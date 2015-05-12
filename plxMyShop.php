@@ -7,7 +7,7 @@ class plxMyShop extends plxPlugin {
     public $aProds = array(); # Tableau de tous les produits
     public $get = false; # Donnees variable GET
     public $cible = false; # Article, categorie, produit ou page statique cible
-
+	
     public function __construct($default_lang) {
         
         # appel du constructeur de la classe plxPlugin (obligatoire)
@@ -73,7 +73,7 @@ class plxMyShop extends plxPlugin {
             $string  = "if(\$this->plxMotor->mode=='product') {";
             $string .= "    \$array = array();";
             $string .= "    \$array[\$this->plxMotor->cible] = array(
-                'name'        => '".$this->aProds[$this->productNumber()]['name']."',
+                'name'        => '" . self::nomProtege($this->aProds[$this->productNumber()]["name"]) . "',
                 'menu'        => '',
                 'url'        => 'product',
                 'readable'    => 1,
@@ -120,12 +120,18 @@ class plxMyShop extends plxPlugin {
         if (isset($this->aProds[$this->productNumber()]['name'])){
             echo '<?php
                 if($this->plxMotor->mode == "product") {
-                    echo plxUtils::strCheck($this->plxMotor->aConf["title"]." - '.$this->aProds[$this->productNumber()]['name'].'");
+                    echo plxUtils::strCheck($this->plxMotor->aConf["title"]  . \' - '
+						. self::nomProtege($this->aProds[$this->productNumber()]["name"]) .'\');
                     return true;
                 }
             ?>';
         }
     }
+	
+	
+	public function nomProtege($nomProduit) {
+		return str_replace("\\\"", "\"", addslashes($nomProduit));
+	}
 
     /**
      * Méthode qui référence les produits dans le sitemap
@@ -631,13 +637,37 @@ class plxMyShop extends plxPlugin {
         if (isset($this->aProds) && is_array($this->aProds)) {
             foreach($this->aProds as $k=>$v) {
                 if ($v['menu']!='non' && $v['menu']!='') {
-                echo "<?php \$class = \$this->plxMotor->mode=='product'?'active':'noactive'; ?>";
-                echo "<?php array_splice(\$menus, ".($this->getParam('menu_position')-1).", 0, '<li><a class=\"static '.\$class.'\" href=\"'.\$this->plxMotor->urlRewrite('index.php?product".$k."/".$v['url']."').'\" title=\"".$v['name']."\">".$v['name']."</a></li>'); ?>";
+					
+					$nomProtege = self::nomProtege($v['name']);
+					
+					echo "<?php \$class = \$this->plxMotor->mode=='product'?'active':'noactive'; ?>";
+					echo "<?php array_splice(\$menus, ".($this->getParam('menu_position')-1).", 0, '<li><a class=\"static '.\$class.'\" href=\"'.\$this->plxMotor->urlRewrite('index.php?product".$k."/".$v['url']."').'\" title=\"".$nomProtege."\">".$nomProtege."</a></li>'); ?>";
                 }
             }
         }
     }
     
-
+	
+	public $donneesModeles = array();
+	
+	public function modele($modele) {
+		
+		$plxMotor = plxMotor::getInstance();
+		
+		$racineTheme = PLX_ROOT . $plxMotor->aConf["racine_themes"] . $plxMotor->style;
+		$fichier = "$racineTheme/modeles/plxMyShop/$modele.php";
+		
+		
+		// si le fichier du modèle n'existe pas dans le thème
+		if (!file_exists($fichier)) {
+			// on choisi le fichier par défaut dans le répertoire de l'extension
+			$fichier = "modeles/$modele.php";
+		}
+		
+		$d = $this->donneesModeles;
+		require $fichier;
+		
+	}
+	
 }
 ?>
