@@ -266,23 +266,22 @@ else: ?>
     <article>
         <?php $plxPlugin->plxShowProductContent(); ?>
     </article>
-    <?php if (isset($plxPlugin->aProds)) {
-    foreach($plxPlugin->aProds as $k => $v) {
-        if (preg_match('#'.$plxPlugin->productNumber().'#',$v['group']) && $v['active']==1 && $v['readable']==1){
-?>
-    <div class="lproduct_content" align="center">
-        <header>
-            <h1 class="product_poidg"><a href="<?php echo $plxPlugin->productRUrl($k); ?>" ><?php echo $v['name']; ?></a></h1>
-            <?php echo ($v['image']!=''?'<a href="'.$plxPlugin->productRUrl($k).'"><img class="product_image" src="'.$v['image'].'"></a>':'<a href="'.$plxPlugin->productRUrl($k).'"><img class="product_image" src="'.PLX_PLUGINS.'plxMyShop/none.png"></a>'); ?><br>
-            <span class="lproduct_pricettc"><?php echo $v['pricettc'].$v['device']; ?></span>
-            <?php echo ((int)$v['poidg']>0?'&nbsp;pour&nbsp;<span class="product_poidg">'.$v['poidg'].'Kg</span>':''); ?>
-        </header>
-        <footer class="product_footer">
-            <button class="product_addcart" onclick="addCart('<?php echo $v['name']; ?>', '<?php echo $v['pricettc']; ?><?php echo $v['device']; ?> TTC<?php echo ((int)$v['poidg']>0?'&nbsp;pour&nbsp;'.$v['poidg'].'Kg':''); ?>', <?php echo $v['pricettc']; ?>, <?php echo $v['poidg']; ?>,'<?php echo $k; ?>');">Ajouter au panier</button>
-        </footer>
-    </div>
-<?php }
-}
+    <?php
+if (isset($plxPlugin->aProds)) {
+	foreach($plxPlugin->aProds as $k => $v) {
+		if (	preg_match('#'.$plxPlugin->productNumber().'#', $v['group']) 
+			&&	$v['active']==1 
+			&&	$v['readable']==1
+		) {
+			
+			$plxPlugin->donneesModeles["plxPlugin"] = $plxPlugin;
+			$plxPlugin->donneesModeles["v"] = $v;
+			$plxPlugin->donneesModeles["k"] = $k;
+			
+			$plxPlugin->modele("produitRubrique");
+			
+		}
+	}
 }
 echo "</section>";
 endif; ?>
