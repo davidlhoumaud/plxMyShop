@@ -460,7 +460,7 @@ class plxMyShop extends plxPlugin {
      **/
     public function productTitle() {
 
-        echo plxUtils::strCheck($this->aProds[ $this->productNumber()]['name']);
+        echo plxUtils::strCheck(preg_replace("/'/",'&apos;',$this->aProds[ $this->productNumber()]['name']));
     }
     
     /**
