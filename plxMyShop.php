@@ -670,4 +670,4 @@ class plxMyShop extends plxPlugin {
 	}
 	
 }
-?>
+

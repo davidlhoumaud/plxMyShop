@@ -2,7 +2,8 @@
 //unset($_SESSION['prods']);
 
 $plxShow = plxShow::getInstance();
-$plxPlugin = $plxShow->plxMotor->plxPlugins->getInstance('plxMyShop');
+$plxPlugin = $plxShow->plxMotor->plxPlugins->aPlugins['plxMyShop'];
+$plxPlugin->donneesModeles["plxPlugin"] = $plxPlugin;
 
 // cryptage
 require(PLX_PLUGINS.'plxMyShop/inc/xorCrypt.inc.php');
@@ -10,9 +11,11 @@ $xorCrypt = new xorCrypt();
 $xorCrypt->set_key($plxPlugin->getParam('keyxorcrypt'));
 
 static $totalkg=0.000;
+
 function shippingMethod($kg, $op){
-    $plxShow = plxShow::getInstance();
-    $plxPlugin = $plxShow->plxMotor->plxPlugins->getInstance('plxMyShop');
+	$plxShow = plxShow::getInstance();
+	$plxPlugin = $plxShow->plxMotor->plxPlugins->aPlugins['plxMyShop'];
+	
     $accurecept=(float)$plxPlugin->getParam('acurecept');
     if ($kg<=0) {
         $shippingPrice=0.00;
@@ -52,11 +55,41 @@ $COMMERCANTNAME=$plxPlugin->getParam('commercant_name');
 $COMMERCANTPOSTCODE=$plxPlugin->getParam('commercant_postcode');
 $COMMERCANTCITY=$plxPlugin->getParam('commercant_city');
 $COMMERCANTSTREET=$plxPlugin->getParam('commercant_street');
-$IFPAYPAL=($plxPlugin->getParam('payment_paypal')==1?true:false);
-$IFCHEQUE=($plxPlugin->getParam('payment_cheque')==1?true:false);
+
 $IFSOCO=($plxPlugin->getParam('shipping_colissimo')==1?true:false);
 
+$tabMethodespaiement = array(
+	"cheque" => array(
+		"libelle" => "Chèque",
+		"codeOption" => "payment_cheque",
+	),
+	"paypal" => array(
+		"libelle" => "Paypal",
+		"codeOption" => "payment_paypal",
+	),
+);
+
+$tabChoixMethodespaiement = array();
+
+foreach ($tabMethodespaiement as $codeMethodespaiement => $m) {
+	if ("1" === $plxPlugin->getParam($m["codeOption"])) {
+		$tabChoixMethodespaiement[$codeMethodespaiement] = $m;
+	}
+}
+
+$plxPlugin->donneesModeles["tabChoixMethodespaiement"] = $tabChoixMethodespaiement;
+
+
+if (	isset($_POST["methodpayment"])
+	&&	!isset($tabChoixMethodespaiement[$_POST["methodpayment"]])
+) {
+	// si la méthode de paiement n'est pas autorisé, choix par défaut
+	$_POST["methodpayment"] = current($tabChoixMethodespaiement);
+}
+
+
 if (($plxPlugin->aProds[ $plxPlugin->productNumber()]['active']!=1 || $plxPlugin->aProds[ $plxPlugin->productNumber()]['readable']!=1) && ($plxPlugin->aProds[ $plxPlugin->productNumber()]['pcat']!=1)) header('Location: index.php');
+
 echo "<script type='text/javascript' src='".PLX_PLUGINS."plxMyShop/js/libajax.js'></script>
 <script type='text/javascript'>var error=false;</script>";
             $_SESSION['msgCommand']="";
@@ -220,110 +253,21 @@ echo "<script type='text/javascript' src='".PLX_PLUGINS."plxMyShop/js/libajax.js
                 }
             //}
         }
+?>
+
+<?php
+
+if ("1" === $plxPlugin->aProds[$plxPlugin->productNumber()]['pcat']) {
+	$plxPlugin->modele("espacePublic/categorie");
+} else { 
+	$plxPlugin->modele("espacePublic/produit");
+}
 
 ?>
-<?php if ($plxPlugin->aProds[ $plxPlugin->productNumber()]['pcat']!=1) : 
-    if (is_array($plxPlugin->productGroupTitle())) {
-        $i=0;
-        foreach($plxPlugin->productGroupTitle() as $key => $value) {
-            echo ($i>0?',':'').'<a href="'.$plxPlugin->productRUrl($key).'">'.$value.'</a>';
-            $i=1;
-        }
-            echo '&nbsp;&rsaquo;&nbsp;'; $plxPlugin->productTitle();
-    } else { ?>
-        <a href="?product<?php $plxPlugin->productGroup(); ?>/"><?php echo $plxPlugin->productGroupTitle(); ?></a>&nbsp;&rsaquo;&nbsp;<?php $plxPlugin->productTitle();
-    }
-endif;?>
-<?php if ($plxPlugin->aProds[ $plxPlugin->productNumber()]['pcat']!=1) : ?>
-<section class="product_content">
-    <header>
-        <div class="product_priceimage">
-<a href="#panier" id="notiShoppingCart"><span id="notiNumShoppingCart"></span><img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;Votre panier</a>
-<?php echo ($plxPlugin->productImage()!=""?'<img class="product_image" src="'.$plxPlugin->productImage().'">':''); ?>
-        </div>
-        <span class="product_pricettc"><?php $plxPlugin->productPriceTTC(); ?><?php $plxPlugin->productDevice(); ?></span>
-        <?php echo ((int)$plxPlugin->productPoidG()>0?'&nbsp;pour&nbsp;<span class="product_poidg">'.$plxPlugin->productPoidG().'Kg</span>':''); ?>
-    </header>
-    <article>
-        <?php $plxPlugin->plxShowProductContent(); ?>
-    </article>
-    <footer class="product_footer">
-        <button class="product_addcart" onclick="addCart('<?php $plxPlugin->productTitle(); ?>', '<?php $plxPlugin->productPriceTTC(); ?><?php $plxPlugin->productDevice(); ?> TTC<?php echo ((int)$plxPlugin->productPoidG()>0?'&nbsp;pour&nbsp;'.$plxPlugin->productPoidG().'Kg':''); ?>', <?php $plxPlugin->productPriceTTC(); ?>, <?php echo $plxPlugin->productPoidG(); ?>,'<?php echo $plxPlugin->productNumber(); ?>');">Ajouter au panier</button>
-    </footer>
-</section>
-<?php 
-else: ?>
-<section class='list_products'>
-    <header>
-        <div class="product_priceimage">
-    <a href="#panier" id="notiShoppingCart"><span id="notiNumShoppingCart"></span><img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;Votre panier</a>
-    
-        </div>
-        <div class="cat_image">
-        <?php echo ($plxPlugin->productImage()!=""?'<img class="product_image_cat" src="'.$plxPlugin->productImage().'">':''); ?>
-        </div>
-    </header>
-    <article>
-        <?php $plxPlugin->plxShowProductContent(); ?>
-    </article>
-    <?php
-if (isset($plxPlugin->aProds)) {
-	foreach($plxPlugin->aProds as $k => $v) {
-		if (	preg_match('#'.$plxPlugin->productNumber().'#', $v['group']) 
-			&&	$v['active']==1 
-			&&	$v['readable']==1
-		) {
-			
-			$plxPlugin->donneesModeles["plxPlugin"] = $plxPlugin;
-			$plxPlugin->donneesModeles["v"] = $v;
-			$plxPlugin->donneesModeles["k"] = $k;
-			
-			$plxPlugin->modele("produitRubrique");
-			
-		}
-	}
-}
-echo "</section>";
-endif; ?>
-<a name="panier"></a>
-<div align="center" class="panierbloc">
-                                <div align="center" id="listproducts">
-                                    <section align="center" class="productsect">
-                                        <header >
-                                            Votre panier&nbsp;&nbsp;&nbsp;&nbsp;<span id='totalCart'>Total : 0.00&euro;</span><span id="spanshipping"></span>
-                                        <?php if (isset($_SESSION['msgCommand']) && !empty($_SESSION['msgCommand']) && $_SESSION['msgCommand']!=""){
-                                                echo $_SESSION['msgCommand'];
-                                                $_SESSION['msgCommand']="";
-                                                unset($_SESSION['msgCommand']);
-                                         }?>
-                                        </header>
-                                        <form id="formcart" method="POST" action="#panier">
-                                            <div id="shoppingCart" ><em>Aucun produit pour le moment.</em></div>
-                                            <p ><strong id="labelFirstnameCart"><span class='startw'>* = champs obligatoire</span> <br>
-                                            <br>Prénom<span class='star'>*</span> :</strong> <input  type="text" name="firstname" id="firstname" value=""><strong id="labelLastnameCart">&nbsp;et Nom<span class='star'>*</span> :</strong> <input type="text" name="lastname"  id="lastname" value=""></p>
-                                            <p ><strong id="labelMailCart">Votre email<span class='star'>*</span> :</strong> <input type="email" name="email"  id="email" value=""></p>
-                                            <p ><strong id="labelTelCart">Tel :</strong> <input type="text" name="tel" id="tel" value=""></p>
-                                            <p ><strong id="labelAddrCart">Addresse<span class='star'>*</span> :</strong> <input type="text" name="adress" id="adress" value=""></p>
-                                            <p ><strong id="labelPostcodeCart" >Code postal<span class='star'>*</span> :</strong> <input  type="text" name="postcode" id="postcode" value=""><strong id="labelCityCart"> Ville :</strong> <input type="text" name="city" id="city" value=""></p>
-                                            <p ><strong id="labelCountryCart" >Pays<span class='star'>*</span> :</strong> <input type="text" name="country" id="country" value=""></p>
-                                            <strong id="labelMsgCart">Votre commentaire :</strong><br><textarea name="msg" id="msgCart"  rows="3"></textarea><br>
-                                            <textarea name="prods" id="prodsCart" rows="3"></textarea>
-                                            <input type="hidden" name="total" id="totalcommand" value="0">
-                                            <input type="hidden" name="shipping" id="shipping" value="0">
-                                            <input type="hidden" name="shipping_kg" id="shipping_kg" value="0">
-                                            <input type="hidden" name="idsuite" id="idsuite" value="0">
-                                            <input type="hidden" name="numcart" id="numcart" value="0">
-                                            <strong>Méthode de paiement&nbsp;:&nbsp;&nbsp;</strong><select onchange="changePaymentMethod(this.value);" name="methodpayment">
-                                                <?php if ($IFPAYPAL) echo '<option value="paypal">Paypal</option>';
-                                                if ($IFCHEQUE) echo '<option value="cheque">Chèque</option>';
-                                                ?>
-                                            </select><br>
-                                            <input type="submit"  id="btnCart" value="Validez la commande" ><br>
-                                        </form>
-                                    </section>
-                                </div>
-                            </div>
-                            <div id="msgAddCart">&darr; Produit ajouté au panier &darr;</div>
+
+
+<?php $plxPlugin->modele("espacePublic/panier");?>
+
 
 <script type="text/javascript">
 var total=0;
@@ -440,8 +384,8 @@ if (error) {
     if (total >0) displayTotal=(total+<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>);
     else displayTotal=0;
     
-    totalCart.innerHTML="Total : "+displayTotal.toFixed(2)+"&euro;";
-    spanshipping.innerHTML="<p class='spanshippingp'>Frais de port : <?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>&euro; pour <?php echo $totalpoidg; ?>Kg</p>";
+    totalCart.innerHTML="Total&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;&euro;";
+    spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: <?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>&nbsp;&euro; pour <?php echo $totalpoidg; ?>&nbsp;kg</p>";
     totalcommand.value=total;
 }
 <?php 
@@ -525,11 +469,11 @@ function addCart(product, price, realprice, kg, id){
     total=(total+realprice);
     tmpship=shippingMethod(kg, 1);
     displayTotal=(total+tmpship);
-    totalCart.innerHTML="Total (frais de port inclus) : "+displayTotal.toFixed(2)+"&euro;";
+    totalCart.innerHTML="Total (frais de port inclus)&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;&euro;";
     totalcommand.value=total.toFixed(2);
     shipping.value=tmpship.toFixed(2);
     shipping_kg.value=totalkg.toFixed(2);
-    if (totalkg>0) spanshipping.innerHTML="<p class='spanshippingp'>Frais de port : "+tmpship.toFixed(2)+"&euro; pour "+totalkg.toFixed(2)+"Kg</p>";
+    if (totalkg>0) spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: "+tmpship.toFixed(2)+"&nbsp;&euro; pour "+totalkg.toFixed(2)+"&nbsp;kg</p>";
     else spanshipping.innerHTML="";
     msgAddCart.style.display="block";
     setTimeout(function() {
@@ -589,7 +533,7 @@ function removeCart(obj, realprice, kg, id){
     totalcommand.value=total.toFixed(2);
     shipping.value=tmpship.toFixed(2);
     shipping_kg.value=totalkg.toFixed(2);
-    if (totalkg>0) spanshipping.innerHTML="<p class='spanshippingp'>Frais de port : "+tmpship.toFixed(2)+"&euro; pour "+totalkg.toFixed(2)+"Kg</p>";
+    if (totalkg>0) spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: "+tmpship.toFixed(2)+"&nbsp;&euro; pour "+totalkg.toFixed(2)+"&nbsp;kg</p>";
     else spanshipping.innerHTML="";
     
     realnprod--;
