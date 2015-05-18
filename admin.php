@@ -67,11 +67,6 @@ echo $plxPlugin->lang('LIST_ORDERS');
             <th class="checkbox"><input type="checkbox" onclick="checkAll(this.form, 'idProduct[]')" /></th>
             <th style="width:80px"><?php $plxPlugin->lang('L_PRODUCTS_ID') ?></th>
             <th><!--Catégorie--></th>
-            <?php if (isset($_GET['mod']) && plxUtils::strCheck($_GET['mod'])=='cat'):
-                echo''; 
-            else: ?>
-            <th>Id <?php $plxPlugin->lang('CREATE_CATS') ?></th> 
-            <?php endif; ?>
             <th><?php $plxPlugin->lang('L_PRODUCTS_TITLE') ?></th>
             <th><?php $plxPlugin->lang('L_PRODUCTS_URL') ?></th>
             <th><?php $plxPlugin->lang('L_PRODUCTS_ACTIVE') ?></th>
@@ -107,11 +102,7 @@ echo $plxPlugin->lang('LIST_ORDERS');
             $selected = $v['pcat']==1 ? ' checked="checked"' : '';
             $valued = $v['pcat']==1 ? '1' : '0'; ?>
             <td><input title="<?php $plxPlugin->lang('L_CAT') ?><?php echo '" type="hidden" name="'.$k.'_pcat" value="'.$valued.'"'.$selected.' onclick="checkBox(this);" /></td>';
-            if ($v['pcat']==0) {
-                echo '<td>';
-                plxUtils::printInput($k.'_group', plxUtils::strCheck($v['group']), 'text', '13-100');
-                echo '</td>';
-            }
+
             echo '<td>';
             plxUtils::printInput($k.'_name', plxUtils::strCheck($v['name']), 'text', '13-255');
             echo '</td><td>';
@@ -158,11 +149,6 @@ echo $plxPlugin->lang('LIST_ORDERS');
             <?php
                 echo '<input type="hidden" name="productNum[]" value="'.$new_productid.'" />'; ?>
                 <td><input title="<?php $plxPlugin->lang('L_CAT') ?><?php echo '" type="hidden" name="'.$new_productid.'_pcat" value="'.(isset($_GET['mod']) && plxUtils::strCheck($_GET['mod'])=='cat'?'1':'0').'" '.(isset($_GET['mod']) && plxUtils::strCheck($_GET['mod'])=='cat'?'checked':'').' onclick="checkBox(this);" ></td>';
-                if (!isset($_GET['mod']) || plxUtils::strCheck($_GET['mod'])!='cat') {
-                echo '<td>';
-                plxUtils::printInput($new_productid.'_group', '', 'text', '13-100');
-                echo '</td>';
-                }
                 echo '<td>';
                 plxUtils::printInput($new_productid.'_name', '', 'text', '13-255');
                 plxUtils::printInput($new_productid.'_template', $plxPlugin->getParam('template'), 'hidden');

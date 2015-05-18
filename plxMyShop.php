@@ -275,7 +275,7 @@ class plxMyShop extends plxPlugin {
                     }
                     $this->aProds[$product_id]['pcat'] = trim($content[$product_id.'_pcat']);
                     $this->aProds[$product_id]['menu'] = trim($content[$product_id.'_menu']);
-                    $this->aProds[$product_id]['group'] = trim($content[$product_id.'_group']);
+                    $this->aProds[$product_id]['group'] = (isset($this->aProds[$product_id]['group'])?$this->aProds[$product_id]['group']:'');
                     $this->aProds[$product_id]['name'] = $stat_name;
                     $this->aProds[$product_id]['url'] = plxUtils::checkSite($url)?$url:$stat_url;
                     $this->aProds[$product_id]['active'] = $content[$product_id.'_active'];
@@ -383,8 +383,12 @@ class plxMyShop extends plxPlugin {
      * @return    string
      * @author    David.L
      **/
-    public function EditProduct($content) {
+    public function editProduct($content) {
         # Mise à jour du fichier product.xml
+		
+		if (isset($content["listeCategories"])) {
+			$this->aProds[$content['id']]['group'] = implode(",", $content["listeCategories"]);
+		}
         
         $this->aProds[$content['id']]['image'] = $content['image'];
         $this->aProds[$content['id']]['noaddcart'] = $content['noaddcart'];

@@ -96,6 +96,28 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
             <?php plxUtils::printSelect('noaddcart', array('1'=>L_YES,'0'=>L_NO), plxUtils::strCheck($noaddcart)); ?>
             <p><label for="id_notice_noaddcart">Afficher une notice si le bouton "Ajouter au panier" n'est pas affiché&nbsp;:</label></p>
             <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'text','50-255'); ?>
+			<hr/>
+			Catégories de ce produit&nbsp;:<br/>
+			<?php $listeCategories = explode(",", $plxPlugin->aProds[$id]["group"]);?>
+			<?php foreach ($plxPlugin->aProds as $idCategorie => $p) {?>
+				<?php 
+					if ("1" !== $p["pcat"]) {
+						continue;
+					}
+				?>
+				<label for="categorie_<?php echo $idCategorie;?>">
+					<input type="checkbox"
+						 name="listeCategories[]"
+						 value="<?php echo $idCategorie;?>"
+						 id="categorie_<?php echo $idCategorie;?>"
+						 <?php echo (!in_array($idCategorie, $listeCategories)) 
+							? "" : " checked=\"checked\"";?>
+						/>
+					<?php echo plxUtils::strCheck($p["name"]); ?>
+				</label>
+				<br/>
+			<?php }?>
+			<hr/>
         <?php else: ?>
             <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'hidden','50-255'); ?>
             <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'hidden','50-255'); ?>
