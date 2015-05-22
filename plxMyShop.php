@@ -636,7 +636,10 @@ class plxMyShop extends plxPlugin {
      * @author    David.L
      **/
     public function plxShowStaticListEnd() {
-
+		
+		$this->plxMotor = plxMotor::getInstance();
+		
+		
         # ajout du menu pour accèder à la page de contact
         if (isset($this->aProds) && is_array($this->aProds)) {
             foreach($this->aProds as $k=>$v) {
@@ -644,8 +647,22 @@ class plxMyShop extends plxPlugin {
 					
 					$nomProtege = self::nomProtege($v['name']);
 					
-					echo "<?php \$class = \$this->plxMotor->mode=='product'?'active':'noactive'; ?>";
-					echo "<?php array_splice(\$menus, ".($this->getParam('menu_position')-1).", 0, '<li><a class=\"static '.\$class.'\" href=\"'.\$this->plxMotor->urlRewrite('index.php?product".$k."/".$v['url']."').'\" title=\"".$nomProtege."\">".$nomProtege."</a></li>'); ?>";
+					$categorieSelectionnee = (
+							("product" === $this->plxMotor->mode)
+						&&	("product$k/{$v["url"]}" === $this->plxMotor->get)
+					);
+					
+					
+					$classeCss = $categorieSelectionnee ? "active" : "noactive";
+					$positionMenu = $this->getParam('menu_position') - 1;
+					$lien = $this->plxMotor->urlRewrite("index.php?product$k/{$v["url"]}");
+					
+					echo "<?php";
+					echo "	array_splice(\$menus, $positionMenu, 0";
+					echo "		, '<li><a class=\"static $classeCss\" href=\"$lien\" title=\"' . htmlspecialchars('$nomProtege') . '\">$nomProtege</a></li>'";
+					echo "	);";
+					echo "?>";
+					
                 }
             }
         }
