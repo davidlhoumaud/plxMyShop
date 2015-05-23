@@ -169,7 +169,7 @@
     color:green;
 }
 
-#labelFirstnameCart, #labelMailCart, #labelTelCart, #labelAddrCart, #labelPostcodeCart, #labelCountryCart, #labelCityCart, #labelMsgCart, #prodsCart, #btnCart, #labelLastnameCart {
+#formcart, #labelFirstnameCart, #labelMailCart, #labelTelCart, #labelAddrCart, #labelPostcodeCart, #labelCountryCart, #labelCityCart, #labelMsgCart, #prodsCart, #btnCart, #labelLastnameCart {
     display:none;
 }
 

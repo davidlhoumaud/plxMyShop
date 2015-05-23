@@ -1,0 +1,7 @@
+
+Deny from All
+
+<Files "icon.png">
+	Allow from All
+</Files>
+
