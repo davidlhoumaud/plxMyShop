@@ -2,41 +2,6 @@
 
 $plxPlugin = $d["plxPlugin"];
 
-function shippingMethod($kg, $op) {
-	$plxMotor = plxMotor::getInstance();
-	$plxPlugin = $plxMotor->plxPlugins->aPlugins['plxMyShop'];
-	
-    $accurecept=(float)$plxPlugin->getParam('acurecept');
-    if ($kg<=0) {
-        $shippingPrice=0.00;
-    } else if ((float)$kg<=$plxPlugin->getParam('p01')) {
-        $shippingPrice=$shippingPrice1;
-    } else if ((float)$kg<=$plxPlugin->getParam('p02')) {
-        $shippingPrice=((float)$plxPlugin->getParam('pv02')+$accurecept);
-    } else if ((float)$kg<=(float)$plxPlugin->getParam('p03')) {
-        $shippingPrice=((float)$plxPlugin->getParam('pv03')+$accurecept);
-    } else if ((float)$kg<=(float)$plxPlugin->getParam('p04')) {
-        $shippingPrice=((float)$plxPlugin->getParam('pv04')+$accurecept);
-    } else if ((float)$kg<=(float)$plxPlugin->getParam('p05')) {
-        $shippingPrice=((float)$plxPlugin->getParam('pv05')+$accurecept);
-    } else if ((float)$kg<=(float)$plxPlugin->getParam('p06')) {
-        $shippingPrice=((float)$plxPlugin->getParam('pv06')+$accurecept);
-    } else if ((float)$kg<=(float)$plxPlugin->getParam('p07')) {
-        $shippingPrice=((float)$plxPlugin->getParam('pv07')+$accurecept);
-    } else if ((float)$kg<=(float)$plxPlugin->getParam('p08')) {
-        $shippingPrice=((float)$plxPlugin->getParam('pv08')+$accurecept);
-    } else if ((float)$kg<=(float)$plxPlugin->getParam('p09')) {
-        $shippingPrice=((float)$plxPlugin->getParam('pv09')+$accurecept);
-    } else if ((float)$kg<=(float)$plxPlugin->getParam('p10')) {
-        $shippingPrice=((float)$plxPlugin->getParam('pv10')+$accurecept);
-    } else if ((float)$kg<=(float)$plxPlugin->getParam('p11')) {
-        $shippingPrice=((float)$plxPlugin->getParam('pv11')+$accurecept);
-    } else {
-        $shippingPrice=0.00;
-    }
-    return (float)$shippingPrice;
-}
-
 
 ?>
 
@@ -49,7 +14,6 @@ function shippingMethod($kg, $op) {
 				Votre panier&nbsp;&nbsp;&nbsp;&nbsp;<span id='totalCart'>Total : 0.00&euro;</span><span id="spanshipping"></span>
 			<?php if (isset($_SESSION['msgCommand']) && !empty($_SESSION['msgCommand']) && $_SESSION['msgCommand']!=""){
 					echo $_SESSION['msgCommand'];
-					$_SESSION['msgCommand']="";
 					unset($_SESSION['msgCommand']);
 			 }?>
 			</header>
@@ -129,8 +93,8 @@ var shipping=document.getElementById('shipping');
 var shipping_kg=document.getElementById('shipping_kg');
 var spanshipping=document.getElementById('spanshipping');
 
-
 <?php
+
 if (isset($_SESSION['prods']) && is_array($_SESSION['prods'])) {
     $sessioncart="";
     $totalpricettc=0.00;
@@ -149,10 +113,12 @@ if (isset($_SESSION['prods']) && is_array($_SESSION['prods'])) {
             $nprod++;
         }
     }
-    $totalpoidgshipping=shippingMethod($totalpoidg, 1);
-    if (sizeof($_SESSION['prods']) > 0 ) echo "var error=true;\n";
-    else echo "var error=false;\n";
+    $totalpoidgshipping = $plxPlugin->shippingMethod($totalpoidg, 1);
+
+	if (sizeof($_SESSION['prods']) > 0 ) echo "var error=true;\n";
+	else echo "var error=false;\n";
 ?>
+	
 if (error) {
     shoppingCart.innerHTML='<?php echo $sessioncart; ?>';
     PRODS.value=shoppingCart.innerHTML;

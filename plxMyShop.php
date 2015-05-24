@@ -751,7 +751,7 @@ class plxMyShop extends plxPlugin {
 										'device' => $this->aProds[$v]['device']
 									);
 			}
-			$totalpoidgshipping=shippingMethod($totalpoidg, 1);
+			$totalpoidgshipping = $this->shippingMethod($totalpoidg, 1);
 		}
 		
 		#Mail de nouvelle commande pour le commerçant.
@@ -889,6 +889,42 @@ class plxMyShop extends plxPlugin {
 		}
 		
 		$_SESSION['msgCommand']=$msgCommand;
+	}
+	
+	
+	function shippingMethod($kg, $op) {
+		
+		$accurecept = (float) $this->getParam('acurecept');
+		
+		if ($kg<=0) {
+			$shippingPrice=0.00;
+		} else if ((float)$kg<=$this->getParam('p01')) {
+			$shippingPrice=$shippingPrice1;
+		} else if ((float)$kg<=$this->getParam('p02')) {
+			$shippingPrice=((float)$this->getParam('pv02')+$accurecept);
+		} else if ((float)$kg<=(float)$this->getParam('p03')) {
+			$shippingPrice=((float)$this->getParam('pv03')+$accurecept);
+		} else if ((float)$kg<=(float)$this->getParam('p04')) {
+			$shippingPrice=((float)$this->getParam('pv04')+$accurecept);
+		} else if ((float)$kg<=(float)$this->getParam('p05')) {
+			$shippingPrice=((float)$this->getParam('pv05')+$accurecept);
+		} else if ((float)$kg<=(float)$this->getParam('p06')) {
+			$shippingPrice=((float)$this->getParam('pv06')+$accurecept);
+		} else if ((float)$kg<=(float)$this->getParam('p07')) {
+			$shippingPrice=((float)$this->getParam('pv07')+$accurecept);
+		} else if ((float)$kg<=(float)$this->getParam('p08')) {
+			$shippingPrice=((float)$this->getParam('pv08')+$accurecept);
+		} else if ((float)$kg<=(float)$this->getParam('p09')) {
+			$shippingPrice=((float)$this->getParam('pv09')+$accurecept);
+		} else if ((float)$kg<=(float)$this->getParam('p10')) {
+			$shippingPrice=((float)$this->getParam('pv10')+$accurecept);
+		} else if ((float)$kg<=(float)$this->getParam('p11')) {
+			$shippingPrice=((float)$this->getParam('pv11')+$accurecept);
+		} else {
+			$shippingPrice=0.00;
+		}
+		
+		return (float) $shippingPrice;
 	}
 }
 
