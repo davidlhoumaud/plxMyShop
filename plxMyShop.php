@@ -697,30 +697,44 @@ class plxMyShop extends plxPlugin {
 		
 		$positionMenu = $this->getParam('menu_position') - 1;
 		
-		// ajout du lien vers le panier
 		
-		$panierSelectionne = (
-				("static" === $this->plxMotor->mode)
-			&&	($nomPlugin === $this->plxMotor->cible)
-			&&	("panier" === get_class($this->vue))
-		);
+		if (in_array(
+				$this->getParam("affPanier")
+				, array("pageSeparee", "partout")
+			)
+		) {
+			// ajout du lien vers le panier
+			
+			$panierSelectionne = (
+					("static" === $this->plxMotor->mode)
+				&&	($nomPlugin === $this->plxMotor->cible)
+				&&	("panier" === get_class($this->vue))
+			);
+			
+			
+			$classeCss = $panierSelectionne ? "active" : "noactive";
+			
+			$lienPanier = $this->plxMotor->urlRewrite("index.php?boutique/panier");
+			
+			require_once "classes/vues/panier.php";
+			$vuePanier = new panier();
+			
+			$titreProtege = plxMyShop::nomProtege($vuePanier->titre());
+			
+			
+			echo "<?php";
+			echo "	array_splice(\$menus, $positionMenu, 0";
+			echo "		, '<li><a class=\"static $classeCss\" href=\"$lienPanier\" title=\"' . htmlspecialchars('$titreProtege') . '\">$titreProtege</a></li>'";
+			echo "	);";
+			echo "?>";
+		}
 		
 		
-		$classeCss = $panierSelectionne ? "active" : "noactive";
+		if ("pageSeparee" !== $this->getParam("affPanier")) {
+			$lienPanier = "#panier";
+		}
 		
-		$lienPanier = $this->plxMotor->urlRewrite("index.php?boutique/panier");
-		
-		require_once "classes/vues/panier.php";
-		$vuePanier = new panier();
-		
-		$titreProtege = plxMyShop::nomProtege($vuePanier->titre());
-		
-		
-		echo "<?php";
-		echo "	array_splice(\$menus, $positionMenu, 0";
-		echo "		, '<li><a class=\"static $classeCss\" href=\"$lienPanier\" title=\"' . htmlspecialchars('$titreProtege') . '\">$titreProtege</a></li>'";
-		echo "	);";
-		echo "?>";
+		$this->donneesModeles["lienPanier"] = $lienPanier;
 		
 		
         # ajout du menu pour accèder aux rubriques
@@ -753,7 +767,6 @@ class plxMyShop extends plxPlugin {
         }
     }
     
-	
 	
 	public function modele($modele) {
 		

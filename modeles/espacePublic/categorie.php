@@ -7,7 +7,7 @@ $plxPlugin = $d["plxPlugin"];
 <section class="list_products">
     <header>
         <div class="product_priceimage">
-			<a href="#panier" id="notiShoppingCart">
+			<a href="<?php echo htmlspecialchars($d["lienPanier"]);?>" id="notiShoppingCart">
 				<span id="notiNumShoppingCart"></span><img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;Votre panier</a>
         </div>
         <div class="cat_image">
@@ -25,7 +25,6 @@ $plxPlugin = $d["plxPlugin"];
 					&&	$v['readable']==1
 				) {
 					
-					$plxPlugin->donneesModeles["v"] = $v;
 					$plxPlugin->donneesModeles["k"] = $k;
 					
 					$plxPlugin->modele("espacePublic/boucle/produitRubrique");

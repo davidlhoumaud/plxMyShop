@@ -1,5 +1,11 @@
+<?php
+
+$plxPlugin = $d["plxPlugin"];
+$v = $plxPlugin->aProds[$d["k"]];
+
+?>
 
 <footer class="product_footer">
-	<button class="product_addcart" onclick="addCart('<?php echo htmlspecialchars(plxMyShop::nomProtege($d["v"]['name'])); ?>', '<?php echo $d["v"]['pricettc']; ?>&nbsp;<?php echo $d["v"]['device']; ?> TTC<?php echo ((int)$d["v"]['poidg']>0?'&nbsp;pour&nbsp;'.$d["v"]['poidg'].'&nbsp;kg':''); ?>', '<?php echo $d["v"]['pricettc']; ?>', '<?php echo $d["v"]['poidg']; ?>','<?php echo $d["k"]; ?>');">
+	<button class="product_addcart" onclick="addCart('<?php echo htmlspecialchars(plxMyShop::nomProtege($v['name'])); ?>', '<?php echo $v['pricettc']; ?>&nbsp;<?php echo $v['device']; ?> TTC<?php echo ((int)$v['poidg']>0?'&nbsp;pour&nbsp;'.$v['poidg'].'&nbsp;kg':''); ?>', '<?php echo $v['pricettc']; ?>', '<?php echo $v['poidg']; ?>','<?php echo $d["k"]; ?>');">
 		Ajouter au panier</button>
 </footer>

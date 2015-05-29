@@ -27,7 +27,8 @@ $plxPlugin = $d["plxPlugin"];
 				<p ><strong id="labelMailCart">Votre email<span class='star'>*</span> :</strong> <input type="email" name="email"  id="email" value=""></p>
 				<p ><strong id="labelTelCart">Tel :</strong> <input type="text" name="tel" id="tel" value=""></p>
 				<p ><strong id="labelAddrCart">Addresse<span class='star'>*</span> :</strong> <input type="text" name="adress" id="adress" value=""></p>
-				<p ><strong id="labelPostcodeCart" >Code postal<span class='star'>*</span> :</strong> <input  type="text" name="postcode" id="postcode" value=""><strong id="labelCityCart"> Ville :</strong> <input type="text" name="city" id="city" value=""></p>
+				<p ><strong id="labelPostcodeCart" >Code postal<span class='star'>*</span> :</strong> <input  type="text" name="postcode" id="postcode" value="">
+				<strong id="labelCityCart"> Ville<span class='star'>*</span> :</strong> <input type="text" name="city" id="city" value=""></p>
 				<p ><strong id="labelCountryCart" >Pays<span class='star'>*</span> :</strong> <input type="text" name="country" id="country" value=""></p>
 				<strong id="labelMsgCart">Votre commentaire :</strong><br><textarea name="msg" id="msgCart"  rows="3"></textarea><br>
 				<textarea name="prods" id="prodsCart" rows="3"></textarea>
@@ -43,7 +44,7 @@ $plxPlugin = $d["plxPlugin"];
 						</option>
 					<?php }?>
 				</select><br>
-				<input type="submit"  id="btnCart" value="Validez la commande" ><br>
+				<input type="submit" id="btnCart" value="Validez la commande"/><br>
 			</form>
 		</section>
 	</div>

@@ -10,6 +10,14 @@ if(defined('PLX_MYMULTILINGUE')) {
 } else {
 	$aLangs = array($plxPlugin->default_lang);
 }
+
+$tabAffPanier = array(
+	"basPage" => "En bas des pages de catégories et des produits",
+	"pageSeparee" => "Sur une page séparée",
+	"partout" => "En bas des pages et sur une page séparée",
+);
+
+
 $var = array();
 if(!empty($_POST)) {
 	$plxPlugin->setParam('racine_product', 'data/products/', 'string');
@@ -54,21 +62,25 @@ if(!empty($_POST)) {
 	//end paypal
 	
 	
-	$plxPlugin->setParam('payment_mercanet', 0, 'numeric');	
-	$plxPlugin->setParam('payment_kwixo', 0, 'numeric');	
+	$plxPlugin->setParam('payment_mercanet', 0, 'numeric');
+	$plxPlugin->setParam('payment_kwixo', 0, 'numeric');
 	$plxPlugin->setParam('email', $_POST['email'], 'string');
 	$plxPlugin->setParam('email_cc', $_POST['email_cc'], 'string');
 	$plxPlugin->setParam('email_bcc', $_POST['email_bcc'], 'string');
-	$plxPlugin->setParam('subject', $_POST['subject'], 'string');	
-	$plxPlugin->setParam('newsubject', $_POST['newsubject'], 'string');	
-	$plxPlugin->setParam('template', $_POST['template'], 'string');	
+	$plxPlugin->setParam('subject', $_POST['subject'], 'string');
+	$plxPlugin->setParam('newsubject', $_POST['newsubject'], 'string');
+	$plxPlugin->setParam('template', $_POST['template'], 'string');
 	$plxPlugin->setParam('shop_name', $_POST['shop_name'], 'string');
-	$plxPlugin->setParam('commercant_name', $_POST['commercant_name'], 'string');	
+	$plxPlugin->setParam('commercant_name', $_POST['commercant_name'], 'string');
 	$plxPlugin->setParam('commercant_street', $_POST['commercant_street'], 'string');
 	$plxPlugin->setParam('commercant_city', $_POST['commercant_city'], 'string');
-	$plxPlugin->setParam('commercant_postcode', $_POST['commercant_postcode'], 'string');	
-	$plxPlugin->setParam('keyxorcrypt', $_POST['keyxorcrypt'], 'string');	
-	$plxPlugin->setParam('menu_position', $_POST['menu_position'], 'numeric');		
+	$plxPlugin->setParam('commercant_postcode', $_POST['commercant_postcode'], 'string');
+	$plxPlugin->setParam('keyxorcrypt', $_POST['keyxorcrypt'], 'string');
+	$plxPlugin->setParam('menu_position', $_POST['menu_position'], 'numeric');
+	
+	$plxPlugin->setParam('affPanier', $_POST['affPanier'], 'string');
+	
+	
 	$plxPlugin->saveParams();
 	header('Location: parametres_plugin.php?p=plxMyShop');
 	exit;
@@ -137,6 +149,9 @@ $var['commercant_city'] = $plxPlugin->getParam('commercant_city')=='' ? 'Dun' : 
 $var['keyxorcrypt'] = $plxPlugin->getParam('keyxorcrypt')=='' ? 'Ab123cD$' : $plxPlugin->getParam('keyxorcrypt');
 $var['menu_position'] = $plxPlugin->getParam('menu_position')=='' ? 3 : $plxPlugin->getParam('menu_position');
 
+$var["affPanier"] = ("" === $plxPlugin->getParam("affPanier")) ? current(array_keys($tabAffPanier)) : $plxPlugin->getParam("affPanier");
+
+
 # On récupère les templates des pages statiques
 $files = plxGlob::getInstance(PLX_ROOT.'themes/'.$plxAdmin->aConf['style']);
 if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
@@ -188,47 +203,47 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 		            <td colspanb='2'>Accuser de reception:&nbsp;<?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?>&nbsp;&euro;</td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p01',$var['p01'],'text','25-120') ?>&nbsp;<=</td>
+		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p01',$var['p01'],'text','25-120') ?>&nbsp;<=</td>
 		            <td><?php plxUtils::printInput('pv01',$var['pv01'],'text','25-120') ?>&nbsp;&euro;</td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p02',$var['p02'],'text','25-120') ?>&nbsp;<=</td>
+		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p02',$var['p02'],'text','25-120') ?>&nbsp;<=</td>
 		            <td><?php plxUtils::printInput('pv02',$var['pv02'],'text','25-120') ?>&nbsp;&euro;</td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p03',$var['p03'],'text','25-120') ?>&nbsp;<=</td>
+		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p03',$var['p03'],'text','25-120') ?>&nbsp;<=</td>
 		            <td><?php plxUtils::printInput('pv03',$var['pv03'],'text','25-120') ?>&nbsp;&euro;</td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p04',$var['p04'],'text','25-120') ?>&nbsp;<=</td>
+		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p04',$var['p04'],'text','25-120') ?>&nbsp;<=</td>
 		            <td><?php plxUtils::printInput('pv04',$var['pv04'],'text','25-120') ?>&nbsp;&euro;</td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p05',$var['p05'],'text','25-120') ?>&nbsp;<=</td>
+		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p05',$var['p05'],'text','25-120') ?>&nbsp;<=</td>
 		            <td><?php plxUtils::printInput('pv05',$var['pv05'],'text','25-120') ?>&nbsp;&euro;</td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p06',$var['p06'],'text','25-120') ?>&nbsp;<=</td>
+		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p06',$var['p06'],'text','25-120') ?>&nbsp;<=</td>
 		            <td><?php plxUtils::printInput('pv06',$var['pv06'],'text','25-120') ?>&nbsp;&euro;</td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p07',$var['p07'],'text','25-120') ?>&nbsp;<=</td>
+		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p07',$var['p07'],'text','25-120') ?>&nbsp;<=</td>
 		            <td><?php plxUtils::printInput('pv07',$var['pv07'],'text','25-120') ?>&nbsp;&euro;</td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p08',$var['p08'],'text','25-120') ?>&nbsp;<=</td>
+		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p08',$var['p08'],'text','25-120') ?>&nbsp;<=</td>
 		            <td><?php plxUtils::printInput('pv08',$var['pv08'],'text','25-120') ?>&nbsp;&euro;</td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p09',$var['p09'],'text','25-120') ?>&nbsp;<=</td>
+		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p09',$var['p09'],'text','25-120') ?>&nbsp;<=</td>
 		            <td><?php plxUtils::printInput('pv09',$var['pv09'],'text','25-120') ?>&nbsp;&euro;</td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p10',$var['p10'],'text','25-120') ?>&nbsp;<=</td>
+		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p10',$var['p10'],'text','25-120') ?>&nbsp;<=</td>
 		            <td><?php plxUtils::printInput('pv10',$var['pv10'],'text','25-120') ?>&nbsp;&euro;</td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p11',$var['p11'],'text','25-120') ?>&nbsp;<=</td>
+		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p11',$var['p11'],'text','25-120') ?>&nbsp;<=</td>
 		            <td><?php plxUtils::printInput('pv11',$var['pv11'],'text','25-120') ?>&nbsp;&euro;</td>
 		        </tr>
 		    </table>
@@ -302,15 +317,21 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 				<p></p>
 		<p class="field"><label for="id_newsubject">Titre mail "Nouvelle commande" (pour le commerçant)&nbsp;:</label></p>
 				<p><?php plxUtils::printInput('newsubject',$var['newsubject'],'text','100-120') ?></p>
-				<p></p>
-		<h2>Configuration du menu</h2><br>
-		<p class="field"><label for="id_menu_position">Position principal dans le menu (pour le cat&eacute;gories)&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('menu_position',$var['menu_position'],'number','100-120') ?></p>
-				<p></p>
-		<h2>Configuration des pages</h2><br>
-		<p class="field"><label for="id_template"><?php $plxPlugin->lang('L_TEMPLATE') ?>&nbsp;:</label></p>
-				<p><?php plxUtils::printSelect('template', $aTemplates, $var['template']) ?></p>
-				<p></p>
+		<p></p>
+		<br/>
+		
+		<h2>Configuration du menu</h2>
+		<p class="field"><label for="id_menu_position">Position dans le menu des catégories et pages fixes (panier)&nbsp;:</label></p>
+			<p><?php plxUtils::printInput('menu_position',$var['menu_position'],'number','100-120') ?></p>
+		<p></p>
+		<br/>
+		
+		<h2>Configuration des pages</h2>
+		<p class="field"><label for="id_affPanier">Affichage du panier&nbsp;:</label></p>
+			<p><?php plxUtils::printSelect("affPanier", $tabAffPanier, $var["affPanier"]) ?></p>
+		<p class="field"><label for="id_template">Template pour les pages fixes et template par défaut des catégories et produits&nbsp;:</label></p>
+			<p><?php plxUtils::printSelect('template', $aTemplates, $var['template']) ?></p>
+		<p></p>
 		
 		
 	</div>
