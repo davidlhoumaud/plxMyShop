@@ -140,4 +140,3 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
     </p>
 </form>
 
-

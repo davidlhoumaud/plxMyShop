@@ -7,7 +7,8 @@ class plxMyShop extends plxPlugin {
     public $aProds = array(); # Tableau de tous les produits
     public $get = false; # Donnees variable GET
     public $cible = false; # Article, categorie, produit ou page statique cible
-	
+	public $donneesModeles = array();
+
     public function __construct($default_lang) {
         
         # appel du constructeur de la classe plxPlugin (obligatoire)
@@ -63,8 +64,8 @@ class plxMyShop extends plxPlugin {
     }
 
     public function productNumber(){
-    
-        $capture=explode("/",$this->get);
+
+		$capture=explode("/",$this->get);
         
         $capture=explode("product",$capture[0]);
 
@@ -117,8 +118,41 @@ class plxMyShop extends plxPlugin {
      * @return    null
      * @author    Anthony GUÉRIN, Florent MONTHEL, Stéphane F
      **/
-    public function plxMotorPreChauffageBegin($template="static.php") {
+    public function plxMotorPreChauffageBegin() {
+		
+		$this->plxMotor = plxMotor::getInstance();
+		
+		$nomPlugin = __CLASS__;
+		
+		
+		// contrôleur des pages du plugin
+		
+		
+		if ("boutique/panier" === $this->plxMotor->get) {
+			
+			$classeVue = "panier";
+			
+			require_once "classes/vues/$classeVue.php";
+			$this->vue = new $classeVue();
+			$this->vue->traitement();
+			
+			$this->plxMotor->mode = "static";
+			$this->plxMotor->cible = $nomPlugin;
+			$this->plxMotor->template = $this->getParam("template");
+			
+			$this->plxMotor->aConf["racine_statiques"] = "";
+			$this->plxMotor->aStats[$this->plxMotor->cible] = array(
+				"name" => $this->vue->titre(),
+				"url" => "/../{$this->plxMotor->aConf["racine_plugins"]}/$nomPlugin/template/vue",
+				"readable" => 1
+			);
+			
+			echo "<?php return TRUE;?>";
+		}
+		
+		
         if (isset($this->aProds[$this->productNumber()])) {
+			
             $template = ($this->aProds[$this->productNumber()]["template"]==""?$this->getParam('template'):$this->aProds[$this->productNumber()]["template"]);
             $string= '$prefix = str_repeat("../", substr_count(trim(PLX_ROOT."data/products/", "/"), "/"));
     if ($this->get && preg_match("#product([0-9]+)/?([a-z0-9-]+)?#",$this->get)) {
@@ -660,12 +694,41 @@ class plxMyShop extends plxPlugin {
      **/
     public function plxShowStaticListEnd() {
 		
-		$this->plxMotor = plxMotor::getInstance();
+		
+		$positionMenu = $this->getParam('menu_position') - 1;
+		
+		// ajout du lien vers le panier
+		
+		$panierSelectionne = (
+				("static" === $this->plxMotor->mode)
+			&&	($nomPlugin === $this->plxMotor->cible)
+			&&	("panier" === get_class($this->vue))
+		);
 		
 		
-        # ajout du menu pour accèder à la page de contact
+		$classeCss = $panierSelectionne ? "active" : "noactive";
+		
+		$lienPanier = $this->plxMotor->urlRewrite("index.php?boutique/panier");
+		
+		require_once "classes/vues/panier.php";
+		$vuePanier = new panier();
+		
+		$titreProtege = plxMyShop::nomProtege($vuePanier->titre());
+		
+		
+		echo "<?php";
+		echo "	array_splice(\$menus, $positionMenu, 0";
+		echo "		, '<li><a class=\"static $classeCss\" href=\"$lienPanier\" title=\"' . htmlspecialchars('$titreProtege') . '\">$titreProtege</a></li>'";
+		echo "	);";
+		echo "?>";
+		
+		
+        # ajout du menu pour accèder aux rubriques
+		
         if (isset($this->aProds) && is_array($this->aProds)) {
-            foreach($this->aProds as $k=>$v) {
+			
+			
+            foreach(array_reverse($this->aProds) as $k=>$v) {
                 if ($v['menu']!='non' && $v['menu']!='') {
 					
 					$nomProtege = self::nomProtege($v['name']);
@@ -677,7 +740,6 @@ class plxMyShop extends plxPlugin {
 					
 					
 					$classeCss = $categorieSelectionnee ? "active" : "noactive";
-					$positionMenu = $this->getParam('menu_position') - 1;
 					$lien = $this->plxMotor->urlRewrite("index.php?product$k/{$v["url"]}");
 					
 					echo "<?php";
@@ -692,7 +754,6 @@ class plxMyShop extends plxPlugin {
     }
     
 	
-	public $donneesModeles = array();
 	
 	public function modele($modele) {
 		
