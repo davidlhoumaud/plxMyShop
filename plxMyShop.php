@@ -770,6 +770,15 @@ class plxMyShop extends plxPlugin {
 	
 	public function modele($modele) {
 		
+		if (!isset($this->donneesModeles["pileModeles"])) {
+			$this->donneesModeles["pileModeles"] = array();
+		}
+		
+		$this->donneesModeles["pileModeles"][] = $modele;
+		
+		
+		// fichier du modèle dans le thème
+		
 		$plxMotor = plxMotor::getInstance();
 		
 		$racineTheme = PLX_ROOT . $plxMotor->aConf["racine_themes"] . $plxMotor->style;
@@ -783,7 +792,12 @@ class plxMyShop extends plxPlugin {
 		}
 		
 		$d = $this->donneesModeles;
+		
 		require $fichier;
+		
+		
+		// rétablissement des noms des modèles
+		array_pop($this->donneesModeles["pileModeles"]);
 		
 	}
 	
