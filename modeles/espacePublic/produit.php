@@ -1,7 +1,7 @@
 <?php
 
 $plxPlugin = $d["plxPlugin"];
-$v = $plxPlugin->aProds[$d["k"]];
+
 
 if (is_array($plxPlugin->productGroupTitle())) {
 	$i=0;
@@ -38,6 +38,7 @@ if (is_array($plxPlugin->productGroupTitle())) {
         <?php $plxPlugin->plxShowProductContent(); ?>
     </article>
 	<?php
+		$plxPlugin->donneesModeles["k"] = $plxPlugin->productNumber();
 		$plxPlugin->modele("espacePublic/boucle/boutonPanier");
 	?>
 </section>

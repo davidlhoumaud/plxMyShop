@@ -33,7 +33,7 @@ if (isset($_POST['prods']) && plxUtils::cdataCheck($_POST['prods'])!="") {
 
 if ("1" === $plxPlugin->aProds[$plxPlugin->productNumber()]['pcat']) {
 	$plxPlugin->modele("espacePublic/categorie");
-} else { 
+} else {
 	$plxPlugin->modele("espacePublic/produit");
 }
 

@@ -4,11 +4,14 @@
  * @author    David L
  **/
 class plxMyShop extends plxPlugin {
-    public $aProds = array(); # Tableau de tous les produits
-    public $get = false; # Donnees variable GET
-    public $cible = false; # Article, categorie, produit ou page statique cible
+	
+	public $aProds = array(); # Tableau de tous les produits
 	public $donneesModeles = array();
-
+	
+	public $plxMotor;
+	public $idProduit;
+	
+	
     public function __construct($default_lang) {
         
         # appel du constructeur de la classe plxPlugin (obligatoire)
@@ -18,7 +21,11 @@ class plxMyShop extends plxPlugin {
         # droits pour accèder à la page config.php du plugin
         $this->setConfigProfil(PROFIL_ADMIN);
         # Personnalisation du menu admin
-        $this->setAdminMenu(($this->getParam('shop_name')!=""?$this->getParam('shop_name'):"MyShop").' '.$this->getInfo('version'), 5, 'Affichage des produits/catégories');
+        $this->setAdminMenu(
+			($this->getParam('shop_name') !== "" ? $this->getParam('shop_name') : "MyShop") . ' ' . $this->getInfo('version')
+			, 5
+			, 'Affichage des produits / catégories'
+		);
 
         $this->addHook('plxMotorPreChauffageBegin', 'plxMotorPreChauffageBegin');
         $this->addHook('plxShowConstruct', 'plxShowConstruct');
@@ -26,17 +33,16 @@ class plxMyShop extends plxPlugin {
         $this->addHook('plxShowStaticListEnd', 'plxShowStaticListEnd');
         $this->addHook('SitemapStatics', 'SitemapStatics');
         
-        //echo PLX_ROOT.PLX_CONFIG_PATH.'products.xml'; exit;
-         $this->getProducts();
-         $this->get = plxUtils::getGets();
-         if (!is_dir(PLX_ROOT.'data/commandes/')) {
-                mkdir(PLX_ROOT.'data/commandes/', 0755, true);
-         }
-         if (!is_file(PLX_ROOT.'data/commandes/index.html')) {
-                $mescommandeindex = fopen(PLX_ROOT.'data/commandes/index.html', 'w+');
-                fclose($mescommandeindex);
-         }
-
+		$this->getProducts();
+		
+		if (!is_dir(PLX_ROOT.'data/commandes/')) {
+			mkdir(PLX_ROOT.'data/commandes/', 0755, true);
+		}
+		if (!is_file(PLX_ROOT.'data/commandes/index.html')) {
+			$mescommandeindex = fopen(PLX_ROOT.'data/commandes/index.html', 'w+');
+			fclose($mescommandeindex);
+		}
+		
 		
 		// méthodes de paiement
 		
@@ -63,25 +69,8 @@ class plxMyShop extends plxPlugin {
 		
     }
 
-    public function productNumber(){
-
-		$capture=explode("/",$this->get);
-        
-        $capture=explode("product",$capture[0]);
-
-       
-        if (isset($capture[1])){
-#             $ii=0;
-#             echo count($this->aProds);
-#            while($ii<(sizeof($this->aProds)+2)) {
-#                $ii++;
-#                if ((int)$capture[1]===(int)$ii) {
-
-                    return str_pad($capture[1],3,"0",STR_PAD_LEFT);
-#                }
-#                $ii++;
-#            }
-        }
+    public function productNumber() {
+		return $this->idProduit;
     }
 
     /**
@@ -144,27 +133,33 @@ class plxMyShop extends plxPlugin {
 			$this->plxMotor->aStats[$this->plxMotor->cible] = array(
 				"name" => $this->vue->titre(),
 				"url" => "/../{$this->plxMotor->aConf["racine_plugins"]}/$nomPlugin/template/vue",
-				"readable" => 1
+				"active" => 1,
+				"menu" => "non",
+				"readable" => 1,
+				"title_htmltag" => "",
 			);
 			
 			echo "<?php return TRUE;?>";
 		}
 		
 		
-        if (isset($this->aProds[$this->productNumber()])) {
+		// pages des produits et des catégories
+		
+		if (preg_match("#product([0-9]+)/?([a-z0-9-]+)?#", $this->plxMotor->get, $resultat)) {
+			$this->idProduit = str_pad($resultat[1], 3, "0", STR_PAD_LEFT);
 			
-            $template = ($this->aProds[$this->productNumber()]["template"]==""?$this->getParam('template'):$this->aProds[$this->productNumber()]["template"]);
-            $string= '$prefix = str_repeat("../", substr_count(trim(PLX_ROOT."data/products/", "/"), "/"));
-    if ($this->get && preg_match("#product([0-9]+)/?([a-z0-9-]+)?#",$this->get)) {
-        $capture=explode("/",$this->get);
-        $capture=explode("product",$capture[0]);
-        $this->cible = $prefix."'.PLX_PLUGINS.'plxMyShop/form";
-        $this->mode = "product";
-        $this->template = "'.$template.'";
-        return true;
-    }';
-            echo "<?php ".$string." ?>"; 
-        }
+			$template = $this->aProds[$this->productNumber()]["template"] === ""
+				 ? $this->getParam('template')
+				 : $this->aProds[$this->productNumber()]["template"];
+			
+			$this->plxMotor->mode = "product";
+			$this->plxMotor->aConf["racine_statiques"] = "";
+			$this->plxMotor->cible = "{$this->plxMotor->aConf["racine_plugins"]}/$nomPlugin/form";
+			$this->plxMotor->template = $template;
+			
+			echo "<?php return TRUE;?>";
+		}
+		
     }
 
     /**
@@ -705,6 +700,8 @@ class plxMyShop extends plxPlugin {
 		) {
 			// ajout du lien vers le panier
 			
+			$nomPlugin = __CLASS__;
+			
 			$panierSelectionne = (
 					("static" === $this->plxMotor->mode)
 				&&	($nomPlugin === $this->plxMotor->cible)
@@ -803,7 +800,7 @@ class plxMyShop extends plxPlugin {
 	
 	public function validerCommande() {
 		
-		$tabChoixMethodespaiement = $plxPlugin->donneesModeles["tabChoixMethodespaiement"];
+		$tabChoixMethodespaiement = $this->donneesModeles["tabChoixMethodespaiement"];
 		
 		
 		if (	isset($_POST["methodpayment"])
