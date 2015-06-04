@@ -783,7 +783,7 @@ class plxMyShop extends plxPlugin {
 		
 		
 		// si le fichier du modèle n'existe pas dans le thème
-		if (!file_exists($fichier)) {
+		if (!is_file($fichier)) {
 			// on choisi le fichier par défaut dans le répertoire de l'extension
 			$fichier = "modeles/$modele.php";
 		}
