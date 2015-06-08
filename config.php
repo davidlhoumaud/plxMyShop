@@ -153,7 +153,7 @@ $var["affPanier"] = ("" === $plxPlugin->getParam("affPanier")) ? current(array_k
 
 
 # On récupère les templates des pages statiques
-$files = plxGlob::getInstance(PLX_ROOT.'themes/'.$plxAdmin->aConf['style']);
+$files = plxGlob::getInstance(PLX_ROOT.$plxAdmin->aConf['racine_themes'].$plxAdmin->aConf['style']);
 if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 	foreach($array as $k=>$v)
 		$aTemplates[$v] = $v;
