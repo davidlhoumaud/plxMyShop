@@ -5,7 +5,7 @@
 <script type='text/javascript'>
 
 var error = false;
-var repertoireAjax = '<?php echo $d["plxPlugin"]->plxMotor->urlRewrite(PLX_PLUGINS);?>plxMyShop/ajax/';
+var repertoireAjax = '<?php echo PLX_PLUGINS;?>plxMyShop/ajax/';
 var shoppingCart = null;
 
 </script>
