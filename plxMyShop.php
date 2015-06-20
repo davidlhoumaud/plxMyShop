@@ -9,6 +9,7 @@ class plxMyShop extends plxPlugin {
 	public $donneesModeles = array();
 	
 	public $plxMotor;
+	public $cheminImages;
 	public $idProduit;
 	
 	
@@ -32,6 +33,8 @@ class plxMyShop extends plxPlugin {
         $this->addHook('plxShowPageTitle', 'plxShowPageTitle');
         $this->addHook('plxShowStaticListEnd', 'plxShowStaticListEnd');
         $this->addHook('SitemapStatics', 'SitemapStatics');
+		
+        $this->addHook('AdminPrepend', 'AdminPrepend');
         
 		$this->getProducts();
 		
@@ -98,7 +101,23 @@ class plxMyShop extends plxPlugin {
             echo "<?php ".$string." ?>";
         }
     }
-
+    
+	
+	
+	public function AdminPrepend() {
+		
+		$this->plxMotor = plxAdmin::getInstance();
+		
+		if (isset($this->plxMotor->aConf['images'])) {
+			// jusqu'à la version 5.3.1
+			$this->cheminImages = $this->plxMotor->aConf['images'];
+		} else {
+			$this->cheminImages = $this->plxMotor->aConf['media'];
+		}
+		
+	}
+	
+	
     /**
      * Méthode qui effectue une analyse de la situation et détermine
      * le mode à appliquer. Cette méthode alimente ensuite les variables
@@ -107,9 +126,18 @@ class plxMyShop extends plxPlugin {
      * @return    null
      * @author    Anthony GUÉRIN, Florent MONTHEL, Stéphane F
      **/
-    public function plxMotorPreChauffageBegin() {
+
+	public function plxMotorPreChauffageBegin() {
 		
 		$this->plxMotor = plxMotor::getInstance();
+		
+		if (isset($this->plxMotor->aConf['images'])) {
+			// jusqu'à la version 5.3.1
+			$this->cheminImages = $this->plxMotor->aConf['images'];
+		} else {
+			$this->cheminImages = $this->plxMotor->aConf['media'];
+		}
+		
 		
 		$nomPlugin = __CLASS__;
 		
@@ -515,8 +543,14 @@ class plxMyShop extends plxPlugin {
      * @author    David.L
      **/
     public function productTitle() {
-
-        echo plxUtils::strCheck(preg_replace("/'/",'&apos;',$this->aProds[ $this->productNumber()]['name']));
+		
+		echo plxUtils::strCheck(
+			preg_replace(
+				"/'/"
+				, '&apos;'
+				, $this->aProds[ $this->productNumber()]['name']
+			)
+		);
     }
     
     /**
@@ -528,8 +562,13 @@ class plxMyShop extends plxPlugin {
 
      **/
     public function productImage() {
-
-        return plxUtils::strCheck($this->aProds[ $this->productNumber() ]["image"]);
+		
+		return plxUtils::strCheck(
+			$this->plxMotor->urlRewrite(
+				$this->cheminImages
+				. $this->aProds[$this->productNumber()]["image"]
+			)
+		);
     }
     
     /**

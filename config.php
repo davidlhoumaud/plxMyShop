@@ -20,7 +20,7 @@ $tabAffPanier = array(
 
 $var = array();
 if(!empty($_POST)) {
-	$plxPlugin->setParam('racine_product', 'data/products/', 'string');
+	
 	//socolissimo reco
 	$plxPlugin->setParam('shipping_colissimo', $_POST['shipping_colissimo'], 'numeric');
 	$plxPlugin->setParam('acurecept', $_POST['acurecept'], 'string');
