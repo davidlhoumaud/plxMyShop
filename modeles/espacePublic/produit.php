@@ -29,7 +29,7 @@ if (is_array($plxPlugin->productGroupTitle())) {
 			<a href="<?php echo htmlspecialchars($d["lienPanier"]);?>" id="notiShoppingCart">
 				<span id="notiNumShoppingCart"></span>
 				<img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;Votre panier</a>
-			<?php echo ($plxPlugin->productImage()!=""?'<img class="product_image" src="'.$plxPlugin->productImage().'">':''); ?>
+			<?php echo ($plxPlugin->aProds[$plxPlugin->productNumber()]["image"]!=""?'<img class="product_image" src="'.$plxPlugin->productImage().'">':''); ?>
         </div>
         <span class="product_pricettc"><?php $plxPlugin->productPriceTTC(); ?><?php $plxPlugin->productDevice(); ?></span>
         <?php echo ((int)$plxPlugin->productPoidG()>0?'&nbsp;pour&nbsp;<span class="product_poidg">'.$plxPlugin->productPoidG().'Kg</span>':''); ?>
