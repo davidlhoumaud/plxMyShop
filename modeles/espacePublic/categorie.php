@@ -11,7 +11,7 @@ $plxPlugin = $d["plxPlugin"];
 				<span id="notiNumShoppingCart"></span><img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;Votre panier</a>
         </div>
         <div class="cat_image">
-			<?php echo ($plxPlugin->productImage()!="") ? '<img class="product_image_cat" src="'.$plxPlugin->productImage().'">' : '';?>
+			<?php echo ($plxPlugin->aProds[$plxPlugin->productNumber()]["image"]!="") ? '<img class="product_image_cat" src="'.$plxPlugin->productImage().'">' : '';?>
         </div>
     </header>
     <article>

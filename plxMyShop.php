@@ -112,7 +112,7 @@ class plxMyShop extends plxPlugin {
 			// jusqu'à la version 5.3.1
 			$this->cheminImages = $this->plxMotor->aConf['images'];
 		} else {
-			$this->cheminImages = $this->plxMotor->aConf['media'];
+			$this->cheminImages = $this->plxMotor->aConf['medias'];
 		}
 		
 	}
@@ -135,7 +135,7 @@ class plxMyShop extends plxPlugin {
 			// jusqu'à la version 5.3.1
 			$this->cheminImages = $this->plxMotor->aConf['images'];
 		} else {
-			$this->cheminImages = $this->plxMotor->aConf['media'];
+			$this->cheminImages = $this->plxMotor->aConf['medias'];
 		}
 		
 		

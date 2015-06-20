@@ -23,7 +23,7 @@ function addCart(product, price, realprice, kg, id) {
         shoppingCart.innerHTML='';
     }
 	
-    shoppingCart.innerHTML=shoppingCart.innerHTML+'<span id="p'+nprod+'"><br>-&nbsp;'+product+'&nbsp;&nbsp;&nbsp;&nbsp;'+price+'&nbsp;&nbsp;&nbsp;&nbsp;'+'<button onclick="removeCart(\'p'+nprod+'\', '+realprice+', '+kg+', \''+id+'\');" id="delp'+nprod+'">Supprimer</button></span>';
+    shoppingCart.innerHTML=shoppingCart.innerHTML+'<span id="p'+nprod+'"><br>-&nbsp;'+product+'&nbsp;&nbsp;&nbsp;&nbsp;'+price+'&nbsp;&nbsp;&nbsp;&nbsp;'+'<button onclick="return removeCart(\'p'+nprod+'\', '+realprice+', '+kg+', \''+id+'\');" id="delp'+nprod+'">Supprimer</button></span>';
     PRODS.value=PRODS.value+'<span id="p'+nprod+'">-&nbsp;'+product+'&nbsp;&nbsp;&nbsp;&nbsp;'+price+'</span><br>';
     btnCart.style.display='inline-block';
     msgCart.style.display='inline-block';
@@ -127,4 +127,5 @@ function removeCart(obj, realprice, kg, id) {
     realnprod--;
     numCart.value=realnprod;
 
+	return false;
 }

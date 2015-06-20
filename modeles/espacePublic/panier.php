@@ -110,7 +110,7 @@ if (isset($_SESSION['prods']) && is_array($_SESSION['prods'])) {
                                     'poidg' => $plxPlugin->aProds[$v]['poidg'],
                                     'name' => $plxPlugin->aProds[$v]['name'],
                                     'device' => $plxPlugin->aProds[$v]['device']);
-            $sessioncart.="<span id=\"p".$nprod."\"><br>-&nbsp;".preg_replace("/'/",'&apos;',$productscart[$v]['name'])."&nbsp;&nbsp;&nbsp;&nbsp;".$productscart[$v]['pricettc']." ".$productscart[$v]['device'].((float)$productscart[$v]['poidg']>0?" pour ".$productscart[$v]['poidg']."&nbsp;kg":"").'&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="removeCart(\\\'p'.$nprod.'\\\', '.$productscart[$v]['pricettc'].', '.$productscart[$v]['poidg'].', \\\''.$v.'\\\');return false;" id="delp'.$nprod.'">Supprimer</button></span>';
+            $sessioncart.="<span id=\"p".$nprod."\"><br>-&nbsp;".preg_replace("/'/",'&apos;',$productscart[$v]['name'])."&nbsp;&nbsp;&nbsp;&nbsp;".$productscart[$v]['pricettc']." ".$productscart[$v]['device'].((float)$productscart[$v]['poidg']>0?" pour ".$productscart[$v]['poidg']."&nbsp;kg":"").'&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="return removeCart(\\\'p'.$nprod.'\\\', '.$productscart[$v]['pricettc'].', '.$productscart[$v]['poidg'].', \\\''.$v.'\\\');" id="delp'.$nprod.'">Supprimer</button></span>';
             $nprod++;
         }
     }

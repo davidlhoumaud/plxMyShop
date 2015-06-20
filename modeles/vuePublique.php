@@ -1,11 +1,11 @@
 
-<script type='text/javascript' src='<?php echo PLX_PLUGINS;?>plxMyShop/js/libajax.js'></script>
-<script type='text/javascript' src='<?php echo PLX_PLUGINS;?>plxMyShop/js/panier.js'></script>
+<script type='text/javascript' src='<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/libajax.js'></script>
+<script type='text/javascript' src='<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js'></script>
 
 <script type='text/javascript'>
 
 var error = false;
-var repertoireAjax = '<?php echo PLX_PLUGINS;?>plxMyShop/ajax/';
+var repertoireAjax = '<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
 var shoppingCart = null;
 
 </script>
