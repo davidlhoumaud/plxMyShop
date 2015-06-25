@@ -57,11 +57,11 @@ function addCart(product, price, realprice, kg, id) {
     total = parseFloat(total) + parseFloat(realprice);
     tmpship=shippingMethod(kg, 1);
 	displayTotal=(total+tmpship);
-    totalCart.innerHTML="Total (frais de port inclus)&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;&euro;";
+    totalCart.innerHTML="Total (frais de port inclus)&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;" + devise + "";
     totalcommand.value=total.toFixed(2);
     shipping.value=tmpship.toFixed(2);
     shipping_kg.value=totalkg.toFixed(2);
-    if (totalkg>0) spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: "+tmpship.toFixed(2)+"&nbsp;&euro; pour "+totalkg.toFixed(2)+"&nbsp;kg</p>";
+    if (totalkg>0) spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: "+tmpship.toFixed(2)+"&nbsp;" + devise + " pour "+totalkg.toFixed(2)+"&nbsp;kg</p>";
     else spanshipping.innerHTML="";
 }
 
@@ -117,11 +117,11 @@ function removeCart(obj, realprice, kg, id) {
     tmpship=shippingMethod(kg, 0);
     if (total >0) displayTotal=(total+tmpship);
     else displayTotal=0;
-    totalCart.innerHTML="Total&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;&euro;";
+    totalCart.innerHTML="Total&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;" + devise + "";
     totalcommand.value=total.toFixed(2);
     shipping.value=tmpship.toFixed(2);
     shipping_kg.value=totalkg.toFixed(2);
-    if (totalkg>0) spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: "+tmpship.toFixed(2)+"&nbsp;&euro; pour "+totalkg.toFixed(2)+"&nbsp;kg</p>";
+    if (totalkg>0) spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: "+tmpship.toFixed(2)+"&nbsp;" + devise + " pour "+totalkg.toFixed(2)+"&nbsp;kg</p>";
     else spanshipping.innerHTML="";
     
     realnprod--;

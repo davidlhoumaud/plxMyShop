@@ -31,7 +31,7 @@ if (is_array($plxPlugin->productGroupTitle())) {
 				<img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;Votre panier</a>
 			<?php echo ($plxPlugin->aProds[$plxPlugin->productNumber()]["image"]!=""?'<img class="product_image" src="'.$plxPlugin->productImage().'">':''); ?>
         </div>
-        <span class="product_pricettc"><?php $plxPlugin->productPriceTTC(); ?><?php $plxPlugin->productDevice(); ?></span>
+        <span class="product_pricettc"><?php $plxPlugin->productPriceTTC();?>&nbsp;<?php echo $plxPlugin->getParam("devise");?></span>
         <?php echo ((int)$plxPlugin->productPoidG()>0?'&nbsp;pour&nbsp;<span class="product_poidg">'.$plxPlugin->productPoidG().'Kg</span>':''); ?>
     </header>
     <article>

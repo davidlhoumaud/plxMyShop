@@ -25,7 +25,6 @@ if(!empty($_POST) AND isset($plxPlugin->aProds[$_POST['id']])) {
     $pricettc = $plxPlugin->aProds[$id]['pricettc'];
     $pcat = $plxPlugin->aProds[$id]['pcat'];
     $poidg = $plxPlugin->aProds[$id]['poidg'];
-    $device = $plxPlugin->aProds[$id]['device'];
     $title = $plxPlugin->aProds[$id]['name'];
     $url = $plxPlugin->aProds[$id]['url'];
     $active = $plxPlugin->aProds[$id]['active'];
@@ -118,10 +117,8 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
         <?php if ($modProduit): ?>
             <p><label for="id_pricettc">Prix TTC&nbsp;:</label></p>
             <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'text','50-255'); ?>
-            <p><label for="id_poidg">Poid (kilogramme)&nbsp;:</label></p>
+            <p><label for="id_poidg">Poids (kg)&nbsp;:</label></p>
             <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'text','50-255'); ?>
-            <p><label for="id_device">Unité&nbsp;:</label></p>
-            <?php plxUtils::printInput('device',plxUtils::strCheck($device),'text','50-255'); ?>
             <p><label for="id_noaddcart">Afficher le bouton "Ajouter au panier"&nbsp;:</label></p>
             <?php plxUtils::printSelect('noaddcart', array('1'=>L_YES,'0'=>L_NO), plxUtils::strCheck($noaddcart)); ?>
             <p><label for="id_notice_noaddcart">Afficher un message si le bouton "Ajouter au panier" n'est pas affiché&nbsp;:</label></p>
@@ -151,7 +148,6 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
         <?php else: ?>
             <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'hidden','50-255');?>
             <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'hidden','50-255');?>
-            <?php plxUtils::printInput('device',plxUtils::strCheck($device),'hidden','50-255');?>
             <?php plxUtils::printInput('noaddcart', plxUtils::strCheck($noaddcart),'hidden','50-255');?>
             <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'hidden','50-255');?>
         <?php endif; ?>

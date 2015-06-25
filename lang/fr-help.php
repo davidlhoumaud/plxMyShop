@@ -65,7 +65,7 @@ La configuration de Paypal nécessite que vous ayez deux jeux d'identifiants com
 </ul>
 Ensuite vous devrez renseigner les informations suivante :
 <ul>
-	<li>Code de device, par défaut «EUR»</li>
+	<li>Code de devise, par défaut «EUR»</li>
 	<li>Nom de description de la boutique</li>
 	<li>Url <i>avec le HTTP </i>de retour</li>
 	<li>Url <i>avec le HTTP </i>d'annulation</li>

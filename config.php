@@ -74,6 +74,7 @@ if(!empty($_POST)) {
 	$plxPlugin->setParam('commercant_name', $_POST['commercant_name'], 'string');
 	$plxPlugin->setParam('commercant_street', $_POST['commercant_street'], 'string');
 	$plxPlugin->setParam('commercant_city', $_POST['commercant_city'], 'string');
+	$plxPlugin->setParam('devise', $_POST['devise'], 'string');
 	$plxPlugin->setParam('commercant_postcode', $_POST['commercant_postcode'], 'string');
 	$plxPlugin->setParam('keyxorcrypt', $_POST['keyxorcrypt'], 'string');
 	$plxPlugin->setParam('menu_position', $_POST['menu_position'], 'numeric');
@@ -146,6 +147,7 @@ $var['commercant_name'] = $plxPlugin->getParam('commercant_name')=='' ? 'David.L
 $var['commercant_street'] = $plxPlugin->getParam('commercant_street')=='' ? 'Rue de la plume' : $plxPlugin->getParam('commercant_street');
 $var['commercant_postcode'] = $plxPlugin->getParam('commercant_postcode')=='' ? '09600' : $plxPlugin->getParam('commercant_postcode');
 $var['commercant_city'] = $plxPlugin->getParam('commercant_city')=='' ? 'Dun' : $plxPlugin->getParam('commercant_city');
+$var['devise'] = $plxPlugin->getParam('devise')=='' ? '€' : $plxPlugin->getParam('devise');
 $var['keyxorcrypt'] = $plxPlugin->getParam('keyxorcrypt')=='' ? 'Ab123cD$' : $plxPlugin->getParam('keyxorcrypt');
 $var['menu_position'] = $plxPlugin->getParam('menu_position')=='' ? 3 : $plxPlugin->getParam('menu_position');
 
@@ -187,6 +189,9 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 		<p class="field"><label for="id_commercant_city">Ville du commerçant&nbsp;:</label></p>
 				<p><?php plxUtils::printInput('commercant_city',$var['commercant_city'],'text','100-120') ?></p>
 				<p></p>
+		<p class="field"><label for="id_devise">Devise&nbsp;:</label></p>
+				<p><?php plxUtils::printInput('devise',$var['devise'],'text','100-120') ?></p>
+				<p></p>
 	    
 	    <h2>Sécurité</h2><br>
 	    <p class="field"><label for="id_keyxorcrypt">Clé de chiffrement&nbsp;:</label></p>
@@ -201,51 +206,51 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 		    <legend>Configuration "SoColissimo Recommandé"</legend>
 		    <table>
 		        <tr>
-		            <td colspanb='2'>Accuser de reception:&nbsp;<?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td colspanb='2'>Accuser de reception:&nbsp;<?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
 		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p01',$var['p01'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv01',$var['pv01'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php plxUtils::printInput('pv01',$var['pv01'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
 		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p02',$var['p02'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv02',$var['pv02'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php plxUtils::printInput('pv02',$var['pv02'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
 		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p03',$var['p03'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv03',$var['pv03'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php plxUtils::printInput('pv03',$var['pv03'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
 		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p04',$var['p04'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv04',$var['pv04'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php plxUtils::printInput('pv04',$var['pv04'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
 		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p05',$var['p05'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv05',$var['pv05'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php plxUtils::printInput('pv05',$var['pv05'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
 		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p06',$var['p06'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv06',$var['pv06'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php plxUtils::printInput('pv06',$var['pv06'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
 		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p07',$var['p07'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv07',$var['pv07'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php plxUtils::printInput('pv07',$var['pv07'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
 		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p08',$var['p08'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv08',$var['pv08'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php plxUtils::printInput('pv08',$var['pv08'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
 		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p09',$var['p09'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv09',$var['pv09'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php plxUtils::printInput('pv09',$var['pv09'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
 		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p10',$var['p10'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv10',$var['pv10'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php plxUtils::printInput('pv10',$var['pv10'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
 		            <td>Poids en kg&nbsp;:&nbsp;<?php plxUtils::printInput('p11',$var['p11'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv11',$var['pv11'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php plxUtils::printInput('pv11',$var['pv11'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		    </table>
 		</fieldset>

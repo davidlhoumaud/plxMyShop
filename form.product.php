@@ -7,15 +7,19 @@ $plxPlugin->donneesModeles["plxPlugin"] = $plxPlugin;
 
 if (($plxPlugin->aProds[ $plxPlugin->productNumber()]['active']!=1 || $plxPlugin->aProds[ $plxPlugin->productNumber()]['readable']!=1) && ($plxPlugin->aProds[ $plxPlugin->productNumber()]['pcat']!=1)) header('Location: index.php');
 
+
 ?>
 
 <script type='text/javascript' src='<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/libajax.js'></script>
 <script type='text/javascript' src='<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js'></script>
 
+
+
 <script type='text/javascript'>
 
 var error = false;
 var repertoireAjax = '<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
+var devise = '<?php echo $plxPlugin->getParam("devise");?>';
 var shoppingCart = null;
 
 </script>

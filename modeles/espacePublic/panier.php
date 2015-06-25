@@ -11,7 +11,7 @@ $plxPlugin = $d["plxPlugin"];
 	<div align="center" id="listproducts">
 		<section align="center" class="productsect">
 			<header >
-				Votre panier&nbsp;&nbsp;&nbsp;&nbsp;<span id='totalCart'>Total : 0.00&euro;</span><span id="spanshipping"></span>
+				Votre panier&nbsp;&nbsp;&nbsp;&nbsp;<span id='totalCart'>Total : 0.00&nbsp;<?php echo $plxPlugin->getParam("devise");?></span><span id="spanshipping"></span>
 			<?php if (isset($_SESSION['msgCommand']) && !empty($_SESSION['msgCommand']) && $_SESSION['msgCommand']!=""){
 					echo $_SESSION['msgCommand'];
 					unset($_SESSION['msgCommand']);
@@ -28,8 +28,8 @@ $plxPlugin = $d["plxPlugin"];
 				<p ><strong id="labelTelCart">Tel :</strong> <input type="text" name="tel" id="tel" value=""></p>
 				<p ><strong id="labelAddrCart">Addresse<span class='star'>*</span> :</strong> <input type="text" name="adress" id="adress" value=""></p>
 				<p ><strong id="labelPostcodeCart" >Code postal<span class='star'>*</span> :</strong> <input  type="text" name="postcode" id="postcode" value="">
-				<strong id="labelCityCart"> Ville<span class='star'>*</span> :</strong> <input type="text" name="city" id="city" value=""></p>
-				<p ><strong id="labelCountryCart" >Pays<span class='star'>*</span> :</strong> <input type="text" name="country" id="country" value=""></p>
+				<strong id="labelCityCart">Ville<span class='star'>*</span> :</strong> <input type="text" name="city" id="city" value=""></p>
+				<p ><strong id="labelCountryCart">Pays<span class='star'>*</span> :</strong> <input type="text" name="country" id="country" value=""></p>
 				<strong id="labelMsgCart">Votre commentaire :</strong><br><textarea name="msg" id="msgCart"  rows="3"></textarea><br>
 				<textarea name="prods" id="prodsCart" rows="3"></textarea>
 				<input type="hidden" name="total" id="totalcommand" value="0">
@@ -106,11 +106,12 @@ if (isset($_SESSION['prods']) && is_array($_SESSION['prods'])) {
         if (isset($plxPlugin->aProds[$v])){
             $totalpricettc= ((float)$plxPlugin->aProds[$v]['pricettc']+(float)$totalpricettc);
             $totalpoidg= ((float)$plxPlugin->aProds[$v]['poidg']+(float)$totalpoidg);
-            $productscart[$v]=array('pricettc' => $plxPlugin->aProds[$v]['pricettc'],
-                                    'poidg' => $plxPlugin->aProds[$v]['poidg'],
-                                    'name' => $plxPlugin->aProds[$v]['name'],
-                                    'device' => $plxPlugin->aProds[$v]['device']);
-            $sessioncart.="<span id=\"p".$nprod."\"><br>-&nbsp;".preg_replace("/'/",'&apos;',$productscart[$v]['name'])."&nbsp;&nbsp;&nbsp;&nbsp;".$productscart[$v]['pricettc']." ".$productscart[$v]['device'].((float)$productscart[$v]['poidg']>0?" pour ".$productscart[$v]['poidg']."&nbsp;kg":"").'&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="return removeCart(\\\'p'.$nprod.'\\\', \\\''.$productscart[$v]['pricettc'].'\\\', '.$productscart[$v]['poidg'].', \\\''.$v.'\\\');" id="delp'.$nprod.'">Supprimer</button></span>';
+            $productscart[$v]=array(
+				'pricettc' => $plxPlugin->aProds[$v]['pricettc'],
+				'poidg' => $plxPlugin->aProds[$v]['poidg'],
+				'name' => $plxPlugin->aProds[$v]['name'],
+			);
+            $sessioncart.="<span id=\"p".$nprod."\"><br>-&nbsp;".preg_replace("/'/",'&apos;',$productscart[$v]['name'])."&nbsp;&nbsp;&nbsp;&nbsp;".$productscart[$v]['pricettc']."&nbsp;" . $plxPlugin->getParam("devise") . ((float)$productscart[$v]['poidg']>0?" pour ".$productscart[$v]['poidg']."&nbsp;kg":"").'&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="return removeCart(\\\'p'.$nprod.'\\\', \\\''.$productscart[$v]['pricettc'].'\\\', '.$productscart[$v]['poidg'].', \\\''.$v.'\\\');" id="delp'.$nprod.'">Supprimer</button></span>';
             $nprod++;
         }
     }
@@ -171,8 +172,8 @@ if (error) {
     if (total >0) displayTotal=(total+<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>);
     else displayTotal=0;
     
-    totalCart.innerHTML="Total&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;&euro;";
-    spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: <?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>&nbsp;&euro; pour <?php echo $totalpoidg; ?>&nbsp;kg</p>";
+    totalCart.innerHTML="Total&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;<?php echo $plxPlugin->getParam("devise");?>";
+    spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: <?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>&nbsp;<?php echo $plxPlugin->getParam("devise");?> pour <?php echo $totalpoidg; ?>&nbsp;kg</p>";
     totalcommand.value=total;
 }
 <?php 

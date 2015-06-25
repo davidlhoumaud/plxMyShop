@@ -280,10 +280,6 @@ class plxMyShop extends plxPlugin {
                 $poidg = plxUtils::getValue($iTags['poidg'][$i]);
                 $this->aProds[$number]['poidg']=plxUtils::getValue($values[$poidg]['value']);
                 
-                # Recuperation device 
-                $device = plxUtils::getValue($iTags['device'][$i]);
-                $this->aProds[$number]['device']=plxUtils::getValue($values[$device]['value']);
-                
                 # Recuperation image 
                 $image = plxUtils::getValue($iTags['image'][$i]);
                 $this->aProds[$number]['image']=plxUtils::getValue($values[$image]['value']);
@@ -367,7 +363,6 @@ class plxMyShop extends plxPlugin {
                     $this->aProds[$product_id]['notice_noaddcart'] = (isset($this->aProds[$product_id]['notice_noaddcart'])?$this->aProds[$product_id]['notice_noaddcart']:'');
                     $this->aProds[$product_id]['pricettc'] = (isset($this->aProds[$product_id]['pricettc'])?$this->aProds[$product_id]['pricettc']:'');
                     $this->aProds[$product_id]['poidg'] = (isset($this->aProds[$product_id]['poidg'])?$this->aProds[$product_id]['poidg']:'');
-                    $this->aProds[$product_id]['device'] = (isset($this->aProds[$product_id]['device'])?$this->aProds[$product_id]['device']:'');
                     $this->aProds[$product_id]['meta_description'] = (isset($this->aProds[$product_id]['meta_description'])?$this->aProds[$product_id]['meta_description']:'');
                     $this->aProds[$product_id]['meta_keywords'] = (isset($this->aProds[$product_id]['meta_keywords'])?$this->aProds[$product_id]['meta_keywords']:'');
                     $action = true;
@@ -411,7 +406,6 @@ class plxMyShop extends plxPlugin {
                     $xml .= "<notice_noaddcart><![CDATA[".plxUtils::cdataCheck($product['notice_noaddcart'])."]]></notice_noaddcart>";
                     $xml .= "<pricettc><![CDATA[".plxUtils::cdataCheck($product['pricettc'])."]]></pricettc>";
                     $xml .= "<poidg><![CDATA[".plxUtils::cdataCheck(($product['poidg']==0?"0.0":$product['poidg']))."]]></poidg>";
-                    $xml .= "<device><![CDATA[".plxUtils::cdataCheck($product['device'])."]]></device>";
                     $xml .= "<meta_description><![CDATA[".plxUtils::cdataCheck($product['meta_description'])."]]></meta_description>";
                     $xml .= "<meta_keywords><![CDATA[".plxUtils::cdataCheck($product['meta_keywords'])."]]></meta_keywords>";
                     $xml .= "<title_htmltag><![CDATA[".plxUtils::cdataCheck($product['title_htmltag'])."]]></title_htmltag>";
@@ -475,7 +469,6 @@ class plxMyShop extends plxPlugin {
         $this->aProds[$content['id']]['notice_noaddcart'] = $content['notice_noaddcart'];
         $this->aProds[$content['id']]['pricettc'] = $content['pricettc'];
         $this->aProds[$content['id']]['poidg'] = $content['poidg'];
-        $this->aProds[$content['id']]['device'] = $content['device'];
         $this->aProds[$content['id']]['template'] = $content['template'];
         $this->aProds[$content['id']]['title_htmltag'] = trim($content['title_htmltag']);
         $this->aProds[$content['id']]['meta_description'] = trim($content['meta_description']);
@@ -613,18 +606,6 @@ class plxMyShop extends plxPlugin {
     public function productPoidG() {
 
         return plxUtils::strCheck($this->aProds[ $this->productNumber() ]['poidg']);
-    }
-    
-    /**
-     * Méthode qui affiche la device du produit
-     *
-     * @return    stdout
-     * @scope    product
-     * @author    David.L
-     **/
-    public function productDevice() {
-
-        echo plxUtils::strCheck($this->aProds[ $this->productNumber()]['device']);
     }
 
     /**
@@ -869,31 +850,31 @@ class plxMyShop extends plxPlugin {
 			foreach ($_SESSION['prods'] as $k => $v) {
 				$totalpricettc= ((float)$this->aProds[$v]['pricettc']+(float)$totalpricettc);
 				$totalpoidg= ((float)$this->aProds[$v]['poidg']+(float)$totalpoidg);
-				$productscart[$v]=array('pricettc' => $this->aProds[$v]['pricettc'],
-										'poidg' => $this->aProds[$v]['poidg'],
-										'name' => $this->aProds[$v]['name'],
-										'device' => $this->aProds[$v]['device']
-									);
+				$productscart[$v]=array(
+					'pricettc' => $this->aProds[$v]['pricettc'],
+					'poidg' => $this->aProds[$v]['poidg'],
+					'name' => $this->aProds[$v]['name'],
+				);
 			}
 			$totalpoidgshipping = $this->shippingMethod($totalpoidg, 1);
 		}
 		
 		#Mail de nouvelle commande pour le commerçant.
 		$sujet = 'Nouvelle commande '.$SHOPNAME;
-		$message = plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br />".
-		plxUtils::cdataCheck($_POST['adress'])."<br />".
-		plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br />".
-		plxUtils::cdataCheck($_POST['country'])."<br />".
-		"Tel : ".plxUtils::cdataCheck($_POST['tel'])."<br /><br />".
+		$message = plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br/>".
+		plxUtils::cdataCheck($_POST['adress'])."<br/>".
+		plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
+		plxUtils::cdataCheck($_POST['country'])."<br/>".
+		"Tel : ".plxUtils::cdataCheck($_POST['tel'])."<br/><br/>".
 		"Méthode de paiement : ".($_POST['methodpayment']=="paypal"?"Paypal":"Chèque").
-		"<br>Liste des produits :<br /><ul>";
+		"<br>Liste des produits :<br/><ul>";
 		foreach ($productscart as $k => $v) {
-			$message.="<li>".$v['name']." ".$v['pricettc'].$v['device'].((float)$v['poidg']>0?" pour ".$v['poidg']."Kg":"")."</li>";
+			$message.="<li>".$v['name']." ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" pour ".$v['poidg']."Kg":"")."</li>";
 		}
-		$message.="</ul><br /><br>".
-		"<strong>Total (frais de port inclus): ".($totalpricettc+$totalpoidgshipping)."&euro;</strong><br />".
-		"<em><strong>Frais de port : ".$totalpoidgshipping."&euro;</strong><br />".
-		"<strong>Poids : ".$totalpoidg."kg</strong><br /><br /></em>".
+		$message.="</ul><br/><br>".
+		"<strong>Total (frais de port inclus): ".($totalpricettc+$totalpoidgshipping)."&nbsp;" . $this->getParam("devise") . "</strong><br/>".
+		"<em><strong>Frais de port : ".$totalpoidgshipping."&nbsp;" . $this->getParam("devise") . "</strong><br/>".
+		"<strong>Poids : ".$totalpoidg."&nbsp;kg</strong><br/><br/></em>".
 		"Commentaire : <br>".plxUtils::cdataCheck($_POST['msg']);
 		$destinataire = $TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"");
 		$headers = "MIME-Version: 1.0\r\nFrom: \"".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."\"<".$_POST['email'].">\r\n";
@@ -930,20 +911,20 @@ class plxMyShop extends plxPlugin {
 					 $message .="<p>Cette commande sera finalisé une fois le paiement Paypal contrôlé.</p>";
 				}
 				$message .= "<br><h1><u>Récapitulatif de votre commande :</u></h1>".
-				"<br><strong>Addresse de livraison :</strong>".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br />".
-				plxUtils::cdataCheck($_POST['adress'])."<br />".
-				plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br />".
-				plxUtils::cdataCheck($_POST['country'])."<br />".
-				"<strong>Tel : </strong>".plxUtils::cdataCheck($_POST['tel'])."<br /><br />".
+				"<br><strong>Addresse de livraison :</strong>".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br/>".
+				plxUtils::cdataCheck($_POST['adress'])."<br/>".
+				plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
+				plxUtils::cdataCheck($_POST['country'])."<br/>".
+				"<strong>Tel : </strong>".plxUtils::cdataCheck($_POST['tel'])."<br/><br/>".
 				"<strong>Méthode de paiement : </strong>".($_POST['methodpayment']=="paypal"?"Paypal":"Chèque").
-				"<br><strong>Liste des produits :</strong><br />";
+				"<br><strong>Liste des produits :</strong><br/>";
 				foreach ($productscart as $k => $v) {
-					$message.="<li>".$v['name']." ".$v['pricettc'].$v['device'].((float)$v['poidg']>0?" pour ".$v['poidg']."Kg":"")."</li>";
+					$message.="<li>".$v['name']." ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" pour ".$v['poidg']."&nbsp;kg":"")."</li>";
 				}
-				$message.= "<br /><br>".
-				"<strong>Total (frais de port inclus) : </strong>".($totalpricettc+$totalpoidgshipping)."&euro;<br />".
-				"<em><strong>Frais de port : </strong>".$totalpoidgshipping."&euro;<br />".
-				"<strong>Poids : </strong>".$totalpoidg."kg<br /><br /></em>".
+				$message.= "<br/><br>".
+				"<strong>Total (frais de port inclus) : </strong>".($totalpricettc+$totalpoidgshipping)."&nbsp;" . $this->getParam("devise") . "<br/>".
+				"<em><strong>Frais de port : </strong>".$totalpoidgshipping."&nbsp;" . $this->getParam("devise") . "<br/>".
+				"<strong>Poids : </strong>".$totalpoidg."&nbsp;kg<br/><br/></em>".
 				"<strong>Votre Commentaire : </strong><br>".plxUtils::cdataCheck($_POST['msg']);
 				$destinataire = $_POST['email'];
 				$headers = "MIME-Version: 1.0\r\nFrom: \"".$SHOPNAME."\"<".$TONMAIL.">\r\n";
