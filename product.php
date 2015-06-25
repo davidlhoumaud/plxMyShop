@@ -107,11 +107,12 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
 		<?php if($active) : 
 			$link = $plxAdmin->urlRewrite('index.php?product'.intval($id).'/'.$url);
 			?>
-			<a href="<?php echo $link;?>">
-				<?php $plxPlugin->lang($modProduit?'L_PRODUCT_VIEW_PAGE':'L_CAT_VIEW_PAGE');?>
-				<?php echo plxUtils::strCheck($title); ?>
-				<?php $plxPlugin->lang('L_PRODUCT_ON_SITE');?></a>
-				
+			<p>
+				<a href="<?php echo $link;?>">
+					<?php $plxPlugin->lang($modProduit?'L_PRODUCT_VIEW_PAGE':'L_CAT_VIEW_PAGE');?>
+					<?php echo plxUtils::strCheck($title); ?>
+					<?php $plxPlugin->lang('L_PRODUCT_ON_SITE');?></a>
+			</p>
         <?php endif; ?>
 		
         <?php if ($modProduit): ?>
