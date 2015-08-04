@@ -36,6 +36,8 @@ class plxMyShop extends plxPlugin {
 		
         $this->addHook('AdminPrepend', 'AdminPrepend');
         
+		$this->addHook('plxShowStaticContent', 'plxShowStaticContent');
+        
 		$this->getProducts();
 		
 		if (!is_dir(PLX_ROOT.'data/commandes/')) {
@@ -116,6 +118,78 @@ class plxMyShop extends plxPlugin {
 		}
 		
 	}
+	
+	
+	
+	
+	public function plxShowStaticContent() {
+		
+		echo "<?php";
+		?>
+			$plxPlugin = $this->plxMotor->plxPlugins->aPlugins['plxMyShop'];
+			$output = $plxPlugin->traitementPageStatique($output);
+			?>
+		<?php
+		
+	}
+	
+	public function traitementPageStatique($output) {
+		
+		$shortcode = "boutonPanier";
+		
+		preg_match_all("!\\[$shortcode (.*)\\]!U", $output, $resultat);
+		
+		
+		if (0 < count($resultat[1])) {
+			
+			$resultat[1] = array_unique($resultat[1]);
+			
+			$tabCodes = array();
+			$tabRemplacement = array();
+			
+			$this->donneesModeles["plxPlugin"] = $this;
+			
+			foreach ($resultat[1] as $codeProduit) {
+				$tabCodes[] = "[$shortcode $codeProduit]";
+				
+				
+				ob_start();
+				
+				$this->donneesModeles["k"] = $codeProduit;
+				$this->modele("espacePublic/boucle/boutonPanier");
+				
+				$tabRemplacements[] = ob_get_clean();
+			}
+			
+			$output = str_replace($tabCodes, $tabRemplacements, $output);
+			
+			ob_start();
+			
+			?>
+				<script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/libajax.js'></script>
+				<script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js'></script>
+
+				<?php echo $this->modele("espacePublic/ajoutProduit");?>
+
+				<script type='text/javascript'>
+
+				var error = false;
+				var repertoireAjax = '<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
+				var devise = '<?php echo $this->getParam("devise");?>';
+				var shoppingCart = null;
+				
+				var msgAddCart=document.getElementById('msgAddCart');
+
+				</script>
+			
+			<?php
+			
+			$output .= ob_get_clean();
+		}
+		
+		return $output;
+	}
+	
 	
 	
     /**
