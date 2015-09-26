@@ -12,6 +12,8 @@ class plxMyShop extends plxPlugin {
 	public $cheminImages;
 	public $idProduit;
 	
+	public $shortcode = "boutonPanier";
+	
 	
     public function __construct($default_lang) {
         
@@ -135,9 +137,7 @@ class plxMyShop extends plxPlugin {
 	
 	public function traitementPageStatique($output) {
 		
-		$shortcode = "boutonPanier";
-		
-		preg_match_all("!\\[$shortcode (.*)\\]!U", $output, $resultat);
+		preg_match_all("!\\[{$this->shortcode} (.*)\\]!U", $output, $resultat);
 		
 		
 		if (0 < count($resultat[1])) {
@@ -150,7 +150,7 @@ class plxMyShop extends plxPlugin {
 			$this->donneesModeles["plxPlugin"] = $this;
 			
 			foreach ($resultat[1] as $codeProduit) {
-				$tabCodes[] = "[$shortcode $codeProduit]";
+			$tabCodes[] = "[{$this->shortcode} $codeProduit]";
 				
 				
 				ob_start();
@@ -169,17 +169,22 @@ class plxMyShop extends plxPlugin {
 				<script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/libajax.js'></script>
 				<script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js'></script>
 
-				<?php echo $this->modele("espacePublic/ajoutProduit");?>
-
-				<script type='text/javascript'>
-
-				var error = false;
-				var repertoireAjax = '<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
-				var devise = '<?php echo $this->getParam("devise");?>';
-				var shoppingCart = null;
+				<?php 
+					if (in_array(
+							$this->getParam("affPanier")
+							, array("basPage", "partout")
+						)
+					) {
+						$this->modele("espacePublic/panier");
+					} else {
+						$this->modele("espacePublic/ajoutProduit");
+					}
+				?>
 				
-				var msgAddCart=document.getElementById('msgAddCart');
-
+				<script type="text/JavaScript">
+					var error = false;
+					var repertoireAjax = '<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
+					var devise = '<?php echo $this->getParam("devise");?>';
 				</script>
 			
 			<?php

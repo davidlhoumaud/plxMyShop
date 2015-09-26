@@ -74,11 +74,34 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
 
 <?php eval($plxAdmin->plxPlugins->callHook('AdminProductTop'));?>
 
+<style type="text/css">
+	
+	.informationsShortcodeProduit
+	{
+		background-color : #CCD;
+		width : 30%;
+		float : right;
+		padding : 2em;
+	}
+	
+	.informationsShortcodeProduit .code
+	{
+		background-color : #EEF;
+	}
+	
+</style>
+
 <div id="block_select_image" style="box-shadow:0px 0px 5px #333;position:fixed;top:0px; width:600px;height:400px;overflow:auto;display:none;background-color:#dfdfdf;z-index:10000;"></div>
 <form action="plugin.php?p=plxMyShop" method="post" id="form_product">
     <fieldset>
         <?php plxUtils::printInput('prod', $_GET['prod'], 'hidden');?>
         <?php plxUtils::printInput('id', $id, 'hidden');?>
+		
+		<div class="informationsShortcodeProduit">
+			shortcode utilisable dans une page statique&nbsp;:<br/>
+			<span class="code">[<?php echo $plxPlugin->shortcode;?> <?php echo $id;?>]</span>
+		</div>
+		
         <p id="p_image"><label for="id_image">Image de pr&eacute;sentation&nbsp;:</label></p>
         <?php plxUtils::printInput('image',plxUtils::strCheck($image),'text','50-255'); ?> <span style="padding:3px; border:1px solid #999; background-color:#dfdfdf;cursor:pointer;" onclick="sendWithAjaxE4(
             '<?php echo PLX_PLUGINS;?>plxMyShop/ajax/select_image.php',

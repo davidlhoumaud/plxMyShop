@@ -20,7 +20,6 @@ if (($plxPlugin->aProds[ $plxPlugin->productNumber()]['active']!=1 || $plxPlugin
 var error = false;
 var repertoireAjax = '<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
 var devise = '<?php echo $plxPlugin->getParam("devise");?>';
-var shoppingCart = null;
 
 </script>
 
