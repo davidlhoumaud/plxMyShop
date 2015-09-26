@@ -537,6 +537,15 @@ class plxMyShop extends plxPlugin {
 		if (isset($content["listeCategories"])) {
 			$this->aProds[$content['id']]['group'] = implode(",", $content["listeCategories"]);
 		}
+		
+		// formatage du prix et du poids à l'édition
+		
+		foreach (array("pricettc", "poidg") as $champ) {
+			$content[$champ] = number_format($content[$champ], 2, ".", "");
+		}
+		
+		
+		// données du produit
         
         $this->aProds[$content['id']]['image'] = $content['image'];
         $this->aProds[$content['id']]['noaddcart'] = $content['noaddcart'];

@@ -115,7 +115,7 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
         <?php endif; ?>
 		
         <?php if ($modProduit): ?>
-            <p><label for="id_pricettc">Prix TTC&nbsp;:</label></p>
+            <p><label for="id_pricettc">Prix T.T.C. (<?php echo $plxPlugin->getParam("devise");?>) &nbsp;:</label></p>
             <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'text','50-255'); ?>
             <p><label for="id_poidg">Poids (kg)&nbsp;:</label></p>
             <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'text','50-255'); ?>
