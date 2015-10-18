@@ -2,8 +2,10 @@
 
 $plxPlugin = $d["plxPlugin"];
 
-
 ?>
+
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/css/panier.css"/>
 
 
 <a id="panier"></a>
@@ -24,12 +26,28 @@ $plxPlugin = $d["plxPlugin"];
 				<div id="shoppingCart" ><em>Aucun produit pour le moment.</em></div>
 				<p ><strong id="labelFirstnameCart"><span class='startw'>* = champs obligatoire</span> <br>
 				<br>Prénom<span class='star'>*</span> :</strong> <input  type="text" name="firstname" id="firstname" value=""><strong id="labelLastnameCart">&nbsp;et Nom<span class='star'>*</span> :</strong> <input type="text" name="lastname"  id="lastname" value=""></p>
-				<p ><strong id="labelMailCart">Votre email<span class='star'>*</span> :</strong> <input type="email" name="email"  id="email" value=""></p>
-				<p ><strong id="labelTelCart">Tel :</strong> <input type="text" name="tel" id="tel" value=""></p>
-				<p ><strong id="labelAddrCart">Addresse<span class='star'>*</span> :</strong> <input type="text" name="adress" id="adress" value=""></p>
+				<p ><strong id="labelMailCart">Adresse e-mail<span class='star'>*</span> :</strong> <input type="email" name="email"  id="email" value=""></p>
+				<p ><strong id="labelTelCart">Téléphone :</strong> <input type="text" name="tel" id="tel" value=""></p>
+				<p ><strong id="labelAddrCart">Adresse postale<span class='star'>*</span> :</strong> <input type="text" name="adress" id="adress" value=""></p>
 				<p ><strong id="labelPostcodeCart" >Code postal<span class='star'>*</span> :</strong> <input  type="text" name="postcode" id="postcode" value="">
 				<strong id="labelCityCart">Ville<span class='star'>*</span> :</strong> <input type="text" name="city" id="city" value=""></p>
 				<p ><strong id="labelCountryCart">Pays<span class='star'>*</span> :</strong> <input type="text" name="country" id="country" value=""></p>
+				<p>
+					<label for="choixCadeau">
+						<input type="checkbox" id="choixCadeau" name="choixCadeau"
+							<?php echo (!isset($_POST["choixCadeau"])) ? "" : " checked=\"checked\"";?>
+						/>
+						S'agit-il d'un cadeau ?
+					</label>
+				</p>
+				<p class="conteneurNomCadeau">
+					<label for="nomCadeau">
+						Merci d'indiquer le prénom et le nom de la personne destinataire du cadeau<span class="star">*</span>&nbsp;:
+						<input type="text" name="nomCadeau" id="nomCadeau" 
+							 value="<?php echo (!isset($_POST["nomCadeau"])) ? "" : htmlspecialchars($_POST["nomCadeau"]);?>"
+						/>
+					</label>
+				</p>
 				<strong id="labelMsgCart">Votre commentaire :</strong><br><textarea name="msg" id="msgCart"  rows="3"></textarea><br>
 				<textarea name="prods" id="prodsCart" rows="3"></textarea>
 				<input type="hidden" name="total" id="totalcommand" value="0">

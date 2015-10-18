@@ -166,6 +166,11 @@ class plxMyShop extends plxPlugin {
 			ob_start();
 			
 			?>
+				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+				<script type="text/javascript">
+				jQuery.noConflict();
+				</script>
+
 				<script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/libajax.js'></script>
 				<script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js'></script>
 
@@ -976,6 +981,7 @@ class plxMyShop extends plxPlugin {
 			&&	(isset($_POST['postcode']) &&  plxUtils::cdataCheck($_POST['postcode'])!="")
 			&&	(isset($_POST['city']) && plxUtils::cdataCheck($_POST['city'])!="")
 			&&	(isset($_POST['country']) && plxUtils::cdataCheck($_POST['country'])!="")
+			&&	(!isset($_POST['choixCadeau']) || plxUtils::cdataCheck($_POST['nomCadeau'])!="")
 		) {
 			
 			if(mail($destinataire,$sujet,$message,$headers)){
@@ -1004,6 +1010,11 @@ class plxMyShop extends plxPlugin {
 				plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
 				plxUtils::cdataCheck($_POST['country'])."<br/>".
 				"<strong>Tel : </strong>".plxUtils::cdataCheck($_POST['tel'])."<br/><br/>".
+				(!isset($_POST["choixCadeau"]) 
+					? "La commande n'est pas un cadeau" 
+					: "La commande est un cadeau pour <strong>" . htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
+				)
+				. "<br/><br/>" .
 				"<strong>Méthode de paiement : </strong>".($_POST['methodpayment']=="paypal"?"Paypal":"Chèque").
 				"<br><strong>Liste des produits :</strong><br/>";
 				foreach ($productscart as $k => $v) {
@@ -1014,6 +1025,9 @@ class plxMyShop extends plxPlugin {
 				"<em><strong>Frais de port : </strong>".$totalpoidgshipping."&nbsp;" . $this->getParam("devise") . "<br/>".
 				"<strong>Poids : </strong>".$totalpoidg."&nbsp;kg<br/><br/></em>".
 				"<strong>Votre Commentaire : </strong><br>".plxUtils::cdataCheck($_POST['msg']);
+				
+				print_r($message);exit();
+				
 				$destinataire = $_POST['email'];
 				$headers = "MIME-Version: 1.0\r\nFrom: \"".$SHOPNAME."\"<".$TONMAIL.">\r\n";
 				$headers .= "Reply-To: ".$TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"")."\r\nX-Mailer: PHP/" . phpversion() . "\r\nX-originating-IP: " . $_SERVER["REMOTE_ADDR"] . "\r\n";
@@ -1081,6 +1095,9 @@ class plxMyShop extends plxPlugin {
 			
 			if ( (!isset($_POST['country']) ||  plxUtils::cdataCheck($_POST['country'])=="") ) {
 				$msgCommand.= "<h2 class='h2nomsg'>Le pays n'est pas défini.</h2>";
+			}
+			if ( (isset($_POST['choixCadeau']) &&  plxUtils::cdataCheck($_POST['nomCadeau']) === "") ) {
+				$msgCommand.= "<h2 class='h2nomsg'>Le nom du destinataire du cadeau n'est pas défini.</h2>";
 			}
 			
 			echo "<script type='text/javascript'>error=true;</script>";
