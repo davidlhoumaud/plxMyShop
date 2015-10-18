@@ -980,7 +980,7 @@ class plxMyShop extends plxPlugin {
 			
 			if(mail($destinataire,$sujet,$message,$headers)){
 				if ($_POST['methodpayment']=="paypal") {
-					$msgCommand.= "<h2 class='h2okmsg' >La commande est confirmé et en cours de validation de votre par sur Paypal</h2>";
+					$msgCommand.= "<h2 class='h2okmsg' >La commande est confirmé et en cours de validation de votre part sur Paypal</h2>";
 				} else if ($_POST['methodpayment']=="cheque") { 
 					 $msgCommand.= "<h2 class='h2okmsg'>La commande a bien été confirmé et envoyé par email.</h2>";
 				}
@@ -1021,7 +1021,12 @@ class plxMyShop extends plxPlugin {
 				if(mail($destinataire,$sujet,$message,$headers)){
 					$msgCommand.= "<h2 class='h2okmsg2'>Un email de récapitulatif de commande vous a été envoyé.</h2>";
 					$msgCommand.= "<h2 class='h2okmsg3' >Si l'email de récapitulatif de commande n'apparait pas dans votre liste de mails en attente ou que celui-ci est signalé en tant que Spam. Veuillez ajouter \"".$TONMAIL."\" à votre liste de contacts.</h2>";
-					if ( $_POST['methodpayment']== "paypal") include(PLX_PLUGINS.'plxMyShop/paypal_api/SetExpressCheckout.php');
+					
+					if ($_POST['methodpayment'] === "paypal") {
+						$plxPlugin = $this;
+						require PLX_PLUGINS . 'plxMyShop/paypal_api/SetExpressCheckout.php';
+					}
+					
 					$nf=PLX_ROOT.'data/commandes/'.date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
 					$monfichier = fopen($nf, 'w+');
 					$commandeContent="<!DOCTYPE html>
