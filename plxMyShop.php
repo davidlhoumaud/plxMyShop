@@ -959,6 +959,11 @@ class plxMyShop extends plxPlugin {
 		plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
 		plxUtils::cdataCheck($_POST['country'])."<br/>".
 		"Tel : ".plxUtils::cdataCheck($_POST['tel'])."<br/><br/>".
+		(!isset($_POST["choixCadeau"]) 
+			? "La commande n'est pas un cadeau" 
+			: "La commande est un cadeau pour <strong>" . htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
+		)
+		. "<br/><br/>" .
 		"Méthode de paiement : ".($_POST['methodpayment']=="paypal"?"Paypal":"Chèque").
 		"<br>Liste des produits :<br/><ul>";
 		foreach ($productscart as $k => $v) {
@@ -1039,7 +1044,6 @@ class plxMyShop extends plxPlugin {
 					if ($_POST['methodpayment'] === "paypal") {
 						$plxPlugin = $this;
 						require PLX_PLUGINS . 'plxMyShop/paypal_api/SetExpressCheckout.php';
-						var_dump('plxMyShop/paypal_api/SetExpressCheckout.php');
 					}
 					
 					$nf=PLX_ROOT.'data/commandes/'.date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
