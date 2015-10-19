@@ -1026,7 +1026,7 @@ class plxMyShop extends plxPlugin {
 				"<strong>Poids : </strong>".$totalpoidg."&nbsp;kg<br/><br/></em>".
 				"<strong>Votre Commentaire : </strong><br>".plxUtils::cdataCheck($_POST['msg']);
 				
-				print_r($message);exit();
+				
 				
 				$destinataire = $_POST['email'];
 				$headers = "MIME-Version: 1.0\r\nFrom: \"".$SHOPNAME."\"<".$TONMAIL.">\r\n";
@@ -1039,6 +1039,7 @@ class plxMyShop extends plxPlugin {
 					if ($_POST['methodpayment'] === "paypal") {
 						$plxPlugin = $this;
 						require PLX_PLUGINS . 'plxMyShop/paypal_api/SetExpressCheckout.php';
+						var_dump('plxMyShop/paypal_api/SetExpressCheckout.php');
 					}
 					
 					$nf=PLX_ROOT.'data/commandes/'.date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
