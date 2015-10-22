@@ -989,7 +989,7 @@ class plxMyShop extends plxPlugin {
 			&&	(!isset($_POST['choixCadeau']) || plxUtils::cdataCheck($_POST['nomCadeau'])!="")
 		) {
 			
-			if(!@mail($destinataire,$sujet,$message,$headers)){
+			if(mail($destinataire,$sujet,$message,$headers)){
 				if ($_POST['methodpayment']=="paypal") {
 					$msgCommand.= "<h2 class='h2okmsg' >La commande est confirmé et en cours de validation de votre part sur Paypal</h2>";
 				} else if ($_POST['methodpayment']=="cheque") { 
@@ -1037,7 +1037,7 @@ class plxMyShop extends plxPlugin {
 				$headers = "MIME-Version: 1.0\r\nFrom: \"".$SHOPNAME."\"<".$TONMAIL.">\r\n";
 				$headers .= "Reply-To: ".$TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"")."\r\nX-Mailer: PHP/" . phpversion() . "\r\nX-originating-IP: " . $_SERVER["REMOTE_ADDR"] . "\r\n";
 				$headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\nX-Priority: 1\r\nX-MSMail-Priority: High\r\n";
-				if(!@mail($destinataire,$sujet,$message,$headers)){
+				if(mail($destinataire,$sujet,$message,$headers)){
 					$msgCommand.= "<h2 class='h2okmsg2'>Un email de récapitulatif de commande vous a été envoyé.</h2>";
 					$msgCommand.= "<h2 class='h2okmsg3' >Si l'email de récapitulatif de commande n'apparait pas dans votre liste de mails en attente ou que celui-ci est signalé en tant que Spam. Veuillez ajouter \"".$TONMAIL."\" à votre liste de contacts.</h2>";
 					
