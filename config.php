@@ -263,49 +263,31 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 				
 		<fieldset id="blockpaypal" align="center" style="border:1px solid #333;display:<?php echo ($var['payment_paypal']==1?"block":"none"); ?>;">
 		    <legend>Configuration Paypal</legend>
-		        <p class="field"><label for="id_payment_paypal">Mode &nbsp;:</label></p><?php plxUtils::printSelect('payment_paypal_test',array('1'=>"Test",'0'=>"Production"),$var['payment_paypal_test']); ?></p>
+			
+				<input type="hidden" name="payment_paypal_test" value="<?php echo $var["payment_paypal_test"];?>"/>
+				<input type="hidden" name="payment_paypal_test_user" value="<?php echo $var["payment_paypal_test_user"];?>"/>
+				<input type="hidden" name="payment_paypal_test_pwd" value="<?php echo $var["payment_paypal_test_pwd"];?>"/>
+				<input type="hidden" name="payment_paypal_test_signature" value="<?php echo $var["payment_paypal_test_signature"];?>"/>
+				
+				<input type="hidden" name="payment_paypal_pwd" value="<?php echo $var["payment_paypal_pwd"];?>"/>
+				<input type="hidden" name="payment_paypal_signature" value="<?php echo $var["payment_paypal_signature"];?>"/>
+				<input type="hidden" name="payment_paypal_overalldescription" value="<?php echo $var["payment_paypal_overalldescription"];?>"/>
+				<input type="hidden" name="payment_paypal_ipnurl" value="<?php echo $var["payment_paypal_ipnurl"];?>"/>
+				<input type="hidden" name="payment_paypal_logoimg" value="<?php echo $var["payment_paypal_logoimg"];?>"/>
+				<input type="hidden" name="payment_paypal_payflowcolor" value="<?php echo $var["payment_paypal_payflowcolor"];?>"/>
+				<input type="hidden" name="payment_paypal_cartbordercolor" value="<?php echo $var["payment_paypal_cartbordercolor"];?>"/>
+				
+				<p class="field"><label for="payment_paypal_user">Adresse e-mail Paypal&nbsp;:</label></p>
+				<p><input name='payment_paypal_user' value="<?php echo $var['payment_paypal_user'];?>" type='text' ></p>
 				<p></p>
-				<p class="field"><label for="payment_paypal_test_user">Login Test&nbsp;:</label></p>
-				<p><input name='payment_paypal_test_user' value="<?php echo $var['payment_paypal_test_user']; ?>" type='text' ></p>
-				<p></p>
-				<p class="field"><label for="payment_paypal_test_pwd">Password Test&nbsp;:</label></p>
-				<p><input name='payment_paypal_test_pwd' value="<?php echo $var['payment_paypal_test_pwd']; ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_test_signature">Signature Test&nbsp;:</label></p>
-				<p><input name='payment_paypal_test_signature' value="<?php echo $var['payment_paypal_test_signature']; ?>" type='text' ></p>
-				<p></p>
-				<p class="field"><label for="payment_paypal_user">Login Prod&nbsp;:</label></p>
-				<p><input name='payment_paypal_user' value="<?php echo $var['payment_paypal_user']; ?>" type='text' ></p>
-				<p></p>
-				<p class="field"><label for="payment_paypal_pwd">Password Prod&nbsp;:</label></p>
-				<p><input name='payment_paypal_pwd' value="<?php echo $var['payment_paypal_pwd']; ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_signature">Signature Prod&nbsp;:</label></p>
-				<p><input name='payment_paypal_signature' value="<?php echo $var['payment_paypal_signature']; ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_currencycode">Code Device (EUR)&nbsp;:</label></p>
-				<p><input name='payment_paypal_currencycode' value="<?php echo ($var['payment_paypal_signature']!=""?$var['payment_paypal_currencycode']:"EUR"); ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_overalldescription">Description&nbsp;:</label></p>
-				<p><input name='payment_paypal_overalldescription' value="<?php echo ($var['payment_paypal_overalldescription']!=""?$var['payment_paypal_overalldescription']:"My Shop"); ?>" type='text' ></p>
+				<p class="field" ><label for="payment_paypal_currencycode">Code Devise (EUR)&nbsp;:</label></p>
+				<p><input name='payment_paypal_currencycode' value="<?php echo ($var['payment_paypal_currencycode']!=""?$var['payment_paypal_currencycode']:"EUR"); ?>" type='text' ></p>
 				<p></p>
 				<p class="field" ><label for="payment_paypal_returnurl">URL de retour&nbsp;:</label></p>
 				<p><input name='payment_paypal_returnurl' value="<?php echo ($var['payment_paypal_returnurl']!=""?$var['payment_paypal_returnurl']:$_SERVER['HTTP_HOST']); ?>" type='text' ></p>
 				<p></p>
 				<p class="field" ><label for="payment_paypal_cancelurl">URL d'annulation&nbsp;:</label></p>
 				<p><input name='payment_paypal_cancelurl' value="<?php echo ($var['payment_paypal_cancelurl']!=""?$var['payment_paypal_cancelurl']:$_SERVER['HTTP_HOST']); ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_ipnurl">URL IPN&nbsp;:</label></p>
-				<p><input name='payment_paypal_ipnurl' value="<?php echo ($var['payment_paypal_ipnurl']!=""?$var['payment_paypal_ipnurl']:$_SERVER['HTTP_HOST']); ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_logoimg">Logo&nbsp;:</label></p>
-				<p><input name='payment_paypal_logoimg' value="<?php echo ($var['payment_paypal_logoimg']!=""?$var['payment_paypal_logoimg']:$_SERVER['HTTP_HOST']."/plugins/plxMyShop/icon.png"); ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_payflowcolor">Couleur global&nbsp;:</label></p>
-				<p><input name='payment_paypal_payflowcolor' value="<?php echo ($var['payment_paypal_payflowcolor']!=""?$var['payment_paypal_payflowcolor']:"296899"); ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_cartbordercolor">Couleur des bordures&nbsp;:</label></p>
-				<p><input name='payment_paypal_cartbordercolor' value="<?php echo ($var['payment_paypal_payflowcolor']!=""?$var['payment_paypal_cartbordercolor']:"296899"); ?>" type='text' ></p>
 				<p></p>
 		</fieldset>
 		<h2>Configuration email de commande</h2><br>

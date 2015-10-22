@@ -78,8 +78,8 @@ if ($SandboxFlag=="True") { #for test
 
 
        $msgCommand.= '<div style="width:100%;" align="center">
-            <p><img style="margin-top:10%;" src="' . $plxPlugin->plxMotor->racine . PLX_PLUGINS . 'plxMyShop/paypal_api/PlxToPaypal_logo.png" border="0"/></p>
-            <p><img style="margin-top:2%;" src="' . $plxPlugin->plxMotor->racine . PLX_PLUGINS . 'plxMyShop/paypal_api/icon_load.gif" border="0"/></p>
+            <p><img style="margin-top:10%;" src="' . $plxPlugin->plxMotor->racine . PLX_PLUGINS . 'plxMyShop/images/paypal_logo.gif" border="0"/></p>
+            <p><img style="margin-top:2%;" src="' . $plxPlugin->plxMotor->racine . PLX_PLUGINS . 'plxMyShop/images/icon_load.gif" border="0"/></p>
             <span style="color:#003366;font-size:12px">Transfert des informations vers Paypal en cours...</span>
         </div>';
 
