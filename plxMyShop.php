@@ -180,6 +180,13 @@ class plxMyShop extends plxPlugin {
 							, array("basPage", "partout")
 						)
 					) {
+						
+						$_SESSION['msgCommand']="";
+						
+						if (isset($_POST['prods']) && plxUtils::cdataCheck($_POST['prods'])!="") {
+							$this->validerCommande();
+						}
+						
 						$this->modele("espacePublic/panier");
 					} else {
 						$this->modele("espacePublic/ajoutProduit");
