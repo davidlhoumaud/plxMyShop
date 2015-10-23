@@ -948,13 +948,23 @@ class plxMyShop extends plxPlugin {
 		$productscart=array();
 		if (isset($_SESSION['prods'])) {
 			foreach ($_SESSION['prods'] as $k => $v) {
+				
+				if (!isset($productscart[$v])) {
+					$productscart[$v] = array(
+						'name' => $this->aProds[$v]['name'],
+						'pricettc' => 0,
+						'poidg' => 0,
+						'nombre' => 0,
+					);
+				}
+				
 				$totalpricettc= ((float)$this->aProds[$v]['pricettc']+(float)$totalpricettc);
 				$totalpoidg= ((float)$this->aProds[$v]['poidg']+(float)$totalpoidg);
-				$productscart[$v]=array(
-					'pricettc' => $this->aProds[$v]['pricettc'],
-					'poidg' => $this->aProds[$v]['poidg'],
-					'name' => $this->aProds[$v]['name'],
-				);
+				
+				$productscart[$v]["nombre"]++;
+				$productscart[$v]["pricettc"] += $this->aProds[$v]['pricettc'];
+				$productscart[$v]["poidg"] += $this->aProds[$v]['poidg'];
+				
 			}
 			$totalpoidgshipping = $this->shippingMethod($totalpoidg, 1);
 		}
@@ -974,7 +984,7 @@ class plxMyShop extends plxPlugin {
 		"Méthode de paiement : ".($_POST['methodpayment']=="paypal"?"Paypal":"Chèque").
 		"<br>Liste des produits :<br/><ul>";
 		foreach ($productscart as $k => $v) {
-			$message.="<li>".$v['name']." ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" pour ".$v['poidg']."Kg":"")."</li>";
+			$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" pour ".$v['poidg']."Kg":"")."</li>";
 		}
 		$message.="</ul><br/><br>".
 		"<strong>Total (frais de port inclus): ".($totalpricettc+$totalpoidgshipping)."&nbsp;" . $this->getParam("devise") . "</strong><br/>".
@@ -1030,7 +1040,7 @@ class plxMyShop extends plxPlugin {
 				"<strong>Méthode de paiement : </strong>".($_POST['methodpayment']=="paypal"?"Paypal":"Chèque").
 				"<br><strong>Liste des produits :</strong><br/>";
 				foreach ($productscart as $k => $v) {
-					$message.="<li>".$v['name']." ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" pour ".$v['poidg']."&nbsp;kg":"")."</li>";
+					$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" pour ".$v['poidg']."&nbsp;kg":"")."</li>";
 				}
 				$message.= "<br/><br>".
 				"<strong>Total (frais de port inclus) : </strong>".($totalpricettc+$totalpoidgshipping)."&nbsp;" . $this->getParam("devise") . "<br/>".
