@@ -70,5 +70,59 @@ $LANG = array(
 'L_CAT'              => 'Cat&eacute;gorie',
 #commandes
 'LIST_ORDERS'                                  => 'Liste des commandes',
+
+#Related to panier
+'L_PANIER_POS_BOTTOM'               => 'En bas des pages de catégories et des produits',
+'L_PANIER_POS_SEPARATE'             => 'Sur une page séparée',
+'L_PANIER_POS_BOTH'                 => 'En bas des pages et sur une page séparée',
+
+#config page
+'L_CONFIG_SHOP_INFO'                     => 'Informations Boutique',
+'L_CONFIG_SHOP_NAME'                     => 'Nom de la boutique',
+'L_CONFIG_SHOP_OWNER'                     => 'Nom et prénom du commerçant',
+'L_CONFIG_SHOP_STREET'                     => 'Rue du commerçant',
+'L_CONFIG_SHOP_ZIP'                     => 'Code postal du commerçant',
+'L_CONFIG_SHOP_TOWN'                     => 'Ville du commerçant',
+'L_CONFIG_SHOP_CURRENCY'                     => 'Devise',
+
+'L_CONFIG_SECURITY'                 => 'Sécurité',
+'L_CONFIG_SECURITY_KEY'                 => 'Clé de chiffrement',
+
+'L_CONFIG_DELIVERY_TITLE'                 => 'Configuration des moyens de livraison et paiement',
+'L_CONFIG_DELIVERY_SHIPPING'                 => 'Livraison par "SoColissimo Recommandé"',
+'L_CONFIG_DELIVERY_CONFIG'                 => 'Configuration "SoColissimo Recommandé"',
+'L_CONFIG_DELIVERY_RECORDED'                 => 'Accusé de réception',
+'L_CONFIG_DELIVERY_WEIGHT'                 => 'Poids en kg',
+
+'L_CONFIG_PAYMENT_CHEQUE'                 => 'Paiment par chèque',
+'L_CONFIG_PAYMENT_PAYPAL'                 => 'Paiment par PAYPAL',
+'L_CONFIG_CONF_PAYPAL'                 => 'Configuration Paypal',
+'L_CONFIG_EMAIL_PAYPAL'                 => 'Adresse e-mail Paypal',
+'L_CONFIG_CURRENCY_PAYPAL'                 => 'Code Devise',
+'L_CONFIG_RETURN_URL_PAYPAL'                 => 'URL de retour',
+'L_CONFIG_CANCEL_URL_PAYPAL'                 => 'URL d\'annulation',
+
+'L_CONFIG_EMAIL_ORDER_TITLE'                 => 'Configuration email de commande',
+'L_CONFIG_EMAIL_ORDER_SUBJECT_CUST'                 => 'Titre mail "Récapitulatif de commande" (pour le client)',
+'L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP'                 => 'Titre mail "Nouvelle commande" (pour le commerçant)',
+
+'L_CONFIG_MENU_TITLE'                       => 'Configuration du menu',
+'L_CONFIG_MENU_POSITION'                       => 'Position dans le menu des catégories et pages fixes (panier)',
+
+'L_CONFIG_PAGE'                       => 'Configuration des pages',
+
+'L_CONFIG_BASKET_DISPLAY'              => 'Affichage du panier',
+'L_CONFIG_PAGE_TEMPLATE'              => 'Template pour les pages fixes et template par défaut des catégories et produits',
+
+'L_CONFIG_SUBMIT'                       => "Sauvegarder",
+
+
+
+
+
+
+
+
+
 );
 ?>
