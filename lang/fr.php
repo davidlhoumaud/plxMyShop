@@ -45,6 +45,20 @@ $LANG = array(
 'L_PRODUCTS_NEW_PAGE'				=> 'Nouveau produit',
 'L_PRODUCTS_UPDATE'					=> 'Modifier la liste des produits',
 'L_ERR_PRODUCT_ALREADY_EXISTS'		=> 'Titre du produit déjà utilisé',
+'L_PRODUCTS_IMAGE'                  => 'Image de présentation',
+'L_PRODUCTS_IMAGE_CHOICE'           => 'Choisir une image',
+'L_PRODUCTS_SHORTCODE'              => 'shortcode utilisable dans une page statique',
+'L_PRODUCTS_BASKET_BUTTON'          => 'Afficher le bouton "Ajouter au panier"',
+'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Afficher un message si le bouton "Ajouter au panier" n\'est pas affiché',
+'L_PRODUCTS_CATEGORIES'             => 'Catégories de ce produit',
+'L_PRODUCTS_PRICE'                  => 'Prix T.T.C.',
+'L_PRODUCTS_WEIGHT'                 => 'Poids (kg)',
+
+
+
+
+
+
 # product.php
 
 'L_PRODUCT_BACK_TO_PAGE'			=> 'Retour à la liste des produits',
@@ -53,7 +67,7 @@ $LANG = array(
 'L_PRODUCT_TITLE'					=> 'Édition du produit',
 'L_CAT_TITLE'					    => 'Édition de la cat&eascute;gorie',
 'L_PRODUCT_VIEW_PAGE'				=> 'Visualiser le produit',
-'L_CAT_VIEW_PAGE'				=> 'Visualiser la cat&eacute;gorie de produit',
+'L_CAT_VIEW_PAGE'				    => 'Visualiser la cat&eacute;gorie de produit',
 'L_PRODUCT_ON_SITE'					=> 'sur le site',
 'L_PRODUCT_UPDATE'					=> 'Enregistrer ce produit',
 'L_CAT_UPDATE'					    => 'Enregistrer cette cat&eacute;gorie',
@@ -114,12 +128,18 @@ $LANG = array(
 'L_CONFIG_BASKET_DISPLAY'              => 'Affichage du panier',
 'L_CONFIG_PAGE_TEMPLATE'              => 'Template pour les pages fixes et template par défaut des catégories et produits',
 
-'L_CONFIG_SUBMIT'                       => "Sauvegarder",
+'L_CONFIG_SUBMIT'                       => 'Sauvegarder',
 
+'L_ADMIN_MODIFY'                        => 'Modifier la liste des',
 
+'L_PRODUCTS'                            => 'produits',
+'L_CATEGORIES'                            => 'catégories',
+'L_NEW_PRODUCT'                            => 'Nouveau produit',
+'L_NEW_CATEGORY'                            => 'Nouvelle catégorie',
 
-
-
+'L_ADMIN_ORDER_VIEW'                    => 'Voir',
+'L_ADMIN_ORDER_DELETE'                    => 'Supprimer',
+'L_ADMIN_CONFIRM_DELETE'                    => 'Confirmez-vous la supression de cette commande ?',
 
 
 

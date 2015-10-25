@@ -164,7 +164,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 ?>
 
 <h2><?php echo $plxPlugin->getInfo('title') ?></h2>
-<a href="plugin.php?p=plxMyShop"><button>Liste des produits</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="plugin.php?p=plxMyShop&mod=cat"><button>Liste des catégories</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="plugin.php?p=plxMyShop&mod=cmd"><button>Liste des commandes</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="parametres_plugin.php?p=plxMyShop"><button disabled>Configuration</button></a></p>
+<a href="plugin.php?p=plxMyShop"><button><?php $plxPlugin->lang('L_MENU_PRODUCTS') ?></button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="plugin.php?p=plxMyShop&mod=cat"><button><?php $plxPlugin->lang('L_MENU_CATS') ?></button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="plugin.php?p=plxMyShop&mod=cmd"><button><?php $plxPlugin->lang('L_MENU_ORDERS') ?></button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="parametres_plugin.php?p=plxMyShop"><button disabled><?php $plxPlugin->lang('L_MENU_CONFIG') ?></button></a></p>
 
 <p></p>
 <p></p>

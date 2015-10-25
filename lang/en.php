@@ -45,6 +45,17 @@ $LANG = array(
 'L_PRODUCTS_NEW_PAGE'				=> 'New product',
 'L_PRODUCTS_UPDATE'					=> 'Modify the list of products',
 'L_ERR_PRODUCT_ALREADY_EXISTS'		=> 'Product title already in use',
+'L_PRODUCTS_IMAGE'          		=> 'Product image',
+'L_PRODUCTS_IMAGE_CHOICE'          	=> 'Choose an image',
+'L_PRODUCTS_SHORTCODE'          	=> 'shortcode to use in a static page',
+'L_PRODUCTS_BASKET_BUTTON'          => 'Display the button "Add to the basket"',
+'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Display a message if the button "Add to the basket" is not displayed',
+'L_PRODUCTS_CATEGORIES'          	=> 'Categories of this product',
+'L_PRODUCTS_PRICE'           	    => 'Price tax included',
+'L_PRODUCTS_WEIGHT'           	    => 'Weight (kg)',
+
+
+
 # product.php
 
 'L_PRODUCT_BACK_TO_PAGE'			=> 'Return to the product list',
@@ -53,7 +64,7 @@ $LANG = array(
 'L_PRODUCT_TITLE'					=> 'Edit the source code of this product',
 'L_CAT_TITLE'					    => 'Edit the source code of this category',
 'L_PRODUCT_VIEW_PAGE'				=> 'View the product',
-'L_CAT_VIEW_PAGE'				    => 'View the category of the product',
+'L_CAT_VIEW_PAGE'				    => 'View the product\'s category',
 'L_PRODUCT_ON_SITE'					=> 'on the site',
 'L_PRODUCT_UPDATE'					=> 'Save this product',
 'L_CAT_UPDATE'					    => 'Save this category',
@@ -115,7 +126,18 @@ $LANG = array(
 'L_CONFIG_BASKET_DISPLAY'              => 'Location of the basket',
 'L_CONFIG_PAGE_TEMPLATE'              => 'Template for fixed pages and default templates for categories and products',
 
-'L_CONFIG_SUBMIT'                       => "Save",
+'L_CONFIG_SUBMIT'                       => 'Save',
+
+'L_ADMIN_MODIFY'                        => 'Modify the list of',
+
+'L_PRODUCTS'                            => 'products',
+'L_CATEGORIES'                            => 'categories',
+'L_NEW_PRODUCT'                            => 'New product',
+'L_NEW_CATEGORY'                            => 'New category',
+
+'L_ADMIN_ORDER_VIEW'                    => 'Display',
+'L_ADMIN_ORDER_DELETE'                    => 'Delete',
+'L_ADMIN_CONFIRM_DELETE'                    => 'Do you confirm the deletion of this order ?',
 
 );
 ?>

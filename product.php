@@ -98,18 +98,18 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
         <?php plxUtils::printInput('id', $id, 'hidden');?>
 		
 		<div class="informationsShortcodeProduit">
-			shortcode utilisable dans une page statique&nbsp;:<br/>
+            <?php $plxPlugin->lang('L_PRODUCTS_SHORTCODE'); ?>&nbsp;:<br/>
 			<span class="code">[<?php echo $plxPlugin->shortcode;?> <?php echo $id;?>]</span>
 		</div>
 		
-        <p id="p_image"><label for="id_image">Image de pr&eacute;sentation&nbsp;:</label></p>
+        <p id="p_image"><label for="id_image"><?php $plxPlugin->lang('L_PRODUCTS_IMAGE'); ?>&nbsp;:</label></p>
         <?php plxUtils::printInput('image',plxUtils::strCheck($image),'text','50-255'); ?> <span style="padding:3px; border:1px solid #999; background-color:#dfdfdf;cursor:pointer;" onclick="sendWithAjaxE4(
             '<?php echo PLX_PLUGINS;?>plxMyShop/ajax/select_image.php',
             'POST',
             'eval(xh.responseText)',
             null,
             null
-		);">Choisir une image</span>
+        );"><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE'); ?></span>
 		<script type="text/javascript">
 			var block_select_image=document.getElementById("block_select_image");
 			var id_image=document.getElementById("id_image");
@@ -138,16 +138,16 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
         <?php endif; ?>
 		
         <?php if ($modProduit): ?>
-            <p><label for="id_pricettc">Prix T.T.C. (<?php echo $plxPlugin->getParam("devise");?>) &nbsp;:</label></p>
+            <p><label for="id_pricettc"><?php $plxPlugin->lang('L_PRODUCTS_PRICE') ;?> (<?php echo $plxPlugin->getParam("devise");?>) &nbsp;:</label></p>
             <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'text','50-255'); ?>
-            <p><label for="id_poidg">Poids (kg)&nbsp;:</label></p>
+            <p><label for="id_poidg"><?php $plxPlugin->lang('L_PRODUCTS_WEIGHT') ;?>&nbsp;:</label></p>
             <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'text','50-255'); ?>
-            <p><label for="id_noaddcart">Afficher le bouton "Ajouter au panier"&nbsp;:</label></p>
+            <p><label for="id_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_BUTTON') ;?>&nbsp;:</label></p>
             <?php plxUtils::printSelect('noaddcart', array('1'=>L_YES,'0'=>L_NO), plxUtils::strCheck($noaddcart)); ?>
-            <p><label for="id_notice_noaddcart">Afficher un message si le bouton "Ajouter au panier" n'est pas affiché&nbsp;:</label></p>
+            <p><label for="id_notice_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_NO_BUTTON') ;?>&nbsp;:</label></p>
             <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'text','50-255'); ?>
 			<hr/>
-			Catégories de ce produit&nbsp;:<br/>
+            <?php $plxPlugin->lang('L_PRODUCTS_CATEGORIES');?>&nbsp;:<br/>
 			<?php $listeCategories = explode(",", $plxPlugin->aProds[$id]["group"]);?>
 			<?php foreach ($plxPlugin->aProds as $idCategorie => $p) {?>
 				<?php 
