@@ -56,9 +56,6 @@ $LANG = array(
 
 
 
-
-
-
 # product.php
 
 'L_PRODUCT_BACK_TO_PAGE'			=> 'Retour à la liste des produits',
@@ -141,7 +138,54 @@ $LANG = array(
 'L_ADMIN_ORDER_DELETE'                    => 'Supprimer',
 'L_ADMIN_CONFIRM_DELETE'                    => 'Confirmez-vous la supression de cette commande ?',
 
+#plxMyShop.php
+'L_PAYMENT_CHEQUE'                      => 'Chèque',
+'L_PAYMENT_CASH'                      => 'Cash',
+'L_PAYMENT_PAYPAL'                      => 'Paypal',
 
+'L_EMAIL_SUBJECT'                          => 'Nouvelle commande ',
+'L_EMAIL_TEL'                          => 'Tel :',
+'L_EMAIL_NOGIFT'                          => 'La commande n\'est pas un cadeau',
+'L_EMAIL_GIFT_FOR'                      => 'La commande est un cadeau pour',
+'L_EMAIL_PRODUCTLIST'                   => 'Liste des produits',
+'L_EMAIL_TOTAL'                   => 'Total (frais de port inclus)',
+'L_EMAIL_WEIGHT'                   => 'Poids',
+'L_EMAIL_DELIVERY_COST'                   => 'Frais de port',
+'L_EMAIL_COMMENT'                   => 'Commentaire',
+'L_EMAIL_CONFIRM_PAYPAL'                   => 'La commande est confirmé et en cours de validation de votre part sur Paypal.',
+'L_EMAIL_CONFIRM_CHEQUE'                   => 'La commande a bien été confirmé et envoyé par email.',
+
+'L_EMAIL_CUST_SUBJECT'                          => 'Récapitulatif de la commande ',
+'L_EMAIL_CUST_MESSAGE1'                          => 'Vous venez de confirmer une commande sur',
+'L_EMAIL_CUST_MESSAGE2'                          => 'Cette commande est en',
+'L_WAITING'                                => 'attente',
+'L_ONGOING'                                => 'cours',
+'L_EMAIL_CUST_MESSAGE3'                          => 'de règlement',
+'L_EMAIL_CUST_CHEQUE'                          => 'Pour finaliser cette commande veuillez établir le chèque à l\'ordre de',
+'L_EMAIL_CUST_SENDCHEQUE'                          => 'Envoyer votre chèque à cette addresse',
+'L_EMAIL_CUST_PAYPAL'                          => 'Cette commande sera finalisé une fois le paiement Paypal contrôlé.',
+'L_EMAIL_CUST_SUMMARY'                          => 'Récapitulatif de votre commande',
+'L_EMAIL_CUST_ADDRESS'                          => 'Addresse de livraison',
+'L_EMAIL_CUST_PAYMENT'                      => 'Méthode de paiement',
+
+'L_EMAIL_SENT1'                      => 'Un email de récapitulatif de commande vous a été envoyé.',
+'L_EMAIL_SENT2'                      => 'Si l\'email de récapitulatif de commande n\'apparait pas dans votre liste de mails en attente ou que celui-ci est signalé en tant que Spam. Veuillez ajouter \"".$TONMAIL."\" à votre liste de contacts.',
+
+'L_EMAIL_ERROR1'                      => 'Une erreur c\'est produite lors de l\'envoi de votre e-mail récapitulatif.',
+'L_EMAIL_ERROR2'                      => 'Une erreur c\'est produite lors de l\'envoi de la commande par e-mail.',
+
+'L_FILE_ORDER'                      => 'Commande du ',
+
+'L_FOR'                                => 'pour',
+
+'L_MISSING_EMAIL'                      => 'l\'addresse email n\'est pas défini.',
+'L_MISSING_FIRSTNAME'                      => 'Le prénom n\'est pas défini.',
+'L_MISSING_LASTNAME'                      => 'Le nom de famille n\'est pas défini.',
+'L_MISSING_ADDRESS'                      => 'L\'addresse n\'est pas défini.',
+'L_MISSING_ZIP'                      => 'Le code postal n\'est pas défini.',
+'L_MISSING_TOWN'                      => 'La ville n\'est pas défini.',
+'L_MISSING_COUNTRY'                      => 'Le pays n\'est pas défini.',
+'L_MISSING_GIFTNAME'                      => 'Le nom du destinataire du cadeau n\'est pas défini.',
 
 
 );

@@ -113,7 +113,6 @@ $LANG = array(
 'L_CONFIG_RETURN_URL_PAYPAL'                 => 'Return URL',
 'L_CONFIG_CANCEL_URL_PAYPAL'                 => 'Cancel URL',
 
-
 'L_CONFIG_EMAIL_ORDER_TITLE'                 => 'Configuration of order email',
 'L_CONFIG_EMAIL_ORDER_SUBJECT_CUST'                 => 'Email subjet "Order summary" for the customer',
 'L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP'                 => 'Email subject (New order) for the shop owner',
@@ -138,6 +137,56 @@ $LANG = array(
 'L_ADMIN_ORDER_VIEW'                    => 'Display',
 'L_ADMIN_ORDER_DELETE'                    => 'Delete',
 'L_ADMIN_CONFIRM_DELETE'                    => 'Do you confirm the deletion of this order ?',
+
+#plxMyShop.php
+'L_PAYMENT_CHEQUE'                      => 'Cheque',
+'L_PAYMENT_CASH'                      => 'Cash',
+'L_PAYMENT_PAYPAL'                      => 'Paypal',
+
+'L_EMAIL_SUBJECT'                          => 'New order for ',
+'L_EMAIL_TEL'                          => 'Tel :',
+'L_EMAIL_NOGIFT'                          => 'The order is not a gift',
+'L_EMAIL_GIFT_FOR'                      => 'The order is a gift for',
+'L_EMAIL_PRODUCTLIST'                   => 'List of products',
+'L_EMAIL_TOTAL'                   => 'Total (tax included)',
+'L_EMAIL_WEIGHT'                   => 'Poids',
+'L_EMAIL_DELIVERY_COST'                   => 'Delivery cost',
+'L_EMAIL_COMMENT'                   => 'Comment',
+'L_EMAIL_CONFIRM_PAYPAL'                   => 'The order is confirmed and awaiting validation from your side at Paypal.',
+'L_EMAIL_CONFIRM_CHEQUE'                   => 'The order has been validated and sent by email.',
+
+'L_EMAIL_CUST_SUBJECT'                          => 'Order summary ',
+'L_EMAIL_CUST_MESSAGE1'                          => 'You just confirm an order from',
+'L_EMAIL_CUST_MESSAGE2'                          => 'This order is',
+'L_WAITING'                                => 'awaiting',
+'L_ONGOING'                                => 'ongoing',
+'L_EMAIL_CUST_MESSAGE3'                          => ' payment',
+'L_EMAIL_CUST_CHEQUE'                          => 'To finalise this order please write a cheque to the order of',
+'L_EMAIL_CUST_SENDCHEQUE'                          => 'Send the cheque at this address',
+'L_EMAIL_CUST_PAYPAL'                          => 'This order will be finalised once the Paypal payment has been verified.',
+'L_EMAIL_CUST_SUMMARY'                          => 'Summary of your order',
+'L_EMAIL_CUST_ADDRESS'                          => 'Delivery address',
+'L_EMAIL_CUST_PAYMENT'                      => 'Payment method',
+
+'L_EMAIL_SENT1'                      => 'Un email de récapitulatif de commande vous a été envoyé.',
+'L_EMAIL_SENT2'                      => 'Si l\'email de récapitulatif de commande n\'apparait pas dans votre liste de mails en attente ou que celui-ci est signalé en tant que Spam. Veuillez ajouter \"".$TONMAIL."\" à votre liste de contacts.',
+
+'L_EMAIL_ERROR1'                      => 'Une erreur c\'est produite lors de l\'envoi de votre e-mail récapitulatif.',
+'L_EMAIL_ERROR2'                      => 'Une erreur c\'est produite lors de l\'envoi de la commande par e-mail.',
+
+'L_FILE_ORDER'                      => 'Order of',
+
+'L_FOR'                                => 'for',
+
+'L_MISSING_EMAIL'                      => 'The email address is not defined.',
+'L_MISSING_FIRSTNAME'                      => 'The firstname is not defined.',
+'L_MISSING_LASTNAME'                      => 'The last name is not defined.',
+'L_MISSING_ADDRESS'                      => 'The address is not defined.',
+'L_MISSING_ZIP'                      => 'The post code is not defined.',
+'L_MISSING_TOWN'                      => 'The town is not defined.',
+'L_MISSING_COUNTRY'                      => 'The country is not defined.',
+'L_MISSING_GIFTNAME'                      => 'The name of the gift recipient is not defined.',
+
 
 );
 ?>
