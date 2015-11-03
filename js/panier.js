@@ -45,7 +45,7 @@ function addCart(product, price, realprice, kg, id) {
         shoppingCart.innerHTML='';
     }
 	
-    shoppingCart.innerHTML=shoppingCart.innerHTML+'<span id="p'+nprod+'"><br>-&nbsp;'+product+'&nbsp;&nbsp;&nbsp;&nbsp;'+price+'&nbsp;&nbsp;&nbsp;&nbsp;'+'<button onclick="return removeCart(\'p'+nprod+'\', '+realprice+', '+kg+', \''+id+'\');" id="delp'+nprod+'">Supprimer</button></span>';
+    shoppingCart.innerHTML=shoppingCart.innerHTML+'<span id="p'+nprod+'"><br>-&nbsp;'+product+'&nbsp;&nbsp;&nbsp;&nbsp;'+price+'&nbsp;&nbsp;&nbsp;&nbsp;'+'<button onclick="return removeCart(\'p'+nprod+'\', '+realprice+', '+kg+', \''+id+'\');" id="delp'+nprod+'">'+L_DEL+'</button></span>';
     PRODS.value=PRODS.value+'<span id="p'+nprod+'">-&nbsp;'+product+'&nbsp;&nbsp;&nbsp;&nbsp;'+price+'</span><br>';
     btnCart.style.display='inline-block';
     msgCart.style.display='inline-block';
@@ -79,7 +79,7 @@ function addCart(product, price, realprice, kg, id) {
     total = parseFloat(total) + parseFloat(realprice);
     tmpship=shippingMethod(kg, 1);
 	displayTotal=(total+tmpship);
-    totalCart.innerHTML="Total (frais de port inclus)&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;" + devise + "";
+    totalCart.innerHTML=L_TOTAL +"&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;" + devise + "";
     totalcommand.value=total.toFixed(2);
     shipping.value=tmpship.toFixed(2);
     shipping_kg.value=totalkg.toFixed(2);

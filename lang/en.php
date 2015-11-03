@@ -168,15 +168,17 @@ $LANG = array(
 'L_EMAIL_CUST_ADDRESS'                          => 'Delivery address',
 'L_EMAIL_CUST_PAYMENT'                      => 'Payment method',
 
-'L_EMAIL_SENT1'                      => 'Un email de récapitulatif de commande vous a été envoyé.',
-'L_EMAIL_SENT2'                      => 'Si l\'email de récapitulatif de commande n\'apparait pas dans votre liste de mails en attente ou que celui-ci est signalé en tant que Spam. Veuillez ajouter \"".$TONMAIL."\" à votre liste de contacts.',
+'L_EMAIL_SENT1'                      => 'A summary email has just be sent to you.',
+'L_EMAIL_SENT2'                      => 'If the summary email doesn\'t appear in your inbox or is flagged as Spam, please add',
+'L_EMAIL_SENT3'                      => 'to your contact list.',
 
-'L_EMAIL_ERROR1'                      => 'Une erreur c\'est produite lors de l\'envoi de votre e-mail récapitulatif.',
-'L_EMAIL_ERROR2'                      => 'Une erreur c\'est produite lors de l\'envoi de la commande par e-mail.',
+'L_EMAIL_ERROR1'                      => 'An error occured during the sending of your summary email.',
+'L_EMAIL_ERROR2'                      => 'An error occured during the sending of your order email.',
 
 'L_FILE_ORDER'                      => 'Order of',
 
 'L_FOR'                                => 'for',
+'L_DEL'                                => 'Remove',
 
 'L_MISSING_EMAIL'                      => 'The email address is not defined.',
 'L_MISSING_FIRSTNAME'                      => 'The firstname is not defined.',
@@ -186,6 +188,32 @@ $LANG = array(
 'L_MISSING_TOWN'                      => 'The town is not defined.',
 'L_MISSING_COUNTRY'                      => 'The country is not defined.',
 'L_MISSING_GIFTNAME'                      => 'The name of the gift recipient is not defined.',
+
+#Espace public
+'L_PUBLIC_ADDBASKET'                    => 'Product added to the basket',
+'L_PUBLIC_BASKET'                    => 'Your basket',
+'L_PUBLIC_BASKET_NIL'                    => 'Total : 0.00',
+'L_PUBLIC_TOTAL_BASKET'                    => 'Total',
+'L_PUBLIC_NOPRODUCT'                    => 'No product for the moment.',
+'L_PUBLIC_MANDATORY_FIELD'                    => '* = mandatory field',
+'L_PUBLIC_FIRSTNAME'                    => 'First name',
+'L_PUBLIC_LASTNAME'                    => 'Last name',
+'L_PUBLIC_EMAIL'                    => 'Email',
+'L_PUBLIC_TEL'                    => 'Tel :',
+'L_PUBLIC_ADDRESS'                    => 'Address',
+'L_PUBLIC_ZIP'                    => 'Post Code',
+'L_PUBLIC_TOWN'                    => 'Town',
+'L_PUBLIC_COUNTRY'                    => 'Country',
+'L_PUBLIC_GIFT'                    => 'Is this a gift ?',
+'L_PUBLIC_GIFTNAME'                    => 'Please indicate the first and last name of the recipient of the gift',
+'L_PUBLIC_COMMENT'                   => 'Your comment :',
+'L_PUBLIC_VALIDATE_ORDER'                   => 'Confirm the order',
+'L_PUBLIC_ADD_BASKET'                   => 'Add to the basket',
+'L_PUBLIC_TAX'                   => 'Tax included',
+
+#panier.js
+'L_TOTAL_BASKET'                    => 'Total (delivery cost included)',
+
 
 
 );

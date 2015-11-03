@@ -195,7 +195,11 @@ class plxMyShop extends plxPlugin {
 				<script type="text/JavaScript">
 					var error = false;
 					var repertoireAjax = '<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
-					var devise = '<?php echo $this->getParam("devise");?>';
+                    var devise = '<?php echo $this->getParam("devise");?>';
+                    var L_FOR = '<?php echo $this->getlang('L_FOR'); ?>';
+                    var L_DELETE = '<?php echo $this->getlang('L_DEL'); ?>';
+                    var L_TOTAL = '<?php echo $this->getlang('L_TOTAL_BASKET'); ?>';
+
 				</script>
 			
 			<?php
@@ -1040,7 +1044,7 @@ class plxMyShop extends plxPlugin {
 				"<strong>". $this->getlang('L_EMAIL_CUST_PAYMENT') .": </strong>".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE')).
 				"<br><strong>". $this->getlang('L_EMAIL_PRODUCTLIST') ." :</strong><br/>";
 				foreach ($productscart as $k => $v) {
-					$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" pour ".$v['poidg']."&nbsp;kg":"")."</li>";
+					$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" ".$this->getlang('L_FOR')." ".$v['poidg']."&nbsp;kg":"")."</li>";
 				}
 				$message.= "<br/><br>".
 				"<strong>". $this->getlang('L_EMAIL_TOTAL') ." : </strong>".($totalpricettc+$totalpoidgshipping)."&nbsp;" . $this->getParam("devise") . "<br/>".
@@ -1056,7 +1060,7 @@ class plxMyShop extends plxPlugin {
 				$headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\nX-Priority: 1\r\nX-MSMail-Priority: High\r\n";
 				if(mail($destinataire,$sujet,$message,$headers)){
 					$msgCommand.= "<h2 class='h2okmsg2'>". $this->getlang('L_EMAIL_SENT1') ."</h2>";
-					$msgCommand.= "<h2 class='h2okmsg3' >". $this->getlang('L_EMAIL_SENT2') ."</h2>";
+					$msgCommand.= "<h2 class='h2okmsg3' >". $this->getlang('L_EMAIL_SENT2')." ".$TONMAIL." ".$this->getlang('L_EMAIL_SENT3')."</h2>";
 					
 					if ($_POST['methodpayment'] === "paypal") {
 						$plxPlugin = $this;

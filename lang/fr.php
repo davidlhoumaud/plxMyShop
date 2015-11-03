@@ -169,7 +169,8 @@ $LANG = array(
 'L_EMAIL_CUST_PAYMENT'                      => 'Méthode de paiement',
 
 'L_EMAIL_SENT1'                      => 'Un email de récapitulatif de commande vous a été envoyé.',
-'L_EMAIL_SENT2'                      => 'Si l\'email de récapitulatif de commande n\'apparait pas dans votre liste de mails en attente ou que celui-ci est signalé en tant que Spam. Veuillez ajouter \"".$TONMAIL."\" à votre liste de contacts.',
+'L_EMAIL_SENT2'                      => 'Si l\'email de récapitulatif de commande n\'apparait pas dans votre liste de mails en attente ou que celui-ci est signalé en tant que Spam. Veuillez ajouter ',
+'L_EMAIL_SENT3'                      => ' à votre liste de contacts.',
 
 'L_EMAIL_ERROR1'                      => 'Une erreur c\'est produite lors de l\'envoi de votre e-mail récapitulatif.',
 'L_EMAIL_ERROR2'                      => 'Une erreur c\'est produite lors de l\'envoi de la commande par e-mail.',
@@ -186,6 +187,31 @@ $LANG = array(
 'L_MISSING_TOWN'                      => 'La ville n\'est pas défini.',
 'L_MISSING_COUNTRY'                      => 'Le pays n\'est pas défini.',
 'L_MISSING_GIFTNAME'                      => 'Le nom du destinataire du cadeau n\'est pas défini.',
+
+#Espace public
+'L_PUBLIC_ADDBASKET'                    => 'Produit ajouté au panier',
+'L_PUBLIC_BASKET'                    => 'Votre panier',
+'L_PUBLIC_BASKET_NIL'                    => 'Total : 0.00',
+'L_PUBLIC_TOTAL_BASKET'                    => 'Total',
+'L_PUBLIC_NOPRODUCT'                    => 'Aucun produit pour le moment.',
+'L_PUBLIC_MANDATORY_FIELD'                    => '* = champs obligatoire',
+'L_PUBLIC_FIRSTNAME'                    => 'Prénom',
+'L_PUBLIC_LASTNAME'                    => 'Nom',
+'L_PUBLIC_EMAIL'                    => 'Adresse e-mail',
+'L_PUBLIC_TEL'                    => 'Téléphone :',
+'L_PUBLIC_ADDRESS'                    => 'Adresse postale',
+'L_PUBLIC_ZIP'                    => 'Code postal',
+'L_PUBLIC_TOWN'                    => 'Ville',
+'L_PUBLIC_COUNTRY'                    => 'Pays',
+'L_PUBLIC_GIFT'                    => 'S\'agit-il d\'un cadeau ?',
+'L_PUBLIC_GIFTNAME'                    => 'Merci d\'indiquer le prénom et le nom de la personne destinataire du cadeau',
+'L_PUBLIC_COMMENT'                   => 'Votre commentaire :',
+'L_PUBLIC_VALIDATE_ORDER'                   => 'Validez la commande',
+'L_PUBLIC_ADD_BASKET'                   => 'Ajouter au panier',
+'L_PUBLIC_TAX'                   => 'TTC',
+
+#panier.js
+'L_TOTAL_BASKET'                    => 'Total (frais de port inclus)',
 
 
 );

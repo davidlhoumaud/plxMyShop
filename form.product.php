@@ -27,6 +27,11 @@ jQuery.noConflict();
 var error = false;
 var repertoireAjax = '<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
 var devise = '<?php echo $plxPlugin->getParam("devise");?>';
+var L_FOR = '<?php echo $plxPlugin->getlang('L_FOR'); ?>';
+var L_DEL = '<?php echo $plxPlugin->getlang('L_DEL'); ?>';
+var L_TOTAL = '<?php echo $plxPlugin->getlang('L_TOTAL_BASKET'); ?>';
+
+
 
 </script>
 
