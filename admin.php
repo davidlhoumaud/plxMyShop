@@ -145,7 +145,7 @@ echo $plxPlugin->lang('LIST_ORDERS');
      <?php if (!isset($_GET['mod']) || (isset($_GET['mod']) && plxUtils::strCheck($_GET['mod'])!='cmd')): ?>
         <tr class="new">
             <td>&nbsp;</td>
-            <td><?php echo (isset($_GET['mod']) && plxUtils::strCheck($_GET['mod'])=='cat'?"Nouvelle catégorie":"Nouveau produit"); ?></td>
+            <td><?php echo (isset($_GET['mod']) && plxUtils::strCheck($_GET['mod'])=='cat'?$plxPlugin->getlang('L_NEW_CATEGORY'):$plxPlugin->getlang('L_NEW_PRODUCT')); ?></td>
             <?php
                 echo '<input type="hidden" name="productNum[]" value="'.$new_productid.'" />'; ?>
                 <td><input title="<?php $plxPlugin->lang('L_CAT') ?><?php echo '" type="hidden" name="'.$new_productid.'_pcat" value="'.(isset($_GET['mod']) && plxUtils::strCheck($_GET['mod'])=='cat'?'1':'0').'" '.(isset($_GET['mod']) && plxUtils::strCheck($_GET['mod'])=='cat'?'checked':'').' onclick="checkBox(this);" ></td>';
@@ -184,7 +184,7 @@ echo $plxPlugin->lang('LIST_ORDERS');
             '   <td>'.$date[2].'-'.$date[1].'-'.$date[0].' &agrave; '.preg_replace('/-/',':',$namearray[1]).'</td>'.
             '   <td>'.$namearray[2].'</td>'.
             '   <td>'.((float)$namearray[3]+(float)preg_replace('/.html/','',$namearray[4])).'</td>'.
-            '   <td><a onclick="if(confirm(\'Confirmez-vous la supression de cette commande ?\')) return true; else return false;" href="plugin.php?p=plxMyShop&mod=cmd&kill='.$val.'">Supprimer</a> - <a href="'.$dir.$val.'" target="_BLANK">Voir</a></td>'.
+            '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p=plxMyShop&mod=cmd&kill='.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a href="'.$dir.$val.'" target="_BLANK">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.
             '</tr>';
     }; 
     
@@ -194,7 +194,7 @@ echo $plxPlugin->lang('LIST_ORDERS');
     <?php if (!isset($_GET['mod']) || (isset($_GET['mod']) && plxUtils::strCheck($_GET['mod'])!='cmd')): ?>
     <p class="center">
         <?php echo plxToken::getTokenPostMethod() ?>
-        <input class="button update" type="submit" name="update" value="Modifier la liste des <?php echo (isset($_GET['mod']) && plxUtils::strCheck($_GET['mod'])=='cat'?'catégories':'produits'); ?>" />
+        <input class="button update" type="submit" name="update" value="<?php $plxPlugin->lang('L_ADMIN_MODIFY') ?> <?php echo (isset($_GET['mod']) && plxUtils::strCheck($_GET['mod'])=='cat'?$plxPlugin->getlang('L_CATEGORIES'):$plxPlugin->getlang('L_PRODUCTS')); ?>" />
     </p>
     <p>
         <?php plxUtils::printSelect('selection', array( '' =>L_FOR_SELECTION, 'delete' =>L_DELETE), '', false, '', 'id_selection') ?>

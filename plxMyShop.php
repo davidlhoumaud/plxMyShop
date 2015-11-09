@@ -52,14 +52,13 @@ class plxMyShop extends plxPlugin {
 		
 		
 		// méthodes de paiement
-		
 		$tabMethodespaiement = array(
 			"cheque" => array(
-				"libelle" => "Chèque",
+				"libelle" => $this->getlang('L_PAYMENT_CHEQUE') ,
 				"codeOption" => "payment_cheque",
 			),
 			"paypal" => array(
-				"libelle" => "Paypal",
+				"libelle" => $this->getlang('L_PAYMENT_PAYPAL'),
 				"codeOption" => "payment_paypal",
 			),
 		);
@@ -196,7 +195,11 @@ class plxMyShop extends plxPlugin {
 				<script type="text/JavaScript">
 					var error = false;
 					var repertoireAjax = '<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
-					var devise = '<?php echo $this->getParam("devise");?>';
+                    var devise = '<?php echo $this->getParam("devise");?>';
+                    var L_FOR = '<?php echo $this->getlang('L_FOR'); ?>';
+                    var L_DELETE = '<?php echo $this->getlang('L_DEL'); ?>';
+                    var L_TOTAL = '<?php echo $this->getlang('L_TOTAL_BASKET'); ?>';
+
 				</script>
 			
 			<?php
@@ -970,27 +973,28 @@ class plxMyShop extends plxPlugin {
 		}
 		
 		#Mail de nouvelle commande pour le commerçant.
-		$sujet = 'Nouvelle commande '.$SHOPNAME;
+		$sujet = $this->getlang('L_EMAIL_SUBJECT').$SHOPNAME;
 		$message = plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br/>".
 		plxUtils::cdataCheck($_POST['adress'])."<br/>".
 		plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
 		plxUtils::cdataCheck($_POST['country'])."<br/>".
-		"Tel : ".plxUtils::cdataCheck($_POST['tel'])."<br/><br/>".
+        $this->getlang('L_EMAIL_TEL').
+        plxUtils::cdataCheck($_POST['tel'])."<br/><br/>".
 		(!isset($_POST["choixCadeau"]) 
-			? "La commande n'est pas un cadeau" 
-			: "La commande est un cadeau pour <strong>" . htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
+			? $this->getlang('L_EMAIL_NOGIFT') 
+			: $this->getlang('L_EMAIL_GIFT_FOR')." <strong>".htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
 		)
-		. "<br/><br/>" .
-		"Méthode de paiement : ".($_POST['methodpayment']=="paypal"?"Paypal":"Chèque").
-		"<br>Liste des produits :<br/><ul>";
+		."<br/><br/>".
+		$this->getlang('L_PAIEMENT').": ".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE')).
+		"<br>".$this->getlang('L_EMAIL_PRODUCTLIST')." :<br/><ul>";
 		foreach ($productscart as $k => $v) {
-			$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" pour ".$v['poidg']."Kg":"")."</li>";
+			$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."Kg":"")."</li>";
 		}
 		$message.="</ul><br/><br>".
-		"<strong>Total (frais de port inclus): ".($totalpricettc+$totalpoidgshipping)."&nbsp;" . $this->getParam("devise") . "</strong><br/>".
-		"<em><strong>Frais de port : ".$totalpoidgshipping."&nbsp;" . $this->getParam("devise") . "</strong><br/>".
-		"<strong>Poids : ".$totalpoidg."&nbsp;kg</strong><br/><br/></em>".
-		"Commentaire : <br>".plxUtils::cdataCheck($_POST['msg']);
+            "<strong>".$this->getlang('L_EMAIL_TOTAL').": ".($totalpricettc+$totalpoidgshipping)."&nbsp;" . $this->getParam("devise") . "</strong><br/><em><strong>". 
+            $this->getlang('L_EMAIL_DELIVERY_COST'). " : ".$totalpoidgshipping."&nbsp;" . $this->getParam("devise") . "</strong><br/>".
+		"<strong>".$this->getlang('L_EMAIL_WEIGHT')." : ".$totalpoidg."&nbsp;kg</strong><br/><br/></em>".
+		$this->getlang('L_EMAIL_COMMENT')." : <br>".plxUtils::cdataCheck($_POST['msg']);
 		$destinataire = $TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"");
 		$headers = "MIME-Version: 1.0\r\nFrom: \"".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."\"<".$_POST['email'].">\r\n";
 		$headers .= "Reply-To: ".$_POST['email']."\r\nX-Mailer: PHP/" . phpversion() . "\r\nX-originating-IP: " . $_SERVER["REMOTE_ADDR"] . "\r\n";
@@ -1008,45 +1012,45 @@ class plxMyShop extends plxPlugin {
 			
 			if(mail($destinataire,$sujet,$message,$headers)){
 				if ($_POST['methodpayment']=="paypal") {
-					$msgCommand.= "<h2 class='h2okmsg' >La commande est confirmé et en cours de validation de votre part sur Paypal</h2>";
+					$msgCommand.= "<h2 class='h2okmsg' >".$this->getlang('L_EMAIL_CONFIRM_PAYPAL')."</h2>";
 				} else if ($_POST['methodpayment']=="cheque") { 
-					 $msgCommand.= "<h2 class='h2okmsg'>La commande a bien été confirmé et envoyé par email.</h2>";
+					 $msgCommand.= "<h2 class='h2okmsg'>".$this->getlang('L_EMAIL_CONFIRM_CHEQUE')."</h2>";
 				}
 				
 				#Mail de récapitulatif de commande pour le client.
-				$sujet = 'Récapitulatif commande '.$SHOPNAME;
-				$message = "<p>Vous venez de confirmer une commande sur <a href='http://".$_SERVER["HTTP_HOST"]."'>".$SHOPNAME."</a>".
-				"<br>Cette commande est en ".($_POST['methodpayment']=="cheque"?"attente":"cours")." de règlement</p>";
+		        $sujet = $this->getlang('L_EMAIL_CUST_SUBJECT') . $SHOPNAME;
+                $message = "<p>" . $this->getlang('L_EMAIL_CUST_MESSAGE1') . " <a href='http://".$_SERVER["HTTP_HOST"]."'>".$SHOPNAME."</a><br>".
+                    $this->getlang('L_EMAIL_CUST_MESSAGE2')." ".($_POST['methodpayment']=="cheque"?$this->getlang('L_WAITING'):$this->getlang('L_ONGOING'))." ".$this->getlang('L_EMAIL_CUST_MESSAGE3')."</p>";
 				if ($_POST['methodpayment']=="cheque") {
-					$message .="<p>Pour finaliser cette commande veuillez établir le chèque à l'ordre de : ".$COMMERCANTNAME."<br>Envoyer votre chèque à cette addresse :".
+					$message .="<p>". $this->getlang('L_EMAIL_CUST_CHEQUE') ." : ".$COMMERCANTNAME."<br>". $this->getlang('L_EMAIL_CUST_SENDCHEQUE') ." :".
 					"<br><em>&nbsp;&nbsp;&nbsp;&nbsp;".$SHOPNAME."".
 					"<br>&nbsp;&nbsp;&nbsp;&nbsp;".$COMMERCANTNAME."".
 					"<br>&nbsp;&nbsp;&nbsp;&nbsp;".$COMMERCANTSTREET."".
 					"<br>&nbsp;&nbsp;&nbsp;&nbsp;".$COMMERCANTPOSTCODE." ".$COMMERCANTCITY."</em></p>";
 				} elseif ($_POST['methodpayment']=="paypal") {
-					 $message .="<p>Cette commande sera finalisé une fois le paiement Paypal contrôlé.</p>";
+					 $message .="<p>".$this->getlang('L_EMAIL_CUST_PAYPAL')."</p>";
 				}
-				$message .= "<br><h1><u>Récapitulatif de votre commande :</u></h1>".
-				"<br><strong>Addresse de livraison :</strong>".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br/>".
+				$message .= "<br><h1><u>".$this->getlang('L_EMAIL_CUST_SUMMARY')." :</u></h1>".
+				"<br><strong>".$this->getlang('L_EMAIL_CUST_ADDRESS')." :</strong><br/>".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br/>".
 				plxUtils::cdataCheck($_POST['adress'])."<br/>".
 				plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
 				plxUtils::cdataCheck($_POST['country'])."<br/>".
 				"<strong>Tel : </strong>".plxUtils::cdataCheck($_POST['tel'])."<br/><br/>".
 				(!isset($_POST["choixCadeau"]) 
-					? "La commande n'est pas un cadeau" 
-					: "La commande est un cadeau pour <strong>" . htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
+					? $this->getlang('L_EMAIL_NOGIFT') 
+					: $this->getlang('L_EMAIL_GIFT_FOR') ." <strong>" . htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
 				)
 				. "<br/><br/>" .
-				"<strong>Méthode de paiement : </strong>".($_POST['methodpayment']=="paypal"?"Paypal":"Chèque").
-				"<br><strong>Liste des produits :</strong><br/>";
+				"<strong>". $this->getlang('L_EMAIL_CUST_PAYMENT') .": </strong>".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE')).
+				"<br><strong>". $this->getlang('L_EMAIL_PRODUCTLIST') ." :</strong><br/>";
 				foreach ($productscart as $k => $v) {
-					$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" pour ".$v['poidg']."&nbsp;kg":"")."</li>";
+					$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" ".$this->getlang('L_FOR')." ".$v['poidg']."&nbsp;kg":"")."</li>";
 				}
 				$message.= "<br/><br>".
-				"<strong>Total (frais de port inclus) : </strong>".($totalpricettc+$totalpoidgshipping)."&nbsp;" . $this->getParam("devise") . "<br/>".
-				"<em><strong>Frais de port : </strong>".$totalpoidgshipping."&nbsp;" . $this->getParam("devise") . "<br/>".
-				"<strong>Poids : </strong>".$totalpoidg."&nbsp;kg<br/><br/></em>".
-				"<strong>Votre Commentaire : </strong><br>".plxUtils::cdataCheck($_POST['msg']);
+				"<strong>". $this->getlang('L_EMAIL_TOTAL') ." : </strong>".($totalpricettc+$totalpoidgshipping)."&nbsp;" . $this->getParam("devise") . "<br/>".
+				"<em><strong>". $this->getlang('L_EMAIL_DELIVERY_COST') ." : </strong>".$totalpoidgshipping."&nbsp;" . $this->getParam("devise") . "<br/>".
+				"<strong>". $this->getlang('L_EMAIL_WEIGHT') ." : </strong>".$totalpoidg."&nbsp;kg<br/><br/></em>".
+				"<strong>". $this->getlang('L_EMAIL_COMMENT') ." : </strong><br>".plxUtils::cdataCheck($_POST['msg']);
 				
 				
 				
@@ -1055,8 +1059,8 @@ class plxMyShop extends plxPlugin {
 				$headers .= "Reply-To: ".$TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"")."\r\nX-Mailer: PHP/" . phpversion() . "\r\nX-originating-IP: " . $_SERVER["REMOTE_ADDR"] . "\r\n";
 				$headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\nX-Priority: 1\r\nX-MSMail-Priority: High\r\n";
 				if(mail($destinataire,$sujet,$message,$headers)){
-					$msgCommand.= "<h2 class='h2okmsg2'>Un email de récapitulatif de commande vous a été envoyé.</h2>";
-					$msgCommand.= "<h2 class='h2okmsg3' >Si l'email de récapitulatif de commande n'apparait pas dans votre liste de mails en attente ou que celui-ci est signalé en tant que Spam. Veuillez ajouter \"".$TONMAIL."\" à votre liste de contacts.</h2>";
+					$msgCommand.= "<h2 class='h2okmsg2'>". $this->getlang('L_EMAIL_SENT1') ."</h2>";
+					$msgCommand.= "<h2 class='h2okmsg3' >". $this->getlang('L_EMAIL_SENT2')." ".$TONMAIL." ".$this->getlang('L_EMAIL_SENT3')."</h2>";
 					
 					if ($_POST['methodpayment'] === "paypal") {
 						$plxPlugin = $this;
@@ -1071,7 +1075,7 @@ class plxMyShop extends plxPlugin {
 					$commandeContent="<!DOCTYPE html>
 	<html>
 	<head>
-	<title>Commande du ".date("d m Y")."</title>
+	<title>".$this->getlang('L_FILE_ORDER').date("d m Y")."</title>
 	<meta charset=\"UTF-8\">
 	<meta name=\"description\" content=\"Commande\">
 	<meta name=\"author\" content=\"plxMyShop\">
@@ -1086,43 +1090,43 @@ class plxMyShop extends plxPlugin {
 					unset($_SESSION['prods']);
 					unset($_SESSION['ncart']);
 				}else{
-					$msgCommand.= "<h2 class='h2nomsg'>Une erreur c'est produite lors de l'envoi de votre e-mail récapitulatif.</h2>";
+					$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_EMAIL_ERROR1') ."</h2>";
 				}
 			}else{
-				$msgCommand.= "<h2 class='h2nomsg'>Une erreur c'est produite lors de l'envoi de la commande par e-mail.</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_EMAIL_ERROR2') ."</h2>";
 				echo "<script type='text/javascript'>error=true;</script>";
 			}
 			
 		} else {
 			if ( (!isset($_POST['email']) || empty($_POST['email']) || $_POST['email']=="") ) {
-				$msgCommand.= "<h2 class='h2nomsg'>l'addresse email n'est pas défini.</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_EMAIL') ."</h2>";
 			}
 			
 			if (  (!isset($_POST['firstname']) ||  plxUtils::cdataCheck($_POST['firstname'])=="") ) {
-				$msgCommand.= "<h2 class='h2nomsg'>Le prénom n'est pas défini</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_FIRSTNAME') ."</h2>";
 			}
 			
 			if ( (!isset($_POST['lastname']) ||  plxUtils::cdataCheck($_POST['lastname'])=="")  ) {
-				$msgCommand.= "<h2 class='h2nomsg'>Le nom de famille n'est pas défini</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_LASTNAME')  ."</h2>";
 			}
 			
 			if ( (!isset($_POST['adress']) ||  plxUtils::cdataCheck($_POST['adress'])=="")  ) {
-				$msgCommand.= "<h2 class='h2nomsg'>L'addresse n'est pas défini</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_ADDRESS') ."</h2>";
 			}
 			
 			if ( (!isset($_POST['postcode']) ||  plxUtils::cdataCheck($_POST['postcode'])=="") ) {
-				$msgCommand.= "<h2 class='h2nomsg'>Le code postal n'est pas défini</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_ZIP')  ."</h2>";
 			}
 			
 			if ( (!isset($_POST['city']) ||  plxUtils::cdataCheck($_POST['city'])=="") ) {
-				$msgCommand.= "<h2 class='h2nomsg'>La ville n'est pas défini.</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_TOWN') ."</h2>";
 			}
 			
 			if ( (!isset($_POST['country']) ||  plxUtils::cdataCheck($_POST['country'])=="") ) {
-				$msgCommand.= "<h2 class='h2nomsg'>Le pays n'est pas défini.</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_COUNTRY') ."</h2>";
 			}
 			if ( (isset($_POST['choixCadeau']) &&  plxUtils::cdataCheck($_POST['nomCadeau']) === "") ) {
-				$msgCommand.= "<h2 class='h2nomsg'>Le nom du destinataire du cadeau n'est pas défini.</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_GIFTNAME') ."</h2>";
 			}
 			
 			echo "<script type='text/javascript'>error=true;</script>";
