@@ -169,8 +169,7 @@ $LANG = array(
 'L_EMAIL_CUST_PAYMENT'                      => 'Payment method',
 
 'L_EMAIL_SENT1'                      => 'A summary email has just be sent to you.',
-'L_EMAIL_SENT2'                      => 'If the summary email doesn\'t appear in your inbox or is flagged as Spam, please add',
-'L_EMAIL_SENT3'                      => 'to your contact list.',
+'L_EMAIL_SENT2'                      => 'If the summary email doesn\'t appear in your inbox or is flagged as Spam, please add %s to your contact list.',
 
 'L_EMAIL_ERROR1'                      => 'An error occured during the sending of your summary email.',
 'L_EMAIL_ERROR2'                      => 'An error occured during the sending of your order email.',
@@ -217,4 +216,3 @@ $LANG = array(
 
 
 );
-?>

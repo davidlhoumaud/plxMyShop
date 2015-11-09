@@ -17,10 +17,10 @@ $LANG = array(
 'L_MONTANT'                        => 'Montant',
 'L_ACTIONS'                        => 'Actions',
 
-'L_EMAIL'		   			=> 'Destinataire(s) du mail *',
-'L_EMAIL_CC'	   			=> 'Destinataire(s) en copie du mail ',
-'L_EMAIL_BCC'	   			=> 'Destinataire(s) en copie cachée du mail ',
-'L_EMAIL_SUBJECT'  			=> 'Objet du mail',
+'L_EMAIL'		   			=> 'Destinataire(s) de l\'e-mail *',
+'L_EMAIL_CC'	   			=> 'Destinataire(s) en copie de l\'e-mail ',
+'L_EMAIL_BCC'	   			=> 'Destinataire(s) en copie cachée de l\'e-mail ',
+'L_EMAIL_SUBJECT'  			=> 'Objet de l\'e-mail',
 'L_DEFAULT_OBJECT'			=> 'Récapitulatif de commande',
 'L_DEFAULT_CONFIRMATION_OBJECT'			=> 'Confirmation de commande',
 'L_TEMPLATE'				=> 'Template',
@@ -113,9 +113,9 @@ $LANG = array(
 'L_CONFIG_RETURN_URL_PAYPAL'                 => 'URL de retour',
 'L_CONFIG_CANCEL_URL_PAYPAL'                 => 'URL d\'annulation',
 
-'L_CONFIG_EMAIL_ORDER_TITLE'                 => 'Configuration email de commande',
-'L_CONFIG_EMAIL_ORDER_SUBJECT_CUST'                 => 'Titre mail "Récapitulatif de commande" (pour le client)',
-'L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP'                 => 'Titre mail "Nouvelle commande" (pour le commerçant)',
+'L_CONFIG_EMAIL_ORDER_TITLE'                 => 'Configuration e-mail de commande',
+'L_CONFIG_EMAIL_ORDER_SUBJECT_CUST'                 => 'Titre e-mail "Récapitulatif de commande" (pour le client)',
+'L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP'                 => 'Titre e-mail "Nouvelle commande" (pour le commerçant)',
 
 'L_CONFIG_MENU_TITLE'                       => 'Configuration du menu',
 'L_CONFIG_MENU_POSITION'                       => 'Position dans le menu des catégories et pages fixes (panier)',
@@ -153,7 +153,7 @@ $LANG = array(
 'L_EMAIL_DELIVERY_COST'                   => 'Frais de port',
 'L_EMAIL_COMMENT'                   => 'Commentaire',
 'L_EMAIL_CONFIRM_PAYPAL'                   => 'La commande est confirmé et en cours de validation de votre part sur Paypal.',
-'L_EMAIL_CONFIRM_CHEQUE'                   => 'La commande a bien été confirmé et envoyé par email.',
+'L_EMAIL_CONFIRM_CHEQUE'                   => 'La commande a bien été confirmé et envoyé par e-mail.',
 
 'L_EMAIL_CUST_SUBJECT'                          => 'Récapitulatif de la commande ',
 'L_EMAIL_CUST_MESSAGE1'                          => 'Vous venez de confirmer une commande sur',
@@ -165,12 +165,11 @@ $LANG = array(
 'L_EMAIL_CUST_SENDCHEQUE'                          => 'Envoyer votre chèque à cette addresse',
 'L_EMAIL_CUST_PAYPAL'                          => 'Cette commande sera finalisé une fois le paiement Paypal contrôlé.',
 'L_EMAIL_CUST_SUMMARY'                          => 'Récapitulatif de votre commande',
-'L_EMAIL_CUST_ADDRESS'                          => 'Addresse de livraison',
+'L_EMAIL_CUST_ADDRESS'                          => 'Adresse de livraison',
 'L_EMAIL_CUST_PAYMENT'                      => 'Méthode de paiement',
 
-'L_EMAIL_SENT1'                      => 'Un email de récapitulatif de commande vous a été envoyé.',
-'L_EMAIL_SENT2'                      => 'Si l\'email de récapitulatif de commande n\'apparait pas dans votre liste de mails en attente ou que celui-ci est signalé en tant que Spam. Veuillez ajouter ',
-'L_EMAIL_SENT3'                      => ' à votre liste de contacts.',
+'L_EMAIL_SENT1'                      => 'Un e-mail de récapitulatif de commande vous a été envoyé.',
+'L_EMAIL_SENT2'                      => 'Si l\'e-mail de récapitulatif de commande n\'apparait pas dans votre liste d\'e-mails en attente ou que celui-ci est signalé en tant que spam, veuillez ajouter %s à votre liste de contacts.', // %s : adresse e-mail du gestionnaire des commandes
 
 'L_EMAIL_ERROR1'                      => 'Une erreur c\'est produite lors de l\'envoi de votre e-mail récapitulatif.',
 'L_EMAIL_ERROR2'                      => 'Une erreur c\'est produite lors de l\'envoi de la commande par e-mail.',
@@ -178,8 +177,9 @@ $LANG = array(
 'L_FILE_ORDER'                      => 'Commande du ',
 
 'L_FOR'                                => 'pour',
+'L_DEL'                                => 'Retirer',
 
-'L_MISSING_EMAIL'                      => 'l\'addresse email n\'est pas défini.',
+'L_MISSING_EMAIL'                      => 'l\'addresse e-mail n\'est pas défini.',
 'L_MISSING_FIRSTNAME'                      => 'Le prénom n\'est pas défini.',
 'L_MISSING_LASTNAME'                      => 'Le nom de famille n\'est pas défini.',
 'L_MISSING_ADDRESS'                      => 'L\'addresse n\'est pas défini.',
@@ -208,11 +208,10 @@ $LANG = array(
 'L_PUBLIC_COMMENT'                   => 'Votre commentaire :',
 'L_PUBLIC_VALIDATE_ORDER'                   => 'Validez la commande',
 'L_PUBLIC_ADD_BASKET'                   => 'Ajouter au panier',
-'L_PUBLIC_TAX'                   => 'TTC',
+'L_PUBLIC_TAX'                   => 'T.T.C.',
 
 #panier.js
 'L_TOTAL_BASKET'                    => 'Total (frais de port inclus)',
 
 
 );
-?>

@@ -1059,8 +1059,8 @@ class plxMyShop extends plxPlugin {
 				$headers .= "Reply-To: ".$TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"")."\r\nX-Mailer: PHP/" . phpversion() . "\r\nX-originating-IP: " . $_SERVER["REMOTE_ADDR"] . "\r\n";
 				$headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\nX-Priority: 1\r\nX-MSMail-Priority: High\r\n";
 				if(mail($destinataire,$sujet,$message,$headers)){
-					$msgCommand.= "<h2 class='h2okmsg2'>". $this->getlang('L_EMAIL_SENT1') ."</h2>";
-					$msgCommand.= "<h2 class='h2okmsg3' >". $this->getlang('L_EMAIL_SENT2')." ".$TONMAIL." ".$this->getlang('L_EMAIL_SENT3')."</h2>";
+					$msgCommand .= "<h2 class='h2okmsg2'>". $this->getlang('L_EMAIL_SENT1') . "</h2>";
+					$msgCommand .= "<h2 class='h2okmsg3'>" . sprintf($this->getlang('L_EMAIL_SENT2'), $TONMAIL) . "</h2>";
 					
 					if ($_POST['methodpayment'] === "paypal") {
 						$plxPlugin = $this;
