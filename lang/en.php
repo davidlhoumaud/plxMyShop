@@ -95,7 +95,9 @@ $LANG = array(
 'L_CONFIG_SHOP_ZIP'                     => 'Post Code of the shop',
 'L_CONFIG_SHOP_TOWN'                     => 'Town of the Shop',
 'L_CONFIG_SHOP_CURRENCY'                     => 'Currency',
-
+'L_CONFIG_POSITION_CURRENCY'            => 'Position of the currency',
+'L_BEFORE'                              => 'Before the price',
+'L_AFTER'                              => 'After the price',
 'L_CONFIG_SECURITY'                 => 'Security',
 'L_CONFIG_SECURITY_KEY'                 => 'Encryption key',
 
