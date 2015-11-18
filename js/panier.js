@@ -79,11 +79,18 @@ function addCart(product, price, realprice, kg, id) {
     total = parseFloat(total) + parseFloat(realprice);
     tmpship=shippingMethod(kg, 1);
 	displayTotal=(total+tmpship);
-    totalCart.innerHTML=L_TOTAL +"&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;" + devise + "";
+    
+    if (pos_devise == "before") {price= devise+displayTotal.toFixed(2);}
+    else {price= displayTotal.toFixed(2)+devise;}
+    totalCart.innerHTML=L_TOTAL +"&nbsp;: "+ price + "";
+    
     totalcommand.value=total.toFixed(2);
     shipping.value=tmpship.toFixed(2);
     shipping_kg.value=totalkg.toFixed(2);
-    if (totalkg>0) spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: "+tmpship.toFixed(2)+"&nbsp;" + devise + " pour "+totalkg.toFixed(2)+"&nbsp;kg</p>";
+    
+    if (pos_devise == "before") {price= devise+tmpship.toFixed(2);}
+    else {price= tmpship.toFixed(2)+devise;}
+    if (totalkg>0) spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: "+ price + " pour "+totalkg.toFixed(2)+"&nbsp;kg</p>";
     else spanshipping.innerHTML="";
 }
 
@@ -139,11 +146,18 @@ function removeCart(obj, realprice, kg, id) {
     tmpship=shippingMethod(kg, 0);
     if (total >0) displayTotal=(total+tmpship);
     else displayTotal=0;
-    totalCart.innerHTML="Total&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;" + devise + "";
+    if (pos_devise == "before") {price= devise+displayTotal.toFixed(2);}
+    else {price = displayTotal.toFixed(2)+devise;}
+    totalCart.innerHTML="Total&nbsp;: "+ price + "";
+    totalCart.innerHTML=L_TOTAL +"&nbsp;: "+ price + "";
+
     totalcommand.value=total.toFixed(2);
     shipping.value=tmpship.toFixed(2);
     shipping_kg.value=totalkg.toFixed(2);
-    if (totalkg>0) spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: "+tmpship.toFixed(2)+"&nbsp;" + devise + " pour "+totalkg.toFixed(2)+"&nbsp;kg</p>";
+    
+    if (pos_devise == "before") {price= devise+tmpship.toFixed(2);}
+    else {price= tmpship.toFixed(2)+devise;}
+    if (totalkg>0) spanshipping.innerHTML="<p class='spanshippingp'>Frais de port&nbsp;: "+ price + " pour "+totalkg.toFixed(2)+"&nbsp;kg</p>";
     else spanshipping.innerHTML="";
     
     realnprod--;

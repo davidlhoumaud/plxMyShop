@@ -193,7 +193,7 @@ $LANG = array(
 #Espace public
 'L_PUBLIC_ADDBASKET'                    => 'Produit ajouté au panier',
 'L_PUBLIC_BASKET'                    => 'Votre panier',
-'L_PUBLIC_BASKET_NIL'                    => 'Total : 0.00',
+'L_PUBLIC_BASKET_NIL'                    => '0.00',
 'L_PUBLIC_TOTAL_BASKET'                    => 'Total',
 'L_PUBLIC_NOPRODUCT'                    => 'Aucun produit pour le moment.',
 'L_PUBLIC_MANDATORY_FIELD'                    => '* = champs obligatoire',

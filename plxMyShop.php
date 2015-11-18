@@ -196,6 +196,7 @@ class plxMyShop extends plxPlugin {
 					var error = false;
 					var repertoireAjax = '<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
                     var devise = '<?php echo $this->getParam("devise");?>';
+                    var pos_devise = '<?php echo $this->getParam("position_devise");?>';
                     var L_FOR = '<?php echo $this->getlang('L_FOR'); ?>';
                     var L_DELETE = '<?php echo $this->getlang('L_DEL'); ?>';
                     var L_TOTAL = '<?php echo $this->getlang('L_TOTAL_BASKET'); ?>';
@@ -676,7 +677,8 @@ class plxMyShop extends plxPlugin {
      **/
     public function productPriceTTC() {
 
-        echo plxUtils::strCheck($this->aProds[ $this->productNumber() ]['pricettc']);
+        #echo plxUtils::strCheck($this->aProds[ $this->productNumber() ]['pricettc']);
+        return plxUtils::strCheck($this->aProds[ $this->productNumber() ]['pricettc']);
     }
     
     /**
@@ -1134,7 +1136,22 @@ class plxMyShop extends plxPlugin {
 		
 		$_SESSION['msgCommand']=$msgCommand;
 	}
-	
+    
+    //will position the price based on the config, before or after the price
+    public function pos_devise($price) {
+        $pos_price = $price;
+        if ( $this->getParam('position_devise') == "before" ) {
+            #echo $this->getParam('devise');
+            #echo $price;
+            $pos_price = $this->getParam('devise').$price;
+            }
+        elseif ( $this->getParam('position_devise') == "after" ) {
+            #echo $price;
+            #echo $this->getParam('devise');
+            $pos_price = $price.$this->getParam('devise');
+            }
+       return $pos_price; 
+    }
 	
 	function shippingMethod($kg, $op) {
 		

@@ -13,7 +13,7 @@ $plxPlugin = $d["plxPlugin"];
 	<div align="center" id="listproducts">
 		<section align="center" class="productsect">
 			<header >
-                <?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?>&nbsp;&nbsp;&nbsp;&nbsp;<span id='totalCart'><?php $plxPlugin->lang('L_PUBLIC_BASKET_NIL'); ?>&nbsp;<?php echo $plxPlugin->getParam("devise");?></span><span id="spanshipping"></span>
+                <?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?>&nbsp;&nbsp;&nbsp;&nbsp;<span id='totalCart'><?php $plxPlugin->lang('L_TOTAL_BASKET'); echo $plxPlugin->pos_devise('0.00'); ?></span><span id="spanshipping"></span>
 			<?php if (isset($_SESSION['msgCommand']) && !empty($_SESSION['msgCommand']) && $_SESSION['msgCommand']!=""){
 					echo $_SESSION['msgCommand'];
 					unset($_SESSION['msgCommand']);
@@ -129,7 +129,7 @@ if (isset($_SESSION['prods']) && is_array($_SESSION['prods'])) {
 				'poidg' => $plxPlugin->aProds[$v]['poidg'],
 				'name' => $plxPlugin->aProds[$v]['name'],
 			);
-            $sessioncart.="<span id=\"p".$nprod."\"><br>-&nbsp;".preg_replace("/'/",'&apos;',$productscart[$v]['name'])."&nbsp;&nbsp;&nbsp;&nbsp;".$productscart[$v]['pricettc']."&nbsp;" . $plxPlugin->getParam("devise") . ((float)$productscart[$v]['poidg']>0?" ".$plxPlugin->getlang('L_FOR')." ".$productscart[$v]['poidg']."&nbsp;kg":"").'&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="return removeCart(\\\'p'.$nprod.'\\\', \\\''.$productscart[$v]['pricettc'].'\\\', '.$productscart[$v]['poidg'].', \\\''.$v.'\\\');" id="delp'.$nprod.'">'.$plxPlugin->getlang('L_DEL').'</button></span>';
+            $sessioncart.="<span id=\"p".$nprod."\"><br>-&nbsp;".preg_replace("/'/",'&apos;',$productscart[$v]['name'])."&nbsp;&nbsp;&nbsp;&nbsp;". $plxPlugin->pos_devise($productscart[$v]['pricettc']) . ((float)$productscart[$v]['poidg']>0?" ".$plxPlugin->getlang('L_FOR')." ".$productscart[$v]['poidg']."&nbsp;kg":"").'&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="return removeCart(\\\'p'.$nprod.'\\\', \\\''.$productscart[$v]['pricettc'].'\\\', '.$productscart[$v]['poidg'].', \\\''.$v.'\\\');" id="delp'.$nprod.'">'.$plxPlugin->getlang('L_DEL').'</button></span>';
             $nprod++;
         }
     }
@@ -189,9 +189,16 @@ if (error) {
     total=<?php echo (isset($totalpricettc)?$totalpricettc:0.00); ?>;
     if (total >0) displayTotal=(total+<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>);
     else displayTotal=0;
-    
-    totalCart.innerHTML="<?php $plxPlugin->lang('L_PUBLIC_TOTAL_BASKET'); ?>&nbsp;: "+displayTotal.toFixed(2)+"&nbsp;<?php echo $plxPlugin->getParam("devise");?>";
-    spanshipping.innerHTML="<p class='spanshippingp'><?php $plxPlugin->lang('L_EMAIL_DELIVERY_COST'); ?>&nbsp;: <?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>&nbsp;<?php echo $plxPlugin->getParam("devise");?> <?php $plxPlugin->lang('L_FOR'); ?> <?php echo $totalpoidg; ?>&nbsp;kg</p>";
+
+    pos_devise= "<?php echo $plxPlugin->getParam("position_devise");?>";
+    devise= "<?php echo $plxPlugin->getParam("devise");?>";
+    if (pos_devise == "before") { price= devise+displayTotal.toFixed(2);}
+    else { price= displayTotal.toFixed(2)+devise;}
+    totalCart.innerHTML="<?php $plxPlugin->lang('L_TOTAL_BASKET'); ?>&nbsp;: "+price; 
+
+    if (pos_devise == "before") { price= devise+"<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>";}
+    else { price= "<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>"+devise;}
+    spanshipping.innerHTML="<p class='spanshippingp'><?php $plxPlugin->lang('L_EMAIL_DELIVERY_COST'); ?>&nbsp;: " + price + " <?php $plxPlugin->lang('L_FOR'); ?> <?php echo $totalpoidg; ?>&nbsp;kg</p>";
     totalcommand.value=total;
 }
 <?php 
