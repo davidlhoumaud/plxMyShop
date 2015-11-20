@@ -12,7 +12,7 @@ $v = $plxPlugin->aProds[$d["k"]];
 			? '<a href="'.$plxPlugin->productRUrl($d["k"]).'"><img class="product_image" src="'.$plxPlugin->plxMotor->urlRewrite(PLX_ROOT.$plxPlugin->cheminImages.$v['image']).'"></a>'
 			: '<a href="'.$plxPlugin->productRUrl($d["k"]).'"><img class="product_image" src="'.PLX_PLUGINS.'plxMyShop/images/none.png"></a>';
 		?><br>
-		<span class="lproduct_pricettc"><?php echo $v['pricettc']. "&nbsp;" . $plxPlugin->getParam("devise");?></span>
+		<span class="lproduct_pricettc"><?php echo $plxPlugin->pos_devise($v['pricettc']);?></span>
 		<?php echo (int)$v['poidg']>0?'&nbsp;'.$plugin->lang('L_FOR').'&nbsp;<span class="product_poidg">'.$v['poidg'].'&nbsp;kg</span>':'';?>
 	</header>
 	<?php

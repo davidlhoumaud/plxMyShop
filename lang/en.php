@@ -95,7 +95,9 @@ $LANG = array(
 'L_CONFIG_SHOP_ZIP'                     => 'Post Code of the shop',
 'L_CONFIG_SHOP_TOWN'                     => 'Town of the Shop',
 'L_CONFIG_SHOP_CURRENCY'                     => 'Currency',
-
+'L_CONFIG_POSITION_CURRENCY'            => 'Position of the currency',
+'L_BEFORE'                              => 'Before the price',
+'L_AFTER'                              => 'After the price',
 'L_CONFIG_SECURITY'                 => 'Security',
 'L_CONFIG_SECURITY_KEY'                 => 'Encryption key',
 
@@ -191,7 +193,7 @@ $LANG = array(
 #Espace public
 'L_PUBLIC_ADDBASKET'                    => 'Product added to the basket',
 'L_PUBLIC_BASKET'                    => 'Your basket',
-'L_PUBLIC_BASKET_NIL'                    => 'Total : 0.00',
+'L_PUBLIC_BASKET_NIL'                    => '0.00',
 'L_PUBLIC_TOTAL_BASKET'                    => 'Total',
 'L_PUBLIC_NOPRODUCT'                    => 'No product for the moment.',
 'L_PUBLIC_MANDATORY_FIELD'                    => '* = mandatory field',

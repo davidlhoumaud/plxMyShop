@@ -95,7 +95,9 @@ $LANG = array(
 'L_CONFIG_SHOP_ZIP'                     => 'Code postal du commerçant',
 'L_CONFIG_SHOP_TOWN'                     => 'Ville du commerçant',
 'L_CONFIG_SHOP_CURRENCY'                     => 'Devise',
-
+'L_CONFIG_POSITION_CURRENCY'            => 'Position de la devise',
+'L_BEFORE'                              => 'Avant le prix',
+'L_AFTER'                              => 'Apres le prix',
 'L_CONFIG_SECURITY'                 => 'Sécurité',
 'L_CONFIG_SECURITY_KEY'                 => 'Clé de chiffrement',
 
@@ -191,7 +193,7 @@ $LANG = array(
 #Espace public
 'L_PUBLIC_ADDBASKET'                    => 'Produit ajouté au panier',
 'L_PUBLIC_BASKET'                    => 'Votre panier',
-'L_PUBLIC_BASKET_NIL'                    => 'Total : 0.00',
+'L_PUBLIC_BASKET_NIL'                    => '0.00',
 'L_PUBLIC_TOTAL_BASKET'                    => 'Total',
 'L_PUBLIC_NOPRODUCT'                    => 'Aucun produit pour le moment.',
 'L_PUBLIC_MANDATORY_FIELD'                    => '* = champs obligatoire',

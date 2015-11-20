@@ -17,6 +17,11 @@ $tabAffPanier = array(
     "partout" => $plxPlugin->getlang('L_PANIER_POS_BOTH') ,
 );
 
+$tabPosDevise = array(
+    "before" => $plxPlugin->getlang('L_BEFORE') ,
+    "after" => $plxPlugin->getlang('L_AFTER') ,
+);
+
 
 $var = array();
 if(!empty($_POST)) {
@@ -79,7 +84,10 @@ if(!empty($_POST)) {
 	$plxPlugin->setParam('keyxorcrypt', $_POST['keyxorcrypt'], 'string');
 	$plxPlugin->setParam('menu_position', $_POST['menu_position'], 'numeric');
 	
-	$plxPlugin->setParam('affPanier', $_POST['affPanier'], 'string');
+    $plxPlugin->setParam('affPanier', $_POST['affPanier'], 'string');
+
+
+    $plxPlugin->setParam('position_devise', $_POST['position_devise'], 'string');
 	
 	
 	$plxPlugin->saveParams();
@@ -153,6 +161,7 @@ $var['menu_position'] = $plxPlugin->getParam('menu_position')=='' ? 3 : $plxPlug
 
 $var["affPanier"] = ("" === $plxPlugin->getParam("affPanier")) ? current(array_keys($tabAffPanier)) : $plxPlugin->getParam("affPanier");
 
+$var["position_devise"] = ("" === $plxPlugin->getParam("position_devise")) ? current(array_keys($tabPosDevise)) : $plxPlugin->getParam("position_devise");
 
 # On récupère les templates des pages statiques
 $aTemplates = array();
@@ -192,6 +201,39 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
                 <p class="field"><label for="id_devise"><?php $plxPlugin->lang('L_CONFIG_SHOP_CURRENCY') ?>&nbsp;:</label></p>
 				<p><?php plxUtils::printInput('devise',$var['devise'],'text','100-120') ?></p>
 				<p></p>
+                <p class="field"><label for="id_position_devise"><?php $plxPlugin->lang('L_CONFIG_POSITION_CURRENCY') ?>&nbsp;:</label></p>
+			    <p><?php plxUtils::printSelect("position_devise", $tabPosDevise, $var["position_devise"]) ?></p>
+				<p></p>
+	    
+        <h2><?php $plxPlugin->lang('L_CONFIG_SECURITY') ?></h2><br>
+        <p class="field"><label for="id_keyxorcrypt"><?php $plxPlugin->lang('L_CONFIG_SECURITY_KEY') ?>&nbsp;:</label></p>
+				<p><?php plxUtils::printInput('keyxorcrypt',$var['keyxorcrypt'],'text','100-120') ?></p>
+				<p></p>
+				
+        <h2><?php $plxPlugin->lang('L_CONFIG_DELIVERY_TITLE') ?></h2><br>
+        <p class="field"><label for="shipping_colissimo"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_SHIPPING') ?>&nbsp;:</label></p>
+				<p><?php plxUtils::printSelect('shipping_colissimo',array('1'=>L_YES,'0'=>L_NO),$var['shipping_colissimo'], "", '" onchange="if (this.value==\'1\') { document.getElementById(\'blocksocoreco\').style.display=\'block\';}else{document.getElementById(\'blocksocoreco\').style.display=\'none\';}'); ?></p>
+				<p></p>
+		<fieldset id="blocksocoreco" align="center" style="border:1px solid #333;display:<?php echo ($var['shipping_colissimo']==1?"block":"none"); ?>;">
+        <legend><?php $plxPlugin->lang('L_CONFIG_DELIVERY_CONFIG') ?></legend>
+		    <table>
+		        <tr>
+                    <td colspanb='2'><?php $plxPlugin->lang('L_CONFIG_RECORDED_DELIVERY') ?>:&nbsp;<?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
+		        </tr>
+		        <tr>
+                    <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p01',$var['p01'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv01',$var['pv01'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
+		        </tr>
+		        <tr>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p02',$var['p02'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv02',$var['pv02'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
+		        </tr>
+		        <tr>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p03',$var['p03'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv03',$var['pv03'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
+		        </tr>
+		        <tr>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p04',$var['p04'],'text','25-120') ?>&nbsp;<=</td>
 	    
         <h2><?php $plxPlugin->lang('L_CONFIG_SECURITY') ?></h2><br>
         <p class="field"><label for="id_keyxorcrypt"><?php $plxPlugin->lang('L_CONFIG_SECURITY_KEY') ?>&nbsp;:</label></p>

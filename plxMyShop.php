@@ -196,6 +196,7 @@ class plxMyShop extends plxPlugin {
 					var error = false;
 					var repertoireAjax = '<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
                     var devise = '<?php echo $this->getParam("devise");?>';
+                    var pos_devise = '<?php echo $this->getParam("position_devise");?>';
                     var L_FOR = '<?php echo $this->getlang('L_FOR'); ?>';
                     var L_DELETE = '<?php echo $this->getlang('L_DEL'); ?>';
                     var L_TOTAL = '<?php echo $this->getlang('L_TOTAL_BASKET'); ?>';
@@ -676,7 +677,8 @@ class plxMyShop extends plxPlugin {
      **/
     public function productPriceTTC() {
 
-        echo plxUtils::strCheck($this->aProds[ $this->productNumber() ]['pricettc']);
+        #echo plxUtils::strCheck($this->aProds[ $this->productNumber() ]['pricettc']);
+        return plxUtils::strCheck($this->aProds[ $this->productNumber() ]['pricettc']);
     }
     
     /**
@@ -988,11 +990,11 @@ class plxMyShop extends plxPlugin {
 		$this->getlang('L_PAIEMENT').": ".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE')).
 		"<br>".$this->getlang('L_EMAIL_PRODUCTLIST')." :<br/><ul>";
 		foreach ($productscart as $k => $v) {
-			$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."Kg":"")."</li>";
+			$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."Kg":"")."</li>";
 		}
 		$message.="</ul><br/><br>".
-            "<strong>".$this->getlang('L_EMAIL_TOTAL').": ".($totalpricettc+$totalpoidgshipping)."&nbsp;" . $this->getParam("devise") . "</strong><br/><em><strong>". 
-            $this->getlang('L_EMAIL_DELIVERY_COST'). " : ".$totalpoidgshipping."&nbsp;" . $this->getParam("devise") . "</strong><br/>".
+            "<strong>".$this->getlang('L_EMAIL_TOTAL').": ".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "</strong><br/><em><strong>". 
+            $this->getlang('L_EMAIL_DELIVERY_COST'). " : ".$this->pos_devise($totalpoidgshipping). "</strong><br/>".
 		"<strong>".$this->getlang('L_EMAIL_WEIGHT')." : ".$totalpoidg."&nbsp;kg</strong><br/><br/></em>".
 		$this->getlang('L_EMAIL_COMMENT')." : <br>".plxUtils::cdataCheck($_POST['msg']);
 		$destinataire = $TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"");
@@ -1044,11 +1046,11 @@ class plxMyShop extends plxPlugin {
 				"<strong>". $this->getlang('L_EMAIL_CUST_PAYMENT') .": </strong>".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE')).
 				"<br><strong>". $this->getlang('L_EMAIL_PRODUCTLIST') ." :</strong><br/>";
 				foreach ($productscart as $k => $v) {
-					$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$v['pricettc']."&nbsp;" . $this->getParam("devise") . ((float)$v['poidg']>0?" ".$this->getlang('L_FOR')." ".$v['poidg']."&nbsp;kg":"")."</li>";
+					$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ".$this->getlang('L_FOR')." ".$v['poidg']."&nbsp;kg":"")."</li>";
 				}
 				$message.= "<br/><br>".
-				"<strong>". $this->getlang('L_EMAIL_TOTAL') ." : </strong>".($totalpricettc+$totalpoidgshipping)."&nbsp;" . $this->getParam("devise") . "<br/>".
-				"<em><strong>". $this->getlang('L_EMAIL_DELIVERY_COST') ." : </strong>".$totalpoidgshipping."&nbsp;" . $this->getParam("devise") . "<br/>".
+				"<strong>". $this->getlang('L_EMAIL_TOTAL') ." : </strong>".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "<br/>".
+				"<em><strong>". $this->getlang('L_EMAIL_DELIVERY_COST') ." : </strong>".$this->pos_devise($totalpoidgshipping)."<br/>".
 				"<strong>". $this->getlang('L_EMAIL_WEIGHT') ." : </strong>".$totalpoidg."&nbsp;kg<br/><br/></em>".
 				"<strong>". $this->getlang('L_EMAIL_COMMENT') ." : </strong><br>".plxUtils::cdataCheck($_POST['msg']);
 				
@@ -1134,7 +1136,22 @@ class plxMyShop extends plxPlugin {
 		
 		$_SESSION['msgCommand']=$msgCommand;
 	}
-	
+    
+    //will position the price based on the config, before or after the price
+    public function pos_devise($price) {
+        $pos_price = $price;
+        if ( $this->getParam('position_devise') == "before" ) {
+            #echo $this->getParam('devise');
+            #echo $price;
+            $pos_price = $this->getParam('devise').$price;
+            }
+        elseif ( $this->getParam('position_devise') == "after" ) {
+            #echo $price;
+            #echo $this->getParam('devise');
+            $pos_price = $price.$this->getParam('devise');
+            }
+       return $pos_price; 
+    }
 	
 	function shippingMethod($kg, $op) {
 		
