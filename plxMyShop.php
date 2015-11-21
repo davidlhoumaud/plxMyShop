@@ -1141,13 +1141,9 @@ class plxMyShop extends plxPlugin {
     public function pos_devise($price) {
         $pos_price = $price;
         if ( $this->getParam('position_devise') == "before" ) {
-            #echo $this->getParam('devise');
-            #echo $price;
             $pos_price = $this->getParam('devise').$price;
             }
         elseif ( $this->getParam('position_devise') == "after" ) {
-            #echo $price;
-            #echo $this->getParam('devise');
             $pos_price = $price.$this->getParam('devise');
             }
        return $pos_price; 
