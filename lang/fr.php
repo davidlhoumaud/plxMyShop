@@ -108,6 +108,7 @@ $LANG = array(
 'L_CONFIG_DELIVERY_WEIGHT'                 => 'Poids en kg',
 
 'L_CONFIG_PAYMENT_CHEQUE'                 => 'Paiment par chèque',
+'L_CONFIG_PAYMENT_CASH'                 => 'Paiement en argent comptant',
 'L_CONFIG_PAYMENT_PAYPAL'                 => 'Paiment par PAYPAL',
 'L_CONFIG_CONF_PAYPAL'                 => 'Configuration Paypal',
 'L_CONFIG_EMAIL_PAYPAL'                 => 'Adresse e-mail Paypal',
@@ -156,6 +157,7 @@ $LANG = array(
 'L_EMAIL_COMMENT'                   => 'Commentaire',
 'L_EMAIL_CONFIRM_PAYPAL'                   => 'La commande est confirmé et en cours de validation de votre part sur Paypal.',
 'L_EMAIL_CONFIRM_CHEQUE'                   => 'La commande a bien été confirmé et envoyé par e-mail.',
+'L_EMAIL_CONFIRM_CASH'                   => 'La commande a bien été confirmé et envoyé par e-mail.',
 
 'L_EMAIL_CUST_SUBJECT'                          => 'Récapitulatif de la commande ',
 'L_EMAIL_CUST_MESSAGE1'                          => 'Vous venez de confirmer une commande sur',
@@ -165,6 +167,7 @@ $LANG = array(
 'L_EMAIL_CUST_MESSAGE3'                          => 'de règlement',
 'L_EMAIL_CUST_CHEQUE'                          => 'Pour finaliser cette commande veuillez établir le chèque à l\'ordre de',
 'L_EMAIL_CUST_SENDCHEQUE'                          => 'Envoyer votre chèque à cette addresse',
+'L_EMAIL_CUST_CASH'                          => 'Veuillez effectuer le paiement à la livraison',
 'L_EMAIL_CUST_PAYPAL'                          => 'Cette commande sera finalisé une fois le paiement Paypal contrôlé.',
 'L_EMAIL_CUST_SUMMARY'                          => 'Récapitulatif de votre commande',
 'L_EMAIL_CUST_ADDRESS'                          => 'Adresse de livraison',

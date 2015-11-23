@@ -108,6 +108,7 @@ $LANG = array(
 'L_CONFIG_DELIVERY_WEIGHT'                 => 'Weight in kg',
 
 'L_CONFIG_PAYMENT_CHEQUE'                 => 'Payment by cheque',
+'L_CONFIG_PAYMENT_CASH'                 => 'Payment in cash',
 'L_CONFIG_PAYMENT_PAYPAL'                 => 'Payment by Paypal',
 'L_CONFIG_CONF_PAYPAL'                 => 'Paypal configuration',
 'L_CONFIG_EMAIL_PAYPAL'                 => 'Paypal email address',
@@ -156,6 +157,7 @@ $LANG = array(
 'L_EMAIL_COMMENT'                   => 'Comment',
 'L_EMAIL_CONFIRM_PAYPAL'                   => 'The order is confirmed and awaiting validation from your side at Paypal.',
 'L_EMAIL_CONFIRM_CHEQUE'                   => 'The order has been validated and sent by email.',
+'L_EMAIL_CONFIRM_CASH'                   => 'The order has been validated and sent by email.',
 
 'L_EMAIL_CUST_SUBJECT'                          => 'Order summary ',
 'L_EMAIL_CUST_MESSAGE1'                          => 'You just confirm an order from',
@@ -165,6 +167,7 @@ $LANG = array(
 'L_EMAIL_CUST_MESSAGE3'                          => ' payment',
 'L_EMAIL_CUST_CHEQUE'                          => 'To finalise this order please write a cheque to the order of',
 'L_EMAIL_CUST_SENDCHEQUE'                          => 'Send the cheque at this address',
+'L_EMAIL_CUST_CASH'                          => 'Please make your payment on delivery',
 'L_EMAIL_CUST_PAYPAL'                          => 'This order will be finalised once the Paypal payment has been verified.',
 'L_EMAIL_CUST_SUMMARY'                          => 'Summary of your order',
 'L_EMAIL_CUST_ADDRESS'                          => 'Delivery address',
@@ -214,7 +217,6 @@ $LANG = array(
 
 #panier.js
 'L_TOTAL_BASKET'                    => 'Total (delivery cost included)',
-
 
 
 );
