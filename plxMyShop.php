@@ -1026,9 +1026,22 @@ class plxMyShop extends plxPlugin {
 				}
 				
                 #Mail de récapitulatif de commande pour le client.
-                if ( $_POST['methodpayment']=="cheque" ) { $status = $this->getlang('L_WAITING'); $method = $this->getlang('L_PAYMENT_CHEQUE'); }
-                elseif ( $_POST['methodpayment']=="cash" ) { $status = $this->getlang('L_ONGOING'); $method = $this->getlang('L_PAYMENT_CASH'); } 
-                elseif ( $_POST['methodpayment']=="paypal" ) { $status = $this->getlang('L_ONGOING'); $method = $this->getlang('L_PAYMENT_PAYPAL'); } 
+                switch ($_POST['methodpayment']) {
+                   case 'cheque' :
+                        $status = $this->getlang('L_WAITING'); 
+                        $method = $this->getlang('L_PAYMENT_CHEQUE');
+                     break; 
+                   case 'cash':
+                       $status = $this->getlang('L_WAITING'); 
+                       $method = $this->getlang('L_PAYMENT_CASH');
+                     break;
+                   case 'paypal':
+                       $status = $this->getlang('L_ONGOING'); 
+                       $method = $this->getlang('L_PAYMENT_PAYPAL');
+                     break;
+                   default:
+                     echo 'A method of payment is required!'; 
+} 
 		        $sujet = $this->getlang('L_EMAIL_CUST_SUBJECT') . $SHOPNAME;
                 $message = "<p>" . $this->getlang('L_EMAIL_CUST_MESSAGE1') . " <a href='http://".$_SERVER["HTTP_HOST"]."'>".$SHOPNAME."</a><br>".
                     $this->getlang('L_EMAIL_CUST_MESSAGE2')." ". $status ." ".$this->getlang('L_EMAIL_CUST_MESSAGE3')."</p>";
