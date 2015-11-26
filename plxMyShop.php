@@ -57,6 +57,10 @@ class plxMyShop extends plxPlugin {
 				"libelle" => $this->getlang('L_PAYMENT_CHEQUE') ,
 				"codeOption" => "payment_cheque",
 			),
+			"cash" => array(
+				"libelle" => $this->getlang('L_PAYMENT_CASH') ,
+				"codeOption" => "payment_cash",
+			),
 			"paypal" => array(
 				"libelle" => $this->getlang('L_PAYMENT_PAYPAL'),
 				"codeOption" => "payment_paypal",
@@ -1017,18 +1021,38 @@ class plxMyShop extends plxPlugin {
 					$msgCommand.= "<h2 class='h2okmsg' >".$this->getlang('L_EMAIL_CONFIRM_PAYPAL')."</h2>";
 				} else if ($_POST['methodpayment']=="cheque") { 
 					 $msgCommand.= "<h2 class='h2okmsg'>".$this->getlang('L_EMAIL_CONFIRM_CHEQUE')."</h2>";
+				} else if ($_POST['methodpayment']=="cash") { 
+					 $msgCommand.= "<h2 class='h2okmsg'>".$this->getlang('L_EMAIL_CONFIRM_CASH')."</h2>";
 				}
 				
-				#Mail de récapitulatif de commande pour le client.
+                #Mail de récapitulatif de commande pour le client.
+                switch ($_POST['methodpayment']) {
+                   case 'cheque' :
+                        $status = $this->getlang('L_WAITING'); 
+                        $method = $this->getlang('L_PAYMENT_CHEQUE');
+                     break; 
+                   case 'cash':
+                       $status = $this->getlang('L_WAITING'); 
+                       $method = $this->getlang('L_PAYMENT_CASH');
+                     break;
+                   case 'paypal':
+                       $status = $this->getlang('L_ONGOING'); 
+                       $method = $this->getlang('L_PAYMENT_PAYPAL');
+                     break;
+                   default:
+                     echo 'A method of payment is required!'; 
+} 
 		        $sujet = $this->getlang('L_EMAIL_CUST_SUBJECT') . $SHOPNAME;
                 $message = "<p>" . $this->getlang('L_EMAIL_CUST_MESSAGE1') . " <a href='http://".$_SERVER["HTTP_HOST"]."'>".$SHOPNAME."</a><br>".
-                    $this->getlang('L_EMAIL_CUST_MESSAGE2')." ".($_POST['methodpayment']=="cheque"?$this->getlang('L_WAITING'):$this->getlang('L_ONGOING'))." ".$this->getlang('L_EMAIL_CUST_MESSAGE3')."</p>";
+                    $this->getlang('L_EMAIL_CUST_MESSAGE2')." ". $status ." ".$this->getlang('L_EMAIL_CUST_MESSAGE3')."</p>";
 				if ($_POST['methodpayment']=="cheque") {
 					$message .="<p>". $this->getlang('L_EMAIL_CUST_CHEQUE') ." : ".$COMMERCANTNAME."<br>". $this->getlang('L_EMAIL_CUST_SENDCHEQUE') ." :".
 					"<br><em>&nbsp;&nbsp;&nbsp;&nbsp;".$SHOPNAME."".
 					"<br>&nbsp;&nbsp;&nbsp;&nbsp;".$COMMERCANTNAME."".
 					"<br>&nbsp;&nbsp;&nbsp;&nbsp;".$COMMERCANTSTREET."".
 					"<br>&nbsp;&nbsp;&nbsp;&nbsp;".$COMMERCANTPOSTCODE." ".$COMMERCANTCITY."</em></p>";
+                } elseif ($_POST['methodpayment']=="cash") {
+					 $message .="<p>".$this->getlang('L_EMAIL_CUST_CASH')."</p>";
 				} elseif ($_POST['methodpayment']=="paypal") {
 					 $message .="<p>".$this->getlang('L_EMAIL_CUST_PAYPAL')."</p>";
 				}
@@ -1043,7 +1067,7 @@ class plxMyShop extends plxPlugin {
 					: $this->getlang('L_EMAIL_GIFT_FOR') ." <strong>" . htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
 				)
 				. "<br/><br/>" .
-				"<strong>". $this->getlang('L_EMAIL_CUST_PAYMENT') .": </strong>".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE')).
+				"<strong>". $this->getlang('L_EMAIL_CUST_PAYMENT') .": </strong>". $method .
 				"<br><strong>". $this->getlang('L_EMAIL_PRODUCTLIST') ." :</strong><br/>";
 				foreach ($productscart as $k => $v) {
 					$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ".$this->getlang('L_FOR')." ".$v['poidg']."&nbsp;kg":"")."</li>";
@@ -1141,13 +1165,9 @@ class plxMyShop extends plxPlugin {
     public function pos_devise($price) {
         $pos_price = $price;
         if ( $this->getParam('position_devise') == "before" ) {
-            #echo $this->getParam('devise');
-            #echo $price;
             $pos_price = $this->getParam('devise').$price;
             }
         elseif ( $this->getParam('position_devise') == "after" ) {
-            #echo $price;
-            #echo $this->getParam('devise');
             $pos_price = $price.$this->getParam('devise');
             }
        return $pos_price; 

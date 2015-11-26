@@ -208,6 +208,7 @@ if (error) {
 ?>
 function changePaymentMethod(method) {
     if (method=="cheque")formCart.action="#panier";
+    else if (method=="cash") formCart.action="#panier";
     else if (method=="paypal") formCart.action="#panier";
 }
 

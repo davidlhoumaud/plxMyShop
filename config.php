@@ -44,6 +44,7 @@ if(!empty($_POST)) {
 	$plxPlugin->setParam('shipping_ups', 0, 'numeric');
 	$plxPlugin->setParam('shipping_tnt', 0, 'numeric');
 	$plxPlugin->setParam('payment_cheque', $_POST['payment_cheque'], 'numeric');	
+	$plxPlugin->setParam('payment_cash', $_POST['payment_cash'], 'numeric');	
 	//paypal
 	$plxPlugin->setParam('payment_paypal', $_POST['payment_paypal'], 'numeric');
 	$plxPlugin->setParam('payment_paypal_test', $_POST['payment_paypal_test'], 'numeric');
@@ -98,6 +99,7 @@ if(!empty($_POST)) {
 $var['subject'] = $plxPlugin->getParam('subject')=='' ? "Récapitulatif de commande" : $plxPlugin->getParam('subject');
 $var['newsubject'] = $plxPlugin->getParam('newsubject')=='' ? "Nouvelle commande" : $plxPlugin->getParam('newsubject');
 $var['payment_cheque'] = $plxPlugin->getParam('payment_cheque')=='' ? '' : $plxPlugin->getParam('payment_cheque');
+$var['payment_cash'] = $plxPlugin->getParam('payment_cash')=='' ? '' : $plxPlugin->getParam('payment_cash');
 //paypal
 $var['payment_paypal'] = $plxPlugin->getParam('payment_paypal')=='' ? '' : $plxPlugin->getParam('payment_paypal');
 $var['payment_paypal_test'] = $plxPlugin->getParam('payment_paypal_test')=='' ? '' : $plxPlugin->getParam('payment_paypal_test');
@@ -299,6 +301,9 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 		
         <p class="field"><label for="id_payment_cheque"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_CHEQUE') ?>&nbsp;:</label></p>
 				<p><?php plxUtils::printSelect('payment_cheque',array('1'=>L_YES,'0'=>L_NO),$var['payment_cheque']); ?></p>
+				<p></p>
+        <p class="field"><label for="id_payment_cash"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_CASH') ?>&nbsp;:</label></p>
+				<p><?php plxUtils::printSelect('payment_cash',array('1'=>L_YES,'0'=>L_NO),$var['payment_cash']); ?></p>
 				<p></p>
         <p class="field"><label for="id_payment_paypal"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_PAYPAL') ?>&nbsp;:</label></p><?php plxUtils::printSelect('payment_paypal',array('1'=>L_YES,'0'=>L_NO),$var['payment_paypal'], "", '" onchange="if (this.value==\'1\') { document.getElementById(\'blockpaypal\').style.display=\'block\';}else{document.getElementById(\'blockpaypal\').style.display=\'none\';}'); ?></p>
 				<p></p>
