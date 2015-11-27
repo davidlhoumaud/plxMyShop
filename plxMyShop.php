@@ -977,7 +977,24 @@ class plxMyShop extends plxPlugin {
 			}
 			$totalpoidgshipping = $this->shippingMethod($totalpoidg, 1);
 		}
-		
+
+        
+        switch ($_POST['methodpayment']) {
+              case 'cheque' :
+                  $status = $this->getlang('L_WAITING'); 
+                  $method = $this->getlang('L_PAYMENT_CHEQUE');
+                break; 
+              case 'cash':
+                  $status = $this->getlang('L_WAITING'); 
+                  $method = $this->getlang('L_PAYMENT_CASH');
+                break;
+              case 'paypal':
+                  $status = $this->getlang('L_ONGOING'); 
+                  $method = $this->getlang('L_PAYMENT_PAYPAL');
+                break;
+              default:
+                  echo 'A method of payment is required!'; 
+} 
 		#Mail de nouvelle commande pour le commerçant.
 		$sujet = $this->getlang('L_EMAIL_SUBJECT').$SHOPNAME;
 		$message = plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br/>".
@@ -991,7 +1008,7 @@ class plxMyShop extends plxPlugin {
 			: $this->getlang('L_EMAIL_GIFT_FOR')." <strong>".htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
 		)
 		."<br/><br/>".
-		$this->getlang('L_PAIEMENT').": ".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE')).
+		$this->getlang('L_PAIEMENT').": ".$method.
 		"<br>".$this->getlang('L_EMAIL_PRODUCTLIST')." :<br/><ul>";
 		foreach ($productscart as $k => $v) {
 			$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."Kg":"")."</li>";
@@ -1026,22 +1043,6 @@ class plxMyShop extends plxPlugin {
 				}
 				
                 #Mail de récapitulatif de commande pour le client.
-                switch ($_POST['methodpayment']) {
-                   case 'cheque' :
-                        $status = $this->getlang('L_WAITING'); 
-                        $method = $this->getlang('L_PAYMENT_CHEQUE');
-                     break; 
-                   case 'cash':
-                       $status = $this->getlang('L_WAITING'); 
-                       $method = $this->getlang('L_PAYMENT_CASH');
-                     break;
-                   case 'paypal':
-                       $status = $this->getlang('L_ONGOING'); 
-                       $method = $this->getlang('L_PAYMENT_PAYPAL');
-                     break;
-                   default:
-                     echo 'A method of payment is required!'; 
-} 
 		        $sujet = $this->getlang('L_EMAIL_CUST_SUBJECT') . $SHOPNAME;
                 $message = "<p>" . $this->getlang('L_EMAIL_CUST_MESSAGE1') . " <a href='http://".$_SERVER["HTTP_HOST"]."'>".$SHOPNAME."</a><br>".
                     $this->getlang('L_EMAIL_CUST_MESSAGE2')." ". $status ." ".$this->getlang('L_EMAIL_CUST_MESSAGE3')."</p>";
