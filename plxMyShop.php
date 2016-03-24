@@ -253,6 +253,7 @@ class plxMyShop extends plxPlugin {
 			
 			require_once "classes/vues/$classeVue.php";
 			$this->vue = new $classeVue();
+			$this->vue->plxPlugin = $this;
 			$this->vue->traitement();
 			
 			$this->plxMotor->mode = "static";
