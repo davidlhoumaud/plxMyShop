@@ -10,7 +10,7 @@ class panier extends VuePublique {
 	}
 	
 	public function titreVuePublique() {
-		return "Panier";
+		return $this->plxPlugin->getLang("L_TITRE_PANIER");
 	}
 	
 }

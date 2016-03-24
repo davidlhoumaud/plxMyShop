@@ -217,6 +217,7 @@ $LANG = array(
 
 #panier.js
 'L_TOTAL_BASKET'                    => 'Total (frais de port inclus)',
+'L_TITRE_PANIER'                    => 'Panier',
 
 
 );

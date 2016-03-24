@@ -230,6 +230,9 @@ class plxMyShop extends plxPlugin {
 		
 		$this->plxMotor = plxMotor::getInstance();
 		
+		eval($this->plxMotor->plxPlugins->callHook("plxMyShop_debut"));
+		
+		
 		if (isset($this->plxMotor->aConf['images'])) {
 			// jusqu'à la version 5.3.1
 			$this->cheminImages = $this->plxMotor->aConf['images'];
@@ -844,6 +847,7 @@ class plxMyShop extends plxPlugin {
 			
 			require_once "classes/vues/panier.php";
 			$vuePanier = new panier();
+			$vuePanier->plxPlugin = $this;
 			
 			$titreProtege = plxMyShop::nomProtege($vuePanier->titre());
 			
