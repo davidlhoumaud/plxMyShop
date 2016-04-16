@@ -174,7 +174,7 @@ $LANG = array(
 'L_EMAIL_CUST_PAYMENT'                      => 'Méthode de paiement',
 
 'L_EMAIL_SENT1'                      => 'Un e-mail de récapitulatif de commande vous a été envoyé.',
-'L_EMAIL_SENT2'                      => 'Si l\'e-mail de récapitulatif de commande n\'apparaît pas dans votre liste d\'e-mails en attente ou que celui-ci est signalé en tant que spam, veuillez ajouter %s à votre liste de contacts.', // %s : adresse e-mail du gestionnaire des commandes
+'L_EMAIL_SENT2'                      => 'Si l\'e-mail de récapitulatif de commande n\'apparait pas dans votre liste d\'e-mails en attente ou que celui-ci est signalé en tant que spam, veuillez ajouter %s à votre liste de contacts.', // %s : adresse e-mail du gestionnaire des commandes
 
 'L_EMAIL_ERROR1'                      => 'Une erreur s\'est produite lors de l\'envoi de votre e-mail récapitulatif.',
 'L_EMAIL_ERROR2'                      => 'Une erreur s\'est produite lors de l\'envoi de la commande par e-mail.',
