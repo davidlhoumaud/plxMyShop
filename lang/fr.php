@@ -166,7 +166,7 @@ $LANG = array(
 'L_ONGOING'                                => 'cours',
 'L_EMAIL_CUST_MESSAGE3'                          => 'de règlement',
 'L_EMAIL_CUST_CHEQUE'                          => 'Pour finaliser cette commande veuillez établir le chèque à l\'ordre de',
-'L_EMAIL_CUST_SENDCHEQUE'                          => 'Envoyer votre chèque à cette addresse',
+'L_EMAIL_CUST_SENDCHEQUE'                          => 'Envoyer votre chèque à cette adresse',
 'L_EMAIL_CUST_CASH'                          => 'Veuillez effectuer le paiement à la livraison',
 'L_EMAIL_CUST_PAYPAL'                          => 'Cette commande sera finalisée une fois le paiement Paypal contrôlé.',
 'L_EMAIL_CUST_SUMMARY'                          => 'Récapitulatif de votre commande',
@@ -184,7 +184,7 @@ $LANG = array(
 'L_FOR'                                => 'pour',
 'L_DEL'                                => 'Retirer',
 
-'L_MISSING_EMAIL'                      => 'l\'addresse e-mail n\'est pas définie.',
+'L_MISSING_EMAIL'                      => 'l\'adresse e-mail n\'est pas définie.',
 'L_MISSING_FIRSTNAME'                      => 'Le prénom n\'est pas défini.',
 'L_MISSING_LASTNAME'                      => 'Le nom de famille n\'est pas défini.',
 'L_MISSING_ADDRESS'                      => 'L\'addresse n\'est pas définie.',
