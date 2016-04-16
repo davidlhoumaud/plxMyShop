@@ -1212,5 +1212,43 @@ class plxMyShop extends plxPlugin {
 		
 		return (float) $shippingPrice;
 	}
+	
+	public function menuAdmin($ongletEnCours) {
+		
+		
+		$listeOnglets = [
+			"produits" => [
+				"titre" => $this->getLang("L_MENU_PRODUCTS"),
+				"urlHtml" => "plugin.php?p=plxMyShop",
+			],
+			"categories" => [
+				"titre" => $this->getLang("L_MENU_CATS"),
+				"urlHtml" => "plugin.php?p=plxMyShop&amp;mod=cat",
+			],
+			"commandes" => [
+				"titre" => $this->getLang("L_MENU_ORDERS"),
+				"urlHtml" => "plugin.php?p=plxMyShop&amp;mod=cmd",
+			],
+			"configuration" => [
+				"titre" => $this->getLang("L_MENU_CONFIG"),
+				"urlHtml" => "parametres_plugin.php?p=plxMyShop",
+			],
+		];
+		
+		
+		foreach ($listeOnglets as $codeOnglet => $o) {
+			
+			?>
+				
+				<a href="<?php echo $o["urlHtml"];?>">
+					<button<?php echo ($codeOnglet !== $ongletEnCours) ? "" : " disabled";?>>
+						<?php echo plxUtils::strCheck($o["titre"]);?>
+					</button></a>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+			<?php
+		}
+		
+		
+	}
 }
 

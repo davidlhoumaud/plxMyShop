@@ -49,39 +49,34 @@ function checkBox(obj) {
     obj.value = (obj.checked==true) ? '1': '0';
 }
 </script>
-<h2>
-	<?php
-	if (!isset($_GET['mod']) || (isset($_GET['mod']) && $_GET['mod']!='cmd')) {
+
+<?php
+	
+	if (!isset($_GET["mod"])) {
 		
-		echo isset($_GET['mod']) && $_GET['mod']=='cat'
-			 ? $plxPlugin->lang('CREATE_CATS')
-			 : $plxPlugin->lang('CREATE_PRODUCTS')
-		;
+		$onglet = "produits";
+		$titre = $plxPlugin->getLang("CREATE_PRODUCTS");
 		
-	} else {
-		echo $plxPlugin->lang('LIST_ORDERS');
+	} elseif("cat" === $_GET["mod"]) {
+		
+		$onglet = "categories";
+		$titre = $plxPlugin->getLang("CREATE_CATS");
+		
+	} elseif("cmd" === $_GET["mod"]) {
+		
+		$onglet = "commandes";
+		$titre = $plxPlugin->getLang("LIST_ORDERS");
+		
 	}
+	
 ?>
-</h2>
-<a href="plugin.php?p=plxMyShop">
-	<button <?php echo (isset($_GET['mod']) && $_GET['mod']==('cat'||'cmd')?"style='cursor:pointer;'":"disabled"); ?> >
-	<?php echo $plxPlugin->lang('L_MENU_PRODUCTS'); ?>
-	</button></a>
-&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="plugin.php?p=plxMyShop&amp;mod=cat">
-	<button <?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?"disabled":"style='cursor:pointer;'"); ?>>
-	<?php echo $plxPlugin->lang('L_MENU_CATS'); ?>
-	</button></a>
-&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="plugin.php?p=plxMyShop&amp;mod=cmd">
-	<button <?php echo (isset($_GET['mod']) && $_GET['mod']=='cmd'?"disabled":"style='cursor:pointer;'"); ?>>
-	<?php echo $plxPlugin->lang('L_MENU_ORDERS'); ?>
-	</button></a>
-&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="parametres_plugin.php?p=plxMyShop">
-	<button>
-	<?php echo $plxPlugin->lang('L_MENU_CONFIG');?>
-	</button></a>
+
+<h2><?php echo plxUtils::strCheck($titre);?></h2>
+
+<p>
+	<?php $plxPlugin->menuAdmin($onglet);?>
+</p>
+
 
 <form action="plugin.php?p=plxMyShop<?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?"&mod=cat":""); ?>" method="post" id="form_products">
     <table class="table">
