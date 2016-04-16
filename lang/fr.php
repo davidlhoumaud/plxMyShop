@@ -8,7 +8,7 @@ $LANG = array(
 'L_CONFIG_INFOS_NB_PRODUCTS'		=> 'Nombre de produits :',
 'L_MENU_PRODUCTS_TITLE'				=> 'Liste et modification des produits',
 'L_MENU_PRODUCTS'					=> 'Liste des produits',
-'L_MENU_CATS'					=> 'Liste des cat&eacute;gories',
+'L_MENU_CATS'					=> 'Liste des catégories',
 'L_MENU_ORDERS'					=> 'Liste des commandes',
 'L_MENU_CONFIG'					=> 'Configuration',
 
@@ -59,26 +59,28 @@ $LANG = array(
 # product.php
 
 'L_PRODUCT_BACK_TO_PAGE'			=> 'Retour à la liste des produits',
-'L_CAT_BACK_TO_PAGE'			    => 'Retour à la liste des cat&eacute;gories',
+'L_CAT_BACK_TO_PAGE'			    => 'Retour à la liste des catégories',
 'L_PRODUCT_UNKNOWN_PAGE'			=> 'Ce produit n\'existe pas ou n\'existe plus !',
 'L_PRODUCT_TITLE'					=> 'Édition du produit',
-'L_CAT_TITLE'					    => 'Édition de la cat&eascute;gorie',
-'L_PRODUCT_VIEW_PAGE'				=> 'Visualiser le produit',
-'L_CAT_VIEW_PAGE'				    => 'Visualiser la cat&eacute;gorie de produit',
-'L_PRODUCT_ON_SITE'					=> 'sur le site',
+'L_CAT_TITLE'					    => 'Édition de la catégorie',
+
+'L_PRODUCT_VIEW_PAGE_ON_SITE'				=> 'Visualiser le produit %s sur le site',
+'L_CAT_VIEW_PAGE_ON_SITE'				    => 'Visualiser la catégorie de produit %s sur le site',
+
 'L_PRODUCT_UPDATE'					=> 'Enregistrer ce produit',
-'L_CAT_UPDATE'					    => 'Enregistrer cette cat&eacute;gorie',
+'L_CAT_UPDATE'					    => 'Enregistrer cette catégorie',
 'L_PRODUCT_TITLE_HTMLTAG'			=> 'Contenu balise title (option)',
 'L_PRODUCT_META_DESCRIPTION'		=> 'Contenu de la balise meta "description" pour ce produit (option)',
-'L_CAT_META_DESCRIPTION'		    => 'Contenu de la balise meta "description" pour cette cat&eacute;gorie (option)',
+'L_CAT_META_DESCRIPTION'		    => 'Contenu de la balise meta "description" pour cette catégorie (option)',
 'L_PRODUCT_META_KEYWORDS'			=> 'Contenu de la balise meta "keywords" pour ce produit (option)',
-'L_CAT_META_KEYWORDS'			    => 'Contenu de la balise meta "keywords" pour cette cat&eacute;gorie  (option)',
+'L_CAT_META_KEYWORDS'			    => 'Contenu de la balise meta "keywords" pour cette catégorie (option)',
 
 #create product/cat
-'CREATE_PRODUCTS_CATS'              => 'Création et édition des ',
-'CREATE_PRODUCTS'              => 'produits',
-'CREATE_CATS'              => 'cat&eacute;gories',
-'L_CAT'              => 'Cat&eacute;gorie',
+'CREATE_PRODUCTS'              => 'Création et édition des produits',
+'CREATE_CATS'              => 'Création et édition des catégories',
+
+'L_CAT'              => 'Catégorie',
+
 #commandes
 'LIST_ORDERS'                                  => 'Liste des commandes',
 

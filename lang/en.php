@@ -63,9 +63,10 @@ $LANG = array(
 'L_PRODUCT_UNKNOWN_PAGE'			=> 'This product doesn\'t exist or is no longer available !',
 'L_PRODUCT_TITLE'					=> 'Edit the source code of this product',
 'L_CAT_TITLE'					    => 'Edit the source code of this category',
-'L_PRODUCT_VIEW_PAGE'				=> 'View the product',
-'L_CAT_VIEW_PAGE'				    => 'View the product\'s category',
-'L_PRODUCT_ON_SITE'					=> 'on the site',
+
+'L_PRODUCT_VIEW_PAGE_ON_SITE'				=> 'View the product %s on the site',
+'L_CAT_VIEW_PAGE_ON_SITE'				    => 'View the product\'s category %s on the site',
+
 'L_PRODUCT_UPDATE'					=> 'Save this product',
 'L_CAT_UPDATE'					    => 'Save this category',
 'L_PRODUCT_TITLE_HTMLTAG'			=> 'Title tag contents (optional)',
@@ -75,10 +76,11 @@ $LANG = array(
 'L_CAT_META_KEYWORDS'			    => '"Keywords" Meta tag content for this category (optional)',
 
 #create product/cat
-'CREATE_PRODUCTS_CATS'              => 'Creation and edition of ',
-'CREATE_PRODUCTS'                   => 'products',
-'CREATE_CATS'                       => 'categories',
+'CREATE_PRODUCTS'                   => 'Creation and edition of products',
+'CREATE_CATS'                       => 'Creation and edition of categories',
+
 'L_CAT'                             => 'Category',
+
 #commandes
 'LIST_ORDERS'                       => 'List of orders',
 

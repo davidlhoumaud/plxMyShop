@@ -1,4 +1,9 @@
 <?php
+/*
+Si vous réutilisez ce fichier dans votre thème, nous vous conseillons de noter la version actuelle de plxMyShop
+version : 
+*/
+
 
 $plxPlugin = $d["plxPlugin"];
 $v = $plxPlugin->aProds[$d["k"]];
