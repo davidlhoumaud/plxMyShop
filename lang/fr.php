@@ -97,7 +97,7 @@ $LANG = array(
 'L_CONFIG_SHOP_CURRENCY'                     => 'Devise',
 'L_CONFIG_POSITION_CURRENCY'            => 'Position de la devise',
 'L_BEFORE'                              => 'Avant le prix',
-'L_AFTER'                              => 'Apres le prix',
+'L_AFTER'                              => 'Après le prix',
 'L_CONFIG_SECURITY'                 => 'Sécurité',
 'L_CONFIG_SECURITY_KEY'                 => 'Clé de chiffrement',
 
@@ -155,9 +155,9 @@ $LANG = array(
 'L_EMAIL_WEIGHT'                   => 'Poids',
 'L_EMAIL_DELIVERY_COST'                   => 'Frais de port',
 'L_EMAIL_COMMENT'                   => 'Commentaire',
-'L_EMAIL_CONFIRM_PAYPAL'                   => 'La commande est confirmé et en cours de validation de votre part sur Paypal.',
-'L_EMAIL_CONFIRM_CHEQUE'                   => 'La commande a bien été confirmé et envoyé par e-mail.',
-'L_EMAIL_CONFIRM_CASH'                   => 'La commande a bien été confirmé et envoyé par e-mail.',
+'L_EMAIL_CONFIRM_PAYPAL'                   => 'La commande est confirmée et en cours de validation de votre part sur Paypal.',
+'L_EMAIL_CONFIRM_CHEQUE'                   => 'La commande a bien été confirmée et envoyée par e-mail.',
+'L_EMAIL_CONFIRM_CASH'                   => 'La commande a bien été confirmée et envoyée par e-mail.',
 
 'L_EMAIL_CUST_SUBJECT'                          => 'Récapitulatif de la commande ',
 'L_EMAIL_CUST_MESSAGE1'                          => 'Vous venez de confirmer une commande sur',
@@ -166,9 +166,9 @@ $LANG = array(
 'L_ONGOING'                                => 'cours',
 'L_EMAIL_CUST_MESSAGE3'                          => 'de règlement',
 'L_EMAIL_CUST_CHEQUE'                          => 'Pour finaliser cette commande veuillez établir le chèque à l\'ordre de',
-'L_EMAIL_CUST_SENDCHEQUE'                          => 'Envoyer votre chèque à cette addresse',
+'L_EMAIL_CUST_SENDCHEQUE'                          => 'Envoyer votre chèque à cette adresse',
 'L_EMAIL_CUST_CASH'                          => 'Veuillez effectuer le paiement à la livraison',
-'L_EMAIL_CUST_PAYPAL'                          => 'Cette commande sera finalisé une fois le paiement Paypal contrôlé.',
+'L_EMAIL_CUST_PAYPAL'                          => 'Cette commande sera finalisée une fois le paiement Paypal contrôlé.',
 'L_EMAIL_CUST_SUMMARY'                          => 'Récapitulatif de votre commande',
 'L_EMAIL_CUST_ADDRESS'                          => 'Adresse de livraison',
 'L_EMAIL_CUST_PAYMENT'                      => 'Méthode de paiement',
@@ -176,20 +176,20 @@ $LANG = array(
 'L_EMAIL_SENT1'                      => 'Un e-mail de récapitulatif de commande vous a été envoyé.',
 'L_EMAIL_SENT2'                      => 'Si l\'e-mail de récapitulatif de commande n\'apparait pas dans votre liste d\'e-mails en attente ou que celui-ci est signalé en tant que spam, veuillez ajouter %s à votre liste de contacts.', // %s : adresse e-mail du gestionnaire des commandes
 
-'L_EMAIL_ERROR1'                      => 'Une erreur c\'est produite lors de l\'envoi de votre e-mail récapitulatif.',
-'L_EMAIL_ERROR2'                      => 'Une erreur c\'est produite lors de l\'envoi de la commande par e-mail.',
+'L_EMAIL_ERROR1'                      => 'Une erreur s\'est produite lors de l\'envoi de votre e-mail récapitulatif.',
+'L_EMAIL_ERROR2'                      => 'Une erreur s\'est produite lors de l\'envoi de la commande par e-mail.',
 
 'L_FILE_ORDER'                      => 'Commande du ',
 
 'L_FOR'                                => 'pour',
 'L_DEL'                                => 'Retirer',
 
-'L_MISSING_EMAIL'                      => 'l\'addresse e-mail n\'est pas défini.',
+'L_MISSING_EMAIL'                      => 'l\'adresse e-mail n\'est pas définie.',
 'L_MISSING_FIRSTNAME'                      => 'Le prénom n\'est pas défini.',
 'L_MISSING_LASTNAME'                      => 'Le nom de famille n\'est pas défini.',
-'L_MISSING_ADDRESS'                      => 'L\'addresse n\'est pas défini.',
+'L_MISSING_ADDRESS'                      => 'L\'adresse n\'est pas définie.',
 'L_MISSING_ZIP'                      => 'Le code postal n\'est pas défini.',
-'L_MISSING_TOWN'                      => 'La ville n\'est pas défini.',
+'L_MISSING_TOWN'                      => 'La ville n\'est pas définie.',
 'L_MISSING_COUNTRY'                      => 'Le pays n\'est pas défini.',
 'L_MISSING_GIFTNAME'                      => 'Le nom du destinataire du cadeau n\'est pas défini.',
 
