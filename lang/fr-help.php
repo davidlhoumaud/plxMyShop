@@ -4,7 +4,10 @@ if (!defined("PLX_ROOT")) exit;
 
 
 <p align="center"><span style="font-family: Liberation Sans,sans-serif;"><span style="font-size: xx-large;"><b>PlxMyShop</b></span></span></p>
-<p align="center"><span style="font-size: small;">Version 0.9.4 beta</span></p>
+<p align="center">
+<span style="font-size: small;">Version 0.9.4 beta</span>
+<span style="background-color : #FC3; padding : 0.5em">Cette documentation n'est pas à jour avec les fonctionnalités actuelles de l'extension.</span>
+</p>
 
 <h1 class="western"><span style="text-decoration: underline;">Sommaire</span></h1>
 <ul>
