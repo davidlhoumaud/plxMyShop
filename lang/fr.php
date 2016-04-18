@@ -141,7 +141,7 @@ $LANG = array(
 
 'L_ADMIN_ORDER_VIEW'                    => 'Voir',
 'L_ADMIN_ORDER_DELETE'                    => 'Supprimer',
-'L_ADMIN_CONFIRM_DELETE'                    => 'Confirmez-vous la supression de cette commande ?',
+'L_ADMIN_CONFIRM_DELETE'                    => 'Confirmez-vous la suppression de cette commande ?',
 
 #plxMyShop.php
 'L_PAYMENT_CHEQUE'                      => 'Chèque',
