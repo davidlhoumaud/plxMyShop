@@ -862,7 +862,6 @@ class plxMyShop extends plxPlugin {
 		
 		
 		if ("pageSeparee" !== $this->getParam("affPanier")) {
-			$lienPanier = "#panier";
 		}
 		
 		$this->donneesModeles["lienPanier"] = $lienPanier;

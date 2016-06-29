@@ -5,7 +5,8 @@ $LANG = array(
 'L_PAGE_TITLE'				=> 'Création et édition des produits',
 
 'L_DEFAULT_NEW_PRODUCT_URL'			=> 'nouveau-produit',
-'L_CONFIG_INFOS_NB_PRODUCTS'		=> 'Nombre de produits :',
+'L_CONFIG_INFOS_NB_PRODUCTS'		=> 'Nombre de produits :',
+'L_CONFIG_PRIX_BASE'				=> 'Prix de base :',
 'L_MENU_PRODUCTS_TITLE'				=> 'Liste et modification des produits',
 'L_MENU_PRODUCTS'					=> 'Liste des produits',
 'L_MENU_CATS'					=> 'Liste des catégories',
