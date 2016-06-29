@@ -4,9 +4,16 @@
  * @author    David L
  **/
 class plxMyShop extends plxPlugin {
-    public $aProds = array(); # Tableau de tous les produits
-    public $get = false; # Donnees variable GET
-    public $cible = false; # Article, categorie, produit ou page statique cible
+	
+	public $aProds = array(); # Tableau de tous les produits
+	public $donneesModeles = array();
+	
+	public $plxMotor;
+	public $cheminImages;
+	public $idProduit;
+	
+	public $shortcode = "boutonPanier";
+	
 	
     public function __construct($default_lang) {
         
@@ -17,35 +24,45 @@ class plxMyShop extends plxPlugin {
         # droits pour accèder à la page config.php du plugin
         $this->setConfigProfil(PROFIL_ADMIN);
         # Personnalisation du menu admin
-        $this->setAdminMenu(($this->getParam('shop_name')!=""?$this->getParam('shop_name'):"MyShop").' '.$this->getInfo('version'), 5, 'Affichage des produits/catégories');
+        $this->setAdminMenu(
+			($this->getParam('shop_name') !== "" ? $this->getParam('shop_name') : "MyShop") . ' ' . $this->getInfo('version')
+			, 5
+			, 'Affichage des produits / catégories'
+		);
 
         $this->addHook('plxMotorPreChauffageBegin', 'plxMotorPreChauffageBegin');
         $this->addHook('plxShowConstruct', 'plxShowConstruct');
         $this->addHook('plxShowPageTitle', 'plxShowPageTitle');
         $this->addHook('plxShowStaticListEnd', 'plxShowStaticListEnd');
         $this->addHook('SitemapStatics', 'SitemapStatics');
+		
+        $this->addHook('AdminPrepend', 'AdminPrepend');
         
-        //echo PLX_ROOT.PLX_CONFIG_PATH.'products.xml'; exit;
-         $this->getProducts();
-         $this->get = plxUtils::getGets();
-         if (!is_dir(PLX_ROOT.'data/commandes/')) {
-                mkdir(PLX_ROOT.'data/commandes/', 0755, true);
-         }
-         if (!is_file(PLX_ROOT.'data/commandes/index.html')) {
-                $mescommandeindex = fopen(PLX_ROOT.'data/commandes/index.html', 'w+');
-                fclose($mescommandeindex);
-         }
-
+		$this->addHook('plxShowStaticContent', 'plxShowStaticContent');
+        
+		$this->getProducts();
+		
+		if (!is_dir(PLX_ROOT.'data/commandes/')) {
+			mkdir(PLX_ROOT.'data/commandes/', 0755, true);
+		}
+		if (!is_file(PLX_ROOT.'data/commandes/index.html')) {
+			$mescommandeindex = fopen(PLX_ROOT.'data/commandes/index.html', 'w+');
+			fclose($mescommandeindex);
+		}
+		
 		
 		// méthodes de paiement
-		
 		$tabMethodespaiement = array(
 			"cheque" => array(
-				"libelle" => "Chèque",
+				"libelle" => $this->getlang('L_PAYMENT_CHEQUE') ,
 				"codeOption" => "payment_cheque",
 			),
+			"cash" => array(
+				"libelle" => $this->getlang('L_PAYMENT_CASH') ,
+				"codeOption" => "payment_cash",
+			),
 			"paypal" => array(
-				"libelle" => "Paypal",
+				"libelle" => $this->getlang('L_PAYMENT_PAYPAL'),
 				"codeOption" => "payment_paypal",
 			),
 		);
@@ -62,25 +79,8 @@ class plxMyShop extends plxPlugin {
 		
     }
 
-    public function productNumber(){
-    
-        $capture=explode("/",$this->get);
-        
-        $capture=explode("product",$capture[0]);
-
-       
-        if (isset($capture[1])){
-#             $ii=0;
-#             echo count($this->aProds);
-#            while($ii<(sizeof($this->aProds)+2)) {
-#                $ii++;
-#                if ((int)$capture[1]===(int)$ii) {
-
-                    return str_pad($capture[1],3,"0",STR_PAD_LEFT);
-#                }
-#                $ii++;
-#            }
-        }
+    public function productNumber() {
+		return $this->idProduit;
     }
 
     /**
@@ -108,7 +108,115 @@ class plxMyShop extends plxPlugin {
             echo "<?php ".$string." ?>";
         }
     }
+    
+	
+	
+	public function AdminPrepend() {
+		
+		$this->plxMotor = plxAdmin::getInstance();
+		
+		if (isset($this->plxMotor->aConf['images'])) {
+			// jusqu'à la version 5.3.1
+			$this->cheminImages = $this->plxMotor->aConf['images'];
+		} else {
+			$this->cheminImages = $this->plxMotor->aConf['medias'];
+		}
+		
+	}
+	
+	
+	
+	
+	public function plxShowStaticContent() {
+		
+		echo "<?php";
+		?>
+			$plxPlugin = $this->plxMotor->plxPlugins->aPlugins['plxMyShop'];
+			$output = $plxPlugin->traitementPageStatique($output);
+			?>
+		<?php
+		
+	}
+	
+	public function traitementPageStatique($output) {
+		
+		preg_match_all("!\\[{$this->shortcode} (.*)\\]!U", $output, $resultat);
+		
+		
+		if (0 < count($resultat[1])) {
+			
+			$resultat[1] = array_unique($resultat[1]);
+			
+			$tabCodes = array();
+			$tabRemplacement = array();
+			
+			$this->donneesModeles["plxPlugin"] = $this;
+			
+			foreach ($resultat[1] as $codeProduit) {
+			$tabCodes[] = "[{$this->shortcode} $codeProduit]";
+				
+				
+				ob_start();
+				
+				$this->donneesModeles["k"] = $codeProduit;
+				$this->modele("espacePublic/boucle/boutonPanier");
+				
+				$tabRemplacements[] = ob_get_clean();
+			}
+			
+			$output = str_replace($tabCodes, $tabRemplacements, $output);
+			
+			ob_start();
+			
+			?>
+				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+				<script type="text/javascript">
+				jQuery.noConflict();
+				</script>
 
+				<script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/libajax.js'></script>
+				<script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js'></script>
+
+				<?php 
+					if (in_array(
+							$this->getParam("affPanier")
+							, array("basPage", "partout")
+						)
+					) {
+						
+						$_SESSION['msgCommand']="";
+						
+						if (isset($_POST['prods']) && plxUtils::cdataCheck($_POST['prods'])!="") {
+							$this->validerCommande();
+						}
+						
+						$this->modele("espacePublic/panier");
+					} else {
+						$this->modele("espacePublic/ajoutProduit");
+					}
+				?>
+				
+				<script type="text/JavaScript">
+					var error = false;
+					var repertoireAjax = '<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
+                    var devise = '<?php echo $this->getParam("devise");?>';
+                    var pos_devise = '<?php echo $this->getParam("position_devise");?>';
+                    var L_FOR = '<?php echo $this->getlang('L_FOR'); ?>';
+                    var L_DELETE = '<?php echo $this->getlang('L_DEL'); ?>';
+                    var L_TOTAL = '<?php echo $this->getlang('L_TOTAL_BASKET'); ?>';
+
+				</script>
+			
+			<?php
+			
+			$output .= ob_get_clean();
+		}
+		
+		return $output;
+	}
+	
+	
+	
     /**
      * Méthode qui effectue une analyse de la situation et détermine
      * le mode à appliquer. Cette méthode alimente ensuite les variables
@@ -117,20 +225,72 @@ class plxMyShop extends plxPlugin {
      * @return    null
      * @author    Anthony GUÉRIN, Florent MONTHEL, Stéphane F
      **/
-    public function plxMotorPreChauffageBegin($template="static.php") {
-        if (isset($this->aProds[$this->productNumber()])) {
-            $template = ($this->aProds[$this->productNumber()]["template"]==""?$this->getParam('template'):$this->aProds[$this->productNumber()]["template"]);
-            $string= '$prefix = str_repeat("../", substr_count(trim(PLX_ROOT."data/products/", "/"), "/"));
-    if ($this->get && preg_match("#product([0-9]+)/?([a-z0-9-]+)?#",$this->get)) {
-        $capture=explode("/",$this->get);
-        $capture=explode("product",$capture[0]);
-        $this->cible = $prefix."'.PLX_PLUGINS.'plxMyShop/form";
-        $this->mode = "product";
-        $this->template = "'.$template.'";
-        return true;
-    }';
-            echo "<?php ".$string." ?>"; 
-        }
+
+	public function plxMotorPreChauffageBegin() {
+		
+		$this->plxMotor = plxMotor::getInstance();
+		
+		eval($this->plxMotor->plxPlugins->callHook("plxMyShop_debut"));
+		
+		
+		if (isset($this->plxMotor->aConf['images'])) {
+			// jusqu'à la version 5.3.1
+			$this->cheminImages = $this->plxMotor->aConf['images'];
+		} else {
+			$this->cheminImages = $this->plxMotor->aConf['medias'];
+		}
+		
+		
+		$nomPlugin = __CLASS__;
+		
+		
+		// contrôleur des pages du plugin
+		
+		
+		if ("boutique/panier" === $this->plxMotor->get) {
+			
+			$classeVue = "panier";
+			
+			require_once "classes/vues/$classeVue.php";
+			$this->vue = new $classeVue();
+			$this->vue->plxPlugin = $this;
+			$this->vue->traitement();
+			
+			$this->plxMotor->mode = "static";
+			$this->plxMotor->cible = $nomPlugin;
+			$this->plxMotor->template = $this->getParam("template");
+			
+			$this->plxMotor->aConf["racine_statiques"] = "";
+			$this->plxMotor->aStats[$this->plxMotor->cible] = array(
+				"name" => $this->vue->titre(),
+				"url" => "/../{$this->plxMotor->aConf["racine_plugins"]}/$nomPlugin/template/vue",
+				"active" => 1,
+				"menu" => "non",
+				"readable" => 1,
+				"title_htmltag" => "",
+			);
+			
+			echo "<?php return TRUE;?>";
+		}
+		
+		
+		// pages des produits et des catégories
+		
+		if (preg_match("#product([0-9]+)/?([a-z0-9-]+)?#", $this->plxMotor->get, $resultat)) {
+			$this->idProduit = str_pad($resultat[1], 3, "0", STR_PAD_LEFT);
+			
+			$template = $this->aProds[$this->productNumber()]["template"] === ""
+				 ? $this->getParam('template')
+				 : $this->aProds[$this->productNumber()]["template"];
+			
+			$this->plxMotor->mode = "product";
+			$this->plxMotor->aConf["racine_statiques"] = "";
+			$this->plxMotor->cible = "{$this->plxMotor->aConf["racine_plugins"]}/$nomPlugin/form";
+			$this->plxMotor->template = $template;
+			
+			echo "<?php return TRUE;?>";
+		}
+		
     }
 
     /**
@@ -223,10 +383,6 @@ class plxMyShop extends plxPlugin {
                 $poidg = plxUtils::getValue($iTags['poidg'][$i]);
                 $this->aProds[$number]['poidg']=plxUtils::getValue($values[$poidg]['value']);
                 
-                # Recuperation device 
-                $device = plxUtils::getValue($iTags['device'][$i]);
-                $this->aProds[$number]['device']=plxUtils::getValue($values[$device]['value']);
-                
                 # Recuperation image 
                 $image = plxUtils::getValue($iTags['image'][$i]);
                 $this->aProds[$number]['image']=plxUtils::getValue($values[$image]['value']);
@@ -310,7 +466,6 @@ class plxMyShop extends plxPlugin {
                     $this->aProds[$product_id]['notice_noaddcart'] = (isset($this->aProds[$product_id]['notice_noaddcart'])?$this->aProds[$product_id]['notice_noaddcart']:'');
                     $this->aProds[$product_id]['pricettc'] = (isset($this->aProds[$product_id]['pricettc'])?$this->aProds[$product_id]['pricettc']:'');
                     $this->aProds[$product_id]['poidg'] = (isset($this->aProds[$product_id]['poidg'])?$this->aProds[$product_id]['poidg']:'');
-                    $this->aProds[$product_id]['device'] = (isset($this->aProds[$product_id]['device'])?$this->aProds[$product_id]['device']:'');
                     $this->aProds[$product_id]['meta_description'] = (isset($this->aProds[$product_id]['meta_description'])?$this->aProds[$product_id]['meta_description']:'');
                     $this->aProds[$product_id]['meta_keywords'] = (isset($this->aProds[$product_id]['meta_keywords'])?$this->aProds[$product_id]['meta_keywords']:'');
                     $action = true;
@@ -354,7 +509,6 @@ class plxMyShop extends plxPlugin {
                     $xml .= "<notice_noaddcart><![CDATA[".plxUtils::cdataCheck($product['notice_noaddcart'])."]]></notice_noaddcart>";
                     $xml .= "<pricettc><![CDATA[".plxUtils::cdataCheck($product['pricettc'])."]]></pricettc>";
                     $xml .= "<poidg><![CDATA[".plxUtils::cdataCheck(($product['poidg']==0?"0.0":$product['poidg']))."]]></poidg>";
-                    $xml .= "<device><![CDATA[".plxUtils::cdataCheck($product['device'])."]]></device>";
                     $xml .= "<meta_description><![CDATA[".plxUtils::cdataCheck($product['meta_description'])."]]></meta_description>";
                     $xml .= "<meta_keywords><![CDATA[".plxUtils::cdataCheck($product['meta_keywords'])."]]></meta_keywords>";
                     $xml .= "<title_htmltag><![CDATA[".plxUtils::cdataCheck($product['title_htmltag'])."]]></title_htmltag>";
@@ -412,13 +566,21 @@ class plxMyShop extends plxPlugin {
 		if (isset($content["listeCategories"])) {
 			$this->aProds[$content['id']]['group'] = implode(",", $content["listeCategories"]);
 		}
+		
+		// formatage du prix et du poids à l'édition
+		
+		foreach (array("pricettc", "poidg") as $champ) {
+			$content[$champ] = number_format($content[$champ], 2, ".", "");
+		}
+		
+		
+		// données du produit
         
         $this->aProds[$content['id']]['image'] = $content['image'];
         $this->aProds[$content['id']]['noaddcart'] = $content['noaddcart'];
         $this->aProds[$content['id']]['notice_noaddcart'] = $content['notice_noaddcart'];
         $this->aProds[$content['id']]['pricettc'] = $content['pricettc'];
         $this->aProds[$content['id']]['poidg'] = $content['poidg'];
-        $this->aProds[$content['id']]['device'] = $content['device'];
         $this->aProds[$content['id']]['template'] = $content['template'];
         $this->aProds[$content['id']]['title_htmltag'] = trim($content['title_htmltag']);
         $this->aProds[$content['id']]['meta_description'] = trim($content['meta_description']);
@@ -486,8 +648,14 @@ class plxMyShop extends plxPlugin {
      * @author    David.L
      **/
     public function productTitle() {
-
-        echo plxUtils::strCheck(preg_replace("/'/",'&apos;',$this->aProds[ $this->productNumber()]['name']));
+		
+		echo plxUtils::strCheck(
+			preg_replace(
+				"/'/"
+				, '&apos;'
+				, $this->aProds[ $this->productNumber()]['name']
+			)
+		);
     }
     
     /**
@@ -499,8 +667,13 @@ class plxMyShop extends plxPlugin {
 
      **/
     public function productImage() {
-
-        return plxUtils::strCheck($this->aProds[ $this->productNumber() ]["image"]);
+		
+		return plxUtils::strCheck(
+			$this->plxMotor->urlRewrite(
+				$this->cheminImages
+				. $this->aProds[$this->productNumber()]["image"]
+			)
+		);
     }
     
     /**
@@ -512,7 +685,8 @@ class plxMyShop extends plxPlugin {
      **/
     public function productPriceTTC() {
 
-        echo plxUtils::strCheck($this->aProds[ $this->productNumber() ]['pricettc']);
+        #echo plxUtils::strCheck($this->aProds[ $this->productNumber() ]['pricettc']);
+        return plxUtils::strCheck($this->aProds[ $this->productNumber() ]['pricettc']);
     }
     
     /**
@@ -545,18 +719,6 @@ class plxMyShop extends plxPlugin {
     public function productPoidG() {
 
         return plxUtils::strCheck($this->aProds[ $this->productNumber() ]['poidg']);
-    }
-    
-    /**
-     * Méthode qui affiche la device du produit
-     *
-     * @return    stdout
-     * @scope    product
-     * @author    David.L
-     **/
-    public function productDevice() {
-
-        echo plxUtils::strCheck($this->aProds[ $this->productNumber()]['device']);
     }
 
     /**
@@ -660,12 +822,58 @@ class plxMyShop extends plxPlugin {
      **/
     public function plxShowStaticListEnd() {
 		
-		$this->plxMotor = plxMotor::getInstance();
+		
+		$positionMenu = $this->getParam('menu_position') - 1;
 		
 		
-        # ajout du menu pour accèder à la page de contact
+		if (in_array(
+				$this->getParam("affPanier")
+				, array("pageSeparee", "partout")
+			)
+		) {
+			// ajout du lien vers le panier
+			
+			$nomPlugin = __CLASS__;
+			
+			$panierSelectionne = (
+					("static" === $this->plxMotor->mode)
+				&&	($nomPlugin === $this->plxMotor->cible)
+				&&	("panier" === get_class($this->vue))
+			);
+			
+			
+			$classeCss = $panierSelectionne ? "active" : "noactive";
+			
+			$lienPanier = $this->plxMotor->urlRewrite("index.php?boutique/panier");
+			
+			require_once "classes/vues/panier.php";
+			$vuePanier = new panier();
+			$vuePanier->plxPlugin = $this;
+			
+			$titreProtege = plxMyShop::nomProtege($vuePanier->titre());
+			
+			
+			echo "<?php";
+			echo "	array_splice(\$menus, $positionMenu, 0";
+			echo "		, '<li><a class=\"static $classeCss\" href=\"$lienPanier\" title=\"' . htmlspecialchars('$titreProtege') . '\">$titreProtege</a></li>'";
+			echo "	);";
+			echo "?>";
+		}
+		
+		
+		if ("pageSeparee" !== $this->getParam("affPanier")) {
+			$lienPanier = $this->plxMotor->urlRewrite("#panier");
+		}
+		
+		$this->donneesModeles["lienPanier"] = $lienPanier;
+		
+		
+        # ajout du menu pour accèder aux rubriques
+		
         if (isset($this->aProds) && is_array($this->aProds)) {
-            foreach($this->aProds as $k=>$v) {
+			
+			
+            foreach(array_reverse($this->aProds) as $k=>$v) {
                 if ($v['menu']!='non' && $v['menu']!='') {
 					
 					$nomProtege = self::nomProtege($v['name']);
@@ -677,7 +885,6 @@ class plxMyShop extends plxPlugin {
 					
 					
 					$classeCss = $categorieSelectionnee ? "active" : "noactive";
-					$positionMenu = $this->getParam('menu_position') - 1;
 					$lien = $this->plxMotor->urlRewrite("index.php?product$k/{$v["url"]}");
 					
 					echo "<?php";
@@ -692,9 +899,16 @@ class plxMyShop extends plxPlugin {
     }
     
 	
-	public $donneesModeles = array();
-	
 	public function modele($modele) {
+		
+		if (!isset($this->donneesModeles["pileModeles"])) {
+			$this->donneesModeles["pileModeles"] = array();
+		}
+		
+		$this->donneesModeles["pileModeles"][] = $modele;
+		
+		
+		// fichier du modèle dans le thème
 		
 		$plxMotor = plxMotor::getInstance();
 		
@@ -703,19 +917,24 @@ class plxMyShop extends plxPlugin {
 		
 		
 		// si le fichier du modèle n'existe pas dans le thème
-		if (!file_exists($fichier)) {
+		if (!is_file($fichier)) {
 			// on choisi le fichier par défaut dans le répertoire de l'extension
 			$fichier = "modeles/$modele.php";
 		}
 		
 		$d = $this->donneesModeles;
+		
 		require $fichier;
+		
+		
+		// rétablissement des noms des modèles
+		array_pop($this->donneesModeles["pileModeles"]);
 		
 	}
 	
 	public function validerCommande() {
 		
-		$tabChoixMethodespaiement = $plxPlugin->donneesModeles["tabChoixMethodespaiement"];
+		$tabChoixMethodespaiement = $this->donneesModeles["tabChoixMethodespaiement"];
 		
 		
 		if (	isset($_POST["methodpayment"])
@@ -743,34 +962,50 @@ class plxMyShop extends plxPlugin {
 		$productscart=array();
 		if (isset($_SESSION['prods'])) {
 			foreach ($_SESSION['prods'] as $k => $v) {
+				
+				if (!isset($productscart[$v])) {
+					$productscart[$v] = array(
+						'name' => $this->aProds[$v]['name'],
+						'pricettc' => 0,
+						'poidg' => 0,
+						'nombre' => 0,
+					);
+				}
+				
 				$totalpricettc= ((float)$this->aProds[$v]['pricettc']+(float)$totalpricettc);
 				$totalpoidg= ((float)$this->aProds[$v]['poidg']+(float)$totalpoidg);
-				$productscart[$v]=array('pricettc' => $this->aProds[$v]['pricettc'],
-										'poidg' => $this->aProds[$v]['poidg'],
-										'name' => $this->aProds[$v]['name'],
-										'device' => $this->aProds[$v]['device']
-									);
+				
+				$productscart[$v]["nombre"]++;
+				$productscart[$v]["pricettc"] += $this->aProds[$v]['pricettc'];
+				$productscart[$v]["poidg"] += $this->aProds[$v]['poidg'];
+				
 			}
 			$totalpoidgshipping = $this->shippingMethod($totalpoidg, 1);
 		}
 		
 		#Mail de nouvelle commande pour le commerçant.
-		$sujet = 'Nouvelle commande '.$SHOPNAME;
-		$message = plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br />".
-		plxUtils::cdataCheck($_POST['adress'])."<br />".
-		plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br />".
-		plxUtils::cdataCheck($_POST['country'])."<br />".
-		"Tel : ".plxUtils::cdataCheck($_POST['tel'])."<br /><br />".
-		"Méthode de paiement : ".($_POST['methodpayment']=="paypal"?"Paypal":"Chèque").
-		"<br>Liste des produits :<br /><ul>";
+		$sujet = $this->getlang('L_EMAIL_SUBJECT').$SHOPNAME;
+		$message = plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br/>".
+		plxUtils::cdataCheck($_POST['adress'])."<br/>".
+		plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
+		plxUtils::cdataCheck($_POST['country'])."<br/>".
+        $this->getlang('L_EMAIL_TEL').
+        plxUtils::cdataCheck($_POST['tel'])."<br/><br/>".
+		(!isset($_POST["choixCadeau"]) 
+			? $this->getlang('L_EMAIL_NOGIFT') 
+			: $this->getlang('L_EMAIL_GIFT_FOR')." <strong>".htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
+		)
+		."<br/><br/>".
+		$this->getlang('L_PAIEMENT').": ".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE')).
+		"<br>".$this->getlang('L_EMAIL_PRODUCTLIST')." :<br/><ul>";
 		foreach ($productscart as $k => $v) {
-			$message.="<li>".$v['name']." ".$v['pricettc'].$v['device'].((float)$v['poidg']>0?" pour ".$v['poidg']."Kg":"")."</li>";
+			$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."Kg":"")."</li>";
 		}
-		$message.="</ul><br /><br>".
-		"<strong>Total (frais de port inclus): ".($totalpricettc+$totalpoidgshipping)."&euro;</strong><br />".
-		"<em><strong>Frais de port : ".$totalpoidgshipping."&euro;</strong><br />".
-		"<strong>Poids : ".$totalpoidg."kg</strong><br /><br /></em>".
-		"Commentaire : <br>".plxUtils::cdataCheck($_POST['msg']);
+		$message.="</ul><br/><br>".
+            "<strong>".$this->getlang('L_EMAIL_TOTAL').": ".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "</strong><br/><em><strong>". 
+            $this->getlang('L_EMAIL_DELIVERY_COST'). " : ".$this->pos_devise($totalpoidgshipping). "</strong><br/>".
+		"<strong>".$this->getlang('L_EMAIL_WEIGHT')." : ".$totalpoidg."&nbsp;kg</strong><br/><br/></em>".
+		$this->getlang('L_EMAIL_COMMENT')." : <br>".plxUtils::cdataCheck($_POST['msg']);
 		$destinataire = $TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"");
 		$headers = "MIME-Version: 1.0\r\nFrom: \"".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."\"<".$_POST['email'].">\r\n";
 		$headers .= "Reply-To: ".$_POST['email']."\r\nX-Mailer: PHP/" . phpversion() . "\r\nX-originating-IP: " . $_SERVER["REMOTE_ADDR"] . "\r\n";
@@ -783,58 +1018,95 @@ class plxMyShop extends plxPlugin {
 			&&	(isset($_POST['postcode']) &&  plxUtils::cdataCheck($_POST['postcode'])!="")
 			&&	(isset($_POST['city']) && plxUtils::cdataCheck($_POST['city'])!="")
 			&&	(isset($_POST['country']) && plxUtils::cdataCheck($_POST['country'])!="")
+			&&	(!isset($_POST['choixCadeau']) || plxUtils::cdataCheck($_POST['nomCadeau'])!="")
 		) {
 			
 			if(mail($destinataire,$sujet,$message,$headers)){
 				if ($_POST['methodpayment']=="paypal") {
-					$msgCommand.= "<h2 class='h2okmsg' >La commande est confirmé et en cours de validation de votre par sur Paypal</h2>";
+					$msgCommand.= "<h2 class='h2okmsg' >".$this->getlang('L_EMAIL_CONFIRM_PAYPAL')."</h2>";
 				} else if ($_POST['methodpayment']=="cheque") { 
-					 $msgCommand.= "<h2 class='h2okmsg'>La commande a bien été confirmé et envoyé par email.</h2>";
+					 $msgCommand.= "<h2 class='h2okmsg'>".$this->getlang('L_EMAIL_CONFIRM_CHEQUE')."</h2>";
+				} else if ($_POST['methodpayment']=="cash") { 
+					 $msgCommand.= "<h2 class='h2okmsg'>".$this->getlang('L_EMAIL_CONFIRM_CASH')."</h2>";
 				}
 				
-				#Mail de récapitulatif de commande pour le client.
-				$sujet = 'Récapitulatif commande '.$SHOPNAME;
-				$message = "<p>Vous venez de confirmer une commande sur <a href='http://".$_SERVER["HTTP_HOST"]."'>".$SHOPNAME."</a>".
-				"<br>Cette commande est en ".($_POST['methodpayment']=="cheque"?"attente":"cours")." de règlement</p>";
+                #Mail de récapitulatif de commande pour le client.
+                switch ($_POST['methodpayment']) {
+                   case 'cheque' :
+                        $status = $this->getlang('L_WAITING'); 
+                        $method = $this->getlang('L_PAYMENT_CHEQUE');
+                     break; 
+                   case 'cash':
+                       $status = $this->getlang('L_WAITING'); 
+                       $method = $this->getlang('L_PAYMENT_CASH');
+                     break;
+                   case 'paypal':
+                       $status = $this->getlang('L_ONGOING'); 
+                       $method = $this->getlang('L_PAYMENT_PAYPAL');
+                     break;
+                   default:
+                     echo 'A method of payment is required!'; 
+} 
+		        $sujet = $this->getlang('L_EMAIL_CUST_SUBJECT') . $SHOPNAME;
+                $message = "<p>" . $this->getlang('L_EMAIL_CUST_MESSAGE1') . " <a href='http://".$_SERVER["HTTP_HOST"]."'>".$SHOPNAME."</a><br>".
+                    $this->getlang('L_EMAIL_CUST_MESSAGE2')." ". $status ." ".$this->getlang('L_EMAIL_CUST_MESSAGE3')."</p>";
 				if ($_POST['methodpayment']=="cheque") {
-					$message .="<p>Pour finaliser cette commande veuillez établir le chèque à l'ordre de : ".$COMMERCANTNAME."<br>Envoyer votre chèque à cette addresse :".
+					$message .="<p>". $this->getlang('L_EMAIL_CUST_CHEQUE') ." : ".$COMMERCANTNAME."<br>". $this->getlang('L_EMAIL_CUST_SENDCHEQUE') ." :".
 					"<br><em>&nbsp;&nbsp;&nbsp;&nbsp;".$SHOPNAME."".
 					"<br>&nbsp;&nbsp;&nbsp;&nbsp;".$COMMERCANTNAME."".
 					"<br>&nbsp;&nbsp;&nbsp;&nbsp;".$COMMERCANTSTREET."".
 					"<br>&nbsp;&nbsp;&nbsp;&nbsp;".$COMMERCANTPOSTCODE." ".$COMMERCANTCITY."</em></p>";
+                } elseif ($_POST['methodpayment']=="cash") {
+					 $message .="<p>".$this->getlang('L_EMAIL_CUST_CASH')."</p>";
 				} elseif ($_POST['methodpayment']=="paypal") {
-					 $message .="<p>Cette commande sera finalisé une fois le paiement Paypal contrôlé.</p>";
+					 $message .="<p>".$this->getlang('L_EMAIL_CUST_PAYPAL')."</p>";
 				}
-				$message .= "<br><h1><u>Récapitulatif de votre commande :</u></h1>".
-				"<br><strong>Addresse de livraison :</strong>".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br />".
-				plxUtils::cdataCheck($_POST['adress'])."<br />".
-				plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br />".
-				plxUtils::cdataCheck($_POST['country'])."<br />".
-				"<strong>Tel : </strong>".plxUtils::cdataCheck($_POST['tel'])."<br /><br />".
-				"<strong>Méthode de paiement : </strong>".($_POST['methodpayment']=="paypal"?"Paypal":"Chèque").
-				"<br><strong>Liste des produits :</strong><br />";
+				$message .= "<br><h1><u>".$this->getlang('L_EMAIL_CUST_SUMMARY')." :</u></h1>".
+				"<br><strong>".$this->getlang('L_EMAIL_CUST_ADDRESS')." :</strong><br/>".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br/>".
+				plxUtils::cdataCheck($_POST['adress'])."<br/>".
+				plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
+				plxUtils::cdataCheck($_POST['country'])."<br/>".
+				"<strong>Tel : </strong>".plxUtils::cdataCheck($_POST['tel'])."<br/><br/>".
+				(!isset($_POST["choixCadeau"]) 
+					? $this->getlang('L_EMAIL_NOGIFT') 
+					: $this->getlang('L_EMAIL_GIFT_FOR') ." <strong>" . htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
+				)
+				. "<br/><br/>" .
+				"<strong>". $this->getlang('L_EMAIL_CUST_PAYMENT') .": </strong>". $method .
+				"<br><strong>". $this->getlang('L_EMAIL_PRODUCTLIST') ." :</strong><br/>";
 				foreach ($productscart as $k => $v) {
-					$message.="<li>".$v['name']." ".$v['pricettc'].$v['device'].((float)$v['poidg']>0?" pour ".$v['poidg']."Kg":"")."</li>";
+					$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ".$this->getlang('L_FOR')." ".$v['poidg']."&nbsp;kg":"")."</li>";
 				}
-				$message.= "<br /><br>".
-				"<strong>Total (frais de port inclus) : </strong>".($totalpricettc+$totalpoidgshipping)."&euro;<br />".
-				"<em><strong>Frais de port : </strong>".$totalpoidgshipping."&euro;<br />".
-				"<strong>Poids : </strong>".$totalpoidg."kg<br /><br /></em>".
-				"<strong>Votre Commentaire : </strong><br>".plxUtils::cdataCheck($_POST['msg']);
+				$message.= "<br/><br>".
+				"<strong>". $this->getlang('L_EMAIL_TOTAL') ." : </strong>".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "<br/>".
+				"<em><strong>". $this->getlang('L_EMAIL_DELIVERY_COST') ." : </strong>".$this->pos_devise($totalpoidgshipping)."<br/>".
+				"<strong>". $this->getlang('L_EMAIL_WEIGHT') ." : </strong>".$totalpoidg."&nbsp;kg<br/><br/></em>".
+				"<strong>". $this->getlang('L_EMAIL_COMMENT') ." : </strong><br>".plxUtils::cdataCheck($_POST['msg']);
+				
+				
+				
 				$destinataire = $_POST['email'];
 				$headers = "MIME-Version: 1.0\r\nFrom: \"".$SHOPNAME."\"<".$TONMAIL.">\r\n";
 				$headers .= "Reply-To: ".$TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"")."\r\nX-Mailer: PHP/" . phpversion() . "\r\nX-originating-IP: " . $_SERVER["REMOTE_ADDR"] . "\r\n";
 				$headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\nX-Priority: 1\r\nX-MSMail-Priority: High\r\n";
 				if(mail($destinataire,$sujet,$message,$headers)){
-					$msgCommand.= "<h2 class='h2okmsg2'>Un email de récapitulatif de commande vous a été envoyé.</h2>";
-					$msgCommand.= "<h2 class='h2okmsg3' >Si l'email de récapitulatif de commande n'apparait pas dans votre liste de mails en attente ou que celui-ci est signalé en tant que Spam. Veuillez ajouter \"".$TONMAIL."\" à votre liste de contacts.</h2>";
-					if ( $_POST['methodpayment']== "paypal") include(PLX_PLUGINS.'plxMyShop/paypal_api/SetExpressCheckout.php');
+					$msgCommand .= "<h2 class='h2okmsg2'>". $this->getlang('L_EMAIL_SENT1') . "</h2>";
+					$msgCommand .= "<h2 class='h2okmsg3'>" . sprintf($this->getlang('L_EMAIL_SENT2'), $TONMAIL) . "</h2>";
+					
+					if ($_POST['methodpayment'] === "paypal") {
+						$plxPlugin = $this;
+						
+						//require PLX_PLUGINS . 'plxMyShop/paypal_api/SetExpressCheckout.php';
+						
+						require PLX_PLUGINS . 'plxMyShop/paypal_api/boutonPaypalSimple.php';
+					}
+					
 					$nf=PLX_ROOT.'data/commandes/'.date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
 					$monfichier = fopen($nf, 'w+');
 					$commandeContent="<!DOCTYPE html>
 	<html>
 	<head>
-	<title>Commande du ".date("d m Y")."</title>
+	<title>".$this->getlang('L_FILE_ORDER').date("d m Y")."</title>
 	<meta charset=\"UTF-8\">
 	<meta name=\"description\" content=\"Commande\">
 	<meta name=\"author\" content=\"plxMyShop\">
@@ -849,40 +1121,43 @@ class plxMyShop extends plxPlugin {
 					unset($_SESSION['prods']);
 					unset($_SESSION['ncart']);
 				}else{
-					$msgCommand.= "<h2 class='h2nomsg'>Une erreur c'est produite lors de l'envoi de votre e-mail récapitulatif.</h2>";
+					$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_EMAIL_ERROR1') ."</h2>";
 				}
 			}else{
-				$msgCommand.= "<h2 class='h2nomsg'>Une erreur c'est produite lors de l'envoi de la commande par e-mail.</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_EMAIL_ERROR2') ."</h2>";
 				echo "<script type='text/javascript'>error=true;</script>";
 			}
 			
 		} else {
 			if ( (!isset($_POST['email']) || empty($_POST['email']) || $_POST['email']=="") ) {
-				$msgCommand.= "<h2 class='h2nomsg'>l'addresse email n'est pas défini.</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_EMAIL') ."</h2>";
 			}
 			
 			if (  (!isset($_POST['firstname']) ||  plxUtils::cdataCheck($_POST['firstname'])=="") ) {
-				$msgCommand.= "<h2 class='h2nomsg'>Le prénom n'est pas défini</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_FIRSTNAME') ."</h2>";
 			}
 			
 			if ( (!isset($_POST['lastname']) ||  plxUtils::cdataCheck($_POST['lastname'])=="")  ) {
-				$msgCommand.= "<h2 class='h2nomsg'>Le nom de famille n'est pas défini</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_LASTNAME')  ."</h2>";
 			}
 			
 			if ( (!isset($_POST['adress']) ||  plxUtils::cdataCheck($_POST['adress'])=="")  ) {
-				$msgCommand.= "<h2 class='h2nomsg'>L'addresse n'est pas défini</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_ADDRESS') ."</h2>";
 			}
 			
 			if ( (!isset($_POST['postcode']) ||  plxUtils::cdataCheck($_POST['postcode'])=="") ) {
-				$msgCommand.= "<h2 class='h2nomsg'>Le code postal n'est pas défini</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_ZIP')  ."</h2>";
 			}
 			
 			if ( (!isset($_POST['city']) ||  plxUtils::cdataCheck($_POST['city'])=="") ) {
-				$msgCommand.= "<h2 class='h2nomsg'>La ville n'est pas défini.</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_TOWN') ."</h2>";
 			}
 			
 			if ( (!isset($_POST['country']) ||  plxUtils::cdataCheck($_POST['country'])=="") ) {
-				$msgCommand.= "<h2 class='h2nomsg'>Le pays n'est pas défini.</h2>";
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_COUNTRY') ."</h2>";
+			}
+			if ( (isset($_POST['choixCadeau']) &&  plxUtils::cdataCheck($_POST['nomCadeau']) === "") ) {
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_GIFTNAME') ."</h2>";
 			}
 			
 			echo "<script type='text/javascript'>error=true;</script>";
@@ -890,7 +1165,18 @@ class plxMyShop extends plxPlugin {
 		
 		$_SESSION['msgCommand']=$msgCommand;
 	}
-	
+    
+    //will position the price based on the config, before or after the price
+    public function pos_devise($price) {
+        $pos_price = $price;
+        if ( $this->getParam('position_devise') == "before" ) {
+            $pos_price = $this->getParam('devise').$price;
+            }
+        elseif ( $this->getParam('position_devise') == "after" ) {
+            $pos_price = $price.$this->getParam('devise');
+            }
+       return $pos_price; 
+    }
 	
 	function shippingMethod($kg, $op) {
 		
@@ -925,6 +1211,44 @@ class plxMyShop extends plxPlugin {
 		}
 		
 		return (float) $shippingPrice;
+	}
+	
+	public function menuAdmin($ongletEnCours) {
+		
+		
+		$listeOnglets = [
+			"produits" => [
+				"titre" => $this->getLang("L_MENU_PRODUCTS"),
+				"urlHtml" => "plugin.php?p=plxMyShop",
+			],
+			"categories" => [
+				"titre" => $this->getLang("L_MENU_CATS"),
+				"urlHtml" => "plugin.php?p=plxMyShop&amp;mod=cat",
+			],
+			"commandes" => [
+				"titre" => $this->getLang("L_MENU_ORDERS"),
+				"urlHtml" => "plugin.php?p=plxMyShop&amp;mod=cmd",
+			],
+			"configuration" => [
+				"titre" => $this->getLang("L_MENU_CONFIG"),
+				"urlHtml" => "parametres_plugin.php?p=plxMyShop",
+			],
+		];
+		
+		
+		foreach ($listeOnglets as $codeOnglet => $o) {
+			
+			?>
+				
+				<a href="<?php echo $o["urlHtml"];?>">
+					<button<?php echo ($codeOnglet !== $ongletEnCours) ? "" : " disabled";?>>
+						<?php echo plxUtils::strCheck($o["titre"]);?>
+					</button></a>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+			<?php
+		}
+		
+		
 	}
 }
 

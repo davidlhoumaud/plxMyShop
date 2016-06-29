@@ -177,17 +177,17 @@
     display:none;width:20%;
 }
 
-#firstname, #lastname {
+#formcart #firstname, #formcart #lastname {
     display:none;width:30%;
 }
 
-#city {
+#formcart #city {
     display:none;width:40%;
 }
 
-#email, #tel, #country {
+#formcart #email, #formcart #tel, #formcart #country {
     display:none;width:50%;
 }
-#adress {
+#formcart #adress {
     display:none;width:75%;
 }

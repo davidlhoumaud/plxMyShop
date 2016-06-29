@@ -1,4 +1,8 @@
 <?php
+/*
+Si vous réutilisez ce fichier dans votre thème, nous vous conseillons de noter la version actuelle de plxMyShop
+version : 
+*/
 
 $plxPlugin = $d["plxPlugin"];
 
@@ -7,11 +11,11 @@ $plxPlugin = $d["plxPlugin"];
 <section class="list_products">
     <header>
         <div class="product_priceimage">
-			<a href="#panier" id="notiShoppingCart">
-				<span id="notiNumShoppingCart"></span><img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;Votre panier</a>
+			<a href="<?php echo htmlspecialchars($d["lienPanier"]);?>" id="notiShoppingCart">
+            <span id="notiNumShoppingCart"></span><img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;<?php $this->lang('L_PUBLIC_BASKET'); ?></a>
         </div>
         <div class="cat_image">
-			<?php echo ($plxPlugin->productImage()!="") ? '<img class="product_image_cat" src="'.$plxPlugin->productImage().'">' : '';?>
+			<?php echo ($plxPlugin->aProds[$plxPlugin->productNumber()]["image"]!="") ? '<img class="product_image_cat" src="'.$plxPlugin->productImage().'">' : '';?>
         </div>
     </header>
     <article>
@@ -25,7 +29,6 @@ $plxPlugin = $d["plxPlugin"];
 					&&	$v['readable']==1
 				) {
 					
-					$plxPlugin->donneesModeles["v"] = $v;
 					$plxPlugin->donneesModeles["k"] = $k;
 					
 					$plxPlugin->modele("espacePublic/boucle/produitRubrique");

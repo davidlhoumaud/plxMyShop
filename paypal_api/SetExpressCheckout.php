@@ -6,7 +6,7 @@ if (isset($_POST) && !empty($_POST) && is_array($_POST)) {
 * @param    string    The URL of the API endpoint
 * @return    array    Parsed HTTP Response body
 **/
-function PayPalHTTPPost($p_nvpStr, $p_API_Endpoint) {
+function PaypalHTTPPost($p_nvpStr, $p_API_Endpoint) {
     //Create a new cURL resource
     $ch = curl_init();
                 
@@ -78,8 +78,8 @@ if ($SandboxFlag=="True") { #for test
 
 
        $msgCommand.= '<div style="width:100%;" align="center">
-            <p><img style="margin-top:10%;" src="plugins/plxMyShop/paypal_api/PlxToPaypal_logo.png" border="0"/></p>
-            <p><img style="margin-top:2%;" src="plugins/plxMyShop/paypal_api/icon_load.gif" border="0"/></p>
+            <p><img style="margin-top:10%;" src="' . $plxPlugin->plxMotor->racine . PLX_PLUGINS . 'plxMyShop/images/paypal_logo.gif" border="0"/></p>
+            <p><img style="margin-top:2%;" src="' . $plxPlugin->plxMotor->racine . PLX_PLUGINS . 'plxMyShop/images/icon_load.gif" border="0"/></p>
             <span style="color:#003366;font-size:12px">Transfert des informations vers Paypal en cours...</span>
         </div>';
 
@@ -94,7 +94,6 @@ if ($SandboxFlag=="True") { #for test
             $SHIPPINGZIPCODE=urlencode($_POST['postcode']);
             $SHIPPINGCOUNTRYCODE=urlencode("FR");
             $SHIPTOPHONENUM=urlencode($_POST['tel']);
-            $LOCALECODE=trim($_POST['LOCALCODE']);
             $TOTALAMT=($totalpricettc+$totalpoidgshipping);
             
             //Built the string request
@@ -110,7 +109,6 @@ if ($SandboxFlag=="True") { #for test
                 . "&CANCELURL=http://" . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].'&paypal=cancel' //required    
                 . "&PAYMENTREQUEST_0_DESC=" . $OVERALLDESCRIPTION  //optional but best practices
                 . "&PAYMENTREQUEST_0_PAYMENTACTION=" . $PAYMENTACTION ////Could be Sale, Authorization or order
-                . "&LOCALECODE=".$LOCALECODE
                 . "&ADDROVERRIDE=1"
                 . "&PAYMENTREQUEST_0_AMT=" . $TOTALAMT //required = PAYMENTREQUEST_0_ITEMAMT + PAYMENTREQUEST_0_SHIPPINGAMT + PAYMENTREQUEST_0_TAXAMT + PAYMENTREQUEST_0_INURANCEAMT
                 . "&BUYERUSERNAME="//$_POST['customer_id']
@@ -123,7 +121,7 @@ if ($SandboxFlag=="True") { #for test
                 . "&PAYMENTREQUEST_0_SHIPTOSTREET=" . $SHIPPINGSTREET
                 . "&PAYMENTREQUEST_0_SHIPTOSTREET2="
                 . "&PAYMENTREQUEST_0_SHIPTOCITY=" . $SHIPPINGCITY
-                . "&PAYMENTREQUEST_0_SHIPTOSTATE=" . $SHIPPINGSTATE
+                //. "&PAYMENTREQUEST_0_SHIPTOSTATE=" . $SHIPPINGSTATE
                 . "&PAYMENTREQUEST_0_SHIPTOZIP=" . $SHIPPINGZIPCODE
                 . "&PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE=" . $SHIPPINGCOUNTRYCODE
                 . "&PAYMENTREQUEST_0_SHIPTOPHONENUM=" . $SHIPTOPHONENUM        

@@ -10,9 +10,22 @@ if(defined('PLX_MYMULTILINGUE')) {
 } else {
 	$aLangs = array($plxPlugin->default_lang);
 }
+
+$tabAffPanier = array(
+    "basPage" => $plxPlugin->getlang('L_PANIER_POS_BOTTOM') ,
+    "pageSeparee" => $plxPlugin->getlang('L_PANIER_POS_SEPARATE') ,
+    "partout" => $plxPlugin->getlang('L_PANIER_POS_BOTH') ,
+);
+
+$tabPosDevise = array(
+    "after" => $plxPlugin->getlang('L_AFTER') ,
+    "before" => $plxPlugin->getlang('L_BEFORE') ,
+);
+
+
 $var = array();
 if(!empty($_POST)) {
-	$plxPlugin->setParam('racine_product', 'data/products/', 'string');
+	
 	//socolissimo reco
 	$plxPlugin->setParam('shipping_colissimo', $_POST['shipping_colissimo'], 'numeric');
 	$plxPlugin->setParam('acurecept', $_POST['acurecept'], 'string');
@@ -31,6 +44,7 @@ if(!empty($_POST)) {
 	$plxPlugin->setParam('shipping_ups', 0, 'numeric');
 	$plxPlugin->setParam('shipping_tnt', 0, 'numeric');
 	$plxPlugin->setParam('payment_cheque', $_POST['payment_cheque'], 'numeric');	
+	$plxPlugin->setParam('payment_cash', $_POST['payment_cash'], 'numeric');	
 	//paypal
 	$plxPlugin->setParam('payment_paypal', $_POST['payment_paypal'], 'numeric');
 	$plxPlugin->setParam('payment_paypal_test', $_POST['payment_paypal_test'], 'numeric');
@@ -54,21 +68,28 @@ if(!empty($_POST)) {
 	//end paypal
 	
 	
-	$plxPlugin->setParam('payment_mercanet', 0, 'numeric');	
-	$plxPlugin->setParam('payment_kwixo', 0, 'numeric');	
+	$plxPlugin->setParam('payment_mercanet', 0, 'numeric');
+	$plxPlugin->setParam('payment_kwixo', 0, 'numeric');
 	$plxPlugin->setParam('email', $_POST['email'], 'string');
 	$plxPlugin->setParam('email_cc', $_POST['email_cc'], 'string');
 	$plxPlugin->setParam('email_bcc', $_POST['email_bcc'], 'string');
-	$plxPlugin->setParam('subject', $_POST['subject'], 'string');	
-	$plxPlugin->setParam('newsubject', $_POST['newsubject'], 'string');	
-	$plxPlugin->setParam('template', $_POST['template'], 'string');	
+	$plxPlugin->setParam('subject', $_POST['subject'], 'string');
+	$plxPlugin->setParam('newsubject', $_POST['newsubject'], 'string');
+	$plxPlugin->setParam('template', $_POST['template'], 'string');
 	$plxPlugin->setParam('shop_name', $_POST['shop_name'], 'string');
-	$plxPlugin->setParam('commercant_name', $_POST['commercant_name'], 'string');	
+	$plxPlugin->setParam('commercant_name', $_POST['commercant_name'], 'string');
 	$plxPlugin->setParam('commercant_street', $_POST['commercant_street'], 'string');
 	$plxPlugin->setParam('commercant_city', $_POST['commercant_city'], 'string');
-	$plxPlugin->setParam('commercant_postcode', $_POST['commercant_postcode'], 'string');	
-	$plxPlugin->setParam('keyxorcrypt', $_POST['keyxorcrypt'], 'string');	
-	$plxPlugin->setParam('menu_position', $_POST['menu_position'], 'numeric');		
+	$plxPlugin->setParam('devise', $_POST['devise'], 'string');
+	$plxPlugin->setParam('commercant_postcode', $_POST['commercant_postcode'], 'string');
+	$plxPlugin->setParam('menu_position', $_POST['menu_position'], 'numeric');
+	
+    $plxPlugin->setParam('affPanier', $_POST['affPanier'], 'string');
+
+
+    $plxPlugin->setParam('position_devise', $_POST['position_devise'], 'string');
+	
+	
 	$plxPlugin->saveParams();
 	header('Location: parametres_plugin.php?p=plxMyShop');
 	exit;
@@ -77,6 +98,7 @@ if(!empty($_POST)) {
 $var['subject'] = $plxPlugin->getParam('subject')=='' ? "Récapitulatif de commande" : $plxPlugin->getParam('subject');
 $var['newsubject'] = $plxPlugin->getParam('newsubject')=='' ? "Nouvelle commande" : $plxPlugin->getParam('newsubject');
 $var['payment_cheque'] = $plxPlugin->getParam('payment_cheque')=='' ? '' : $plxPlugin->getParam('payment_cheque');
+$var['payment_cash'] = $plxPlugin->getParam('payment_cash')=='' ? '' : $plxPlugin->getParam('payment_cash');
 //paypal
 $var['payment_paypal'] = $plxPlugin->getParam('payment_paypal')=='' ? '' : $plxPlugin->getParam('payment_paypal');
 $var['payment_paypal_test'] = $plxPlugin->getParam('payment_paypal_test')=='' ? '' : $plxPlugin->getParam('payment_paypal_test');
@@ -134,19 +156,27 @@ $var['commercant_name'] = $plxPlugin->getParam('commercant_name')=='' ? 'David.L
 $var['commercant_street'] = $plxPlugin->getParam('commercant_street')=='' ? 'Rue de la plume' : $plxPlugin->getParam('commercant_street');
 $var['commercant_postcode'] = $plxPlugin->getParam('commercant_postcode')=='' ? '09600' : $plxPlugin->getParam('commercant_postcode');
 $var['commercant_city'] = $plxPlugin->getParam('commercant_city')=='' ? 'Dun' : $plxPlugin->getParam('commercant_city');
-$var['keyxorcrypt'] = $plxPlugin->getParam('keyxorcrypt')=='' ? 'Ab123cD$' : $plxPlugin->getParam('keyxorcrypt');
+$var['devise'] = $plxPlugin->getParam('devise')=='' ? ' €' : $plxPlugin->getParam('devise');
 $var['menu_position'] = $plxPlugin->getParam('menu_position')=='' ? 3 : $plxPlugin->getParam('menu_position');
 
+$var["affPanier"] = ("" === $plxPlugin->getParam("affPanier")) ? current(array_keys($tabAffPanier)) : $plxPlugin->getParam("affPanier");
+
+$var["position_devise"] = ("" === $plxPlugin->getParam("position_devise")) ? current(array_keys($tabPosDevise)) : $plxPlugin->getParam("position_devise");
+
 # On récupère les templates des pages statiques
-$files = plxGlob::getInstance(PLX_ROOT.'themes/'.$plxAdmin->aConf['style']);
+$aTemplates = array();
+$files = plxGlob::getInstance(PLX_ROOT.$plxAdmin->aConf['racine_themes'].$plxAdmin->aConf['style']);
 if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 	foreach($array as $k=>$v)
 		$aTemplates[$v] = $v;
 }
 ?>
 
-<h2><?php echo $plxPlugin->getInfo('title') ?></h2>
-<a href="plugin.php?p=plxMyShop"><button>Liste des produits</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="plugin.php?p=plxMyShop&mod=cat"><button>Liste des catégories</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="plugin.php?p=plxMyShop&mod=cmd"><button>Liste des commandes</button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="parametres_plugin.php?p=plxMyShop"><button disabled>Configuration</button></a></p>
+<h2><?php echo $plxPlugin->getInfo('title');?></h2>
+
+<p>
+	<?php $plxPlugin->menuAdmin("configuration");?>
+</p>
 
 <p></p>
 <p></p>
@@ -155,139 +185,128 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 <form id="form_plxmyshop" action="parametres_plugin.php?p=plxMyShop" method="post">
 
 	<div>
-	    <h2>Informations Boutique</h2><br>
-		<p class="field"><label for="id_shop_name">Nom de la boutique&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('shop_name',$var['shop_name'],'text','100-120') ?></p>
-				<p></p>
-		<p class="field"><label for="id_commercant_name">Nom et prénom du commerçant&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('commercant_name',$var['commercant_name'],'text','100-120') ?></p>
-				<p></p>
-		<p class="field"><label for="id_commercant_street">Rue du commerçant&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('commercant_street',$var['commercant_street'],'text','100-120') ?></p>
-				<p></p>
-		<p class="field"><label for="id_commercant_postcode">Code postal du commerçant&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('commercant_postcode',$var['commercant_postcode'],'text','100-120') ?></p>
-				<p></p>
-		<p class="field"><label for="id_commercant_city">Ville du commerçant&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('commercant_city',$var['commercant_city'],'text','100-120') ?></p>
-				<p></p>
+        <h2><?php $plxPlugin->lang('L_CONFIG_SHOP_INFO') ?></h2><br>
+        
+		<p class="field"><label for="id_shop_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_NAME') ?>&nbsp;:</label></p>
+		
+		<p><?php plxUtils::printInput('shop_name',$var['shop_name'],'text','100-120') ?></p>
+		<p></p>
+		<p class="field"><label for="id_commercant_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_OWNER') ?>&nbsp;:</label></p>
+		<p><?php plxUtils::printInput('commercant_name',$var['commercant_name'],'text','100-120') ?></p>
+		<p></p>
+		<p class="field"><label for="id_commercant_street"><?php $plxPlugin->lang('L_CONFIG_SHOP_STREET') ?>&nbsp;:</label></p>
+		<p><?php plxUtils::printInput('commercant_street',$var['commercant_street'],'text','100-120') ?></p>
+		<p></p>
+		<p class="field"><label for="id_commercant_postcode"><?php $plxPlugin->lang('L_CONFIG_SHOP_ZIP') ?>&nbsp;:</label></p>
+		<p><?php plxUtils::printInput('commercant_postcode',$var['commercant_postcode'],'text','100-120') ?></p>
+		<p></p>
+		<p class="field"><label for="id_commercant_city"><?php $plxPlugin->lang('L_CONFIG_SHOP_TOWN') ?>&nbsp;:</label></p>
+		<p><?php plxUtils::printInput('commercant_city',$var['commercant_city'],'text','100-120') ?></p>
+		<p></p>
+		<p class="field"><label for="id_devise"><?php $plxPlugin->lang('L_CONFIG_SHOP_CURRENCY') ?>&nbsp;:</label></p>
+		<p><?php plxUtils::printInput('devise',$var['devise'],'text','100-120') ?></p>
+		<p></p>
+		<p class="field"><label for="id_position_devise"><?php $plxPlugin->lang('L_CONFIG_POSITION_CURRENCY') ?>&nbsp;:</label></p>
+		<p><?php plxUtils::printSelect("position_devise", $tabPosDevise, $var["position_devise"]) ?></p>
+		<p></p>
 	    
-	    <h2>Sécurité</h2><br>
-	    <p class="field"><label for="id_keyxorcrypt">Clé de chiffrement&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('keyxorcrypt',$var['keyxorcrypt'],'text','100-120') ?></p>
-				<p></p>
-				
-	    <h2>Configuration des moyens de livraison et paiement</h2><br>
-	    <p class="field"><label for="shipping_colissimo">Livraison par "SoColissimo Recommandé"&nbsp;:</label></p>
+	
+        <h2><?php $plxPlugin->lang('L_CONFIG_DELIVERY_TITLE') ?></h2><br>
+        <p class="field"><label for="shipping_colissimo"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_SHIPPING') ?>&nbsp;:</label></p>
 				<p><?php plxUtils::printSelect('shipping_colissimo',array('1'=>L_YES,'0'=>L_NO),$var['shipping_colissimo'], "", '" onchange="if (this.value==\'1\') { document.getElementById(\'blocksocoreco\').style.display=\'block\';}else{document.getElementById(\'blocksocoreco\').style.display=\'none\';}'); ?></p>
 				<p></p>
 		<fieldset id="blocksocoreco" align="center" style="border:1px solid #333;display:<?php echo ($var['shipping_colissimo']==1?"block":"none"); ?>;">
-		    <legend>Configuration "SoColissimo Recommandé"</legend>
+        <legend><?php $plxPlugin->lang('L_CONFIG_DELIVERY_CONFIG') ?></legend>
 		    <table>
 		        <tr>
-		            <td colspanb='2'>Accuser de reception:&nbsp;<?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?>&nbsp;&euro;</td>
+                    <td colspanb='2'><?php $plxPlugin->lang('L_CONFIG_PRIX_BASE') ?>&nbsp;<?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p01',$var['p01'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv01',$var['pv01'],'text','25-120') ?>&nbsp;&euro;</td>
+                    <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p01',$var['p01'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv01',$var['pv01'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p02',$var['p02'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv02',$var['pv02'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p02',$var['p02'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv02',$var['pv02'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p03',$var['p03'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv03',$var['pv03'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p03',$var['p03'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv03',$var['pv03'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p04',$var['p04'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv04',$var['pv04'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p04',$var['p04'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv04',$var['pv04'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p05',$var['p05'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv05',$var['pv05'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p05',$var['p05'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv05',$var['pv05'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p06',$var['p06'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv06',$var['pv06'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p06',$var['p06'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv06',$var['pv06'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p07',$var['p07'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv07',$var['pv07'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p07',$var['p07'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv07',$var['pv07'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p08',$var['p08'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv08',$var['pv08'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p08',$var['p08'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv08',$var['pv08'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p09',$var['p09'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv09',$var['pv09'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p09',$var['p09'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv09',$var['pv09'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p10',$var['p10'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv10',$var['pv10'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p10',$var['p10'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv10',$var['pv10'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
-		            <td>Poid en KG:&nbsp;<?php plxUtils::printInput('p11',$var['p11'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv11',$var['pv11'],'text','25-120') ?>&nbsp;&euro;</td>
+		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p11',$var['p11'],'text','25-120') ?>&nbsp;<=</td>
+		            <td><?php plxUtils::printInput('pv11',$var['pv11'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		    </table>
 		</fieldset>
 		
-	    <p class="field"><label for="id_payment_cheque">Paiment par chèque&nbsp;:</label></p>
+        <p class="field"><label for="id_payment_cheque"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_CHEQUE') ?>&nbsp;:</label></p>
 				<p><?php plxUtils::printSelect('payment_cheque',array('1'=>L_YES,'0'=>L_NO),$var['payment_cheque']); ?></p>
 				<p></p>
-		<p class="field"><label for="id_payment_paypal">Paiment par Paypal&nbsp;:</label></p><?php plxUtils::printSelect('payment_paypal',array('1'=>L_YES,'0'=>L_NO),$var['payment_paypal'], "", '" onchange="if (this.value==\'1\') { document.getElementById(\'blockpaypal\').style.display=\'block\';}else{document.getElementById(\'blockpaypal\').style.display=\'none\';}'); ?></p>
+        <p class="field"><label for="id_payment_cash"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_CASH') ?>&nbsp;:</label></p>
+				<p><?php plxUtils::printSelect('payment_cash',array('1'=>L_YES,'0'=>L_NO),$var['payment_cash']); ?></p>
+				<p></p>
+        <p class="field"><label for="id_payment_paypal"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_PAYPAL') ?>&nbsp;:</label></p><?php plxUtils::printSelect('payment_paypal',array('1'=>L_YES,'0'=>L_NO),$var['payment_paypal'], "", '" onchange="if (this.value==\'1\') { document.getElementById(\'blockpaypal\').style.display=\'block\';}else{document.getElementById(\'blockpaypal\').style.display=\'none\';}'); ?></p>
 				<p></p>
 				
 		<fieldset id="blockpaypal" align="center" style="border:1px solid #333;display:<?php echo ($var['payment_paypal']==1?"block":"none"); ?>;">
-		    <legend>Configuration Paypal</legend>
-		        <p class="field"><label for="id_payment_paypal">Mode &nbsp;:</label></p><?php plxUtils::printSelect('payment_paypal_test',array('1'=>"Test",'0'=>"Production"),$var['payment_paypal_test']); ?></p>
+        <legend><?php $plxPlugin->lang('L_CONFIG_CONF_PAYPAL') ?></legend>
+			
+				<input type="hidden" name="payment_paypal_test" value="<?php echo $var["payment_paypal_test"];?>"/>
+				<input type="hidden" name="payment_paypal_test_user" value="<?php echo $var["payment_paypal_test_user"];?>"/>
+				<input type="hidden" name="payment_paypal_test_pwd" value="<?php echo $var["payment_paypal_test_pwd"];?>"/>
+				<input type="hidden" name="payment_paypal_test_signature" value="<?php echo $var["payment_paypal_test_signature"];?>"/>
+				
+				<input type="hidden" name="payment_paypal_pwd" value="<?php echo $var["payment_paypal_pwd"];?>"/>
+				<input type="hidden" name="payment_paypal_signature" value="<?php echo $var["payment_paypal_signature"];?>"/>
+				<input type="hidden" name="payment_paypal_overalldescription" value="<?php echo $var["payment_paypal_overalldescription"];?>"/>
+				<input type="hidden" name="payment_paypal_ipnurl" value="<?php echo $var["payment_paypal_ipnurl"];?>"/>
+				<input type="hidden" name="payment_paypal_logoimg" value="<?php echo $var["payment_paypal_logoimg"];?>"/>
+				<input type="hidden" name="payment_paypal_payflowcolor" value="<?php echo $var["payment_paypal_payflowcolor"];?>"/>
+				<input type="hidden" name="payment_paypal_cartbordercolor" value="<?php echo $var["payment_paypal_cartbordercolor"];?>"/>
+				
+                <p class="field"><label for="payment_paypal_user"><?php $plxPlugin->lang('L_CONFIG_EMAIL_PAYPAL') ?>&nbsp;:</label></p>
+				<p><input name='payment_paypal_user' value="<?php echo $var['payment_paypal_user'];?>" type='text' ></p>
 				<p></p>
-				<p class="field"><label for="payment_paypal_test_user">Login Test&nbsp;:</label></p>
-				<p><input name='payment_paypal_test_user' value="<?php echo $var['payment_paypal_test_user']; ?>" type='text' ></p>
+                <p class="field" ><label for="payment_paypal_currencycode"><?php $plxPlugin->lang('L_CONFIG_CURRENCY_PAYPAL') ?> (<?php echo $var['payment_paypal_currencycode']; ?>)&nbsp;:</label></p>
+				<p><input name='payment_paypal_currencycode' value="<?php echo ($var['payment_paypal_currencycode']!=""?$var['payment_paypal_currencycode']:"EUR"); ?>" type='text' ></p>
 				<p></p>
-				<p class="field"><label for="payment_paypal_test_pwd">Password Test&nbsp;:</label></p>
-				<p><input name='payment_paypal_test_pwd' value="<?php echo $var['payment_paypal_test_pwd']; ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_test_signature">Signature Test&nbsp;:</label></p>
-				<p><input name='payment_paypal_test_signature' value="<?php echo $var['payment_paypal_test_signature']; ?>" type='text' ></p>
-				<p></p>
-				<p class="field"><label for="payment_paypal_user">Login Prod&nbsp;:</label></p>
-				<p><input name='payment_paypal_user' value="<?php echo $var['payment_paypal_user']; ?>" type='text' ></p>
-				<p></p>
-				<p class="field"><label for="payment_paypal_pwd">Password Prod&nbsp;:</label></p>
-				<p><input name='payment_paypal_pwd' value="<?php echo $var['payment_paypal_pwd']; ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_signature">Signature Prod&nbsp;:</label></p>
-				<p><input name='payment_paypal_signature' value="<?php echo $var['payment_paypal_signature']; ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_currencycode">Code Device (EUR)&nbsp;:</label></p>
-				<p><input name='payment_paypal_currencycode' value="<?php echo ($var['payment_paypal_signature']!=""?$var['payment_paypal_currencycode']:"EUR"); ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_overalldescription">Description&nbsp;:</label></p>
-				<p><input name='payment_paypal_overalldescription' value="<?php echo ($var['payment_paypal_overalldescription']!=""?$var['payment_paypal_overalldescription']:"My Shop"); ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_returnurl">URL de retour&nbsp;:</label></p>
+                <p class="field" ><label for="payment_paypal_returnurl"><?php $plxPlugin->lang('L_CONFIG_RETURN_URL_PAYPAL') ?>&nbsp;:</label></p>
 				<p><input name='payment_paypal_returnurl' value="<?php echo ($var['payment_paypal_returnurl']!=""?$var['payment_paypal_returnurl']:$_SERVER['HTTP_HOST']); ?>" type='text' ></p>
 				<p></p>
-				<p class="field" ><label for="payment_paypal_cancelurl">URL d'annulation&nbsp;:</label></p>
+                <p class="field" ><label for="payment_paypal_cancelurl"><?php $plxPlugin->lang('L_CONFIG_CANCEL_URL_PAYPAL') ?>&nbsp;:</label></p>
 				<p><input name='payment_paypal_cancelurl' value="<?php echo ($var['payment_paypal_cancelurl']!=""?$var['payment_paypal_cancelurl']:$_SERVER['HTTP_HOST']); ?>" type='text' ></p>
 				<p></p>
-				<p class="field" ><label for="payment_paypal_ipnurl">URL IPN&nbsp;:</label></p>
-				<p><input name='payment_paypal_ipnurl' value="<?php echo ($var['payment_paypal_ipnurl']!=""?$var['payment_paypal_ipnurl']:$_SERVER['HTTP_HOST']); ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_logoimg">Logo&nbsp;:</label></p>
-				<p><input name='payment_paypal_logoimg' value="<?php echo ($var['payment_paypal_logoimg']!=""?$var['payment_paypal_logoimg']:$_SERVER['HTTP_HOST']."/plugins/plxMyShop/icon.png"); ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_payflowcolor">Couleur global&nbsp;:</label></p>
-				<p><input name='payment_paypal_payflowcolor' value="<?php echo ($var['payment_paypal_payflowcolor']!=""?$var['payment_paypal_payflowcolor']:"296899"); ?>" type='text' ></p>
-				<p></p>
-				<p class="field" ><label for="payment_paypal_cartbordercolor">Couleur des bordures&nbsp;:</label></p>
-				<p><input name='payment_paypal_cartbordercolor' value="<?php echo ($var['payment_paypal_payflowcolor']!=""?$var['payment_paypal_cartbordercolor']:"296899"); ?>" type='text' ></p>
-				<p></p>
 		</fieldset>
-		<h2>Configuration email de commande</h2><br>
+        <h2><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_TITLE') ?></h2><br>
 	    <p class="field"><label for="id_email"><?php $plxPlugin->lang('L_EMAIL') ?>&nbsp;:</label></p>
 				<p><input name='email' value="<?php echo $var['email']; ?>" type='text' ></p>
 				<p></p>
@@ -297,20 +316,26 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 		<p class="field"><label for="id_email_bcc"><?php $plxPlugin->lang('L_EMAIL_BCC') ?>&nbsp;:</label></p>
 				<p><input name='email_bcc' value="<?php echo $var['email_bcc']; ?>" type='text' ></p>
 				<p></p>
-		<p class="field"><label for="id_subject">Titre mail "Récapitulatif de commande" (pour le client)&nbsp;:</label></p>
+                <p class="field"><label for="id_subject"><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_SUBJECT_CUST') ?>&nbsp;:</label></p>
 				<p><?php plxUtils::printInput('subject',$var['subject'],'text','100-120') ?></p>
 				<p></p>
-		<p class="field"><label for="id_newsubject">Titre mail "Nouvelle commande" (pour le commerçant)&nbsp;:</label></p>
+                <p class="field"><label for="id_newsubject"><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP') ?>&nbsp;:</label></p>
 				<p><?php plxUtils::printInput('newsubject',$var['newsubject'],'text','100-120') ?></p>
-				<p></p>
-		<h2>Configuration du menu</h2><br>
-		<p class="field"><label for="id_menu_position">Position principal dans le menu (pour le cat&eacute;gories)&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('menu_position',$var['menu_position'],'number','100-120') ?></p>
-				<p></p>
-		<h2>Configuration des pages</h2><br>
-		<p class="field"><label for="id_template"><?php $plxPlugin->lang('L_TEMPLATE') ?>&nbsp;:</label></p>
-				<p><?php plxUtils::printSelect('template', $aTemplates, $var['template']) ?></p>
-				<p></p>
+		<p></p>
+		<br/>
+		
+        <h2><?php $plxPlugin->lang('L_CONFIG_MENU_TITLE') ?></h2>
+        <p class="field"><label for="id_menu_position"><?php $plxPlugin->lang('L_CONFIG_MENU_POSITION') ?>&nbsp;:</label></p>
+			<p><?php plxUtils::printInput('menu_position',$var['menu_position'],'number','100-120') ?></p>
+		<p></p>
+		<br/>
+		
+        <h2><?php $plxPlugin->lang('L_CONFIG_PAGE') ?></h2>
+        <p class="field"><label for="id_affPanier"><?php $plxPlugin->lang('L_CONFIG_BASKET_DISPLAY') ?>&nbsp;:</label></p>
+			<p><?php plxUtils::printSelect("affPanier", $tabAffPanier, $var["affPanier"]) ?></p>
+            <p class="field"><label for="id_template"><?php $plxPlugin->lang('L_CONFIG_PAGE_TEMPLATE') ?>&nbsp;:</label></p>
+			<p><?php plxUtils::printSelect('template', $aTemplates, $var['template']) ?></p>
+		<p></p>
 		
 		
 	</div>
@@ -318,7 +343,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 				<p></p>
 		<p>
 			<?php echo plxToken::getTokenPostMethod() ?>
-			<input type="submit" name="submit" value="Sauvegarder" />
+            <input type="submit" name="submit" value="<?php $plxPlugin->lang('L_CONFIG_SUBMIT') ?>" />
 		</p>
 	</fieldset>
 </form>

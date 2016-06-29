@@ -4,7 +4,10 @@ if (!defined("PLX_ROOT")) exit;
 
 
 <p align="center"><span style="font-family: Liberation Sans,sans-serif;"><span style="font-size: xx-large;"><b>PlxMyShop</b></span></span></p>
-<p align="center"><span style="font-size: small;">Version 0.9.4 beta</span></p>
+<p align="center">
+<span style="font-size: small;">Documentation de la version 0.9.4 beta</span>
+<span style="background-color : #FC3; padding : 0.5em">Cette documentation n'est pas à jour avec les fonctionnalités actuelles de l'extension.</span>
+</p>
 
 <h1 class="western"><span style="text-decoration: underline;">Sommaire</span></h1>
 <ul>
@@ -65,7 +68,7 @@ La configuration de Paypal nécessite que vous ayez deux jeux d'identifiants com
 </ul>
 Ensuite vous devrez renseigner les informations suivante :
 <ul>
-	<li>Code de device, par défaut «EUR»</li>
+	<li>Code de devise, par défaut «EUR»</li>
 	<li>Nom de description de la boutique</li>
 	<li>Url <i>avec le HTTP </i>de retour</li>
 	<li>Url <i>avec le HTTP </i>d'annulation</li>
