@@ -5,10 +5,11 @@ $LANG = array(
 'L_PAGE_TITLE'				=> 'Création et édition des produits',
 
 'L_DEFAULT_NEW_PRODUCT_URL'			=> 'nouveau-produit',
-'L_CONFIG_INFOS_NB_PRODUCTS'		=> 'Nombre de produits :',
+'L_CONFIG_INFOS_NB_PRODUCTS'		=> 'Nombre de produits :',
+'L_CONFIG_PRIX_BASE'				=> 'Prix de base :',
 'L_MENU_PRODUCTS_TITLE'				=> 'Liste et modification des produits',
 'L_MENU_PRODUCTS'					=> 'Liste des produits',
-'L_MENU_CATS'					=> 'Liste des cat&eacute;gories',
+'L_MENU_CATS'					=> 'Liste des catégories',
 'L_MENU_ORDERS'					=> 'Liste des commandes',
 'L_MENU_CONFIG'					=> 'Configuration',
 
@@ -59,26 +60,28 @@ $LANG = array(
 # product.php
 
 'L_PRODUCT_BACK_TO_PAGE'			=> 'Retour à la liste des produits',
-'L_CAT_BACK_TO_PAGE'			    => 'Retour à la liste des cat&eacute;gories',
+'L_CAT_BACK_TO_PAGE'			    => 'Retour à la liste des catégories',
 'L_PRODUCT_UNKNOWN_PAGE'			=> 'Ce produit n\'existe pas ou n\'existe plus !',
 'L_PRODUCT_TITLE'					=> 'Édition du produit',
-'L_CAT_TITLE'					    => 'Édition de la cat&eascute;gorie',
-'L_PRODUCT_VIEW_PAGE'				=> 'Visualiser le produit',
-'L_CAT_VIEW_PAGE'				    => 'Visualiser la cat&eacute;gorie de produit',
-'L_PRODUCT_ON_SITE'					=> 'sur le site',
+'L_CAT_TITLE'					    => 'Édition de la catégorie',
+
+'L_PRODUCT_VIEW_PAGE_ON_SITE'				=> 'Visualiser le produit %s sur le site',
+'L_CAT_VIEW_PAGE_ON_SITE'				    => 'Visualiser la catégorie de produit %s sur le site',
+
 'L_PRODUCT_UPDATE'					=> 'Enregistrer ce produit',
-'L_CAT_UPDATE'					    => 'Enregistrer cette cat&eacute;gorie',
+'L_CAT_UPDATE'					    => 'Enregistrer cette catégorie',
 'L_PRODUCT_TITLE_HTMLTAG'			=> 'Contenu balise title (option)',
 'L_PRODUCT_META_DESCRIPTION'		=> 'Contenu de la balise meta "description" pour ce produit (option)',
-'L_CAT_META_DESCRIPTION'		    => 'Contenu de la balise meta "description" pour cette cat&eacute;gorie (option)',
+'L_CAT_META_DESCRIPTION'		    => 'Contenu de la balise meta "description" pour cette catégorie (option)',
 'L_PRODUCT_META_KEYWORDS'			=> 'Contenu de la balise meta "keywords" pour ce produit (option)',
-'L_CAT_META_KEYWORDS'			    => 'Contenu de la balise meta "keywords" pour cette cat&eacute;gorie  (option)',
+'L_CAT_META_KEYWORDS'			    => 'Contenu de la balise meta "keywords" pour cette catégorie (option)',
 
 #create product/cat
-'CREATE_PRODUCTS_CATS'              => 'Création et édition des ',
-'CREATE_PRODUCTS'              => 'produits',
-'CREATE_CATS'              => 'cat&eacute;gories',
-'L_CAT'              => 'Cat&eacute;gorie',
+'CREATE_PRODUCTS'              => 'Création et édition des produits',
+'CREATE_CATS'              => 'Création et édition des catégories',
+
+'L_CAT'              => 'Catégorie',
+
 #commandes
 'LIST_ORDERS'                                  => 'Liste des commandes',
 
@@ -97,7 +100,7 @@ $LANG = array(
 'L_CONFIG_SHOP_CURRENCY'                     => 'Devise',
 'L_CONFIG_POSITION_CURRENCY'            => 'Position de la devise',
 'L_BEFORE'                              => 'Avant le prix',
-'L_AFTER'                              => 'Apres le prix',
+'L_AFTER'                              => 'Après le prix',
 'L_CONFIG_SECURITY'                 => 'Sécurité',
 'L_CONFIG_SECURITY_KEY'                 => 'Clé de chiffrement',
 
@@ -139,7 +142,7 @@ $LANG = array(
 
 'L_ADMIN_ORDER_VIEW'                    => 'Voir',
 'L_ADMIN_ORDER_DELETE'                    => 'Supprimer',
-'L_ADMIN_CONFIRM_DELETE'                    => 'Confirmez-vous la supression de cette commande ?',
+'L_ADMIN_CONFIRM_DELETE'                    => 'Confirmez-vous la suppression de cette commande ?',
 
 #plxMyShop.php
 'L_PAYMENT_CHEQUE'                      => 'Chèque',
@@ -151,13 +154,12 @@ $LANG = array(
 'L_EMAIL_NOGIFT'                          => 'La commande n\'est pas un cadeau',
 'L_EMAIL_GIFT_FOR'                      => 'La commande est un cadeau pour',
 'L_EMAIL_PRODUCTLIST'                   => 'Liste des produits',
-'L_EMAIL_TOTAL'                   => 'Total (frais de port inclus)',
 'L_EMAIL_WEIGHT'                   => 'Poids',
 'L_EMAIL_DELIVERY_COST'                   => 'Frais de port',
 'L_EMAIL_COMMENT'                   => 'Commentaire',
-'L_EMAIL_CONFIRM_PAYPAL'                   => 'La commande est confirmé et en cours de validation de votre part sur Paypal.',
-'L_EMAIL_CONFIRM_CHEQUE'                   => 'La commande a bien été confirmé et envoyé par e-mail.',
-'L_EMAIL_CONFIRM_CASH'                   => 'La commande a bien été confirmé et envoyé par e-mail.',
+'L_EMAIL_CONFIRM_PAYPAL'                   => 'La commande est confirmée et en cours de validation de votre part sur Paypal.',
+'L_EMAIL_CONFIRM_CHEQUE'                   => 'La commande a bien été confirmée et envoyée par e-mail.',
+'L_EMAIL_CONFIRM_CASH'                   => 'La commande a bien été confirmée et envoyée par e-mail.',
 
 'L_EMAIL_CUST_SUBJECT'                          => 'Récapitulatif de la commande ',
 'L_EMAIL_CUST_MESSAGE1'                          => 'Vous venez de confirmer une commande sur',
@@ -166,9 +168,9 @@ $LANG = array(
 'L_ONGOING'                                => 'cours',
 'L_EMAIL_CUST_MESSAGE3'                          => 'de règlement',
 'L_EMAIL_CUST_CHEQUE'                          => 'Pour finaliser cette commande veuillez établir le chèque à l\'ordre de',
-'L_EMAIL_CUST_SENDCHEQUE'                          => 'Envoyer votre chèque à cette addresse',
+'L_EMAIL_CUST_SENDCHEQUE'                          => 'Envoyer votre chèque à cette adresse',
 'L_EMAIL_CUST_CASH'                          => 'Veuillez effectuer le paiement à la livraison',
-'L_EMAIL_CUST_PAYPAL'                          => 'Cette commande sera finalisé une fois le paiement Paypal contrôlé.',
+'L_EMAIL_CUST_PAYPAL'                          => 'Cette commande sera finalisée une fois le paiement Paypal contrôlé.',
 'L_EMAIL_CUST_SUMMARY'                          => 'Récapitulatif de votre commande',
 'L_EMAIL_CUST_ADDRESS'                          => 'Adresse de livraison',
 'L_EMAIL_CUST_PAYMENT'                      => 'Méthode de paiement',
@@ -176,20 +178,20 @@ $LANG = array(
 'L_EMAIL_SENT1'                      => 'Un e-mail de récapitulatif de commande vous a été envoyé.',
 'L_EMAIL_SENT2'                      => 'Si l\'e-mail de récapitulatif de commande n\'apparait pas dans votre liste d\'e-mails en attente ou que celui-ci est signalé en tant que spam, veuillez ajouter %s à votre liste de contacts.', // %s : adresse e-mail du gestionnaire des commandes
 
-'L_EMAIL_ERROR1'                      => 'Une erreur c\'est produite lors de l\'envoi de votre e-mail récapitulatif.',
-'L_EMAIL_ERROR2'                      => 'Une erreur c\'est produite lors de l\'envoi de la commande par e-mail.',
+'L_EMAIL_ERROR1'                      => 'Une erreur s\'est produite lors de l\'envoi de votre e-mail récapitulatif.',
+'L_EMAIL_ERROR2'                      => 'Une erreur s\'est produite lors de l\'envoi de la commande par e-mail.',
 
 'L_FILE_ORDER'                      => 'Commande du ',
 
 'L_FOR'                                => 'pour',
 'L_DEL'                                => 'Retirer',
 
-'L_MISSING_EMAIL'                      => 'l\'addresse e-mail n\'est pas défini.',
+'L_MISSING_EMAIL'                      => 'l\'adresse e-mail n\'est pas définie.',
 'L_MISSING_FIRSTNAME'                      => 'Le prénom n\'est pas défini.',
 'L_MISSING_LASTNAME'                      => 'Le nom de famille n\'est pas défini.',
-'L_MISSING_ADDRESS'                      => 'L\'addresse n\'est pas défini.',
+'L_MISSING_ADDRESS'                      => 'L\'adresse n\'est pas définie.',
 'L_MISSING_ZIP'                      => 'Le code postal n\'est pas défini.',
-'L_MISSING_TOWN'                      => 'La ville n\'est pas défini.',
+'L_MISSING_TOWN'                      => 'La ville n\'est pas définie.',
 'L_MISSING_COUNTRY'                      => 'Le pays n\'est pas défini.',
 'L_MISSING_GIFTNAME'                      => 'Le nom du destinataire du cadeau n\'est pas défini.',
 
@@ -217,6 +219,7 @@ $LANG = array(
 
 #panier.js
 'L_TOTAL_BASKET'                    => 'Total (frais de port inclus)',
+'L_TITRE_PANIER'                    => 'Panier',
 
 
 );

@@ -1,4 +1,9 @@
 <?php
+/*
+Si vous réutilisez ce fichier dans votre thème, nous vous conseillons de noter la version actuelle de plxMyShop
+version : 
+*/
+
 
 $plxPlugin = $d["plxPlugin"];
 
@@ -12,8 +17,8 @@ $plxPlugin = $d["plxPlugin"];
 <div align="center" class="panierbloc">
 	<div align="center" id="listproducts">
 		<section align="center" class="productsect">
-			<header >
-                <?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?>&nbsp;&nbsp;&nbsp;&nbsp;<span id='totalCart'><?php $plxPlugin->lang('L_TOTAL_BASKET'); echo $plxPlugin->pos_devise('0.00'); ?></span><span id="spanshipping"></span>
+		
+			<header>
 			<?php if (isset($_SESSION['msgCommand']) && !empty($_SESSION['msgCommand']) && $_SESSION['msgCommand']!=""){
 					echo $_SESSION['msgCommand'];
 					unset($_SESSION['msgCommand']);
@@ -23,6 +28,9 @@ $plxPlugin = $d["plxPlugin"];
 			
 			
 			<form id="formcart" method="POST" action="#panier">
+			
+                <?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?>&nbsp;&nbsp;&nbsp;&nbsp;<span id='totalCart'><?php $plxPlugin->lang('L_TOTAL_BASKET'); echo $plxPlugin->pos_devise('0.00'); ?></span><span id="spanshipping"></span>
+			
             <div id="shoppingCart" ><em><?php $plxPlugin->lang('L_PUBLIC_NOPRODUCT'); ?></em></div>
             <p ><strong id="labelFirstnameCart"><span class='startw'><?php $plxPlugin->lang('L_PUBLIC_MANDATORY_FIELD'); ?></span> <br>
             <br><?php $plxPlugin->lang('L_PUBLIC_FIRSTNAME'); ?><span class='star'>*</span> :</strong> <input  type="text" name="firstname" id="firstname" value=""><strong id="labelLastnameCart">&nbsp;&nbsp;<?php $plxPlugin->lang('L_PUBLIC_LASTNAME'); ?><span class='star'>*</span> :</strong> <input type="text" name="lastname"  id="lastname" value=""></p>
@@ -56,8 +64,13 @@ $plxPlugin = $d["plxPlugin"];
 				<input type="hidden" name="idsuite" id="idsuite" value="0">
 				<input type="hidden" name="numcart" id="numcart" value="0">
                 <strong><?php $plxPlugin->lang('L_EMAIL_CUST_PAYMENT'); ?>&nbsp;:&nbsp;&nbsp;</strong><select onchange="changePaymentMethod(this.value);" name="methodpayment">
+					<?php
+						$methodpayment = !isset($_SESSION["methodpayment"]) ? "" : $_SESSION["methodpayment"];
+					?>
 					<?php foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) {?>
-						<option value="<?php echo htmlspecialchars($codeM);?>">
+						<option value="<?php echo htmlspecialchars($codeM);?>"
+							<?php echo ($codeM !== $methodpayment) ? "" : " selected=\"selected\"";?>
+						>
 							<?php echo htmlspecialchars($m["libelle"]);?>
 						</option>
 					<?php }?>
@@ -217,7 +230,7 @@ function shippingMethod(kg, op){
     if (op==0)totalkg=(parseFloat(totalkg.toFixed(3))-parseFloat(kg));
     accurecept=<?php echo (float)$plxPlugin->getParam('acurecept'); ?>;
     if (totalkg.toFixed(3)<=0.000) {
-        shippingPrice=0.00;
+        shippingPrice=accurecept;
     } else if (totalkg.toFixed(3)<=<?php echo (float)$plxPlugin->getParam('p01'); ?>) {
         shippingPrice=<?php echo (float)$plxPlugin->getParam('pv01'); ?>+accurecept;
     } else if (totalkg.toFixed(3)<=<?php echo (float)$plxPlugin->getParam('p02'); ?>) {

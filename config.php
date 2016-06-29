@@ -18,8 +18,8 @@ $tabAffPanier = array(
 );
 
 $tabPosDevise = array(
-    "before" => $plxPlugin->getlang('L_BEFORE') ,
     "after" => $plxPlugin->getlang('L_AFTER') ,
+    "before" => $plxPlugin->getlang('L_BEFORE') ,
 );
 
 
@@ -82,7 +82,6 @@ if(!empty($_POST)) {
 	$plxPlugin->setParam('commercant_city', $_POST['commercant_city'], 'string');
 	$plxPlugin->setParam('devise', $_POST['devise'], 'string');
 	$plxPlugin->setParam('commercant_postcode', $_POST['commercant_postcode'], 'string');
-	$plxPlugin->setParam('keyxorcrypt', $_POST['keyxorcrypt'], 'string');
 	$plxPlugin->setParam('menu_position', $_POST['menu_position'], 'numeric');
 	
     $plxPlugin->setParam('affPanier', $_POST['affPanier'], 'string');
@@ -157,8 +156,7 @@ $var['commercant_name'] = $plxPlugin->getParam('commercant_name')=='' ? 'David.L
 $var['commercant_street'] = $plxPlugin->getParam('commercant_street')=='' ? 'Rue de la plume' : $plxPlugin->getParam('commercant_street');
 $var['commercant_postcode'] = $plxPlugin->getParam('commercant_postcode')=='' ? '09600' : $plxPlugin->getParam('commercant_postcode');
 $var['commercant_city'] = $plxPlugin->getParam('commercant_city')=='' ? 'Dun' : $plxPlugin->getParam('commercant_city');
-$var['devise'] = $plxPlugin->getParam('devise')=='' ? '€' : $plxPlugin->getParam('devise');
-$var['keyxorcrypt'] = $plxPlugin->getParam('keyxorcrypt')=='' ? 'Ab123cD$' : $plxPlugin->getParam('keyxorcrypt');
+$var['devise'] = $plxPlugin->getParam('devise')=='' ? ' €' : $plxPlugin->getParam('devise');
 $var['menu_position'] = $plxPlugin->getParam('menu_position')=='' ? 3 : $plxPlugin->getParam('menu_position');
 
 $var["affPanier"] = ("" === $plxPlugin->getParam("affPanier")) ? current(array_keys($tabAffPanier)) : $plxPlugin->getParam("affPanier");
@@ -174,8 +172,11 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 }
 ?>
 
-<h2><?php echo $plxPlugin->getInfo('title') ?></h2>
-<a href="plugin.php?p=plxMyShop"><button><?php $plxPlugin->lang('L_MENU_PRODUCTS') ?></button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="plugin.php?p=plxMyShop&mod=cat"><button><?php $plxPlugin->lang('L_MENU_CATS') ?></button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="plugin.php?p=plxMyShop&mod=cmd"><button><?php $plxPlugin->lang('L_MENU_ORDERS') ?></button></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="parametres_plugin.php?p=plxMyShop"><button disabled><?php $plxPlugin->lang('L_MENU_CONFIG') ?></button></a></p>
+<h2><?php echo $plxPlugin->getInfo('title');?></h2>
+
+<p>
+	<?php $plxPlugin->menuAdmin("configuration");?>
+</p>
 
 <p></p>
 <p></p>
@@ -185,33 +186,31 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 
 	<div>
         <h2><?php $plxPlugin->lang('L_CONFIG_SHOP_INFO') ?></h2><br>
-        <p class="field"><label for="id_shop_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_NAME') ?>&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('shop_name',$var['shop_name'],'text','100-120') ?></p>
-				<p></p>
-                <p class="field"><label for="id_commercant_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_OWNER') ?>&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('commercant_name',$var['commercant_name'],'text','100-120') ?></p>
-				<p></p>
-                <p class="field"><label for="id_commercant_street"><?php $plxPlugin->lang('L_CONFIG_SHOP_STREET') ?>&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('commercant_street',$var['commercant_street'],'text','100-120') ?></p>
-				<p></p>
-                <p class="field"><label for="id_commercant_postcode"><?php $plxPlugin->lang('L_CONFIG_SHOP_ZIP') ?>&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('commercant_postcode',$var['commercant_postcode'],'text','100-120') ?></p>
-				<p></p>
-                <p class="field"><label for="id_commercant_city"><?php $plxPlugin->lang('L_CONFIG_SHOP_TOWN') ?>&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('commercant_city',$var['commercant_city'],'text','100-120') ?></p>
-				<p></p>
-                <p class="field"><label for="id_devise"><?php $plxPlugin->lang('L_CONFIG_SHOP_CURRENCY') ?>&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('devise',$var['devise'],'text','100-120') ?></p>
-				<p></p>
-                <p class="field"><label for="id_position_devise"><?php $plxPlugin->lang('L_CONFIG_POSITION_CURRENCY') ?>&nbsp;:</label></p>
-			    <p><?php plxUtils::printSelect("position_devise", $tabPosDevise, $var["position_devise"]) ?></p>
-				<p></p>
+        
+		<p class="field"><label for="id_shop_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_NAME') ?>&nbsp;:</label></p>
+		
+		<p><?php plxUtils::printInput('shop_name',$var['shop_name'],'text','100-120') ?></p>
+		<p></p>
+		<p class="field"><label for="id_commercant_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_OWNER') ?>&nbsp;:</label></p>
+		<p><?php plxUtils::printInput('commercant_name',$var['commercant_name'],'text','100-120') ?></p>
+		<p></p>
+		<p class="field"><label for="id_commercant_street"><?php $plxPlugin->lang('L_CONFIG_SHOP_STREET') ?>&nbsp;:</label></p>
+		<p><?php plxUtils::printInput('commercant_street',$var['commercant_street'],'text','100-120') ?></p>
+		<p></p>
+		<p class="field"><label for="id_commercant_postcode"><?php $plxPlugin->lang('L_CONFIG_SHOP_ZIP') ?>&nbsp;:</label></p>
+		<p><?php plxUtils::printInput('commercant_postcode',$var['commercant_postcode'],'text','100-120') ?></p>
+		<p></p>
+		<p class="field"><label for="id_commercant_city"><?php $plxPlugin->lang('L_CONFIG_SHOP_TOWN') ?>&nbsp;:</label></p>
+		<p><?php plxUtils::printInput('commercant_city',$var['commercant_city'],'text','100-120') ?></p>
+		<p></p>
+		<p class="field"><label for="id_devise"><?php $plxPlugin->lang('L_CONFIG_SHOP_CURRENCY') ?>&nbsp;:</label></p>
+		<p><?php plxUtils::printInput('devise',$var['devise'],'text','100-120') ?></p>
+		<p></p>
+		<p class="field"><label for="id_position_devise"><?php $plxPlugin->lang('L_CONFIG_POSITION_CURRENCY') ?>&nbsp;:</label></p>
+		<p><?php plxUtils::printSelect("position_devise", $tabPosDevise, $var["position_devise"]) ?></p>
+		<p></p>
 	    
-        <h2><?php $plxPlugin->lang('L_CONFIG_SECURITY') ?></h2><br>
-        <p class="field"><label for="id_keyxorcrypt"><?php $plxPlugin->lang('L_CONFIG_SECURITY_KEY') ?>&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('keyxorcrypt',$var['keyxorcrypt'],'text','100-120') ?></p>
-				<p></p>
-				
+	
         <h2><?php $plxPlugin->lang('L_CONFIG_DELIVERY_TITLE') ?></h2><br>
         <p class="field"><label for="shipping_colissimo"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_SHIPPING') ?>&nbsp;:</label></p>
 				<p><?php plxUtils::printSelect('shipping_colissimo',array('1'=>L_YES,'0'=>L_NO),$var['shipping_colissimo'], "", '" onchange="if (this.value==\'1\') { document.getElementById(\'blocksocoreco\').style.display=\'block\';}else{document.getElementById(\'blocksocoreco\').style.display=\'none\';}'); ?></p>
@@ -220,37 +219,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
         <legend><?php $plxPlugin->lang('L_CONFIG_DELIVERY_CONFIG') ?></legend>
 		    <table>
 		        <tr>
-                    <td colspanb='2'><?php $plxPlugin->lang('L_CONFIG_RECORDED_DELIVERY') ?>:&nbsp;<?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
-		        </tr>
-		        <tr>
-                    <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p01',$var['p01'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv01',$var['pv01'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
-		        </tr>
-		        <tr>
-		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p02',$var['p02'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv02',$var['pv02'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
-		        </tr>
-		        <tr>
-		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p03',$var['p03'],'text','25-120') ?>&nbsp;<=</td>
-		            <td><?php plxUtils::printInput('pv03',$var['pv03'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
-		        </tr>
-		        <tr>
-		            <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p04',$var['p04'],'text','25-120') ?>&nbsp;<=</td>
-	    
-        <h2><?php $plxPlugin->lang('L_CONFIG_SECURITY') ?></h2><br>
-        <p class="field"><label for="id_keyxorcrypt"><?php $plxPlugin->lang('L_CONFIG_SECURITY_KEY') ?>&nbsp;:</label></p>
-				<p><?php plxUtils::printInput('keyxorcrypt',$var['keyxorcrypt'],'text','100-120') ?></p>
-				<p></p>
-				
-        <h2><?php $plxPlugin->lang('L_CONFIG_DELIVERY_TITLE') ?></h2><br>
-        <p class="field"><label for="shipping_colissimo"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_SHIPPING') ?>&nbsp;:</label></p>
-				<p><?php plxUtils::printSelect('shipping_colissimo',array('1'=>L_YES,'0'=>L_NO),$var['shipping_colissimo'], "", '" onchange="if (this.value==\'1\') { document.getElementById(\'blocksocoreco\').style.display=\'block\';}else{document.getElementById(\'blocksocoreco\').style.display=\'none\';}'); ?></p>
-				<p></p>
-		<fieldset id="blocksocoreco" align="center" style="border:1px solid #333;display:<?php echo ($var['shipping_colissimo']==1?"block":"none"); ?>;">
-        <legend><?php $plxPlugin->lang('L_CONFIG_DELIVERY_CONFIG') ?></legend>
-		    <table>
-		        <tr>
-                    <td colspanb='2'><?php $plxPlugin->lang('L_CONFIG_RECORDED_DELIVERY') ?>:&nbsp;<?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
+                    <td colspanb='2'><?php $plxPlugin->lang('L_CONFIG_PRIX_BASE') ?>&nbsp;<?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
 		        </tr>
 		        <tr>
                     <td><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:&nbsp;<?php plxUtils::printInput('p01',$var['p01'],'text','25-120') ?>&nbsp;<=</td>
