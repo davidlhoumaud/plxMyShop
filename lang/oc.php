@@ -153,7 +153,6 @@ $LANG = array(
 'L_EMAIL_NOGIFT'                          => 'La comanda es pas un present',
 'L_EMAIL_GIFT_FOR'                      => 'La comanda es un present per',
 'L_EMAIL_PRODUCTLIST'                   => 'Lista dels produits',
-'L_EMAIL_TOTAL'                   => 'Total (fraisses de pòrt enclús)',
 'L_EMAIL_WEIGHT'                   => 'Pes',
 'L_EMAIL_DELIVERY_COST'                   => 'Fraisses de pòrt',
 'L_EMAIL_COMMENT'                   => 'Comentari',

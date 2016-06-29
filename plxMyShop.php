@@ -1002,14 +1002,14 @@ class plxMyShop extends plxPlugin {
 			$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."Kg":"")."</li>";
 		}
 		$message.="</ul><br/><br>".
-            "<strong>".$this->getlang('L_EMAIL_TOTAL').": ".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "</strong><br/><em><strong>". 
+            "<strong>".$this->getlang('L_TOTAL_BASKET').": ".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "</strong><br/><em><strong>". 
             $this->getlang('L_EMAIL_DELIVERY_COST'). " : ".$this->pos_devise($totalpoidgshipping). "</strong><br/>".
 		"<strong>".$this->getlang('L_EMAIL_WEIGHT')." : ".$totalpoidg."&nbsp;kg</strong><br/><br/></em>".
 		$this->getlang('L_EMAIL_COMMENT')." : <br>".plxUtils::cdataCheck($_POST['msg']);
 		$destinataire = $TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"");
-		$headers = "MIME-Version: 1.0\r\nFrom: \"".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."\"<".$_POST['email'].">\r\n";
-		$headers .= "Reply-To: ".$_POST['email']."\r\nX-Mailer: PHP/" . phpversion() . "\r\nX-originating-IP: " . $_SERVER["REMOTE_ADDR"] . "\r\n";
-		$headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\nX-Priority: 1\r\nX-MSMail-Priority: High\r\n";
+		$headers  = "From: \"".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."\" <".$_POST['email'].">\r\n";
+		$headers .= "Reply-To: ".$_POST['email']."\r\n";
+		$headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n";
 		
 		if (	(isset($_POST['email']) && $_POST['email']!="")
 			&&	(isset($_POST['firstname']) && plxUtils::cdataCheck($_POST['firstname'])!="")
@@ -1078,7 +1078,7 @@ class plxMyShop extends plxPlugin {
 					$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ".$this->getlang('L_FOR')." ".$v['poidg']."&nbsp;kg":"")."</li>";
 				}
 				$message.= "<br/><br>".
-				"<strong>". $this->getlang('L_EMAIL_TOTAL') ." : </strong>".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "<br/>".
+				"<strong>". $this->getlang('L_TOTAL_BASKET') ." : </strong>".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "<br/>".
 				"<em><strong>". $this->getlang('L_EMAIL_DELIVERY_COST') ." : </strong>".$this->pos_devise($totalpoidgshipping)."<br/>".
 				"<strong>". $this->getlang('L_EMAIL_WEIGHT') ." : </strong>".$totalpoidg."&nbsp;kg<br/><br/></em>".
 				"<strong>". $this->getlang('L_EMAIL_COMMENT') ." : </strong><br>".plxUtils::cdataCheck($_POST['msg']);
@@ -1086,9 +1086,10 @@ class plxMyShop extends plxPlugin {
 				
 				
 				$destinataire = $_POST['email'];
-				$headers = "MIME-Version: 1.0\r\nFrom: \"".$SHOPNAME."\"<".$TONMAIL.">\r\n";
-				$headers .= "Reply-To: ".$TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"")."\r\nX-Mailer: PHP/" . phpversion() . "\r\nX-originating-IP: " . $_SERVER["REMOTE_ADDR"] . "\r\n";
-				$headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\nX-Priority: 1\r\nX-MSMail-Priority: High\r\n";
+				$headers  = "From: \"".$SHOPNAME."\" <".$TONMAIL.">\r\n";
+				$headers .= "Reply-To: ".$TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"")."\r\n";
+				$headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n";
+				
 				if(mail($destinataire,$sujet,$message,$headers)){
 					$msgCommand .= "<h2 class='h2okmsg2'>". $this->getlang('L_EMAIL_SENT1') . "</h2>";
 					$msgCommand .= "<h2 class='h2okmsg3'>" . sprintf($this->getlang('L_EMAIL_SENT2'), $TONMAIL) . "</h2>";
@@ -1163,7 +1164,8 @@ class plxMyShop extends plxPlugin {
 			echo "<script type='text/javascript'>error=true;</script>";
 		}
 		
-		$_SESSION['msgCommand']=$msgCommand;
+		$_SESSION['msgCommand'] = $msgCommand;
+		$_SESSION['methodpayment'] = $_POST["methodpayment"];
 	}
     
     //will position the price based on the config, before or after the price
@@ -1183,10 +1185,10 @@ class plxMyShop extends plxPlugin {
 		$accurecept = (float) $this->getParam('acurecept');
 		
 		if ($kg<=0) {
-			$shippingPrice=0.00;
-		} else if ((float)$kg<=$this->getParam('p01')) {
-			$shippingPrice=$shippingPrice1;
-		} else if ((float)$kg<=$this->getParam('p02')) {
+			$shippingPrice=$accurecept;
+		} else if ((float)$kg<=(float)$this->getParam('p01')) {
+			$shippingPrice=((float)$this->getParam('pv01')+$accurecept);
+		} else if ((float)$kg<=(float)$this->getParam('p02')) {
 			$shippingPrice=((float)$this->getParam('pv02')+$accurecept);
 		} else if ((float)$kg<=(float)$this->getParam('p03')) {
 			$shippingPrice=((float)$this->getParam('pv03')+$accurecept);

@@ -154,7 +154,6 @@ $LANG = array(
 'L_EMAIL_NOGIFT'                          => 'La commande n\'est pas un cadeau',
 'L_EMAIL_GIFT_FOR'                      => 'La commande est un cadeau pour',
 'L_EMAIL_PRODUCTLIST'                   => 'Liste des produits',
-'L_EMAIL_TOTAL'                   => 'Total (frais de port inclus)',
 'L_EMAIL_WEIGHT'                   => 'Poids',
 'L_EMAIL_DELIVERY_COST'                   => 'Frais de port',
 'L_EMAIL_COMMENT'                   => 'Commentaire',
