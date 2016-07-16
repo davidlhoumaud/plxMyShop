@@ -84,6 +84,9 @@ if(!empty($_POST)) {
 	$plxPlugin->setParam('commercant_postcode', $_POST['commercant_postcode'], 'string');
 	$plxPlugin->setParam('menu_position', $_POST['menu_position'], 'numeric');
 	
+	$afficheCategoriesMenu = isset($_POST['afficheCategoriesMenu']) ? "" : "non";
+	$plxPlugin->setParam('afficheCategoriesMenu', $afficheCategoriesMenu, 'string');
+	
     $plxPlugin->setParam('affPanier', $_POST['affPanier'], 'string');
 
 
@@ -159,6 +162,8 @@ $var['commercant_city'] = $plxPlugin->getParam('commercant_city')=='' ? 'Dun' : 
 $var['devise'] = $plxPlugin->getParam('devise')=='' ? ' €' : $plxPlugin->getParam('devise');
 $var['menu_position'] = $plxPlugin->getParam('menu_position')=='' ? 3 : $plxPlugin->getParam('menu_position');
 
+$var['afficheCategoriesMenu'] = $plxPlugin->getParam('afficheCategoriesMenu');
+
 $var["affPanier"] = ("" === $plxPlugin->getParam("affPanier")) ? current(array_keys($tabAffPanier)) : $plxPlugin->getParam("affPanier");
 
 $var["position_devise"] = ("" === $plxPlugin->getParam("position_devise")) ? current(array_keys($tabPosDevise)) : $plxPlugin->getParam("position_devise");
@@ -170,7 +175,12 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 	foreach($array as $k=>$v)
 		$aTemplates[$v] = $v;
 }
+
 ?>
+
+
+<link rel="stylesheet" type="text/css" href="<?php echo $plxAdmin->racine . "a/a/". PLX_PLUGINS;?>plxMyShop/css/admin.css"/>
+
 
 <h2><?php echo $plxPlugin->getInfo('title');?></h2>
 
@@ -327,6 +337,29 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
         <h2><?php $plxPlugin->lang('L_CONFIG_MENU_TITLE') ?></h2>
         <p class="field"><label for="id_menu_position"><?php $plxPlugin->lang('L_CONFIG_MENU_POSITION') ?>&nbsp;:</label></p>
 			<p><?php plxUtils::printInput('menu_position',$var['menu_position'],'number','100-120') ?></p>
+        <p class="field">
+			
+			<table>
+				<tr>
+					<td>
+						<label class="switch switch-left-right">
+							<input id="id_afficheCategoriesMenu" name="afficheCategoriesMenu" type="checkbox"
+								 class="switch-input"
+								<?php echo ("non" === $var["afficheCategoriesMenu"]) ? "" : " checked=\"checked\"";?>
+							/>
+							<span class="switch-label" data-on="oui" data-off="non"></span> 
+							<span class="switch-handle"></span> 
+						</label>
+					</td>
+					<td>
+						<label for="id_afficheCategoriesMenu">
+							<?php $plxPlugin->lang('L_CONFIG_AFFICHER_CATEGORIES_MENU');?>
+						</label>
+					</td>
+				</tr>
+			</table>
+			
+		</p>
 		<p></p>
 		<br/>
 		

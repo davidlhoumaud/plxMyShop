@@ -6,6 +6,7 @@ $LANG = array(
 
 'L_DEFAULT_NEW_PRODUCT_URL'			=> 'nòu-produit',
 'L_CONFIG_INFOS_NB_PRODUCTS'		=> 'Nombre de produits :',
+'L_CONFIG_PRIX_BASE'				=> 'Prix de base :',
 'L_MENU_PRODUCTS_TITLE'				=> 'Lista e modificacion dels produits',
 'L_MENU_PRODUCTS'					=> 'Lista dels produits',
 'L_MENU_CATS'					=> 'Lista de las categorias',
@@ -90,6 +91,7 @@ $LANG = array(
 'L_PANIER_POS_BOTH'                 => 'Aval de las paginas e sus una pagina a despart',
 
 #config page
+'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Afficher les catégories dans le menu',
 'L_CONFIG_SHOP_INFO'                     => 'Informacions Botiga',
 'L_CONFIG_SHOP_NAME'                     => 'Nom de la botiga',
 'L_CONFIG_SHOP_OWNER'                     => 'Nom e prenom del comerciant',

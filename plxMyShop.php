@@ -29,7 +29,8 @@ class plxMyShop extends plxPlugin {
 			, 5
 			, 'Affichage des produits / catégories'
 		);
-
+		
+		
         $this->addHook('plxMotorPreChauffageBegin', 'plxMotorPreChauffageBegin');
         $this->addHook('plxShowConstruct', 'plxShowConstruct');
         $this->addHook('plxShowPageTitle', 'plxShowPageTitle');
@@ -37,7 +38,7 @@ class plxMyShop extends plxPlugin {
         $this->addHook('SitemapStatics', 'SitemapStatics');
 		
         $this->addHook('AdminPrepend', 'AdminPrepend');
-        
+       
 		$this->addHook('plxShowStaticContent', 'plxShowStaticContent');
         
 		$this->getProducts();
@@ -125,18 +126,16 @@ class plxMyShop extends plxPlugin {
 	}
 	
 	
-	
-	
 	public function plxShowStaticContent() {
 		
 		echo "<?php";
 		?>
 			$plxPlugin = $this->plxMotor->plxPlugins->aPlugins['plxMyShop'];
 			$output = $plxPlugin->traitementPageStatique($output);
-			?>
-		<?php
+		?><?php
 		
 	}
+	
 	
 	public function traitementPageStatique($output) {
 		
@@ -213,7 +212,8 @@ class plxMyShop extends plxPlugin {
 		}
 		
 		return $output;
-	}
+		
+	} // FIN public function traitementPageStatique($output) {
 	
 	
 	
@@ -870,8 +870,10 @@ class plxMyShop extends plxPlugin {
 		
         # ajout du menu pour accèder aux rubriques
 		
-        if (isset($this->aProds) && is_array($this->aProds)) {
-			
+        if (	isset($this->aProds)
+			&&	is_array($this->aProds)
+			&&	("non" !== $this->getParam('afficheCategoriesMenu'))
+		) {
 			
             foreach(array_reverse($this->aProds) as $k=>$v) {
                 if ($v['menu']!='non' && $v['menu']!='') {
@@ -895,8 +897,10 @@ class plxMyShop extends plxPlugin {
 					
                 }
             }
-        }
-    }
+			
+        } // FIN if ajout du menu pour accèder aux rubriques
+		
+    } // FIN public function plxShowStaticListEnd() {
     
 	
 	public function modele($modele) {

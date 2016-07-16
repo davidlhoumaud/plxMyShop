@@ -91,6 +91,7 @@ $LANG = array(
 'L_PANIER_POS_BOTH'                 => 'En bas des pages et sur une page séparée',
 
 #config page
+'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Afficher les catégories dans le menu',
 'L_CONFIG_SHOP_INFO'                     => 'Informations Boutique',
 'L_CONFIG_SHOP_NAME'                     => 'Nom de la boutique',
 'L_CONFIG_SHOP_OWNER'                     => 'Nom et prénom du commerçant',

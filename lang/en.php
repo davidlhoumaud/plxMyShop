@@ -6,6 +6,7 @@ $LANG = array(
 
 'L_DEFAULT_NEW_PRODUCT_URL'			=> 'new-product',
 'L_CONFIG_INFOS_NB_PRODUCTS'		=> 'Number of products :',
+'L_CONFIG_PRIX_BASE'				=> 'Prix de base :',
 'L_MENU_PRODUCTS_TITLE'				=> 'List and modification of products',
 'L_MENU_PRODUCTS'					=> 'List of products',
 'L_MENU_CATS'					    => 'List of categories',
@@ -90,6 +91,7 @@ $LANG = array(
 'L_PANIER_POS_BOTH'                 => 'At the bottom of the pages and on a separate page',
 
 #config page
+'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Afficher les catégories dans le menu',
 'L_CONFIG_SHOP_INFO'                     => 'Shop informations',
 'L_CONFIG_SHOP_NAME'                     => 'Name of the Shop',
 'L_CONFIG_SHOP_OWNER'                     => 'Last and first name of the shop owner',
