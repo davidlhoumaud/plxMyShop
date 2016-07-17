@@ -137,7 +137,7 @@ if ($SandboxFlag=="True") { #for test
 /*            echo '<table align="center">';
             foreach ($resultEC as $i => $value) {
                 if($i == 'TOKEN') {
-                    $_SESSION['PP_TOKEN'] = $value;
+                    $_SESSION["plxMyShop"]['PP_TOKEN'] = $value;
                 }
                 echo '<tr><td>';
                 echo urldecode($i);
@@ -150,7 +150,7 @@ if ($SandboxFlag=="True") { #for test
             foreach ($resultEC as $i => $value) {
                 if($i == 'TOKEN') {
                     $TOKEN=urldecode($value);
-                    //$_SESSION['TOKEN'] = urldecode($value);
+                    //$_SESSION["plxMyShop"]['TOKEN'] = urldecode($value);
                 }
             }
             //var_dump($resultEC); exit;

@@ -6,6 +6,21 @@ version :
 
 
 $plxPlugin = $d["plxPlugin"];
+$plxPlugin->traitementPanier();
+
+$afficheMessage = FALSE;
+
+
+if (	isset($_SESSION["plxMyShop"]['msgCommand']) 
+	&&	!empty($_SESSION["plxMyShop"]['msgCommand']) 
+	&&	$_SESSION["plxMyShop"]['msgCommand']!=""
+){
+	$afficheMessage = TRUE;
+	$message = $_SESSION["plxMyShop"]['msgCommand'];
+	
+	unset($_SESSION["plxMyShop"]['msgCommand']);
+}
+
 
 ?>
 
@@ -19,27 +34,132 @@ $plxPlugin = $d["plxPlugin"];
 		<section align="center" class="productsect">
 		
 			<header>
-			<?php if (isset($_SESSION['msgCommand']) && !empty($_SESSION['msgCommand']) && $_SESSION['msgCommand']!=""){
-					echo $_SESSION['msgCommand'];
-					unset($_SESSION['msgCommand']);
-			 }?>
+				<?php if ($afficheMessage) {?>
+					<?php echo $message;?>
+				<?php } else {?>
+					<?php $plxPlugin->lang('L_PUBLIC_BASKET');?>
+				<?php }?>
 			</header>
 			
 			
+			<div id="shoppingCart" >
+				
+				<?php
+					
+					$sessioncart="";
+					$totalpricettc=0;
+					$totalpoidg=0;
+					$totalpoidgshipping = 0;
+					$nprod=0;
+					
+					if (isset($_SESSION["plxMyShop"]['prods']) && $_SESSION["plxMyShop"]['prods']) {
+						
+						
+						?>
+							<form action="" method="POST">
+								<table class="tableauProduitsPanier">
+									
+									<tr>
+										<th>
+											produit
+										</th>
+										<th>
+											prix unitaire
+										</th>
+										<th>
+											nombre
+										</th>
+										<th>
+											prix total
+										</th>
+										</th>
+										<th>
+									</tr>
+									
+									<?php foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) {?>
+										
+										<?php
+											if (!isset($plxPlugin->aProds[$pId])) {
+												continue;
+											}
+											
+											$prixUnitaire = (float) $plxPlugin->aProds[$pId]['pricettc'];
+											
+											$prixttc = $prixUnitaire * $nb;
+											$poidg = (float) $plxPlugin->aProds[$pId]['poidg'] * $nb;
+											
+											
+											$totalpricettc += $prixttc;
+											$totalpoidg += $poidg;
+											
+											$nprod++;
+										?>
+										
+										<tr>
+											<td>
+												<?php echo $plxPlugin->aProds[$pId]['name'];?>
+											</td>
+											<td class="nombre">
+												<?php echo $plxPlugin->pos_devise($prixUnitaire);?>
+											</td>
+											<td>
+												<input type="number" name="nb[<?php echo $pId;?>]"
+													 value="<?php echo htmlspecialchars($nb);?>"
+												/>
+											</td>
+											<td class="nombre">
+												<?php echo $plxPlugin->pos_devise($prixttc);?>
+											</td>
+											<td>
+												<input type="submit" name="retirerProduit[<?php echo $pId;?>]"
+													 value="<?php echo htmlspecialchars($plxPlugin->getLang('L_DEL'));?>"
+												/>
+											</td>
+										</tr>
+										
+									<?php } // FIN foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) {?>
+									
+								</table>
+								
+								<input type="submit" name="recalculer"
+									 value="<?php echo htmlspecialchars($plxPlugin->getLang('L_PANIER_RECALCULER'));?>"
+								/>
+								
+							</form>
+							
+							
+							<?php $totalpoidgshipping = $plxPlugin->shippingMethod($totalpoidg, 1);?>
+							
+							<span id="spanshipping"></span>
+							
+							<span id='totalCart'>
+								<?php echo htmlspecialchars($plxPlugin->getLang('L_TOTAL_BASKET'));?>
+								<?php echo $plxPlugin->pos_devise($totalpricettc + $totalpoidgshipping);?>
+							</span>
+							
+							
+						<?php
+					}
+				
+				?>
+				
+				<?php if (0 === $nprod && !$afficheMessage) {?>
+					<em><?php $plxPlugin->lang('L_PUBLIC_NOPRODUCT'); ?></em>
+				<?php }?>
+			
+			</div>
+			
 			
 			<form id="formcart" method="POST" action="#panier">
-			
-                <?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?>&nbsp;&nbsp;&nbsp;&nbsp;<span id='totalCart'><?php $plxPlugin->lang('L_TOTAL_BASKET'); echo $plxPlugin->pos_devise('0.00'); ?></span><span id="spanshipping"></span>
-			
-            <div id="shoppingCart" ><em><?php $plxPlugin->lang('L_PUBLIC_NOPRODUCT'); ?></em></div>
-            <p ><strong id="labelFirstnameCart"><span class='startw'><?php $plxPlugin->lang('L_PUBLIC_MANDATORY_FIELD'); ?></span> <br>
-            <br><?php $plxPlugin->lang('L_PUBLIC_FIRSTNAME'); ?><span class='star'>*</span> :</strong> <input  type="text" name="firstname" id="firstname" value=""><strong id="labelLastnameCart">&nbsp;&nbsp;<?php $plxPlugin->lang('L_PUBLIC_LASTNAME'); ?><span class='star'>*</span> :</strong> <input type="text" name="lastname"  id="lastname" value=""></p>
-            <p ><strong id="labelMailCart"><?php $plxPlugin->lang('L_PUBLIC_EMAIL'); ?><span class='star'>*</span> :</strong> <input type="email" name="email"  id="email" value=""></p>
-            <p ><strong id="labelTelCart"><?php $plxPlugin->lang('L_PUBLIC_TEL'); ?></strong> <input type="text" name="tel" id="tel" value=""></p>
-            <p ><strong id="labelAddrCart"><?php $plxPlugin->lang('L_PUBLIC_ADDRESS'); ?><span class='star'>*</span> :</strong> <input type="text" name="adress" id="adress" value=""></p>
-            <p ><strong id="labelPostcodeCart" ><?php $plxPlugin->lang('L_PUBLIC_ZIP'); ?><span class='star'>*</span> :</strong> <input  type="text" name="postcode" id="postcode" value="">
-            <strong id="labelCityCart"><?php $plxPlugin->lang('L_PUBLIC_TOWN'); ?><span class='star'>*</span> :</strong> <input type="text" name="city" id="city" value=""></p>
-            <p ><strong id="labelCountryCart"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span> :</strong> <input type="text" name="country" id="country" value=""></p>
+				
+				<p ><strong id="labelFirstnameCart"><span class='startw'><?php $plxPlugin->lang('L_PUBLIC_MANDATORY_FIELD'); ?></span> <br>
+				<br><?php $plxPlugin->lang('L_PUBLIC_FIRSTNAME'); ?><span class='star'>*</span> :</strong> <input  type="text" name="firstname" id="firstname" value=""><strong id="labelLastnameCart">&nbsp;&nbsp;<?php $plxPlugin->lang('L_PUBLIC_LASTNAME'); ?><span class='star'>*</span> :</strong> <input type="text" name="lastname"  id="lastname" value=""></p>
+				<p ><strong id="labelMailCart"><?php $plxPlugin->lang('L_PUBLIC_EMAIL'); ?><span class='star'>*</span> :</strong> <input type="email" name="email"  id="email" value=""></p>
+				<p ><strong id="labelTelCart"><?php $plxPlugin->lang('L_PUBLIC_TEL'); ?></strong> <input type="text" name="tel" id="tel" value=""></p>
+				<p ><strong id="labelAddrCart"><?php $plxPlugin->lang('L_PUBLIC_ADDRESS'); ?><span class='star'>*</span> :</strong> <input type="text" name="adress" id="adress" value=""></p>
+				<p ><strong id="labelPostcodeCart" ><?php $plxPlugin->lang('L_PUBLIC_ZIP'); ?><span class='star'>*</span> :</strong> <input  type="text" name="postcode" id="postcode" value="">
+				<strong id="labelCityCart"><?php $plxPlugin->lang('L_PUBLIC_TOWN'); ?><span class='star'>*</span> :</strong> <input type="text" name="city" id="city" value=""></p>
+				<p ><strong id="labelCountryCart"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span> :</strong> <input type="text" name="country" id="country" value=""></p>
 				<p>
 					<label for="choixCadeau">
 						<input type="checkbox" id="choixCadeau" name="choixCadeau"
@@ -65,7 +185,7 @@ $plxPlugin = $d["plxPlugin"];
 				<input type="hidden" name="numcart" id="numcart" value="0">
                 <strong><?php $plxPlugin->lang('L_EMAIL_CUST_PAYMENT'); ?>&nbsp;:&nbsp;&nbsp;</strong><select onchange="changePaymentMethod(this.value);" name="methodpayment">
 					<?php
-						$methodpayment = !isset($_SESSION["methodpayment"]) ? "" : $_SESSION["methodpayment"];
+						$methodpayment = !isset($_SESSION["plxMyShop"]["methodpayment"]) ? "" : $_SESSION["plxMyShop"]["methodpayment"];
 					?>
 					<?php foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) {?>
 						<option value="<?php echo htmlspecialchars($codeM);?>"
@@ -75,14 +195,21 @@ $plxPlugin = $d["plxPlugin"];
 						</option>
 					<?php }?>
 				</select><br>
-                <input type="submit" id="btnCart" value="<?php $plxPlugin->lang('L_PUBLIC_VALIDATE_ORDER'); ?>"/><br>
+                <input type="submit" id="btnCart" name="validerCommande" value="<?php $plxPlugin->lang('L_PUBLIC_VALIDATE_ORDER'); ?>"/><br>
 			</form>
 		</section>
 	</div>
 </div>
 <div id="msgAddCart">&darr; <?php $plxPlugin->lang('L_PUBLIC_ADDBASKET'); ?> &darr;</div>
 
-<script type="text/javascript">
+<script type="text/JavaScript">
+
+<?php
+	if ($nprod > 0 ) echo "var error=true;\n";
+	else echo "var error=false;\n";
+?>
+
+
 var total=0;
 var totalkg=0;
 var shippingPrice=0;
@@ -125,35 +252,7 @@ var shipping=document.getElementById('shipping');
 var shipping_kg=document.getElementById('shipping_kg');
 var spanshipping=document.getElementById('spanshipping');
 
-<?php
-
-if (isset($_SESSION['prods']) && is_array($_SESSION['prods'])) {
-    $sessioncart="";
-    $totalpricettc=0.00;
-    $totalpoidg=0.00;
-    $nprod=0;
-    
-    foreach ($_SESSION['prods'] as $k => $v) {
-        if (isset($plxPlugin->aProds[$v])){
-            $totalpricettc= ((float)$plxPlugin->aProds[$v]['pricettc']+(float)$totalpricettc);
-            $totalpoidg= ((float)$plxPlugin->aProds[$v]['poidg']+(float)$totalpoidg);
-            $productscart[$v]=array(
-				'pricettc' => $plxPlugin->aProds[$v]['pricettc'],
-				'poidg' => $plxPlugin->aProds[$v]['poidg'],
-				'name' => $plxPlugin->aProds[$v]['name'],
-			);
-            $sessioncart.="<span id=\"p".$nprod."\"><br>-&nbsp;".preg_replace("/'/",'&apos;',$productscart[$v]['name'])."&nbsp;&nbsp;&nbsp;&nbsp;". $plxPlugin->pos_devise($productscart[$v]['pricettc']) . ((float)$productscart[$v]['poidg']>0?" ".$plxPlugin->getlang('L_FOR')." ".$productscart[$v]['poidg']."&nbsp;kg":"").'&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="return removeCart(\\\'p'.$nprod.'\\\', \\\''.$productscart[$v]['pricettc'].'\\\', '.$productscart[$v]['poidg'].', \\\''.$v.'\\\');" id="delp'.$nprod.'">'.$plxPlugin->getlang('L_DEL').'</button></span>';
-            $nprod++;
-        }
-    }
-    $totalpoidgshipping = $plxPlugin->shippingMethod($totalpoidg, 1);
-
-	if (sizeof($_SESSION['prods']) > 0 ) echo "var error=true;\n";
-	else echo "var error=false;\n";
-?>
-	
 if (error) {
-    shoppingCart.innerHTML='<?php echo $sessioncart; ?>';
     PRODS.value=shoppingCart.innerHTML;
 	
     formcart.style.display='inline-block';
@@ -194,10 +293,10 @@ if (error) {
     telCart.value="<?php echo (isset($_POST['tel'])?preg_replace('/\"/','\\\"',$_POST['tel']):''); ?>";
     labelTelCart.style.display='inline-block';
     
-    idSuite.value="<?php echo (isset($_SESSION['ncart'])?$_SESSION['ncart']:''); ?>";
-    numCart.value="<?php echo (isset($_SESSION['ncart'])?$_SESSION['ncart']:''); ?>";
-    nprod=<?php echo (isset($_SESSION['ncart'])?(int)$_SESSION['ncart']:0); ?>;
-    realnprod=<?php echo (isset($_SESSION['ncart'])?(int)$_SESSION['ncart']:0); ?>;
+    idSuite.value="<?php echo (isset($_SESSION["plxMyShop"]['ncart'])?$_SESSION["plxMyShop"]['ncart']:''); ?>";
+    numCart.value="<?php echo (isset($_SESSION["plxMyShop"]['ncart'])?$_SESSION["plxMyShop"]['ncart']:''); ?>";
+    nprod=<?php echo (isset($_SESSION["plxMyShop"]['ncart'])?(int)$_SESSION["plxMyShop"]['ncart']:0); ?>;
+    realnprod=<?php echo (isset($_SESSION["plxMyShop"]['ncart'])?(int)$_SESSION["plxMyShop"]['ncart']:0); ?>;
     tmpship=<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>;
     total=<?php echo (isset($totalpricettc)?$totalpricettc:0.00); ?>;
     if (total >0) displayTotal=(total+<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>);
@@ -205,20 +304,18 @@ if (error) {
 
     pos_devise= "<?php echo $plxPlugin->getParam("position_devise");?>";
     devise= "<?php echo $plxPlugin->getParam("devise");?>";
+	
     if (pos_devise == "before") { price= devise+displayTotal.toFixed(2);}
     else { price= displayTotal.toFixed(2)+devise;}
-    totalCart.innerHTML="<?php $plxPlugin->lang('L_TOTAL_BASKET'); ?>&nbsp;: "+price; 
+    
+	//totalCart.innerHTML="<?php $plxPlugin->lang('L_TOTAL_BASKET'); ?>&nbsp;: "+price; 
 
     if (pos_devise == "before") { price= devise+"<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>";}
     else { price= "<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>"+devise;}
     spanshipping.innerHTML="<p class='spanshippingp'><?php $plxPlugin->lang('L_EMAIL_DELIVERY_COST'); ?>&nbsp;: " + price + " <?php $plxPlugin->lang('L_FOR'); ?> <?php echo $totalpoidg; ?>&nbsp;kg</p>";
     totalcommand.value=total;
 }
-<?php 
-} else if (isset($_SESSION['prods']) && !is_array($_SESSION['prods'])) {
-    unset($_SESSION['prods']);
-}
-?>
+
 function changePaymentMethod(method) {
     if (method=="cheque")formCart.action="#panier";
     else if (method=="cash") formCart.action="#panier";

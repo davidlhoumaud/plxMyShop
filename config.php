@@ -179,7 +179,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 ?>
 
 
-<link rel="stylesheet" type="text/css" href="<?php echo $plxAdmin->racine . "a/a/". PLX_PLUGINS;?>plxMyShop/css/admin.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo $plxAdmin->racine . "a/a/". PLX_PLUGINS;?>plxMyShop/css/administration.css"/>
 
 
 <h2><?php echo $plxPlugin->getInfo('title');?></h2>

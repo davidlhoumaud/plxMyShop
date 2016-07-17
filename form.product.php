@@ -40,12 +40,10 @@ var L_TOTAL = '<?php echo $plxPlugin->getlang('L_TOTAL_BASKET'); ?>';
 
 // e-mail de la commande
 
-$_SESSION['msgCommand']="";
+$_SESSION["plxMyShop"]['msgCommand']="";
 
+$plxPlugin->validerCommande();
 
-if (isset($_POST['prods']) && plxUtils::cdataCheck($_POST['prods'])!="") {
-	$plxPlugin->validerCommande();
-}
 
 if ("1" === $plxPlugin->aProds[$plxPlugin->productNumber()]['pcat']) {
 	$plxPlugin->modele("espacePublic/categorie");

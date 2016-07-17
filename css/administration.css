@@ -1,8 +1,13 @@
 
 
+.nombre
+{
+	text-align : right;
+}
+
 
 /* ********************************************************************************************** */
-/* case à cocher */
+/* cases à cocher */
 
 .switch {
 	position: relative;

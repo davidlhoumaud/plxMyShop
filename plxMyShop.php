@@ -152,7 +152,8 @@ class plxMyShop extends plxPlugin {
 			$this->donneesModeles["plxPlugin"] = $this;
 			
 			foreach ($resultat[1] as $codeProduit) {
-			$tabCodes[] = "[{$this->shortcode} $codeProduit]";
+				
+				$tabCodes[] = "[{$this->shortcode} $codeProduit]";
 				
 				
 				ob_start();
@@ -183,11 +184,9 @@ class plxMyShop extends plxPlugin {
 						)
 					) {
 						
-						$_SESSION['msgCommand']="";
+						$_SESSION["plxMyShop"]['msgCommand']="";
 						
-						if (isset($_POST['prods']) && plxUtils::cdataCheck($_POST['prods'])!="") {
-							$this->validerCommande();
-						}
+						$this->validerCommande();
 						
 						$this->modele("espacePublic/panier");
 					} else {
@@ -960,32 +959,35 @@ class plxMyShop extends plxPlugin {
 		$COMMERCANTSTREET=$this->getParam('commercant_street');
 		
 		//récupération de la liste des produit du panier
-		$totalpricettc=0.00;
-		$totalpoidg=0.00;
-		$totalpoidgshipping=0.00;
-		$productscart=array();
-		if (isset($_SESSION['prods'])) {
-			foreach ($_SESSION['prods'] as $k => $v) {
-				
-				if (!isset($productscart[$v])) {
-					$productscart[$v] = array(
-						'name' => $this->aProds[$v]['name'],
-						'pricettc' => 0,
-						'poidg' => 0,
-						'nombre' => 0,
-					);
-				}
-				
-				$totalpricettc= ((float)$this->aProds[$v]['pricettc']+(float)$totalpricettc);
-				$totalpoidg= ((float)$this->aProds[$v]['poidg']+(float)$totalpoidg);
-				
-				$productscart[$v]["nombre"]++;
-				$productscart[$v]["pricettc"] += $this->aProds[$v]['pricettc'];
-				$productscart[$v]["poidg"] += $this->aProds[$v]['poidg'];
-				
-			}
-			$totalpoidgshipping = $this->shippingMethod($totalpoidg, 1);
+		$totalpricettc = 0;
+		$totalpoidg = 0;
+		$totalpoidgshipping = 0;
+		$productscart = array();
+		
+		if (	!isset($_SESSION["plxMyShop"]['prods'])
+			||	(0 === count($_SESSION["plxMyShop"]['prods']))
+			||	!isset($_POST["validerCommande"])
+		) {
+			return;
 		}
+		
+		foreach ($_SESSION["plxMyShop"]['prods'] as $idP => $nb) {
+			
+			$productscart[$idP] = array(
+				'name' => $this->aProds[$idP]['name'],
+				'pricettc' => $this->aProds[$idP]['pricettc'] * $nb,
+				'poidg' => $this->aProds[$idP]['poidg'] * $nb,
+				'nombre' => $nb,
+			);
+			
+			$totalpricettc += $productscart[$idP]["pricettc"];
+			$totalpoidg += $productscart[$idP]["poidg"];
+			
+		}
+		
+		$totalpoidgshipping = $this->shippingMethod($totalpoidg, 1);
+		
+		
 		
 		#Mail de nouvelle commande pour le commerçant.
 		$sujet = $this->getlang('L_EMAIL_SUBJECT').$SHOPNAME;
@@ -1006,11 +1008,13 @@ class plxMyShop extends plxPlugin {
 			$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."Kg":"")."</li>";
 		}
 		$message.="</ul><br/><br>".
-            "<strong>".$this->getlang('L_TOTAL_BASKET').": ".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "</strong><br/><em><strong>". 
+            "<strong>".$this->getlang('L_TOTAL_BASKET')." ".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "</strong><br/><em><strong>". 
             $this->getlang('L_EMAIL_DELIVERY_COST'). " : ".$this->pos_devise($totalpoidgshipping). "</strong><br/>".
 		"<strong>".$this->getlang('L_EMAIL_WEIGHT')." : ".$totalpoidg."&nbsp;kg</strong><br/><br/></em>".
-		$this->getlang('L_EMAIL_COMMENT')." : <br>".plxUtils::cdataCheck($_POST['msg']);
+		$this->getlang('L_EMAIL_COMMENT')." : <br>".$_POST['msg'];
+		
 		$destinataire = $TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"");
+		
 		$headers  = "From: \"".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."\" <".$_POST['email'].">\r\n";
 		$headers .= "Reply-To: ".$_POST['email']."\r\n";
 		$headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n";
@@ -1109,22 +1113,22 @@ class plxMyShop extends plxPlugin {
 					$nf=PLX_ROOT.'data/commandes/'.date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
 					$monfichier = fopen($nf, 'w+');
 					$commandeContent="<!DOCTYPE html>
-	<html>
-	<head>
-	<title>".$this->getlang('L_FILE_ORDER').date("d m Y")."</title>
-	<meta charset=\"UTF-8\">
-	<meta name=\"description\" content=\"Commande\">
-	<meta name=\"author\" content=\"plxMyShop\">
-	</head>
-	<body>
-	$message
-	</body>
-	</html>";
+<html>
+<head>
+<title>".$this->getlang('L_FILE_ORDER').date("d m Y")."</title>
+<meta charset=\"UTF-8\">
+<meta name=\"description\" content=\"Commande\">
+<meta name=\"author\" content=\"plxMyShop\">
+</head>
+<body>
+$message
+</body>
+</html>";
 					fputs($monfichier, $commandeContent);
 					fclose($monfichier);
 					chmod($nf, 0644);
-					unset($_SESSION['prods']);
-					unset($_SESSION['ncart']);
+					unset($_SESSION["plxMyShop"]['prods']);
+					unset($_SESSION["plxMyShop"]['ncart']);
 				}else{
 					$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_EMAIL_ERROR1') ."</h2>";
 				}
@@ -1168,20 +1172,33 @@ class plxMyShop extends plxPlugin {
 			echo "<script type='text/javascript'>error=true;</script>";
 		}
 		
-		$_SESSION['msgCommand'] = $msgCommand;
-		$_SESSION['methodpayment'] = $_POST["methodpayment"];
-	}
+		$_SESSION["plxMyShop"]['msgCommand'] = $msgCommand;
+		$_SESSION["plxMyShop"]['methodpayment'] = $_POST["methodpayment"];
+		
+	} // FIN public function validerCommande() {
+	
     
     //will position the price based on the config, before or after the price
     public function pos_devise($price) {
-        $pos_price = $price;
-        if ( $this->getParam('position_devise') == "before" ) {
-            $pos_price = $this->getParam('devise').$price;
-            }
-        elseif ( $this->getParam('position_devise') == "after" ) {
-            $pos_price = $price.$this->getParam('devise');
-            }
-       return $pos_price; 
+		
+		$price = number_format(
+			  $price
+			, $this->getlang("L_NOMBRE_DECIMALES")
+			, $this->getlang("L_POINT_DECIMAL")
+			, $this->getlang("L_SEPARATEUR_MILLIERS")
+		);
+		
+		if ( $this->getParam('position_devise') == "before" ) {
+			
+			$pos_price = $this->getParam('devise').$price;
+			
+		} elseif ( $this->getParam('position_devise') == "after" ) {
+			
+			$pos_price = $price.$this->getParam('devise');
+			
+		}
+		
+		return $pos_price; 
     }
 	
 	function shippingMethod($kg, $op) {
@@ -1255,6 +1272,97 @@ class plxMyShop extends plxPlugin {
 		}
 		
 		
-	}
+	} // FIN public function menuAdmin($ongletEnCours) {
+	
+	
+	public function traitementAjoutPanier() {
+		
+		if (!isset($_POST["ajouterProduit"])) {
+			return;
+		}
+		
+		if (!isset($_SESSION)) {
+			session_start();
+		}
+		
+		if (!isset($_SESSION["plxMyShop"]['prods'])) $_SESSION["plxMyShop"]['prods']= array();
+		if (!isset($_SESSION["plxMyShop"]['ncart'])) $_SESSION["plxMyShop"]['ncart']= 0;
+		
+		$nombre = $_POST["nb"];
+		
+		$_SESSION["plxMyShop"]['ncart'] += $nombre;
+		$_SESSION["plxMyShop"]['prods'][$_POST['idP']] = $nombre;
+		
+		
+		$_SESSION["plxMyShop"]["messageProduitAjouter"] = TRUE;
+		
+		header("Location: {$_SERVER["REQUEST_URI"]}");
+		exit();
+		
+		
+	} // FIN public function traitementAjoutPanier() {
+	
+	
+	public function traitementPanier() {
+		
+		if (!isset($_SESSION)) {
+			session_start();
+		}
+		
+		if (!isset($_SESSION["plxMyShop"]['prods'])) $_SESSION["plxMyShop"]['prods'] = array();
+		if (!isset($_SESSION["plxMyShop"]['ncart'])) $_SESSION["plxMyShop"]['ncart'] = 0;
+		
+		
+		if (isset($_POST["retirerProduit"])) {
+			
+			$cles = array_keys($_POST["retirerProduit"]);
+			$idP = array_pop($cles);
+			
+			
+			if (isset($_SESSION["plxMyShop"]['prods'][$idP])) {
+				$_SESSION["plxMyShop"]['ncart'] -= $_SESSION["plxMyShop"]['prods'][$idP];
+				unset($_SESSION["plxMyShop"]['prods'][$idP]);
+			}
+			
+			
+			header("Location: {$_SERVER["REQUEST_URI"]}");
+			exit();
+			
+		} // FIN if (isset($_POST["retirerProduit"])) {
+		
+		
+		if (isset($_POST["recalculer"])) {
+			
+			
+			foreach ($_POST["nb"] as $idP => $nb) {
+				
+				$nb = floor($nb);
+				$nb = max(0, $nb);
+				
+				
+				if (isset($_SESSION["plxMyShop"]['prods'][$idP])) {
+					
+					$_SESSION["plxMyShop"]['ncart'] -= $_SESSION["plxMyShop"]['prods'][$idP];
+					
+					if (0 === $nb) {
+						unset($_SESSION["plxMyShop"]['prods'][$idP]);
+					} else {
+						$_SESSION["plxMyShop"]['ncart'] += $nb;
+						$_SESSION["plxMyShop"]['prods'][$idP] = $nb;
+					}
+					
+				}
+				
+			}
+			
+			
+			header("Location: {$_SERVER["REQUEST_URI"]}");
+			exit();
+			
+		} // FIN if (isset($_POST["recalculer"])) {
+		
+		
+	} // FIN public function traitementPanier() {
+	
 }
 
