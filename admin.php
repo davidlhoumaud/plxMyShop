@@ -71,6 +71,9 @@ function checkBox(obj) {
 	
 ?>
 
+<link rel="stylesheet" type="text/css" href="<?php echo $plxAdmin->racine . "a/a/". PLX_PLUGINS;?>plxMyShop/css/administration.css"/>
+
+
 <h2><?php echo plxUtils::strCheck($titre);?></h2>
 
 <p>
@@ -202,7 +205,7 @@ function checkBox(obj) {
         echo '<tr>'.
             '   <td>'.$date[2].'-'.$date[1].'-'.$date[0].' &agrave; '.preg_replace('/-/',':',$namearray[1]).'</td>'.
             '   <td>'.$namearray[2].'</td>'.
-            '   <td>'.((float)$namearray[3]+(float)preg_replace('/.html/','',$namearray[4])).'</td>'.
+            '   <td class="nombre">'.$plxPlugin->pos_devise((float)$namearray[3]+(float)preg_replace('/.html/','',$namearray[4])).'</td>'.
             '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p=plxMyShop&mod=cmd&kill='.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a href="'.$dir.$val.'" target="_BLANK">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.
             '</tr>';
     }; 

@@ -32,12 +32,10 @@ var L_TOTAL = '<?php echo $d["plxPlugin"]->getlang('L_TOTAL_BASKET'); ?>';
 
 // e-mail de la commande
 
-$_SESSION['msgCommand']="";
+$_SESSION["plxMyShop"]['msgCommand']="";
 
+$d["plxPlugin"]->validerCommande();
 
-if (isset($_POST['prods']) && ($_POST['prods'] !== "")) {
-	$d["plxPlugin"]->validerCommande();
-}
 
 $this->vue->affichageVuePublique($d["plxPlugin"]);
 

@@ -89,8 +89,17 @@ $LANG = array(
 'L_PANIER_POS_BOTTOM'               => 'En bas des pages de catégories et des produits',
 'L_PANIER_POS_SEPARATE'             => 'Sur une page séparée',
 'L_PANIER_POS_BOTH'                 => 'En bas des pages et sur une page séparée',
+'L_PANIER_RECALCULER'                 => 'Recalculer le total',
+
+
+// formatage des prix
+"L_NOMBRE_DECIMALES" => "2",
+"L_POINT_DECIMAL" => ",",
+"L_SEPARATEUR_MILLIERS" => " ",
+
 
 #config page
+'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Afficher les catégories dans le menu',
 'L_CONFIG_SHOP_INFO'                     => 'Informations Boutique',
 'L_CONFIG_SHOP_NAME'                     => 'Nom de la boutique',
 'L_CONFIG_SHOP_OWNER'                     => 'Nom et prénom du commerçant',
@@ -105,8 +114,8 @@ $LANG = array(
 'L_CONFIG_SECURITY_KEY'                 => 'Clé de chiffrement',
 
 'L_CONFIG_DELIVERY_TITLE'                 => 'Configuration des moyens de livraison et paiement',
-'L_CONFIG_DELIVERY_SHIPPING'                 => 'Livraison par "SoColissimo Recommandé"',
-'L_CONFIG_DELIVERY_CONFIG'                 => 'Configuration "SoColissimo Recommandé"',
+'L_CONFIG_DELIVERY_SHIPPING'                 => 'Ajout de frais de port',
+'L_CONFIG_DELIVERY_CONFIG'                 => 'Configuration des frais de port',
 'L_CONFIG_DELIVERY_RECORDED'                 => 'Accusé de réception',
 'L_CONFIG_DELIVERY_WEIGHT'                 => 'Poids en kg',
 
@@ -218,7 +227,7 @@ $LANG = array(
 'L_PUBLIC_TAX'                   => 'T.T.C.',
 
 #panier.js
-'L_TOTAL_BASKET'                    => 'Total (frais de port inclus)',
+'L_TOTAL_BASKET'                    => 'Total (frais de port inclus) :',
 'L_TITRE_PANIER'                    => 'Panier',
 
 
