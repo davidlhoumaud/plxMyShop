@@ -33,8 +33,9 @@ $LANG = array(
 'L_PRODUCTS_ID'						=> 'Identifier',
 'L_PRODUCTS_GROUP'					=> 'Group',
 'L_PRODUCTS_TITLE'					=> 'Title',
-'L_PRODUCTS_URL'					=> 'Url',
-'L_PRODUCTS_ACTIVE'					=> 'Active',
+'L_PRODUCTS_URL'					=> 'URL',
+'L_PRODUIT_ACTIF'					=> 'Active',
+'L_CATEGORIE_ACTIVE'                => 'Active',
 'L_PRODUCTS_ORDER'					=> 'Order',
 'L_PRODUCTS_MENU'					=> 'Menu',
 'L_PRODUCTS_ACTION'					=> 'Action',
@@ -49,7 +50,7 @@ $LANG = array(
 'L_PRODUCTS_IMAGE'          		=> 'Product image',
 'L_PRODUCTS_IMAGE_CHOICE'          	=> 'Choose an image',
 'L_PRODUCTS_SHORTCODE'          	=> 'shortcode to use in a static page',
-'L_PRODUCTS_BASKET_BUTTON'          => 'Display the button "Add to the basket"',
+'L_PRODUCTS_BASKET_BUTTON'          => 'Hide the button "Add to the basket"',
 'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Display a message if the button "Add to the basket" is not displayed',
 'L_PRODUCTS_CATEGORIES'          	=> 'Categories of this product',
 'L_PRODUCTS_PRICE'           	    => 'Price tax included',
@@ -89,9 +90,17 @@ $LANG = array(
 'L_PANIER_POS_BOTTOM'               => 'At the bottom of the products and categories pages',
 'L_PANIER_POS_SEPARATE'             => 'On a separate page',
 'L_PANIER_POS_BOTH'                 => 'At the bottom of the pages and on a separate page',
+'L_PANIER_RECALCULER'               => 'Recalculate the Total',
+
+
+// formatage des prix
+"L_NOMBRE_DECIMALES"                => "2",
+"L_POINT_DECIMAL"                   => ".",
+"L_SEPARATEUR_MILLIERS"             => " ",
+
 
 #config page
-'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Afficher les catégories dans le menu',
+'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Display the categories in the main menu',
 'L_CONFIG_SHOP_INFO'                     => 'Shop informations',
 'L_CONFIG_SHOP_NAME'                     => 'Name of the Shop',
 'L_CONFIG_SHOP_OWNER'                     => 'Last and first name of the shop owner',
@@ -106,8 +115,8 @@ $LANG = array(
 'L_CONFIG_SECURITY_KEY'                 => 'Encryption key',
 
 'L_CONFIG_DELIVERY_TITLE'                 => 'Configuration of delivery and payment methods',
-'L_CONFIG_DELIVERY_SHIPPING'                 => 'Delivery using "SoColissimo Recommandé"',
-'L_CONFIG_DELIVERY_CONFIG'                 => 'Configuration of "SoColissimo Recommandé"',
+'L_CONFIG_DELIVERY_SHIPPING'                 => 'Add Delivery fee',
+'L_CONFIG_DELIVERY_CONFIG'                 => 'Configuration of Delivery fees',
 'L_CONFIG_DELIVERY_RECORDED'                 => 'Recorded delivery',
 'L_CONFIG_DELIVERY_WEIGHT'                 => 'Weight in kg',
 
@@ -196,6 +205,9 @@ $LANG = array(
 'L_MISSING_COUNTRY'                      => 'The country is not defined.',
 'L_MISSING_GIFTNAME'                      => 'The name of the gift recipient is not defined.',
 
+'L_MISSING_VALIDATION_CGV' => 'Please acknowledge the General Sales Terms and Conditions.',
+
+
 #Espace public
 'L_PUBLIC_ADDBASKET'                    => 'Product added to the basket',
 'L_PUBLIC_BASKET'                    => 'Your basket',
@@ -218,8 +230,14 @@ $LANG = array(
 'L_PUBLIC_ADD_BASKET'                   => 'Add to the basket',
 'L_PUBLIC_TAX'                   => 'Tax included',
 
+'L_COMMANDE_LIBELLE_DEFAUT' => 'I have read and accept the General Sales Terms and Conditions',
+'L_CONFIG_VALIDATION_COMMANDE' => 'Validation of the order',
+'CONFIG_LIBELLE_CGV' => 'Wording of the General Sales T&C . (The URL is required if you are using it)',
+'CONFIG_URL_CGV' => 'URL for the T&C.',
+
+
 #panier.js
-'L_TOTAL_BASKET'                    => 'Total (delivery cost included)',
+'L_TOTAL_BASKET'                    => 'Total (delivery cost included) :',
 'L_TITRE_PANIER'                    => 'Basket',
 
 
