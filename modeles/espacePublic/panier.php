@@ -195,6 +195,18 @@ if (	isset($_SESSION["plxMyShop"]['msgCommand'])
 						</option>
 					<?php }?>
 				</select><br>
+				
+				<?php if ("" !== $plxPlugin->getParam("urlCGV")) {?>
+					<label for="valideCGV">
+						<input type="checkbox" name="valideCGV" id="valideCGV"
+							<?php echo (!isset($_POST["valideCGV"])) ? "" : " checked=\"checked\"";?>
+						/>
+						<span class='star'>*</span>
+						<a href="<?php echo htmlspecialchars($plxPlugin->getParam("urlCGV"));?>">
+							<?php echo htmlspecialchars($plxPlugin->getParam("libelleCGV"));?></a>
+					</label>
+				<?php }?>
+				
                 <input type="submit" id="btnCart" name="validerCommande" value="<?php $plxPlugin->lang('L_PUBLIC_VALIDATE_ORDER'); ?>"/><br>
 			</form>
 		</section>

@@ -33,8 +33,9 @@ $LANG = array(
 'L_PRODUCTS_ID'						=> 'Identifiant',
 'L_PRODUCTS_GROUP'					=> 'Groupe',
 'L_PRODUCTS_TITLE'					=> 'Titre',
-'L_PRODUCTS_URL'					=> 'Url',
-'L_PRODUCTS_ACTIVE'					=> 'Active',
+'L_PRODUCTS_URL'					=> 'URL',
+'L_PRODUIT_ACTIF'					=> 'Actif',
+'L_CATEGORIE_ACTIVE'				=> 'Active',
 'L_PRODUCTS_ORDER'					=> 'Ordre',
 'L_PRODUCTS_MENU'					=> 'Menu',
 'L_PRODUCTS_ACTION'					=> 'Action',
@@ -49,7 +50,7 @@ $LANG = array(
 'L_PRODUCTS_IMAGE'                  => 'Image de présentation',
 'L_PRODUCTS_IMAGE_CHOICE'           => 'Choisir une image',
 'L_PRODUCTS_SHORTCODE'              => 'shortcode utilisable dans une page statique',
-'L_PRODUCTS_BASKET_BUTTON'          => 'Afficher le bouton "Ajouter au panier"',
+'L_PRODUCTS_BASKET_BUTTON'          => 'Cacher le bouton "Ajouter au panier"',
 'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Afficher un message si le bouton "Ajouter au panier" n\'est pas affiché',
 'L_PRODUCTS_CATEGORIES'             => 'Catégories de ce produit',
 'L_PRODUCTS_PRICE'                  => 'Prix T.T.C.',
@@ -204,6 +205,9 @@ $LANG = array(
 'L_MISSING_COUNTRY'                      => 'Le pays n\'est pas défini.',
 'L_MISSING_GIFTNAME'                      => 'Le nom du destinataire du cadeau n\'est pas défini.',
 
+"L_MISSING_VALIDATION_CGV" => "Vous devez valider les conditions générales de vente.",
+
+
 #Espace public
 'L_PUBLIC_ADDBASKET'                    => 'Produit ajouté au panier',
 'L_PUBLIC_BASKET'                    => 'Votre panier',
@@ -225,6 +229,12 @@ $LANG = array(
 'L_PUBLIC_VALIDATE_ORDER'                   => 'Validez la commande',
 'L_PUBLIC_ADD_BASKET'                   => 'Ajouter au panier',
 'L_PUBLIC_TAX'                   => 'T.T.C.',
+
+"L_COMMANDE_LIBELLE_DEFAUT" => "J'ai lu et j'accepte les conditions générales de vente.",
+"L_CONFIG_VALIDATION_COMMANDE" => "Validation de la commande",
+"CONFIG_LIBELLE_CGV" => "Libellé de la demande de validation des C.G.V. (l'URL doit être indiqué pour être utilisé)",
+"CONFIG_URL_CGV" => "URL des C.G.V.",
+
 
 #panier.js
 'L_TOTAL_BASKET'                    => 'Total (frais de port inclus) :',

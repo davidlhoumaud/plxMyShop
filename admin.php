@@ -82,22 +82,47 @@ function checkBox(obj) {
 
 
 <form action="plugin.php?p=plxMyShop<?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?"&mod=cat":""); ?>" method="post" id="form_products">
-    <table class="table">
+    <table class="table listeCategoriesProduitsAdmin liste<?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?"Categories":"Produits");?>Admin">
     <thead>
         <tr>
             <?php if (!isset($_GET['mod']) || (isset($_GET['mod']) && $_GET['mod']!='cmd')): ?>
             <th class="checkbox"><input type="checkbox" onclick="checkAll(this.form, 'idProduct[]')" /></th>
             <th style="width:80px"><?php $plxPlugin->lang('L_PRODUCTS_ID') ?></th>
-            <th><!--Catégorie--></th>
+            <th></th>
             <th><?php $plxPlugin->lang('L_PRODUCTS_TITLE') ?></th>
             <th><?php $plxPlugin->lang('L_PRODUCTS_URL') ?></th>
-            <th><?php $plxPlugin->lang('L_PRODUCTS_ACTIVE') ?></th>
+			
+            <?php
+				if (isset($_GET['mod']) && $_GET['mod']=='cat') {
+					echo '<th>';
+					$plxPlugin->lang('L_CATEGORIE_ACTIVE');
+					echo '</th>';
+				} else {
+					echo '<th>';
+					$plxPlugin->lang('L_PRODUIT_ACTIF');
+					echo '</th>';
+				}
+			?>
+			
             <th><?php $plxPlugin->lang('L_PRODUCTS_ORDER') ?></th>
-            <?php if(isset($_GET['mod']) && $_GET['mod']=='cat') {
-            echo '<th>';
-            $plxPlugin->lang('L_PRODUCTS_MENU');
-            echo '</th>';
-            } ?>
+			
+            <?php
+				if (isset($_GET['mod']) && $_GET['mod']=='cat') {
+					echo '<th>';
+					$plxPlugin->lang('L_PRODUCTS_MENU');
+					echo '</th>';
+				} else {
+					
+					echo '<th>';
+					$plxPlugin->lang('L_PRODUCTS_PRICE');
+					echo '</th>';
+					echo '<th>';
+					$plxPlugin->lang('L_PRODUCTS_WEIGHT');
+					echo '</th>';
+					
+				}
+			?>
+			
             <th><?php $plxPlugin->lang('L_PRODUCTS_ACTION') ?></th>
             <?php else: ?>
             <th><?php $plxPlugin->lang('L_DATE') ?></th>
@@ -117,16 +142,27 @@ function checkBox(obj) {
               $url=$v['url'];
             if ((isset($_GET['mod']) && $_GET['mod']=='cat' && $v['pcat']!=1)||(isset($_GET['mod']) && $_GET['mod']=='cmd'))continue;
             if (!isset($_GET['mod']) && $v['pcat']==1)continue;
+			
             $ordre = ++$num;
+            $selected = $v['pcat']==1 ? ' checked="checked"' : '';
+            $valued = $v['pcat']==1 ? '1' : '0';
+			
+			
             echo '<tr class="line-'.($num%2).'">';
             echo '<td><input type="checkbox" name="idProduct[]" value="'.$k.'" /><input type="hidden" name="productNum[]" value="'.$k.'" /></td>';
-            echo '<td>'.$k.'</td>';
-            $selected = $v['pcat']==1 ? ' checked="checked"' : '';
-            $valued = $v['pcat']==1 ? '1' : '0'; ?>
-            <td><input title="<?php $plxPlugin->lang('L_CAT') ?><?php echo '" type="hidden" name="'.$k.'_pcat" value="'.$valued.'"'.$selected.' onclick="checkBox(this);" /></td>';
-
+            echo '<td>'.$k;
+			echo '<input type="hidden" name="'.$k.'_pcat" value="'.$valued.'"'.$selected.' onclick="checkBox(this);" />';
+			echo "</td>";
+            ?>
+			<td>
+				<?php
+					$image = $v["image"];
+					echo ($image!=""?'<img class="product_image" src="'.PLX_ROOT.$plxPlugin->cheminImages.$image.'">':'');
+				?>
+			</td>
+			<?php
             echo '<td>';
-            plxUtils::printInput($k.'_name', plxUtils::strCheck($v['name']), 'text', '13-255');
+            plxUtils::printInput($k.'_name', plxUtils::strCheck($v['name']), 'text', '20-255');
             echo '</td><td>';
             plxUtils::printInput($k.'_url', $v['url'], 'text', '12-255');
             echo '</td><td>';
@@ -134,11 +170,27 @@ function checkBox(obj) {
             echo '</td><td>';
             plxUtils::printInput($k.'_ordre', $ordre, 'text', '2-3');
             echo '</td>';
-            if ($v['pcat']==1) {
-            echo '<td>';
-            plxUtils::printSelect($k.'_menu', array('oui'=>L_DISPLAY,'non'=>L_HIDE), $v['menu']);
-            echo '</td>';
-            }
+            
+			if ($v['pcat']==1) {
+				echo '<td>';
+				plxUtils::printSelect($k.'_menu', array('oui'=>L_DISPLAY,'non'=>L_HIDE), $v['menu']);
+				echo '</td>';
+            } else {
+				
+				echo '<td class="nombre">';
+				if ($v["pricettc"] > 0) {
+					echo $plxPlugin->pos_devise($v["pricettc"]);
+				}
+				echo '</td>';
+				
+				echo '<td class="nombre">';
+				if ($v["poidg"] > 0) {
+					echo $v["poidg"];
+				}
+				echo '</td>';
+ 				
+			}
+			
             if(!plxUtils::checkSite($v['url'])) {
                 echo '<td>';
                 echo '<a href="plugin.php?p=plxMyShop&prod='.$k.'" title="';
@@ -172,7 +224,7 @@ function checkBox(obj) {
                 echo '<input type="hidden" name="productNum[]" value="'.$new_productid.'" />'; ?>
                 <td><input title="<?php $plxPlugin->lang('L_CAT') ?><?php echo '" type="hidden" name="'.$new_productid.'_pcat" value="'.(isset($_GET['mod']) && $_GET['mod']=='cat'?'1':'0').'" '.(isset($_GET['mod']) && $_GET['mod']=='cat'?'checked':'').' onclick="checkBox(this);" ></td>';
                 echo '<td>';
-                plxUtils::printInput($new_productid.'_name', '', 'text', '13-255');
+                plxUtils::printInput($new_productid.'_name', '', 'text', '20-255');
                 plxUtils::printInput($new_productid.'_template', $plxPlugin->getParam('template'), 'hidden');
                 echo '</td><td>';
                 plxUtils::printInput($new_productid.'_url', '', 'text', '12-255');
@@ -182,12 +234,13 @@ function checkBox(obj) {
                 plxUtils::printInput($new_productid.'_ordre', ++$num, 'text', '2-3');
                 echo '</td>';
                 if (isset($_GET['mod']) && $_GET['mod']=='cat') {
-                echo '<td>';
-                plxUtils::printSelect($new_productid.'_menu', array('oui'=>L_DISPLAY,'non'=>L_HIDE), '0');
-                echo '<td>';
-                }
+					echo '<td>';
+					plxUtils::printSelect($new_productid.'_menu', array('oui'=>L_DISPLAY,'non'=>L_HIDE), '0');
+					echo '<td>';
+                } else {
+					echo "<td colspan=\"3\">&nbsp;</td>";
+				}
             ?>
-            <td>&nbsp;</td>
         </tr>
     <?php else:
     
