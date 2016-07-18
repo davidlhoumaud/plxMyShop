@@ -89,6 +89,14 @@ $LANG = array(
 'L_PANIER_POS_BOTTOM'               => 'At the bottom of the products and categories pages',
 'L_PANIER_POS_SEPARATE'             => 'On a separate page',
 'L_PANIER_POS_BOTH'                 => 'At the bottom of the pages and on a separate page',
+'L_PANIER_RECALCULER'               => 'Recalculate the Total',
+
+
+// formatage des prix
+"L_NOMBRE_DECIMALES"                => "2",
+"L_POINT_DECIMAL"                   => ".",
+"L_SEPARATEUR_MILLIERS"             => " ",
+
 
 #config page
 'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Afficher les catégories dans le menu',
