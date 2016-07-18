@@ -1005,13 +1005,19 @@ class plxMyShop extends plxPlugin {
 		$this->getlang('L_PAIEMENT').": ".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE')).
 		"<br>".$this->getlang('L_EMAIL_PRODUCTLIST')." :<br/><ul>";
 		foreach ($productscart as $k => $v) {
-			$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."Kg":"")."</li>";
+			$message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."&nbsp;kg":"")."</li>";
 		}
-		$message.="</ul><br/><br>".
-            "<strong>".$this->getlang('L_TOTAL_BASKET')." ".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "</strong><br/><em><strong>". 
-            $this->getlang('L_EMAIL_DELIVERY_COST'). " : ".$this->pos_devise($totalpoidgshipping). "</strong><br/>".
-		"<strong>".$this->getlang('L_EMAIL_WEIGHT')." : ".$totalpoidg."&nbsp;kg</strong><br/><br/></em>".
-		$this->getlang('L_EMAIL_COMMENT')." : <br>".$_POST['msg'];
+		$message .= "</ul>";
+		$message .= "<br/><br/>";
+		$message .= "<em><strong>". $this->getlang('L_EMAIL_DELIVERY_COST'). " : ".$this->pos_devise($totalpoidgshipping). "</strong>";
+		$message .= "<br/>";
+		$message .= "<strong>".$this->getlang('L_EMAIL_WEIGHT')." : ".$totalpoidg."&nbsp;kg</strong></em>";
+		$message .= "<br/>";
+		$message .= "<strong>" . $this->getlang('L_TOTAL_BASKET')." ".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "</strong>";
+ 		$message .= "<br/><br/>";
+		$message .= $this->getlang('L_EMAIL_COMMENT')." : ";
+		$message .= "<br/>";
+		$message .= $_POST['msg'];
 		
 		$destinataire = $TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"");
 		
@@ -1027,6 +1033,13 @@ class plxMyShop extends plxPlugin {
 			&&	(isset($_POST['city']) && plxUtils::cdataCheck($_POST['city'])!="")
 			&&	(isset($_POST['country']) && plxUtils::cdataCheck($_POST['country'])!="")
 			&&	(!isset($_POST['choixCadeau']) || plxUtils::cdataCheck($_POST['nomCadeau'])!="")
+			&&	(
+				("" === $this->getParam("urlCGV"))
+				||
+				(		("" !== $this->getParam("urlCGV"))
+					&&	isset($_POST["valideCGV"])
+				)
+			)
 		) {
 			
 			if(mail($destinataire,$sujet,$message,$headers)){
@@ -1167,6 +1180,11 @@ $message
 			}
 			if ( (isset($_POST['choixCadeau']) &&  plxUtils::cdataCheck($_POST['nomCadeau']) === "") ) {
 				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_GIFTNAME') ."</h2>";
+			}
+			if (	("" !== $this->getParam("urlCGV"))
+				&&	!isset($_POST["valideCGV"])
+			) {
+				$msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_VALIDATION_CGV') ."</h2>";
 			}
 			
 			echo "<script type='text/javascript'>error=true;</script>";

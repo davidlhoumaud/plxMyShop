@@ -204,6 +204,9 @@ $LANG = array(
 'L_MISSING_COUNTRY'                      => 'Le pays n\'est pas défini.',
 'L_MISSING_GIFTNAME'                      => 'Le nom du destinataire du cadeau n\'est pas défini.',
 
+"L_MISSING_VALIDATION_CGV" => "Vous devez valider les conditions générales de vente.",
+
+
 #Espace public
 'L_PUBLIC_ADDBASKET'                    => 'Produit ajouté au panier',
 'L_PUBLIC_BASKET'                    => 'Votre panier',
@@ -225,6 +228,12 @@ $LANG = array(
 'L_PUBLIC_VALIDATE_ORDER'                   => 'Validez la commande',
 'L_PUBLIC_ADD_BASKET'                   => 'Ajouter au panier',
 'L_PUBLIC_TAX'                   => 'T.T.C.',
+
+"L_COMMANDE_LIBELLE_DEFAUT" => "J'ai lu et j'accepte les conditions générales de vente.",
+"L_CONFIG_VALIDATION_COMMANDE" => "Validation de la commande",
+"CONFIG_LIBELLE_CGV" => "Libellé de la demande de validation des C.G.V. (l'URL doit être indiqué pour être utilisé)",
+"CONFIG_URL_CGV" => "URL des C.G.V.",
+
 
 #panier.js
 'L_TOTAL_BASKET'                    => 'Total (frais de port inclus) :',

@@ -88,6 +88,9 @@ if(!empty($_POST)) {
 	$plxPlugin->setParam('afficheCategoriesMenu', $afficheCategoriesMenu, 'string');
 	
     $plxPlugin->setParam('affPanier', $_POST['affPanier'], 'string');
+	
+	$plxPlugin->setParam('libelleCGV', $_POST['libelleCGV'], 'string');
+	$plxPlugin->setParam('urlCGV', $_POST['urlCGV'], 'string');
 
 
     $plxPlugin->setParam('position_devise', $_POST['position_devise'], 'string');
@@ -167,6 +170,9 @@ $var['afficheCategoriesMenu'] = $plxPlugin->getParam('afficheCategoriesMenu');
 $var["affPanier"] = ("" === $plxPlugin->getParam("affPanier")) ? current(array_keys($tabAffPanier)) : $plxPlugin->getParam("affPanier");
 
 $var["position_devise"] = ("" === $plxPlugin->getParam("position_devise")) ? current(array_keys($tabPosDevise)) : $plxPlugin->getParam("position_devise");
+
+$var["libelleCGV"] = ("" === $plxPlugin->getParam("libelleCGV")) ? $plxPlugin->getLang("L_COMMANDE_LIBELLE_DEFAUT") : $plxPlugin->getParam("libelleCGV");
+$var["urlCGV"] = ("" === $plxPlugin->getParam("urlCGV")) ? "" : $plxPlugin->getParam("urlCGV");
 
 # On récupère les templates des pages statiques
 $aTemplates = array();
@@ -316,6 +322,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 				<p><input name='payment_paypal_cancelurl' value="<?php echo ($var['payment_paypal_cancelurl']!=""?$var['payment_paypal_cancelurl']:$_SERVER['HTTP_HOST']); ?>" type='text' ></p>
 				<p></p>
 		</fieldset>
+		
         <h2><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_TITLE') ?></h2><br>
 	    <p class="field"><label for="id_email"><?php $plxPlugin->lang('L_EMAIL') ?>&nbsp;:</label></p>
 				<p><input name='email' value="<?php echo $var['email']; ?>" type='text' ></p>
@@ -331,8 +338,15 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 				<p></p>
                 <p class="field"><label for="id_newsubject"><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP') ?>&nbsp;:</label></p>
 				<p><?php plxUtils::printInput('newsubject',$var['newsubject'],'text','100-120') ?></p>
-		<p></p>
-		<br/>
+		<p>&nbsp;</p>
+		
+		
+		<h2><?php $plxPlugin->lang('L_CONFIG_VALIDATION_COMMANDE') ?></h2>
+		<p class="field"><label><?php $plxPlugin->lang('CONFIG_LIBELLE_CGV') ?>&nbsp;:</label></p>
+		<p><input name='libelleCGV' value="<?php echo $var['libelleCGV']; ?>" type='text' size="100"></p>
+		<p class="field"><label><?php $plxPlugin->lang('CONFIG_URL_CGV') ?>&nbsp;:</label></p>
+		<p><input name='urlCGV' value="<?php echo $var['urlCGV']; ?>" type='text' size="100"></p>
+		<p>&nbsp;</p>
 		
         <h2><?php $plxPlugin->lang('L_CONFIG_MENU_TITLE') ?></h2>
         <p class="field"><label for="id_menu_position"><?php $plxPlugin->lang('L_CONFIG_MENU_POSITION') ?>&nbsp;:</label></p>
