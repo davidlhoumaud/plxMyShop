@@ -34,7 +34,7 @@ $LANG = array(
 'L_PRODUCTS_GROUP'					=> 'Group',
 'L_PRODUCTS_TITLE'					=> 'Title',
 'L_PRODUCTS_URL'					=> 'URL',
-'L_PRODUCTS_ACTIVE'					=> 'Active',
+'L_PRODUIT_ACTIF'					=> 'Active',
 'L_CATEGORIE_ACTIVE'                => 'Active',
 'L_PRODUCTS_ORDER'					=> 'Order',
 'L_PRODUCTS_MENU'					=> 'Menu',
@@ -100,7 +100,7 @@ $LANG = array(
 
 
 #config page
-'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Afficher les catégories dans le menu',
+'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Display the categories in the main menu',
 'L_CONFIG_SHOP_INFO'                     => 'Shop informations',
 'L_CONFIG_SHOP_NAME'                     => 'Name of the Shop',
 'L_CONFIG_SHOP_OWNER'                     => 'Last and first name of the shop owner',
@@ -230,7 +230,7 @@ $LANG = array(
 'L_PUBLIC_ADD_BASKET'                   => 'Add to the basket',
 'L_PUBLIC_TAX'                   => 'Tax included',
 
-'L_COMMANDE_LIBELLE_DEFAUT' => 'I have read and accept the General Sales Terms and Conditions'
+'L_COMMANDE_LIBELLE_DEFAUT' => 'I have read and accept the General Sales Terms and Conditions',
 'L_CONFIG_VALIDATION_COMMANDE' => 'Validation of the order',
 'CONFIG_LIBELLE_CGV' => 'Wording of the General Sales T&C . (The URL is required if you are using it)',
 'CONFIG_URL_CGV' => 'URL for the T&C.',
