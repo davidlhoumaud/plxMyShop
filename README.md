@@ -5,11 +5,11 @@ craft@ckdevelop.org
 www.ckdevelop.org  
 
 Description en français :  
-https://github.com/davidlhoumaud/plxMyShop/blob/master/lang/fr/description.md
+https://github.com/davidlhoumaud/plxMyShop/blob/develop/lang/fr/description.md
 
 English description:  
-https://github.com/davidlhoumaud/plxMyShop/blob/master/lang/en/description.md
+https://github.com/davidlhoumaud/plxMyShop/blob/develop/lang/en/description.md
 
 Occitan :  
-https://github.com/davidlhoumaud/plxMyShop/blob/master/lang/oc/description.md
+https://github.com/davidlhoumaud/plxMyShop/blob/develop/lang/oc/description.md
 

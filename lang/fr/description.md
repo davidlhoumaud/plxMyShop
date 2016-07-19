@@ -27,17 +27,17 @@ Par exemple pour modifier le fichier `espacePublic/boucle/produitRubrique.php` q
 
 ## Support
 
-Pour toute question concernant l'utilisation de l'extension, vous pouvez vous rendre dans cette discussion sur le forum de PluXML : 
+Pour toute question concernant l'utilisation de l'extension, vous pouvez vous rendre dans cette discussion sur le forum de PluXML :  
 http://forum.pluxml.org/viewtopic.php?id=4854
 
-Vous trouverez les modifications apportées par les différentes versions dans le fichier suivant : 
-https://github.com/davidlhoumaud/plxMyShop/blob/master/lang/fr/versions.md
+Vous trouverez les modifications apportées par les différentes versions dans le fichier suivant :  
+https://github.com/davidlhoumaud/plxMyShop/blob/develop/lang/fr/versions.md
 
 ## Contributions
 
 Vous pouvez contribuer au projet de différentes façons : 
-- En nous aidant à tenir les traductions à jour ou bien en proposant une nouvelle langue : 
+- En nous aidant à tenir les traductions à jour ou bien en proposant une nouvelle langue :  
 https://github.com/davidlhoumaud/plxMyShop/labels/traduction
-- En corrigant des erreurs de code ou en codant des nouvelles fonctionnalités : 
+- En corrigant des erreurs de code ou en codant des nouvelles fonctionnalités :  
 https://github.com/davidlhoumaud/plxMyShop/labels/question
 
