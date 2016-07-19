@@ -39,7 +39,7 @@ if (isset($_GET['kill']) && !empty($_GET['kill']) && is_file($dir.$_GET['kill'])
 
 if ((isset($_GET['prod']) && !empty($_GET['prod'])) || 
     (isset($_POST['prod']) && !empty($_POST['prod'])) ) 
-        include(dirname(__FILE__).'/product.php');
+        include(dirname(__FILE__).'/template/editionProduitAdmin.php');
 else {
 # On inclut le header
 //include(dirname(__FILE__).'/top.php');

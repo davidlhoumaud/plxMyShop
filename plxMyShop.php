@@ -99,7 +99,7 @@ class plxMyShop extends plxPlugin {
             $string .= "    \$array[\$this->plxMotor->cible] = array(
                 'name'        => '" . self::nomProtege($this->aProds[$this->productNumber()]["name"]) . "',
                 'menu'        => '',
-                'url'        => 'product',
+                'url'        => '/../template/affichageProduitPublic',
                 'readable'    => 1,
                 'active'    => 1,
                 'group'        => ''
@@ -1118,9 +1118,9 @@ class plxMyShop extends plxPlugin {
 					if ($_POST['methodpayment'] === "paypal") {
 						$plxPlugin = $this;
 						
-						//require PLX_PLUGINS . 'plxMyShop/paypal_api/SetExpressCheckout.php';
+						//require PLX_PLUGINS . 'plxMyShop/classes/paypal_api/SetExpressCheckout.php';
 						
-						require PLX_PLUGINS . 'plxMyShop/paypal_api/boutonPaypalSimple.php';
+						require PLX_PLUGINS . 'plxMyShop/classes/paypal_api/boutonPaypalSimple.php';
 					}
 					
 					$nf=PLX_ROOT.'data/commandes/'.date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
