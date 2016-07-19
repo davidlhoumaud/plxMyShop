@@ -7,6 +7,8 @@ version :
 
 $plxPlugin = $d["plxPlugin"];
 
+$produit = $plxPlugin->aProds[$plxPlugin->productNumber()];
+
 
 if (is_array($plxPlugin->productGroupTitle())) {
 	$i=0;
@@ -34,16 +36,25 @@ if (is_array($plxPlugin->productGroupTitle())) {
 			<a href="<?php echo htmlspecialchars($d["lienPanier"]);?>" id="notiShoppingCart">
 				<span id="notiNumShoppingCart"></span>
                 <img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;<?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?></a>
-			<?php echo ($plxPlugin->aProds[$plxPlugin->productNumber()]["image"]!=""?'<img class="product_image" src="'.$plxPlugin->productImage().'">':''); ?>
+			<?php echo ($produit["image"]!=""?'<img class="product_image" src="'.$plxPlugin->productImage().'">':''); ?>
         </div>
-        <span class="product_pricettc"><?php echo $plxPlugin->pos_devise($plxPlugin->productPriceTTC()); ?></span>
-        <?php echo ((int)$plxPlugin->productPoidG()>0?'&nbsp;'.$plxPlugin->lang('L_FOR').'&nbsp;<span class="product_poidg">'.$plxPlugin->productPoidG().'Kg</span>':''); ?>
+		
+        <?php if ($produit["pricettc"] > 0) {?>
+			<span class="product_pricettc"><?php echo $plxPlugin->pos_devise($plxPlugin->productPriceTTC());?></span>
+		<?php }?>
+		
+		<?php if ($produit["poidg"] > 0) {?>
+			<span class="product_poidg"><?php echo $plxPlugin->productPoidG();?>&nbsp;kg</span>
+		<?php }?>
+		
     </header>
     <article>
         <?php $plxPlugin->plxShowProductContent(); ?>
     </article>
+	
 	<?php
 		$plxPlugin->donneesModeles["k"] = $plxPlugin->productNumber();
 		$plxPlugin->modele("espacePublic/boucle/boutonPanier");
 	?>
+	
 </section>
