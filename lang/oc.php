@@ -48,8 +48,8 @@ $LANG = array(
 'L_ERR_PRODUCT_ALREADY_EXISTS'		=> 'Títol del produit ja utilizat',
 'L_PRODUCTS_IMAGE'                  => 'Imatge de presentacion',
 'L_PRODUCTS_IMAGE_CHOICE'           => 'Causir un imatge',
-'L_PRODUCTS_SHORTCODE'              => 'acorchi utilisable dins una pagina estatica',
-'L_PRODUCTS_BASKET_BUTTON'          => 'Afichar lo boton "Ajutar aa panièr"',
+'L_PRODUCTS_SHORTCODE'              => 'Acorchi utilisable dins una pagina estatica',
+'L_PRODUCTS_BASKET_BUTTON'          => 'Afichar lo boton "Ajutar al panièr"',
 'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Afichar un messatge se lo boton "Ajutar al panièr" es pas afichat',
 'L_PRODUCTS_CATEGORIES'             => 'Categorias d\'aqueste produit',
 'L_PRODUCTS_PRICE'                  => 'Prètz T.T.C.',
@@ -91,7 +91,7 @@ $LANG = array(
 'L_PANIER_POS_BOTH'                 => 'Aval de las paginas e sus una pagina a despart',
 
 #config page
-'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Afficher les catégories dans le menu',
+'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Afichar las categorias dins lo menú',
 'L_CONFIG_SHOP_INFO'                     => 'Informacions Botiga',
 'L_CONFIG_SHOP_NAME'                     => 'Nom de la botiga',
 'L_CONFIG_SHOP_OWNER'                     => 'Nom e prenom del comerciant',
@@ -201,7 +201,7 @@ $LANG = array(
 'L_PUBLIC_BASKET'                    => 'Vòstre panièr',
 'L_PUBLIC_BASKET_NIL'                    => '0.00',
 'L_PUBLIC_TOTAL_BASKET'                    => 'Total',
-'L_PUBLIC_NOPRODUCT'                    => 'Pas cal de produit pel moment.',
+'L_PUBLIC_NOPRODUCT'                    => 'Pas cap de produit pel moment.',
 'L_PUBLIC_MANDATORY_FIELD'                    => '* = camp obligatòri',
 'L_PUBLIC_FIRSTNAME'                    => 'Prenom',
 'L_PUBLIC_LASTNAME'                    => 'Nom',
