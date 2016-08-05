@@ -20,9 +20,9 @@ Chaque produit et chaque catégorie peut utiliser un template de page statique d
 Vous trouverez aussi dans le répertoire `exemplesTemplate`, des exemples de template pour afficher sur une seule page tous les produits ou la liste des catégories de la boutique.
 
 Pour des modifications plus importantes, vous pouvez surcharger tous les fichiers du répertoire `modeles` avec un fichier placé dans le thème. 
-Par exemple pour modifier le fichier `espacePublic/boucle/produitRubrique.php` qui présente un résumé du produit dans la rubrique : 
-1. à la racine du thème, créez un répertoire `modeles/plxMyShop/espacePublic/boucle`
-2. copiez le fichier de base dans le répertoire en laissant le même nom
+Par exemple pour modifier le fichier `espacePublic/boucle/produitRubrique.php` qui présente un résumé du produit dans la rubrique :  
+1. à la racine du thème, créez un répertoire `modeles/plxMyShop/espacePublic/boucle`  
+2. copiez le fichier de base dans le répertoire en laissant le même nom  
 3. vous pouvez maintenant modifier le fichier du thème qui sera pris en compte automatiquement quand ce thème est activé
 
 ## Support
