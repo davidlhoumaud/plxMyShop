@@ -3,14 +3,17 @@
 Si vous réutilisez ce fichier dans votre thème, nous vous conseillons de noter la version actuelle de plxMyShop
 version : 
 */
-
-
 $plxPlugin = $d["plxPlugin"];
-$v = $plxPlugin->aProds[$d["k"]];
+$plxPlugin->traitementAjoutPanier();
 
+$dansShortcode = (count($d["pileModeles"]) === 1);
 ?>
-
-<footer class="product_footer">
-    <button class="product_addcart" onclick="addCart('<?php echo htmlspecialchars(plxMyShop::nomProtege($v['name'])); ?>', '<?php echo $plxPlugin->pos_devise($v['pricettc']); ?> <?php $plxPlugin->lang('L_PUBLIC_TAX'); ?><?php echo ((int)$v['poidg']>0?'&nbsp;'.$plxPlugin->lang('L_FOR').'&nbsp;'.$v['poidg'].'&nbsp;kg':''); ?>', '<?php echo $v['pricettc']; ?>', '<?php echo $v['poidg']; ?>','<?php echo $d["k"]; ?>');">
-<?php $plxPlugin->lang('L_PUBLIC_ADD_BASKET'); ?></button>
-</footer>
+<form action="" method="POST" class="formulaireAjoutProduit">
+ <input type="hidden" name="idP" value="<?php echo htmlspecialchars($d["k"]);?>" />
+ <?php if ($dansShortcode) {?>
+  <input type="hidden" name="nb" value="1" min="1" />
+ <?php } else {?>
+  <input type="number" name="nb" value="1" min="1" />
+ <?php }?>
+ <input type="submit" name="ajouterProduit" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_PUBLIC_ADD_BASKET'));?>" />
+</form>

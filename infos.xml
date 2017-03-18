@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
 	<title><![CDATA[MyShop]]></title>
-	<author><![CDATA[David Lhoumaud]]></author>
-	<version>0.9.9</version>
-	<date></date>
+	<author><![CDATA[David Lhoumaud, Thomas Ingles]]></author>
+	<version>0.10</version>
+	<date>18/03/2017</date>
 	<site>http://ckdevelop.org</site>
-	<description><![CDATA[Ajoute une boutique virtuelle à votre PluXml]]></description>
+	<description><![CDATA[Ajoute une boutique à votre PluXml]]></description>
 	<requirements></requirements>
 </document>

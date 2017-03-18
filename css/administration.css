@@ -1,0 +1,222 @@
+.nombre {
+ text-align : right;
+}
+.listeCategoriesProduitsAdmin img.product_image {
+ width : 50px;
+}
+.page-title {
+ /*margin: 6.6rem 0;*/
+}
+.save-button {
+ margin-left: 16.18rem; /* approximatif, pousse les autres boutons lors de la config */
+}
+.return-link {/* produits */
+ margin-top: 2.3rem;;
+}
+#blocksocoreco{ /* Configuration des frais de port */
+ text-align: center;
+ border: 1px solid #333;
+ padding-bottom: 0.2em;
+ max-width:480px;
+}
+#blocksocoreco input {width: 100%;}
+/*
+.return-link, .back {
+ left: 72%;
+}
+.back {
+ top: 0.5rem;
+ position: fixed;
+}
+*/
+@media (max-width: 767px) {
+ .in-action-bar{
+  z-index: 0; /* surchage admin/theme.css ligne 309, sinon impossible de cliquer (5.5) */
+ }
+}
+/* template : editionProduitAdmin.php with js */
+.informationsShortcodeProduit {
+ background-color : #CCD;
+ width : 50%;
+ /*float : right;*/
+ padding : 1.2em;
+}
+.informationsShortcodeProduit .code {
+ background-color : #EEF;
+}
+#block_select_image {
+ box-shadow:0px 0px 5px #333;
+ position:fixed;
+ top:7rem;
+ width:600px;
+ height:400px;
+ overflow:auto;
+ display:none;
+ background-color:#dfdfdf;
+ z-index:2;
+}
+.fermer-img{
+ position:fixed;
+ top:7rem;
+ text-align:center;
+ padding: 0 3px;
+ border:1px solid #999;
+ background-color:#dfdfdf;
+ cursor:pointer;
+ font-size: 2rem;
+}
+.title-img-box{
+ text-align:center;
+ font-weight:bold;
+}
+
+/* ********************************************************************************************** */
+/* cases à cocher */
+
+.switch {
+ position: relative;
+ display: block;
+ vertical-align: top;
+ width: 106px !important;
+ height: 30px;
+ padding: 3px;
+ margin: 0 10px 10px 0;
+ border-radius: 18px;
+ box-sizing: border-box;
+ cursor: pointer;
+}
+.switch-input {
+ position: absolute;
+ top: 0;
+ left: 0;
+ opacity: 0;
+}
+.switch-label {
+ position: relative;
+ display: block;
+ height: inherit;
+ font-size: 10px;
+ background: #eceeef;
+ border-radius: inherit;
+ box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
+}
+.switch-label:before, .switch-label:after {
+ position: absolute;
+ top: 50%;
+ margin-top: -.5em;
+ line-height: 1;
+ -webkit-transition: inherit;
+ -moz-transition: inherit;
+ -o-transition: inherit;
+ transition: inherit;
+}
+.switch-label:before {
+ content: attr(data-off);
+ right: 11px;
+ color: #FFF;
+ text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+}
+.switch-label:after {
+ content: attr(data-on);
+ left: 11px;
+ color: #EEE;
+ text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+ opacity: 0;
+}
+.switch-input:checked ~ .switch-label {
+ background: #E1B42B;
+ box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
+}
+.switch-input:checked ~ .switch-label:before {
+ opacity: 0;
+}
+.switch-input:checked ~ .switch-label:after {
+ opacity: 1;
+}
+.switch-handle {
+ position: absolute;
+ top: 4px;
+ left: 4px;
+ width: 28px;
+ height: 28px;
+ background: linear-gradient(to bottom, #FFF 40%, #f0f0f0);
+ background-image: -webkit-linear-gradient(top, #FFF 40%, #f0f0f0);
+ border-radius: 100%;
+ box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+.switch-handle:before {
+ content: "";
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ margin: -6px 0 0 -6px;
+ width: 12px;
+ height: 12px;
+ background: linear-gradient(to bottom, #EEE, #FFF);
+ background-image: -webkit-linear-gradient(top, #EEE, #FFF);
+ border-radius: 6px;
+ box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+}
+.switch-input:checked ~ .switch-handle {
+ left: 74px;
+ box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Transition
+========================== */
+.switch-label, .switch-handle {
+ transition: All 0.3s ease;
+ -webkit-transition: All 0.3s ease;
+ -moz-transition: All 0.3s ease;
+ -o-transition: All 0.3s ease;
+}
+
+/* Switch Left Right
+==========================*/
+.switch-left-right .switch-label {
+ overflow: hidden;
+}
+.switch-left-right .switch-label:before, .switch-left-right .switch-label:after {
+ width: 20px;
+ height: 20px;
+ top: 4px;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ padding: 11px 0 0 0;
+ text-indent: -12px;
+ border-radius: 20px;
+ box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2), inset 0 0 3px rgba(0, 0, 0, 0.1);
+ 
+ box-sizing : content-box;
+ 
+}
+.switch-left-right .switch-label:before {
+ background: #D00;
+ text-align: left;
+ padding-left: 80px;
+}
+.switch-left-right .switch-label:after {
+ text-align: left;
+ text-indent: 9px;
+ background: #0A0;
+ left: -100px;
+ opacity: 1;
+ width: 100%;
+}
+.switch-left-right .switch-input:checked ~ .switch-label:before {
+ opacity: 1;
+ left: 100px;
+}
+.switch-left-right .switch-input:checked ~ .switch-label:after {
+ left: 0;
+}
+.switch-left-right .switch-input:checked ~ .switch-label {
+ background: inherit;
+}
+
+
+/* ********************************************************************************************** */
+table.dataTable {
+ border: none;
+}

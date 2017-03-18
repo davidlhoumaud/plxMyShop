@@ -33,9 +33,9 @@ function scanDirImage($dir, $subdir, $base) {
 	return $str;
 }
 
-$html  = '<h1 style="text-align:center;font-weight:bold;">S&eacute;lectionner une image de pr&eacute;sentation</h1>';
+$html  = '<h2 class="title-img-box">S&eacute;lectionner une image de pr&eacute;sentation</h2>';
 $html .= scanDirImage("", "", $_SESSION["plxMyShop"]["cheminImages"]);
-$html .= "<span style=\\'position:fixed;top:400px;width:590px;text-align:center;padding:3px;border:1px solid #999;background-color:#dfdfdf;cursor:pointer;\\' onclick=\\'block_select_image.style.display=\"none\";\\'>Fermer</span>";
+$html .= "<span class=\\'fermer-img\\' onclick=\\'block_select_image.style.display=\"none\";\\'>&times;</span>";
 
 echo "document.getElementById('block_select_image').innerHTML='".$html."';
 document.getElementById('block_select_image').style.display=\"block\";";

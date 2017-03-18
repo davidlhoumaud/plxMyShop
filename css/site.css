@@ -147,9 +147,7 @@
 }
 
 .h2okmsg3 {
-    color:orange;
-    font-size:10px!important;
-    text-transform: lowercase!important;
+    font-size : 100%;
 }
 
 .h2nomsg {
@@ -169,25 +167,36 @@
     color:green;
 }
 
-#formcart, #labelFirstnameCart, #labelMailCart, #labelTelCart, #labelAddrCart, #labelPostcodeCart, #labelCountryCart, #labelCityCart, #labelMsgCart, #prodsCart, #btnCart, #labelLastnameCart {
+#formcart, #firstname, #lastname, #city, #email, #tel, #country, #adress, #postcode,
+#labelFirstnameCart, 
+#labelMailCart, 
+#labelTelCart, 
+#labelAddrCart, 
+#labelPostcodeCart, 
+#labelCountryCart, 
+#labelCityCart, 
+#labelMsgCart, 
+#prodsCart, 
+#btnCart, 
+#labelLastnameCart {
     display:none;
 }
 
 #postcode {
-    display:none;width:20%;
+    width:20% !important;
 }
 
-#formcart #firstname, #formcart #lastname {
-    display:none;width:30%;
+#firstname, #lastname {
+    width:30% !important;
 }
 
-#formcart #city {
-    display:none;width:40%;
+#city {
+    width:40% !important;
 }
 
-#formcart #email, #formcart #tel, #formcart #country {
-    display:none;width:50%;
+#email, #tel, #country {
+    width:50% !important;
 }
-#formcart #adress {
-    display:none;width:75%;
+#adress {
+    width:75% !important;
 }
