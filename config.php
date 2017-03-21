@@ -154,10 +154,10 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
   $aTemplates[$v] = $v;
 }
 
-$cssAdmn = $plxPlugin->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/administration.css';
+$cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
 ?>
 <script type="text/javascript">
- var s = document.createElement("link"); s.href = "<?php echo $cssAdmn;?>" s.async = true; s.rel = "stylesheet"; s.type = "text/css"; s.media = "screen";;
+ var s = document.createElement("link"); s.href = "<?php echo $cssAdmn;?>"; s.async = true; s.rel = "stylesheet"; s.type = "text/css"; s.media = "screen";;
  var mx = document.getElementsByTagName('link'); mx = mx[mx.length-1]; mx.parentNode.insertBefore(s, mx.nextSibling);
 </script>
 <noscript><link rel="stylesheet" type="text/css" href="<?php echo $cssAdmn;?>" /></noscript>
