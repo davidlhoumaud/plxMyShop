@@ -3,7 +3,7 @@
 $LANG = array(
 
 'L_PAGE_TITLE'                      => 'Creacion e modificacion dels produits',
-'L_ADMIN_MENU_TOOTIP'               => 'Lista e modificacion dels produits, catégories e comanda',#a traduire, corrigé?
+'L_ADMIN_MENU_TOOTIP'               => 'Gerir mone-comerci (produits, categorias e comandas)',
 
 'L_DEFAULT_NEW_PRODUCT_URL'         => 'nou-produit',
 'L_CONFIG_PRIX_BASE'                => 'Prètz del basa',
@@ -34,7 +34,7 @@ $LANG = array(
 'L_PRODUCTS_GROUP'                  => 'Grop',
 'L_PRODUCTS_TITLE'                  => 'Títol',
 'L_PRODUCTS_URL'                    => 'Url',
-'L_PRODUIT_ACTIF'                   => 'Actif',#a traduire
+'L_PRODUIT_ACTIF'                   => 'Actiu',
 'L_PRODUCTS_ACTIVE'                 => 'Activa',
 'L_PRODUCTS_ORDER'                  => 'Ordre',
 'L_PRODUCTS_MENU'                   => 'Menú',
@@ -90,7 +90,7 @@ $LANG = array(
 'L_PANIER_POS_BOTTOM'               => 'Aval de las paginas de categorias e dels produits',
 'L_PANIER_POS_SEPARATE'             => 'Sus una pagina a despart',
 'L_PANIER_POS_BOTH'                 => 'Aval de las paginas e sus una pagina a despart',
-'L_PANIER_RECALCULER'               => 'Recalculer le total',#a traduire
+'L_PANIER_RECALCULER'               => 'Tornar calcular lo total',
 
 
 // formatage des prix
@@ -205,7 +205,7 @@ $LANG = array(
 'L_MISSING_COUNTRY'                 => 'Lo país es pas definit.',
 'L_MISSING_GIFTNAME'                => 'Lo nom del destinatari del present es pas definit.',
 
-"L_MISSING_VALIDATION_CGV"          => "Vous devez valider les conditions générales de vente.",#a traduire
+"L_MISSING_VALIDATION_CGV"          => "Vos cal validar las condicions generalas de venta.",
 
 
 #Espace public
@@ -230,7 +230,7 @@ $LANG = array(
 'L_PUBLIC_ADD_BASKET'               => 'Ajustar al panièr',
 'L_PUBLIC_TAX'                      => 'T.T.C.',
 
-"L_COMMANDE_LIBELLE_DEFAUT"         => "J'ai lu et j'accepte les conditions générales de vente.",#a traduire
+"L_COMMANDE_LIBELLE_DEFAUT"         => "Ai legit e accepti las condicions generalas de venta.",
 "L_CONFIG_VALIDATION_COMMANDE"      => "Validation de la commande",
 "CONFIG_LIBELLE_CGV"                => "Libellé de la demande de validation des C.G.V. (l'URL doit être indiqué pour être utilisé)",
 "CONFIG_URL_CGV"                    => "URL des C.G.V.",
