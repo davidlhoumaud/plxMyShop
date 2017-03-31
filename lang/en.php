@@ -244,5 +244,8 @@ $LANG = array(
 'L_PRODUCT'                         => 'Product',
 'L_UNIT_PRICE'                      => 'Unit_price',
 'L_NUMBER'                          => 'Number',
-'L_TOTAL_PRICE'                     => 'Total price'
+'L_TOTAL_PRICE'                     => 'Total price',
+'L_ADDRESS_SAVED'					=> 'Address saved in your browser.',
+'L_ADDRESS_DELETED'					=> 'Address deleted in your browser.',
+'L_DO_NOT_SHARED'					=> '(Please, do NOT save in a shared computer.)'
 );
