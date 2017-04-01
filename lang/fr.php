@@ -250,5 +250,5 @@ $LANG = array(
 'L_DO_NOT_SHARED'                   => '( Ne pas utiliser cette option sur un ordinateur partagé. )',
 'L_SAVE_MY_ADDRESS'                 => 'Enregistrer vos coordonnées',
 'L_DELETE_MY_ADDRESS'               => 'Effacer vos coordonnées',
-'L_RESET_ADDRESS'                   => 'Remettre a zéro'
+'L_RESET_ADDRESS'                   => 'Remettre à zéro'
 );
