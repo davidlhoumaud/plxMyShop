@@ -95,7 +95,7 @@ $cssCart=$this->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
     <p><strong id="labelPostcodeCart" ><?php $plxPlugin->lang('L_PUBLIC_ZIP'); ?><span class='star'>*</span>&nbsp;:</strong> <input  type="text" name="postcode" id="postcode" value="">
     <strong id="labelCityCart"><?php $plxPlugin->lang('L_PUBLIC_TOWN'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="city" id="city" value=""></p>
     <p><strong id="labelCountryCart"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="country" id="country" value=""></p>
-    <p><span id="bouton_sauvegarder">&nbsp;</span>&nbsp;<span id="bouton_effacer">&nbsp;</span></p>
+    <p><span id="bouton_sauvegarder">&nbsp;</span>&nbsp;<span id="bouton_effacer">&nbsp;</span>&nbsp;<span id="bouton_raz">&nbsp;</span></p>
 	<p id="alerte_sauvegarder" class="alert green" style="display:none;">&nbsp;</p>
 	<p>
      <label for="choixCadeau">
@@ -304,10 +304,17 @@ for($i=1;$i<=11;$i++){
 				document.getElementById("alerte_sauvegarder").innerHTML = "<?php $plxPlugin->lang('L_ADDRESS_SAVED'); ?><br><?php $plxPlugin->lang('L_DO_NOT_SHARED'); ?>";
 				document.getElementById("alerte_sauvegarder").style.display = "block";
 				setTimeout(function(){
-				document.getElementById("alerte_sauvegarder").style.display = "none"; }, 2000);
+				document.getElementById("alerte_sauvegarder").style.display = "none"; }, 3000);
 			}
 			function clear(){
-				localStorage.removeItem("Shop_Deliver_Adress");
+				localStorage.removeItem("Shop_Deliver_Adress"); 
+				document.getElementById("alerte_sauvegarder").innerHTML = "<?php $plxPlugin->lang('L_ADDRESS_DELETED'); ?>";
+				document.getElementById("alerte_sauvegarder").style.display = "block";
+				setTimeout(function(){
+				document.getElementById("alerte_sauvegarder").style.display = "none"; }, 3000);
+			}
+			function raz(){
+				clear();
 				document.getElementById("firstname").value = "";
 				document.getElementById("lastname").value = "";
 				document.getElementById("email").value = "";
@@ -316,10 +323,6 @@ for($i=1;$i<=11;$i++){
 				document.getElementById("postcode").value = "";
 				document.getElementById("city").value = "";
 				document.getElementById("country").value = "";
-				document.getElementById("alerte_sauvegarder").innerHTML = "<?php $plxPlugin->lang('L_ADDRESS_DELETED'); ?>";
-				document.getElementById("alerte_sauvegarder").style.display = "block";
-				setTimeout(function(){
-				document.getElementById("alerte_sauvegarder").style.display = "none"; }, 2000);
 			}
 			var gm =  JSON.parse(localStorage.getItem("Shop_Deliver_Adress"));
 			if (gm != null){
@@ -347,6 +350,14 @@ for($i=1;$i<=11;$i++){
 			input_deux.setAttribute("type","button");
 			input_deux.addEventListener("click",clear, false);
 			bouton_deux.appendChild(input_deux);
+
+			var bouton_raz = document.getElementById("bouton_raz");
+			input_raz = document.createElement("input");
+			input_raz.setAttribute("name","RAZAdresse");
+			input_raz.setAttribute("value","<?php $plxPlugin->lang('L_RESET_ADDRESS'); ?>");
+			input_raz.setAttribute("type","button");
+			input_raz.addEventListener("click",raz, false);
+			bouton_raz.appendChild(input_raz);
 		}
 	}
 </script>
