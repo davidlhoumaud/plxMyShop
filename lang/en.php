@@ -247,5 +247,7 @@ $LANG = array(
 'L_TOTAL_PRICE'                     => 'Total price',
 'L_ADDRESS_SAVED'					=> 'Address saved in your browser.',
 'L_ADDRESS_DELETED'					=> 'Address deleted in your browser.',
-'L_DO_NOT_SHARED'					=> '(Please, do NOT save in a shared computer.)'
+'L_DO_NOT_SHARED'					=> '(Please, do NOT save on a shared computer.)',
+'L_SAVE_MY_ADDRESS'					=> 'Save my address',
+'L_DELETE_MY_ADDRESS'				=> 'Delete my address'
 );
