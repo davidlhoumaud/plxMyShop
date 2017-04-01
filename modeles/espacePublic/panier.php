@@ -17,7 +17,7 @@ if ( isset($_SESSION["plxMyShop"]['msgCommand'])
 $cssCart=$this->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
 ?>
 <script type="text/javascript">
- var s = document.createElement("link"); s.href = "<?php echo $cssCart;?>" s.async = true; s.rel = "stylesheet"; s.type = "text/css"; s.media = "screen";;
+ var s = document.createElement("link"); s.href = "<?php echo $cssCart;?>"; s.async = true; s.rel = "stylesheet"; s.type = "text/css"; s.media = "screen";;
  var mx = document.getElementsByTagName('link'); mx = mx[mx.length-1]; mx.parentNode.insertBefore(s, mx.nextSibling);
 </script>
 <noscript><link rel="stylesheet" type="text/css" href="<?php echo $cssCart;?>" /></noscript>
@@ -48,7 +48,7 @@ $cssCart=$this->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
           <th><?php $plxPlugin->lang('L_UNIT_PRICE'); ?></th>
           <th><?php $plxPlugin->lang('L_NUMBER'); ?></th>
           <th><?php $plxPlugin->lang('L_TOTAL_PRICE'); ?></th>
-          </th><th>
+          <th></th>
          </tr>
 <?php
           foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) {
