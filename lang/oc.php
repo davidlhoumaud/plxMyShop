@@ -245,10 +245,10 @@ $LANG = array(
 'L_UNIT_PRICE'                      => 'Prètz unitar',
 'L_NUMBER'                          => 'Nombre',
 'L_TOTAL_PRICE'                     => 'Prètz total',
-'L_ADDRESS_SAVED'                   => 'Vos coordonnées ont été enregistrées localement dans votre navigateur.',
-'L_ADDRESS_DELETED'                 => 'Vos coordonnées ont été supprimés de votre navigateur.',
-'L_DO_NOT_SHARED'                   => '( Ne pas utiliser cette option sur un ordinateur partagé. )',
-'L_SAVE_MY_ADDRESS'                 => 'Enregistrer vos coordonnées',
-'L_DELETE_MY_ADDRESS'               => 'Effacer vos coordonnées',
-'L_RESET_ADDRESS'                   => 'Remettre a zéro'
+'L_ADDRESS_SAVED'                   => 'Vòstras coordenadas son estadas enregistradas localament sul vòstre navigator.',
+'L_ADDRESS_DELETED'                 => 'Vòstras coordenadas son estadas tiradas del vòstre navigator.',
+'L_DO_NOT_SHARED'                   => '( Utilizar pas sus un ordinador partejat. )',
+'L_SAVE_MY_ADDRESS'                 => 'Enregistrar vòstras coordenadas',
+'L_DELETE_MY_ADDRESS'               => 'Escafar vòstras coordenadas',
+'L_RESET_ADDRESS'                   => 'Reïnicializar'
 );
