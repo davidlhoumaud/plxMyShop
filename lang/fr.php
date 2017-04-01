@@ -245,10 +245,10 @@ $LANG = array(
 'L_UNIT_PRICE'                      => 'Prix unitaire',
 'L_NUMBER'                          => 'Nombre',
 'L_TOTAL_PRICE'                     => 'Prix total',
-'L_ADDRESS_SAVED'                   => 'Adresse sauvegardé dans votre navigateur pour une durée de 2 mois.',
-'L_ADDRESS_DELETED'                 => 'Adresse effacée de votre navigateur.',
+'L_ADDRESS_SAVED'                   => 'Vos coordonnées ont été enregistrées localement dans votre navigateur.',
+'L_ADDRESS_DELETED'                 => 'Vos coordonnées ont été supprimés de votre navigateur.',
 'L_DO_NOT_SHARED'                   => '( Ne pas utiliser cette option sur un ordinateur partagé. )',
-'L_SAVE_MY_ADDRESS'                 => 'Enregistrer l\'adresse',
-'L_DELETE_MY_ADDRESS'               => 'Effacer l\'adresse',
+'L_SAVE_MY_ADDRESS'                 => 'Enregistrer vos coordonnées',
+'L_DELETE_MY_ADDRESS'               => 'Effacer vos coordonnées',
 'L_RESET_ADDRESS'                   => 'Remettre a zéro'
 );
