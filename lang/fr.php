@@ -100,6 +100,7 @@ $LANG = array(
 
 
 #config page
+'L_CONFIG_AFFICHER_PANIER_MENU'     => 'Afficher le panier dans le menu',
 'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Afficher les catégories dans le menu',
 'L_CONFIG_SHOP_INFO'                => 'Informations Boutique',
 'L_CONFIG_SHOP_NAME'                => 'Nom de la boutique',
