@@ -84,6 +84,8 @@ if(!empty($_POST)) {
  $afficheCategoriesMenu = isset($_POST['afficheCategoriesMenu']) ? "" : "non";
  $plxPlugin->setParam('afficheCategoriesMenu', $afficheCategoriesMenu, 'string');
  $plxPlugin->setParam('affPanier', $_POST['affPanier'], 'string');
+ $affichePanierMenu = isset($_POST['affichePanierMenu']) ? "" : "non";
+ $plxPlugin->setParam('affichePanierMenu',$affichePanierMenu, 'string');
  $plxPlugin->setParam('libelleCGV', $_POST['libelleCGV'], 'string');
  $plxPlugin->setParam('urlCGV', $_POST['urlCGV'], 'string');
  $plxPlugin->setParam('position_devise', $_POST['position_devise'], 'string');
@@ -142,6 +144,7 @@ $var['devise'] = $plxPlugin->getParam('devise')=='' ? ' €' : $plxPlugin->getPa
 $var['menu_position'] = $plxPlugin->getParam('menu_position')=='' ? 3 : $plxPlugin->getParam('menu_position');
 $var['afficheCategoriesMenu'] = $plxPlugin->getParam('afficheCategoriesMenu');
 $var["affPanier"] = ("" === $plxPlugin->getParam("affPanier")) ? current(array_keys($tabAffPanier)) : $plxPlugin->getParam("affPanier");
+$var['affichePanierMenu'] = $plxPlugin->getParam('affichePanierMenu');
 $var["position_devise"] = ("" === $plxPlugin->getParam("position_devise")) ? current(array_keys($tabPosDevise)) : $plxPlugin->getParam("position_devise");
 $var["libelleCGV"] = ("" === $plxPlugin->getParam("libelleCGV")) ? $plxPlugin->getLang("L_COMMANDE_LIBELLE_DEFAUT") : $plxPlugin->getParam("libelleCGV");
 $var["urlCGV"] = ("" === $plxPlugin->getParam("urlCGV")) ? "" : $plxPlugin->getParam("urlCGV");
@@ -285,6 +288,18 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
   <p><?php plxUtils::printInput('menu_position',$var['menu_position'],'number','100-120') ?></p>
   <div class="full-width field">
    <table class="scrollable-table">
+    <tr>
+     <td>
+      <label for="id_affichePanierMenu"><?php $plxPlugin->lang('L_CONFIG_AFFICHER_PANIER_MENU');?>&nbsp;:</label>
+     </td>
+     <td>
+      <label class="switch switch-left-right">
+       <input class="switch-input" id="id_affichePanierMenu" name="affichePanierMenu" type="checkbox" <?php echo ("non" === $var["affichePanierMenu"]) ? "" : " checked=\"checked\"";?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
+       <span class="switch-handle"></span> 
+      </label>
+     </td>
+    </tr>
     <tr>
      <td>
       <label for="id_afficheCategoriesMenu"><?php $plxPlugin->lang('L_CONFIG_AFFICHER_CATEGORIES_MENU');?>&nbsp;:</label>
