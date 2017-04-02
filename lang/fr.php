@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 
 $LANG = array(
