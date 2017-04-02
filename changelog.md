@@ -1,5 +1,14 @@
 ## PlxMyShop Change Log
 
+##v0.11 02/04/2017##
+Release
+
+##v0.11b1 02/04/2017##
+* FIX fichier langue fr suppression d'un <<<<<<HEAD oublié lors de la fusion 
+
+##v0.11b + Panier dans le menu (worldBot) 02/04/2017##
+* [+] Option d'ajouter ou non le lien vers le Panier dans le menu principal
+
 ##v0.11b 02/04/2017##
 * FIX fichier langue fr : retour de ligne de rn(win) en n(tux)
 * [+] Ajout des crochets suivant à panier.php (hook)
@@ -12,6 +21,8 @@
  + plxMyShopPanierCoordsFin
  + plxMyShopPanierFin
 * [-] Sauvegarde locale des coordonnées du client au formulaire de commande déplacé dans le plugin MyShopCookie v0.2
+
+v0.11a1 : Algo boucle des frais de ports config.php 
 
 ##v0.11a 31/03/2017##
 * [+] Ajout de sauvegarde locale des coordonnées du client au formulaire de commande
