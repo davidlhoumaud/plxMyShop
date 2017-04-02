@@ -753,11 +753,14 @@ class plxMyShop extends plxPlugin {
    $vuePanier->plxPlugin = $this;
    $titreProtege = plxMyShop::nomProtege($vuePanier->titre());
 
-   echo "<?php";
-   echo " array_splice(\$menus, $positionMenu, 0";
-   echo "  , '<li><a class=\"static $classeCss\" href=\"$lienPanier\" title=\"' . htmlspecialchars('$titreProtege') . '\">$titreProtege</a></li>'";
-   echo " );";
-   echo "?>";
+   // Afficher la page panier dans le menu ?
+   if ($this->getParam("affichePanierMenu")!="non") {
+    echo "<?php";
+    echo " array_splice(\$menus, $positionMenu, 0";
+    echo "  , '<li><a class=\"static $classeCss\" href=\"$lienPanier\" title=\"' . htmlspecialchars('$titreProtege') . '\">$titreProtege</a></li>'";
+    echo " );";
+    echo "?>";
+   }
   }
 
   if ("pageSeparee" !== $this->getParam("affPanier")){
