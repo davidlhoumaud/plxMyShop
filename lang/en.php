@@ -244,11 +244,5 @@ $LANG = array(
 'L_PRODUCT'                         => 'Product',
 'L_UNIT_PRICE'                      => 'Unit_price',
 'L_NUMBER'                          => 'Number',
-'L_TOTAL_PRICE'                     => 'Total price',
-'L_ADDRESS_SAVED'                   => 'Your details have been saved locally in your browser.',
-'L_ADDRESS_DELETED'                 => 'Your details have been removed from your browser.',
-'L_DO_NOT_SHARED'                   => '(Please, do NOT save your details if you are on a shared computer.)',
-'L_SAVE_MY_ADDRESS'                 => 'Save my address',
-'L_DELETE_MY_ADDRESS'               => 'Forget my address',
-'L_RESET_ADDRESS'                   => 'Reset form'
+'L_TOTAL_PRICE'                     => 'Total price'
 );

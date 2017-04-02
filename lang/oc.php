@@ -244,11 +244,5 @@ $LANG = array(
 'L_PRODUCT'                         => 'Produit',
 'L_UNIT_PRICE'                      => 'Prètz unitar',
 'L_NUMBER'                          => 'Nombre',
-'L_TOTAL_PRICE'                     => 'Prètz total',
-'L_ADDRESS_SAVED'                   => 'Vòstras coordenadas son estadas enregistradas localament sul vòstre navigator.',
-'L_ADDRESS_DELETED'                 => 'Vòstras coordenadas son estadas tiradas del vòstre navigator.',
-'L_DO_NOT_SHARED'                   => '( Utilizar pas sus un ordinador partejat. )',
-'L_SAVE_MY_ADDRESS'                 => 'Enregistrar vòstras coordenadas',
-'L_DELETE_MY_ADDRESS'               => 'Escafar vòstras coordenadas',
-'L_RESET_ADDRESS'                   => 'Reïnicializar'
+'L_TOTAL_PRICE'                     => 'Prètz total'
 );

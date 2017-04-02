@@ -1,5 +1,21 @@
 ## PlxMyShop Change Log
 
+##v0.11b 02/04/2017##
+* FIX fichier langue fr : retour de ligne de rn(win) en n(tux)
+* [+] Ajout des crochets suivant à panier.php (hook)
+ + plxMyShopPanierDebut
+ + plxMyShopPanierFormProdsDebut
+ + plxMyShopPanierFormProdsFin
+ + plxMyShopPanierProdsFin
+ + plxMyShopPanierCoordsDebut
+ + plxMyShopPanierCoordsMilieu
+ + plxMyShopPanierCoordsFin
+ + plxMyShopPanierFin
+* [-] Sauvegarde locale des coordonnées du client au formulaire de commande déplacé dans le plugin MyShopCookie v0.2
+
+##v0.11a 31/03/2017##
+* [+] Ajout de sauvegarde locale des coordonnées du client au formulaire de commande
+
 ##v0.10  18/03/2017##
 * [+] Compatible PluXml 5.5, [5.6](https://github.com/pluxml/PluXml/releases/tag/5.6rc4)
 * [+] Édition des produits compatible avec le plugin WymEditor et d'autres éditeurs (Changement de l'id form_produit VERS form_article)
