@@ -15,6 +15,8 @@ if ( isset($_SESSION["plxMyShop"]['msgCommand'])
  unset($_SESSION["plxMyShop"]['msgCommand']);
 }
 $cssCart=$this->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
+# Hook Plugins
+eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
 ?>
 <script type="text/javascript">
  var s = document.createElement("link"); s.href = "<?php echo $cssCart;?>"; s.async = true; s.rel = "stylesheet"; s.type = "text/css"; s.media = "screen";
@@ -42,6 +44,7 @@ $cssCart=$this->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
      if (isset($_SESSION["plxMyShop"]['prods']) && $_SESSION["plxMyShop"]['prods']) {
 ?>
        <form action="" method="POST">
+<?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFormProdsDebut')); # Hook Plugins ?>
         <table class="tableauProduitsPanier">
          <tr>
           <th><?php $plxPlugin->lang('L_PRODUCT'); ?></th>
@@ -50,8 +53,7 @@ $cssCart=$this->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
           <th><?php $plxPlugin->lang('L_TOTAL_PRICE'); ?></th>
           <th></th>
          </tr>
-<?php
-          foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) {
+<?php   foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) {
            if (!isset($plxPlugin->aProds[$pId])){continue;}
            $prixUnitaire = (float) $plxPlugin->aProds[$pId]['pricettc'];
            $prixttc = $prixUnitaire * $nb;
@@ -60,18 +62,19 @@ $cssCart=$this->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
            $totalpoidg += $poidg;
            $nprod++;
 ?>
-          <tr>
-           <td><?php echo $plxPlugin->aProds[$pId]['name'];?></td>
-           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixUnitaire);?></td>
-           <td><input type="number" name="nb[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($nb);?>" /></td>
-           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixttc);?></td>
-           <td><input type="submit" name="retirerProduit[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_DEL'));?>" /></td>
-          </tr>
-         <?php } // FIN foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) {?>
+         <tr>
+          <td><?php echo $plxPlugin->aProds[$pId]['name'];?></td>
+          <td class="nombre"><?php echo $plxPlugin->pos_devise($prixUnitaire);?></td>
+          <td><input type="number" name="nb[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($nb);?>" /></td>
+          <td class="nombre"><?php echo $plxPlugin->pos_devise($prixttc);?></td>
+          <td><input type="submit" name="retirerProduit[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_DEL'));?>" /></td>
+         </tr>
+<?php   } // FIN foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) ?>
         </table>
         <input type="submit" name="recalculer" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_PANIER_RECALCULER'));?>" />
+<?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFormProdsFin')); # Hook Plugins ?>
        </form>
-       <?php $totalpoidgshipping = $plxPlugin->shippingMethod($totalpoidg, 1);?>
+<?php $totalpoidgshipping = $plxPlugin->shippingMethod($totalpoidg, 1); ?>
        <span id="spanshipping"></span>
        <span id='totalCart'><?php
         echo htmlspecialchars($plxPlugin->getLang('L_TOTAL_BASKET').
@@ -79,13 +82,14 @@ $cssCart=$this->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
         '&nbsp;:&nbsp;'.
         $plxPlugin->pos_devise($totalpricettc + $totalpoidgshipping);
        ?></span>
-<?php
+<?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierProdsFin')); # Hook Plugins
      }
     if (0 === $nprod && !$afficheMessage) {?>
      <em><?php $plxPlugin->lang('L_PUBLIC_NOPRODUCT'); ?></em>
 <?php } ?>
    </div>
    <form id="formcart" method="POST" action="#panier">
+<?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsDebut')) # Hook Plugins ?>
     <p><span class='startw'><?php $plxPlugin->lang('L_PUBLIC_MANDATORY_FIELD'); ?></span></p>
     <p><strong id="labelFirstnameCart"><?php $plxPlugin->lang('L_PUBLIC_FIRSTNAME'); ?><span class='star'>*</span>&nbsp;:</strong> <input  type="text" name="firstname" id="firstname" value="">
     <strong id="labelLastnameCart"><?php $plxPlugin->lang('L_PUBLIC_LASTNAME'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="lastname"  id="lastname" value=""></p>
@@ -95,21 +99,20 @@ $cssCart=$this->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
     <p><strong id="labelPostcodeCart" ><?php $plxPlugin->lang('L_PUBLIC_ZIP'); ?><span class='star'>*</span>&nbsp;:</strong> <input  type="text" name="postcode" id="postcode" value="">
     <strong id="labelCityCart"><?php $plxPlugin->lang('L_PUBLIC_TOWN'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="city" id="city" value=""></p>
     <p><strong id="labelCountryCart"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="country" id="country" value=""></p>
-    <p><span id="bouton_sauvegarder">&nbsp;</span>&nbsp;<span id="bouton_effacer">&nbsp;</span>&nbsp;<span id="bouton_raz">&nbsp;</span></p>
-    <p id="alerte_sauvegarder" class="alert green" style="display:none;">&nbsp;</p>
+<?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsMilieu')) # Hook Plugins ?>
     <p>
      <label for="choixCadeau">
-      <input type="checkbox" id="choixCadeau" name="choixCadeau"<?php echo (!isset($_POST["choixCadeau"])) ? "" : " checked=\"checked\"";?> />
+      <input type="checkbox" id="choixCadeau" name="choixCadeau"<?php echo (!isset($_POST["choixCadeau"])) ? '' : ' checked="checked"';?> />
       <?php $plxPlugin->lang('L_PUBLIC_GIFT'); ?>
      </label>
     </p>
     <p class="conteneurNomCadeau">
      <label for="nomCadeau">
       <?php $plxPlugin->lang('L_PUBLIC_GIFTNAME'); ?>
-      <input type="text" name="nomCadeau" id="nomCadeau" value="<?php echo (!isset($_POST["nomCadeau"])) ? "" : htmlspecialchars($_POST["nomCadeau"]);?>" />
+      <input type="text" name="nomCadeau" id="nomCadeau" value="<?php echo (!isset($_POST["nomCadeau"])) ? '' : htmlspecialchars($_POST['nomCadeau']);?>" />
      </label>
     </p>
-    <strong id="labelMsgCart"><?php $plxPlugin->lang('L_PUBLIC_COMMENT'); ?></strong><br><textarea name="msg" id="msgCart"  rows="3"></textarea><br>
+    <strong id="labelMsgCart"><?php $plxPlugin->lang('L_PUBLIC_COMMENT'); ?></strong><br /><textarea name="msg" id="msgCart"  rows="3"></textarea><br />
     <textarea name="prods" id="prodsCart" rows="3"></textarea>
     <input type="hidden" name="total" id="totalcommand" value="0">
     <input type="hidden" name="shipping" id="shipping" value="0">
@@ -133,8 +136,9 @@ $cssCart=$this->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
       <a href="<?php echo htmlspecialchars($plxPlugin->getParam("urlCGV"));?>"><?php echo htmlspecialchars($plxPlugin->getParam("libelleCGV"));?></a>
      </label>
 <?php } ?>
-    <input type="submit" id="btnCart" name="validerCommande" value="<?php $plxPlugin->lang('L_PUBLIC_VALIDATE_ORDER'); ?>"/><br>
+    <input type="submit" id="btnCart" name="validerCommande" value="<?php $plxPlugin->lang('L_PUBLIC_VALIDATE_ORDER'); ?>"/><br />
    </form>
+<?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsFin')) # Hook Plugins ?>
   </section>
  </div>
 </div>
@@ -274,90 +278,4 @@ for($i=1;$i<=11;$i++){
  return shippingPrice;
 }
 </script>
-<script>
- // localStorage du formulaire pour les clients
- if (window.localStorage) {
-  function lsTest(){
-   var test = "test";
-   try {
-    localStorage.setItem(test, test);
-    localStorage.removeItem(test);
-    return true;
-   } catch(e) {
-    return false;
-   }
-  }
-
-  if(lsTest() === true){
-   function stock(){
-    var temp = {
-    firstname:document.getElementById("firstname").value,
-    lastname:document.getElementById("lastname").value,
-    email:document.getElementById("email").value,
-    tel:document.getElementById("tel").value,
-    adress:document.getElementById("adress").value,
-    postcode:document.getElementById("postcode").value,
-    city:document.getElementById("city").value,
-    country:document.getElementById("country").value,
-    };
-    localStorage.setItem("Shop_Deliver_Adress", JSON.stringify(temp));
-    document.getElementById("alerte_sauvegarder").innerHTML = "<?php $plxPlugin->lang('L_ADDRESS_SAVED'); ?><br><?php $plxPlugin->lang('L_DO_NOT_SHARED'); ?>";
-    document.getElementById("alerte_sauvegarder").style.display = "block";
-    setTimeout(function(){
-    document.getElementById("alerte_sauvegarder").style.display = "none"; }, 3000);
-   }
-   function clear(){
-    localStorage.removeItem("Shop_Deliver_Adress"); 
-    document.getElementById("alerte_sauvegarder").innerHTML = "<?php $plxPlugin->lang('L_ADDRESS_DELETED'); ?>";
-    document.getElementById("alerte_sauvegarder").style.display = "block";
-    setTimeout(function(){
-    document.getElementById("alerte_sauvegarder").style.display = "none"; }, 3000);
-   }
-   function raz(){
-    clear();
-    document.getElementById("firstname").value = "";
-    document.getElementById("lastname").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("tel").value = "";
-    document.getElementById("adress").value = "";
-    document.getElementById("postcode").value = "";
-    document.getElementById("city").value = "";
-    document.getElementById("country").value = "";
-   }
-   var gm =  JSON.parse(localStorage.getItem("Shop_Deliver_Adress"));
-   if (gm != null){
-    document.getElementById("firstname").value = gm["firstname"];
-    document.getElementById("lastname").value = gm["lastname"];
-    document.getElementById("email").value = gm["email"];
-    document.getElementById("tel").value = gm["tel"];
-    document.getElementById("adress").value = gm["adress"];
-    document.getElementById("postcode").value = gm["postcode"];
-    document.getElementById("city").value = gm["city"];
-    document.getElementById("country").value = gm["country"];
-   }
-   var bouton_un = document.getElementById("bouton_sauvegarder");
-   var input_un = document.createElement("input");
-   input_un.setAttribute("name","SaveAdress");
-   input_un.setAttribute("value","<?php $plxPlugin->lang('L_SAVE_MY_ADDRESS'); ?>");
-   input_un.setAttribute("type","button");
-   input_un.addEventListener("click",stock, false);
-   bouton_un.appendChild(input_un);
-
-   var bouton_deux = document.getElementById("bouton_effacer");
-   input_deux = document.createElement("input");
-   input_deux.setAttribute("name","ClearAdress");
-   input_deux.setAttribute("value","<?php $plxPlugin->lang('L_DELETE_MY_ADDRESS'); ?>");
-   input_deux.setAttribute("type","button");
-   input_deux.addEventListener("click",clear, false);
-   bouton_deux.appendChild(input_deux);
-
-   var bouton_raz = document.getElementById("bouton_raz");
-   input_raz = document.createElement("input");
-   input_raz.setAttribute("name","RAZAdresse");
-   input_raz.setAttribute("value","<?php $plxPlugin->lang('L_RESET_ADDRESS'); ?>");
-   input_raz.setAttribute("type","button");
-   input_raz.addEventListener("click",raz, false);
-   bouton_raz.appendChild(input_raz);
-  }
- }
-</script>
+<?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFin')) # Hook Plugins ?>
