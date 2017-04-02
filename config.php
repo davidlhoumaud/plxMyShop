@@ -27,17 +27,11 @@ if(!empty($_POST)) {
  //socolissimo reco
  $plxPlugin->setParam('shipping_colissimo', $_POST['shipping_colissimo'], 'numeric');
  $plxPlugin->setParam('acurecept', $_POST['acurecept'], 'string');
- $plxPlugin->setParam('p01', $_POST['p01'], 'string'); $plxPlugin->setParam('pv01', $_POST['pv01'], 'string');
- $plxPlugin->setParam('p02', $_POST['p02'], 'string'); $plxPlugin->setParam('pv02', $_POST['pv02'], 'string');
- $plxPlugin->setParam('p03', $_POST['p03'], 'string'); $plxPlugin->setParam('pv03', $_POST['pv03'], 'string');
- $plxPlugin->setParam('p04', $_POST['p04'], 'string'); $plxPlugin->setParam('pv04', $_POST['pv04'], 'string');
- $plxPlugin->setParam('p05', $_POST['p05'], 'string'); $plxPlugin->setParam('pv05', $_POST['pv05'], 'string');
- $plxPlugin->setParam('p06', $_POST['p06'], 'string'); $plxPlugin->setParam('pv06', $_POST['pv06'], 'string');
- $plxPlugin->setParam('p07', $_POST['p07'], 'string'); $plxPlugin->setParam('pv07', $_POST['pv07'], 'string');
- $plxPlugin->setParam('p08', $_POST['p08'], 'string'); $plxPlugin->setParam('pv08', $_POST['pv08'], 'string');
- $plxPlugin->setParam('p09', $_POST['p09'], 'string'); $plxPlugin->setParam('pv09', $_POST['pv09'], 'string');
- $plxPlugin->setParam('p10', $_POST['p10'], 'string'); $plxPlugin->setParam('pv10', $_POST['pv10'], 'string');
- $plxPlugin->setParam('p11', $_POST['p11'], 'string'); $plxPlugin->setParam('pv11', $_POST['pv11'], 'string');
+for($i=1;$i<=11;$i++){
+ $num=str_pad($i, 2, "0", STR_PAD_LEFT); 
+ $plxPlugin->setParam('p'.$num, $_POST['p'.$num], 'string');
+ $plxPlugin->setParam('pv'.$num, $_POST['pv'.$num], 'string');
+}
  //end socolissimo reco
  $plxPlugin->setParam('shipping_ups', 0, 'numeric');
  $plxPlugin->setParam('shipping_tnt', 0, 'numeric');
