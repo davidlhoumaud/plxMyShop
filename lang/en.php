@@ -249,6 +249,6 @@ $LANG = array(
 'L_ADDRESS_DELETED'                 => 'Your details have been removed from your browser.',
 'L_DO_NOT_SHARED'                   => '(Please, do NOT save your details if you are on a shared computer.)',
 'L_SAVE_MY_ADDRESS'                 => 'Save my address',
-'L_DELETE_MY_ADDRESS'               => 'Forget my address'
+'L_DELETE_MY_ADDRESS'               => 'Forget my address',
 'L_RESET_ADDRESS'                   => 'Reset form'
 );
