@@ -92,8 +92,8 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsDebut')) # Hook Plugins ?>
     <p><span class='startw'><?php $plxPlugin->lang('L_PUBLIC_MANDATORY_FIELD'); ?></span></p>
     <p><strong id="labelFirstnameCart"><?php $plxPlugin->lang('L_PUBLIC_FIRSTNAME'); ?><span class='star'>*</span>&nbsp;:</strong> <input  type="text" name="firstname" id="firstname" value="">
-    <strong id="labelLastnameCart"><?php $plxPlugin->lang('L_PUBLIC_LASTNAME'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="lastname"  id="lastname" value=""></p>
-    <p><strong id="labelMailCart"><?php $plxPlugin->lang('L_PUBLIC_EMAIL'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="email" name="email"  id="email" value=""></p>
+    <strong id="labelLastnameCart"><?php $plxPlugin->lang('L_PUBLIC_LASTNAME'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="lastname" id="lastname" value=""></p>
+    <p><strong id="labelMailCart"><?php $plxPlugin->lang('L_PUBLIC_EMAIL'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="email" name="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,7}" id="email" value=""></p>
     <p><strong id="labelTelCart"><?php $plxPlugin->lang('L_PUBLIC_TEL'); ?>&nbsp;:</strong> <input type="text" name="tel" id="tel" value=""></p>
     <p><strong id="labelAddrCart"><?php $plxPlugin->lang('L_PUBLIC_ADDRESS'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="adress" id="adress" value=""></p>
     <p><strong id="labelPostcodeCart" ><?php $plxPlugin->lang('L_PUBLIC_ZIP'); ?><span class='star'>*</span>&nbsp;:</strong> <input  type="text" name="postcode" id="postcode" value="">

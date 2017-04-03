@@ -4,6 +4,7 @@
 * [+] MyshopCookie intégré
 * [+] Boutons Save & Forget modifiés selon une idée de [ppmt](http://forum.pluxml.org/viewtopic.php?pid=53349#p53349)
 * [+] Switch to Switch
+* [+] Ajout au champ Courriel d'un filtre par ExpReg : pattern="[^@]+@[^@]+\.[a-zA-Z]{2,7}" 
 
 ##v0.11 02/04/2017##
 Release
