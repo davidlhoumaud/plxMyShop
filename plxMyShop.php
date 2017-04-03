@@ -1164,6 +1164,8 @@ class plxMyShop extends plxPlugin {
 </head>
 <body>
 $message
+<hr>
+<a href=\"mailto:$destinataire\">$destinataire</a>
 </body>
 </html>";
      fputs($monfichier, $commandeContent);
