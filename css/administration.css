@@ -84,6 +84,7 @@
  border-radius: 18px;
  box-sizing: border-box;
  cursor: pointer;
+ float: right;
 }
 .switch-input {
  position: absolute;

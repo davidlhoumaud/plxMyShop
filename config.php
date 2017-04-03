@@ -20,25 +20,23 @@ $tabPosDevise = array(
  "before" => $plxPlugin->getlang('L_BEFORE') ,
 );
 
-
 $var = array();
 if(!empty($_POST)) {
- 
  //socolissimo reco
- $plxPlugin->setParam('shipping_colissimo', $_POST['shipping_colissimo'], 'numeric');
+ $plxPlugin->setParam('shipping_colissimo', isset($_POST['shipping_colissimo'])?'1':'0', 'numeric');
  $plxPlugin->setParam('acurecept', $_POST['acurecept'], 'string');
 for($i=1;$i<=11;$i++){
- $num=str_pad($i, 2, "0", STR_PAD_LEFT); 
+ $num=str_pad($i, 2, "0", STR_PAD_LEFT);
  $plxPlugin->setParam('p'.$num, $_POST['p'.$num], 'string');
  $plxPlugin->setParam('pv'.$num, $_POST['pv'.$num], 'string');
 }
  //end socolissimo reco
  $plxPlugin->setParam('shipping_ups', 0, 'numeric');
  $plxPlugin->setParam('shipping_tnt', 0, 'numeric');
- $plxPlugin->setParam('payment_cheque', $_POST['payment_cheque'], 'numeric'); 
- $plxPlugin->setParam('payment_cash', $_POST['payment_cash'], 'numeric'); 
+ $plxPlugin->setParam('payment_cheque', isset($_POST['payment_cheque'])?'1':'0', 'numeric');
+ $plxPlugin->setParam('payment_cash', isset($_POST['payment_cash'])?'1':'0', 'numeric'); 
  //paypal
- $plxPlugin->setParam('payment_paypal', $_POST['payment_paypal'], 'numeric');
+ $plxPlugin->setParam('payment_paypal', isset($_POST['payment_paypal'])?'1':'0', 'numeric');
  $plxPlugin->setParam('payment_paypal_test', $_POST['payment_paypal_test'], 'numeric');
  $plxPlugin->setParam('payment_paypal_currencycode', $_POST['payment_paypal_currencycode'], 'string');
  $plxPlugin->setParam('payment_paypal_overalldescription', $_POST['payment_paypal_overalldescription'], 'string');
@@ -74,7 +72,7 @@ for($i=1;$i<=11;$i++){
  $plxPlugin->setParam('devise', $_POST['devise'], 'string');
  $plxPlugin->setParam('commercant_postcode', $_POST['commercant_postcode'], 'string');
  $plxPlugin->setParam('menu_position', $_POST['menu_position'], 'numeric');
- 
+
  $afficheCategoriesMenu = isset($_POST['afficheCategoriesMenu']) ? "" : "non";
  $plxPlugin->setParam('afficheCategoriesMenu', $afficheCategoriesMenu, 'string');
  $plxPlugin->setParam('affPanier', $_POST['affPanier'], 'string');
@@ -122,7 +120,7 @@ $var['shipping_colissimo'] = $plxPlugin->getParam('shipping_colissimo')=='' ? ''
 $var['acurecept'] = $plxPlugin->getParam('acurecept')=='' ? '' : $plxPlugin->getParam('acurecept');
 
 for($i=1;$i<=11;$i++){
- $num=str_pad($i, 2, "0", STR_PAD_LEFT); 
+ $num=str_pad($i, 2, "0", STR_PAD_LEFT);
  $var['p'.$num] = $plxPlugin->getParam('p'.$num)=='' ? '' : $plxPlugin->getParam('p'.$num);
  $var['pv'.$num] = $plxPlugin->getParam('pv'.$num)=='' ? '' : $plxPlugin->getParam('pv'.$num);
 }
@@ -173,8 +171,8 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
 <?php echo plxToken::getTokenPostMethod() ?>
  <div>
   <p class="in-action-bar"><input type="submit" name="submit" value="<?php $plxPlugin->lang('L_CONFIG_SUBMIT') ?>" /></p>
-  <h2><?php $plxPlugin->lang('L_CONFIG_SHOP_INFO') ?></h2><br>
-  
+  <h2><?php $plxPlugin->lang('L_CONFIG_SHOP_INFO') ?></h2><br />
+
   <p class="field"><label for="id_shop_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_NAME') ?>&nbsp;:</label></p>
   <p><?php plxUtils::printInput('shop_name',$var['shop_name'],'text','100-120') ?></p>
   <p></p>
@@ -196,15 +194,29 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
   <p class="field"><label for="id_position_devise"><?php $plxPlugin->lang('L_CONFIG_POSITION_CURRENCY') ?>&nbsp;:</label></p>
   <p><?php plxUtils::printSelect("position_devise", $tabPosDevise, $var["position_devise"]) ?></p>
   <p></p>
- 
-  <h2><?php $plxPlugin->lang('L_CONFIG_DELIVERY_TITLE') ?></h2><br>
-  <p class="field"><label for="shipping_colissimo"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_SHIPPING') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printSelect('shipping_colissimo',array('1'=>L_YES,'0'=>L_NO),$var['shipping_colissimo'], "", '" onchange="if (this.value==\'1\') { document.getElementById(\'blocksocoreco\').style.display=\'block\';}else{document.getElementById(\'blocksocoreco\').style.display=\'none\';}'); ?></p>
+
+  <h2><?php $plxPlugin->lang('L_CONFIG_DELIVERY_TITLE') ?></h2><br />
+  <div class="full-width field">
+   <table class="full-width scrollable-table">
+    <tr>
+     <td>
+      <label for="id_shipping_colissimo"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_SHIPPING');?>&nbsp;:</label>
+     </td>
+     <td>
+      <label class="switch switch-left-right">
+       <input class="switch-input" id="id_shipping_colissimo" name="shipping_colissimo" type="checkbox" <?php echo (("0" === $var["shipping_colissimo"]) ? "" : " checked=\"checked\"").' onchange="if (this.checked) { document.getElementById(\'blocksocoreco\').style.display=\'block\';}else{document.getElementById(\'blocksocoreco\').style.display=\'none\';}"';?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
+       <span class="switch-handle"></span>
+      </label>
+     </td>
+    </tr>
+   </table>
+  </div>
   <p></p>
   <fieldset id="blocksocoreco" style="display:<?php echo ($var['shipping_colissimo']==1?"block":"none"); ?>;">
    <legend><?php $plxPlugin->lang('L_CONFIG_DELIVERY_CONFIG') ?></legend>
-   <div class="field scrollable-table">
-    <table class="full-width">
+   <div class="full-width field">
+    <table class="scrollable-table">
      <tr>
       <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_PRIX_BASE') ?>&nbsp;:</td><td colspanb='4'><?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
      </tr>
@@ -217,17 +229,48 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
     </table>
    </div>
   </fieldset>
-   
-  <p class="field"><label for="id_payment_cheque"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_CHEQUE') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printSelect('payment_cheque',array('1'=>L_YES,'0'=>L_NO),$var['payment_cheque']); ?></p>
   <p></p>
-  <p class="field"><label for="id_payment_cash"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_CASH') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printSelect('payment_cash',array('1'=>L_YES,'0'=>L_NO),$var['payment_cash']); ?></p>
-  <p></p>
-  <p class="field"><label for="id_payment_paypal"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_PAYPAL') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printSelect('payment_paypal',array('1'=>L_YES,'0'=>L_NO),$var['payment_paypal'], "", '" onchange="if (this.value==\'1\') { document.getElementById(\'blockpaypal\').style.display=\'block\';}else{document.getElementById(\'blockpaypal\').style.display=\'none\';}'); ?></p>
-  <p></p>
-  
+
+  <div class="full-width full-width field">
+   <table class="full-width scrollable-table">
+    <tr>
+     <td>
+      <label for="id_payment_cheque"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_CHEQUE');?>&nbsp;:</label>
+     </td>
+     <td>
+      <label class="switch switch-left-right">
+       <input class="switch-input" id="id_payment_cheque" name="payment_cheque" type="checkbox" <?php echo ("0" === $var["payment_cheque"]) ? "" : " checked=\"checked\"";?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
+       <span class="switch-handle"></span> 
+      </label>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <label for="id_payment_cash"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_CASH');?>&nbsp;:</label>
+     </td>
+     <td>
+      <label class="switch switch-left-right">
+       <input class="switch-input" id="id_payment_cash" name="payment_cash" type="checkbox" <?php echo ("0" === $var["payment_cash"]) ? "" : " checked=\"checked\"";?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
+       <span class="switch-handle"></span> 
+      </label>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <label for="id_payment_paypal"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_PAYPAL');?>&nbsp;:</label>
+     </td>
+     <td>
+      <label class="switch switch-left-right">
+       <input class="switch-input" id="id_payment_paypal" name="payment_paypal" type="checkbox" <?php echo (("0" === $var["payment_paypal"]) ? "" : " checked=\"checked\"").' onchange="if (this.checked) { document.getElementById(\'blockpaypal\').style.display=\'block\';}else{document.getElementById(\'blockpaypal\').style.display=\'none\';}"';?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
+       <span class="switch-handle"></span> 
+      </label>
+     </td>
+    </tr>
+   </table>
+  </div>
   <fieldset id="blockpaypal" align="center" style="border:1px solid #333;display:<?php echo ($var['payment_paypal']==1?"block":"none"); ?>;">
    <legend><?php $plxPlugin->lang('L_CONFIG_CONF_PAYPAL') ?></legend>
    <input type="hidden" name="payment_paypal_test" value="<?php echo $var["payment_paypal_test"];?>"/>
@@ -256,8 +299,9 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
    <p><input name='payment_paypal_cancelurl' value="<?php echo ($var['payment_paypal_cancelurl']!=""?$var['payment_paypal_cancelurl']:$_SERVER['HTTP_HOST']); ?>" type='text' ></p>
    <p></p>
   </fieldset>
-  
-  <h2><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_TITLE') ?></h2><br>
+  <p></p>
+
+  <h2><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_TITLE') ?></h2><br />
   <p class="field"><label for="id_email"><?php $plxPlugin->lang('L_EMAIL') ?>&nbsp;:</label></p>
   <p><input name='email' value="<?php echo $var['email']; ?>" type='text' ></p>
   <p></p>
@@ -280,12 +324,12 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
   <p class="field"><label><?php $plxPlugin->lang('CONFIG_URL_CGV') ?>&nbsp;:</label></p>
   <p><input name='urlCGV' value="<?php echo $var['urlCGV']; ?>" type='text' size="100"></p>
   <p></p>
-  
+
   <h2><?php $plxPlugin->lang('L_CONFIG_MENU_TITLE') ?></h2>
   <p class="field"><label for="id_menu_position"><?php $plxPlugin->lang('L_CONFIG_MENU_POSITION') ?>&nbsp;:</label></p>
   <p><?php plxUtils::printInput('menu_position',$var['menu_position'],'number','100-120') ?></p>
   <div class="full-width field">
-   <table class="scrollable-table">
+   <table class="full-width scrollable-table">
     <tr>
      <td>
       <label for="id_affichePanierMenu"><?php $plxPlugin->lang('L_CONFIG_AFFICHER_PANIER_MENU');?>&nbsp;:</label>
@@ -293,8 +337,8 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
      <td>
       <label class="switch switch-left-right">
        <input class="switch-input" id="id_affichePanierMenu" name="affichePanierMenu" type="checkbox" <?php echo ("non" === $var["affichePanierMenu"]) ? "" : " checked=\"checked\"";?> />
-       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
-       <span class="switch-handle"></span> 
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
+       <span class="switch-handle"></span>
       </label>
      </td>
     </tr>
@@ -305,8 +349,8 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
      <td>
       <label class="switch switch-left-right">
        <input class="switch-input" id="id_afficheCategoriesMenu" name="afficheCategoriesMenu" type="checkbox" <?php echo ("non" === $var["afficheCategoriesMenu"]) ? "" : " checked=\"checked\"";?> />
-       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
-       <span class="switch-handle"></span> 
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
+       <span class="switch-handle"></span>
       </label>
      </td>
     </tr>
@@ -316,9 +360,9 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
      </td>
      <td>
       <label class="switch switch-left-right">
-       <input class="switch-input" id="id_localStorage" name="localStorage" type="checkbox" <?php echo ('0' === $var["localStorage"]) ? "" : " checked=\"checked\"";?> />
-       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
-       <span class="switch-handle"></span> 
+       <input class="switch-input" id="id_localStorage" name="localStorage" type="checkbox" <?php echo ("0" === $var["localStorage"]) ? "" : " checked=\"checked\"";?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
+       <span class="switch-handle"></span>
       </label>
      </td>
     </tr>
@@ -328,16 +372,16 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
      </td>
      <td>
       <label class="switch switch-left-right">
-       <input class="switch-input" id="id_cookie" name="cookie" type="checkbox" <?php echo ('0' === $var["cookie"]) ? "" : " checked=\"checked\"";?> />
-       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
-       <span class="switch-handle"></span> 
+       <input class="switch-input" id="id_cookie" name="cookie" type="checkbox" <?php echo ("0" === $var["cookie"]) ? "" : " checked=\"checked\"";?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
+       <span class="switch-handle"></span>
       </label>
      </td>
     </tr>
    </table>
   </div>
   <p></p>
- 
+
   <h2><?php $plxPlugin->lang('L_CONFIG_PAGE') ?></h2>
   <p class="field"><label for="id_affPanier"><?php $plxPlugin->lang('L_CONFIG_BASKET_DISPLAY') ?>&nbsp;:</label></p>
   <p><?php plxUtils::printSelect("affPanier", $tabAffPanier, $var["affPanier"]) ?></p>
