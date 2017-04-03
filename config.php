@@ -80,9 +80,11 @@ for($i=1;$i<=11;$i++){
  $plxPlugin->setParam('affPanier', $_POST['affPanier'], 'string');
  $affichePanierMenu = isset($_POST['affichePanierMenu']) ? "" : "non";
  $plxPlugin->setParam('affichePanierMenu',$affichePanierMenu, 'string');
+ $plxPlugin->setParam('localStorage', isset($_POST['localStorage'])?'1':'0', 'numeric');
+ $plxPlugin->setParam('cookie', (isset($_POST['localStorage'])&&isset($_POST['cookie'])?'1':'0'), 'numeric');
+ $plxPlugin->setParam('position_devise', $_POST['position_devise'], 'string');
  $plxPlugin->setParam('libelleCGV', $_POST['libelleCGV'], 'string');
  $plxPlugin->setParam('urlCGV', $_POST['urlCGV'], 'string');
- $plxPlugin->setParam('position_devise', $_POST['position_devise'], 'string');
 
  $plxPlugin->saveParams();
  header('Location: parametres_plugin.php?p=plxMyShop');
@@ -139,6 +141,8 @@ $var['menu_position'] = $plxPlugin->getParam('menu_position')=='' ? 3 : $plxPlug
 $var['afficheCategoriesMenu'] = $plxPlugin->getParam('afficheCategoriesMenu');
 $var["affPanier"] = ("" === $plxPlugin->getParam("affPanier")) ? current(array_keys($tabAffPanier)) : $plxPlugin->getParam("affPanier");
 $var['affichePanierMenu'] = $plxPlugin->getParam('affichePanierMenu');
+$var['localStorage'] = $plxPlugin->getParam('localStorage')!='' ? $plxPlugin->getParam('localStorage') : '1';
+$var['cookie'] = $plxPlugin->getParam('cookie')!='' ? $plxPlugin->getParam('cookie') : '1';
 $var["position_devise"] = ("" === $plxPlugin->getParam("position_devise")) ? current(array_keys($tabPosDevise)) : $plxPlugin->getParam("position_devise");
 $var["libelleCGV"] = ("" === $plxPlugin->getParam("libelleCGV")) ? $plxPlugin->getLang("L_COMMANDE_LIBELLE_DEFAUT") : $plxPlugin->getParam("libelleCGV");
 $var["urlCGV"] = ("" === $plxPlugin->getParam("urlCGV")) ? "" : $plxPlugin->getParam("urlCGV");
@@ -306,10 +310,34 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
       </label>
      </td>
     </tr>
+    <tr>
+     <td>
+      <label for="id_localStorage"><?php $plxPlugin->lang('L_CONFIG_LOCALSTORAGE');?>&nbsp;:</label>
+     </td>
+     <td>
+      <label class="switch switch-left-right">
+       <input class="switch-input" id="id_localStorage" name="localStorage" type="checkbox" <?php echo ('0' === $var["localStorage"]) ? "" : " checked=\"checked\"";?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
+       <span class="switch-handle"></span> 
+      </label>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <label for="id_cookie"><?php $plxPlugin->lang('L_CONFIG_COOKIE');?>&nbsp;:</label>
+     </td>
+     <td>
+      <label class="switch switch-left-right">
+       <input class="switch-input" id="id_cookie" name="cookie" type="checkbox" <?php echo ('0' === $var["cookie"]) ? "" : " checked=\"checked\"";?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
+       <span class="switch-handle"></span> 
+      </label>
+     </td>
+    </tr>
    </table>
   </div>
   <p></p>
-   
+ 
   <h2><?php $plxPlugin->lang('L_CONFIG_PAGE') ?></h2>
   <p class="field"><label for="id_affPanier"><?php $plxPlugin->lang('L_CONFIG_BASKET_DISPLAY') ?>&nbsp;:</label></p>
   <p><?php plxUtils::printSelect("affPanier", $tabAffPanier, $var["affPanier"]) ?></p>

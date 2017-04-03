@@ -134,7 +134,7 @@ $LANG = array(
 'L_CONFIG_EMAIL_ORDER_SUBJECT_CUST' => 'Títol corrièl "Resumimt de comanda" (pel client)',
 'L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP' => 'Títol corrièl "Nòva comanda" (pel comerciant)',
 
-'L_CONFIG_MENU_TITLE'               => 'Configuracion del menú',
+'L_CONFIG_MENU_TITLE'               => 'Configuracion del menú et tactique du cookie client',#a traduire
 'L_CONFIG_MENU_POSITION'            => 'Posicion dins lo menú de las categorias e paginas fixas (panièr)',
 
 'L_CONFIG_PAGE'                     => 'Configuracion de las paginas',
@@ -143,6 +143,15 @@ $LANG = array(
 'L_CONFIG_PAGE_TEMPLATE'            => 'Modèl per las paginas fixas e modèl per defaut de las categorias e produits',
 
 'L_CONFIG_SUBMIT'                   => 'Salvagardar',
+'L_CONFIG_LOCALSTORAGE'             => 'Activer la fonction de stockage locale des coordonnées client?',#a traduire
+'L_CONFIG_COOKIE'                   => 'Activer le cookie de sauvegarde valable 60 jours?',#a traduire
+#local storage
+'L_ADDRESS_SAVED'                   => 'Vòstras coordenadas son estadas enregistradas localament sul vòstre navigator.',
+'L_ADDRESS_DELETED'                 => 'Vòstras coordenadas son estadas tiradas del vòstre navigator.',
+'L_DO_NOT_SHARED'                   => '( Utilizar pas sus un ordinador partejat. )',
+'L_SAVE_MY_ADDRESS'                 => 'Enregistrar vòstras coordenadas',
+'L_DELETE_MY_ADDRESS'               => 'Escafar vòstras coordenadas',
+'L_RESET_ADDRESS'                   => 'Reïnicializar'
 
 'L_ADMIN_MODIFY'                    => 'Modificar la lista',
 

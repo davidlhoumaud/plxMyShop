@@ -1,5 +1,9 @@
 ## PlxMyShop Change Log
 
+##v0.11.1 03/04/2017##
+* [+] MyshopCookie intégré
+* [+] Boutons Save & Forget modifiés selon une idée de [ppmt](http://forum.pluxml.org/viewtopic.php?pid=53349#p53349)
+
 ##v0.11 02/04/2017##
 Release
 

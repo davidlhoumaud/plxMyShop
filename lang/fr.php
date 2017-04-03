@@ -134,7 +134,7 @@ $LANG = array(
 'L_CONFIG_EMAIL_ORDER_SUBJECT_CUST' => 'Titre e-mail "Récapitulatif de commande" (pour le client)',
 'L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP' => 'Titre e-mail "Nouvelle commande" (pour le commerçant)',
 
-'L_CONFIG_MENU_TITLE'               => 'Configuration du menu',
+'L_CONFIG_MENU_TITLE'               => 'Configuration menu et tactique du cookie client',
 'L_CONFIG_MENU_POSITION'            => 'Position dans le menu des catégories et pages fixes (panier)',
 
 'L_CONFIG_PAGE'                     => 'Configuration des pages',
@@ -143,6 +143,15 @@ $LANG = array(
 'L_CONFIG_PAGE_TEMPLATE'            => 'Template pour les pages fixes et template par défaut des catégories et produits',
 
 'L_CONFIG_SUBMIT'                   => 'Sauvegarder',
+'L_CONFIG_LOCALSTORAGE'             => 'Activer la fonction de stockage locale des coordonnées client?',
+'L_CONFIG_COOKIE'                   => 'Activer le cookie de sauvegarde valable 60 jours?',
+#local storage
+'L_ADDRESS_SAVED'                   => 'Vos coordonnées ont été enregistrées localement dans votre navigateur.',
+'L_ADDRESS_DELETED'                 => 'Vos coordonnées ont été supprimés de votre navigateur.',
+'L_DO_NOT_SHARED'                   => '( Ne pas utiliser cette option sur un ordinateur partagé. )',
+'L_SAVE_MY_ADDRESS'                 => 'Enregistrer vos coordonnées',
+'L_DELETE_MY_ADDRESS'               => 'Effacer vos coordonnées',
+'L_RESET_ADDRESS'                   => 'Remettre à zéro',
 
 'L_ADMIN_MODIFY'                    => 'Modifier la liste des',
 
