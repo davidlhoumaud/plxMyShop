@@ -2,9 +2,9 @@
 
 ##v0.11.1 03/04/2017##
 * [+] MyshopCookie intégré
-* [+] Boutons Save & Forget modifiés selon une idée de [ppmt](http://forum.pluxml.org/viewtopic.php?pid=53349#p53349)
-* [+] Switch to Switch
-* [+] Ajout au champ Courriel d'un filtre par ExpReg : pattern="[^@]+@[^@]+\.[a-zA-Z]{2,7}" 
+* [+] Config : Switch to Switch
+* [+] Panier : Boutons Save & Forget modifiés selon une idée de [ppmt](http://forum.pluxml.org/viewtopic.php?pid=53349#p53349)
+* [+] Panier : Ajout d'un filtre ExpReg au champ courriel : pattern="[^@]+@[^@]+\.[a-zA-Z]{2,7}" [src](https://blog.staffannoteberg.com/2012/03/01/html5-form-validation-with-regex/)
 
 ##v0.11 02/04/2017##
 Release
