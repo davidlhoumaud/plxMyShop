@@ -4,7 +4,7 @@
 * [+] MyshopCookie intégré
 * [+] Config : Switch to Switch
 * [+] Panier : Boutons Save & Forget modifiés selon une idée de [ppmt](http://forum.pluxml.org/viewtopic.php?pid=53349#p53349)
-* [+] Panier : Ajout d'un filtre ExpReg au champ courriel : pattern="[^@]+@[^@]+\.[a-zA-Z]{2,7}" [src](https://blog.staffannoteberg.com/2012/03/01/html5-form-validation-with-regex/)
+* [+] Panier : Ajout d'un filtre ExpReg au champ courriel : pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" [src](https://blog.staffannoteberg.com/2012/03/01/html5-form-validation-with-regex/)
 * [+] Courriel client dans le récapitulatif de commande (mailto)
 
 ##v0.11 02/04/2017##
