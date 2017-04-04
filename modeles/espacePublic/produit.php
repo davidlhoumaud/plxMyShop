@@ -28,12 +28,12 @@ if (is_array($plxPlugin->productGroupTitle())) {
     <img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;<?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?></a>
    <?php echo ($produit["image"]!=""?'<img class="product_image" src="'.$plxPlugin->productImage().'">':''); ?>
   </div>
-<?php if ($produit["pricettc"] > 0) {?>
+<?php if ($produit["pricettc"] > 0) { ?>
    <span class="product_pricettc"><?php echo $plxPlugin->pos_devise($plxPlugin->productPriceTTC());?></span>
-<?php }?>
-<?php if ($produit["poidg"] > 0) {?>
+<?php } ?>
+<?php if ($produit["poidg"] > 0) { ?>
    <span class="product_poidg"><?php echo $plxPlugin->productPoidG();?>&nbsp;kg</span>
-<?php }?>
+<?php } ?>
  </header>
  <article>
   <?php $plxPlugin->plxShowProductContent(); ?>
