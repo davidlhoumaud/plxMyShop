@@ -43,7 +43,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
      $nprod=0;
      if (isset($_SESSION["plxMyShop"]['prods']) && $_SESSION["plxMyShop"]['prods']) {
 ?>
-       <form action="" method="POST">
+       <form method="POST">
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFormProdsDebut')); # Hook Plugins ?>
         <table class="tableauProduitsPanier">
          <tr>

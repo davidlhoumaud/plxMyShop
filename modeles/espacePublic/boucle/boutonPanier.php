@@ -8,7 +8,7 @@ $plxPlugin->traitementAjoutPanier();
 
 $dansShortcode = (count($d["pileModeles"]) === 1);
 ?>
-<form action="" method="POST" class="formulaireAjoutProduit">
+<form method="POST" class="formulaireAjoutProduit">
  <input type="hidden" name="idP" value="<?php echo htmlspecialchars($d["k"]);?>" />
  <?php if ($dansShortcode) {?>
   <input type="hidden" name="nb" value="1" min="1" />
