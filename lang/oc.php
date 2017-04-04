@@ -72,7 +72,7 @@ $LANG = array(
 'L_PRODUCT_ON_SITE'                 => 'sul site',
 'L_PRODUCT_UPDATE'                  => 'Enregistrar aqueste produit',
 'L_CAT_UPDATE'                      => 'Enregistrar aquesta categoria',
-'L_PRODUCT_TITLE_HTMLTAG'           => 'Contengut de la balisa title (opcion)',
+'L_PRODUCT_TITLE_HTMLTAG'           => 'Contengut de la balisa "title" (opcion)',
 'L_PRODUCT_META_DESCRIPTION'        => 'Contengut de la balisa meta "description" per aqueste produit (opcion)',
 'L_CAT_META_DESCRIPTION'            => 'Contengut de la balisa meta "description" per aquesta categoria (opcion)',
 'L_PRODUCT_META_KEYWORDS'           => 'Contengut de la balisa meta "keywords" per aqueste produit (opcion)',
@@ -100,7 +100,7 @@ $LANG = array(
 
 
 #config page
-'L_CONFIG_AFFICHER_PANIER_MENU'     => 'Afficher le panier dans le menu',
+'L_CONFIG_AFFICHER_PANIER_MENU'     => 'Afichar el Panièr dins lo menú',# a verifier
 'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Afichar las categorias dins lo menú',
 'L_CONFIG_SHOP_INFO'                => 'Informacions Botiga',
 'L_CONFIG_SHOP_NAME'                => 'Nom de la botiga',
@@ -134,7 +134,7 @@ $LANG = array(
 'L_CONFIG_EMAIL_ORDER_SUBJECT_CUST' => 'Títol corrièl "Resumimt de comanda" (pel client)',
 'L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP' => 'Títol corrièl "Nòva comanda" (pel comerciant)',
 
-'L_CONFIG_MENU_TITLE'               => 'Configuracion del menú et tactique du cookie client',#a traduire
+'L_CONFIG_MENU_TITLE'               => 'Configuracion del menú y tactica del cookie client',#a verfier
 'L_CONFIG_MENU_POSITION'            => 'Posicion dins lo menú de las categorias e paginas fixas (panièr)',
 
 'L_CONFIG_PAGE'                     => 'Configuracion de las paginas',
@@ -143,8 +143,8 @@ $LANG = array(
 'L_CONFIG_PAGE_TEMPLATE'            => 'Modèl per las paginas fixas e modèl per defaut de las categorias e produits',
 
 'L_CONFIG_SUBMIT'                   => 'Salvagardar',
-'L_CONFIG_LOCALSTORAGE'             => 'Activer la fonction de stockage locale des coordonnées client?',#a traduire
-'L_CONFIG_COOKIE'                   => 'Activer le cookie de sauvegarde valable 60 jours?',#a traduire
+'L_CONFIG_LOCALSTORAGE'             => 'Activer le stockage local des coordonnées client',#a traduire
+'L_CONFIG_COOKIE'                   => 'Garder 60 jours pour simplifier les futures commandes',#a traduire
 #local storage
 'L_ADDRESS_SAVED'                   => 'Vòstras coordenadas son estadas enregistradas localament sul vòstre navigator.',
 'L_ADDRESS_DELETED'                 => 'Vòstras coordenadas son estadas tiradas del vòstre navigator.',

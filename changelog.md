@@ -1,6 +1,7 @@
 ## PlxMyShop Change Log
 
 ##v0.12 0#/04/2017##
+* [+] Fichiers de langues Français & Anglais peaufinés + tentative d'occitan
 * [+] Ajout des requis aux entrées du panier
 * FIX : webkits X-XSS-Protection Content-Security-Policy
 

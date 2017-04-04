@@ -143,8 +143,8 @@ $LANG = array(
 'L_CONFIG_PAGE_TEMPLATE'            => 'Template for fixed pages and default templates for categories and products',
 
 'L_CONFIG_SUBMIT'                   => 'Save',
-'L_CONFIG_LOCALSTORAGE'             => 'Activate the function of local storage of customer details ?',
-'L_CONFIG_COOKIE'                   => 'Activate the cookie of backup valid for 60 days ?',
+'L_CONFIG_LOCALSTORAGE'             => 'Activate the local storage of customer details',
+'L_CONFIG_COOKIE'                   => 'Activate this storage for 60 days to save time at the next order',
 #local storage
 'L_ADDRESS_SAVED'                   => 'Your details have been saved locally in your browser.',
 'L_ADDRESS_DELETED'                 => 'Your details have been removed from your browser.',

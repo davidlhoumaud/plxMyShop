@@ -18,10 +18,10 @@ $LANG = array(
 'L_MONTANT'                         => 'Montant',
 'L_ACTIONS'                         => 'Actions',
 
-'L_EMAIL'                           => 'Destinataire(s) de l\'e-mail *',
-'L_EMAIL_CC'                        => 'Destinataire(s) en copie de l\'e-mail ',
-'L_EMAIL_BCC'                       => 'Destinataire(s) en copie cachée de l\'e-mail ',
-'L_EMAIL_SUBJECT'                   => 'Objet de l\'e-mail',
+'L_EMAIL'                           => 'Destinataire(s) du courriel *',
+'L_EMAIL_CC'                        => 'Destinataire(s) en copie du courriel ',
+'L_EMAIL_BCC'                       => 'Destinataire(s) en copie cachée du courriel ',
+'L_EMAIL_SUBJECT'                   => 'Objet du courriel',
 'L_DEFAULT_OBJECT'                  => 'Récapitulatif de commande',
 'L_DEFAULT_CONFIRMATION_OBJECT'     => 'Confirmation de commande',
 'L_TEMPLATE'                        => 'Template',
@@ -49,7 +49,7 @@ $LANG = array(
 'L_ERR_PRODUCT_ALREADY_EXISTS'      => 'Titre du produit déjà utilisé',
 'L_PRODUCTS_IMAGE'                  => 'Image de présentation',
 'L_PRODUCTS_IMAGE_CHOICE'           => 'Choisir une image',
-'L_PRODUCTS_SHORTCODE'              => 'shortcode utilisable dans une page statique',
+'L_PRODUCTS_SHORTCODE'              => 'Shortcode utilisable dans une page statique',
 'L_PRODUCTS_BASKET_BUTTON'          => 'Cacher le bouton "Ajouter au panier"',
 'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Afficher un message si le bouton "Ajouter au panier" n\'est pas affiché',
 'L_PRODUCTS_CATEGORIES'             => 'Catégories de ce produit',
@@ -71,7 +71,7 @@ $LANG = array(
 
 'L_PRODUCT_UPDATE'                  => 'Enregistrer ce produit',
 'L_CAT_UPDATE'                      => 'Enregistrer cette catégorie',
-'L_PRODUCT_TITLE_HTMLTAG'           => 'Contenu balise title (option)',
+'L_PRODUCT_TITLE_HTMLTAG'           => 'Contenu de la balise "title" (option)',
 'L_PRODUCT_META_DESCRIPTION'        => 'Contenu de la balise meta "description" pour ce produit (option)',
 'L_CAT_META_DESCRIPTION'            => 'Contenu de la balise meta "description" pour cette catégorie (option)',
 'L_PRODUCT_META_KEYWORDS'           => 'Contenu de la balise meta "keywords" pour ce produit (option)',
@@ -121,18 +121,18 @@ $LANG = array(
 'L_CONFIG_DELIVERY_RECORDED'        => 'Accusé de réception',
 'L_CONFIG_DELIVERY_WEIGHT'          => 'Poids en kg',
 
-'L_CONFIG_PAYMENT_CHEQUE'           => 'Paiment par chèque',
+'L_CONFIG_PAYMENT_CHEQUE'           => 'Paiement par chèque',
 'L_CONFIG_PAYMENT_CASH'             => 'Paiement en argent comptant',
-'L_CONFIG_PAYMENT_PAYPAL'           => 'Paiment par PAYPAL',
+'L_CONFIG_PAYMENT_PAYPAL'           => 'Paiement par PAYPAL',
 'L_CONFIG_CONF_PAYPAL'              => 'Configuration Paypal',
-'L_CONFIG_EMAIL_PAYPAL'             => 'Adresse e-mail Paypal',
+'L_CONFIG_EMAIL_PAYPAL'             => 'Adresse courriel Paypal',
 'L_CONFIG_CURRENCY_PAYPAL'          => 'Code Devise',
 'L_CONFIG_RETURN_URL_PAYPAL'        => 'URL de retour',
 'L_CONFIG_CANCEL_URL_PAYPAL'        => 'URL d\'annulation',
 
-'L_CONFIG_EMAIL_ORDER_TITLE'        => 'Configuration e-mail de commande',
-'L_CONFIG_EMAIL_ORDER_SUBJECT_CUST' => 'Titre e-mail "Récapitulatif de commande" (pour le client)',
-'L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP' => 'Titre e-mail "Nouvelle commande" (pour le commerçant)',
+'L_CONFIG_EMAIL_ORDER_TITLE'        => 'Configuration du courriel de commande',
+'L_CONFIG_EMAIL_ORDER_SUBJECT_CUST' => 'Titre du courriel "Récapitulatif de commande" (pour le client)',
+'L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP' => 'Titre du courriel "Nouvelle commande" (pour le commerçant)',
 
 'L_CONFIG_MENU_TITLE'               => 'Configuration menu et tactique du cookie client',
 'L_CONFIG_MENU_POSITION'            => 'Position dans le menu des catégories et pages fixes (panier)',
@@ -140,11 +140,11 @@ $LANG = array(
 'L_CONFIG_PAGE'                     => 'Configuration des pages',
 
 'L_CONFIG_BASKET_DISPLAY'           => 'Affichage du panier',
-'L_CONFIG_PAGE_TEMPLATE'            => 'Template pour les pages fixes et template par défaut des catégories et produits',
+'L_CONFIG_PAGE_TEMPLATE'            => 'Template par défaut des catégories, des produits et des pages fixes',
 
 'L_CONFIG_SUBMIT'                   => 'Sauvegarder',
-'L_CONFIG_LOCALSTORAGE'             => 'Activer la fonction de stockage locale des coordonnées client?',
-'L_CONFIG_COOKIE'                   => 'Activer le cookie de sauvegarde valable 60 jours?',
+'L_CONFIG_LOCALSTORAGE'             => 'Activer le stockage local des coordonnées client',
+'L_CONFIG_COOKIE'                   => 'Garder 60 jours pour simplifier les futures commandes',
 #local storage
 'L_ADDRESS_SAVED'                   => 'Vos coordonnées ont été enregistrées localement dans votre navigateur.',
 'L_ADDRESS_DELETED'                 => 'Vos coordonnées ont été supprimés de votre navigateur.',
@@ -178,8 +178,8 @@ $LANG = array(
 'L_EMAIL_DELIVERY_COST'             => 'Frais de port',
 'L_EMAIL_COMMENT'                   => 'Commentaire',
 'L_EMAIL_CONFIRM_PAYPAL'            => 'La commande est confirmée et en cours de validation de votre part sur Paypal.',
-'L_EMAIL_CONFIRM_CHEQUE'            => 'La commande a bien été confirmée et envoyée par e-mail.',
-'L_EMAIL_CONFIRM_CASH'              => 'La commande a bien été confirmée et envoyée par e-mail.',
+'L_EMAIL_CONFIRM_CHEQUE'            => 'La commande a bien été confirmée et envoyée par courriel.',
+'L_EMAIL_CONFIRM_CASH'              => 'La commande a bien été confirmée et envoyée par courriel.',
 
 'L_EMAIL_CUST_SUBJECT'              => 'Récapitulatif de la commande ',
 'L_EMAIL_CUST_MESSAGE1'             => 'Vous venez de confirmer une commande sur',
@@ -195,25 +195,25 @@ $LANG = array(
 'L_EMAIL_CUST_ADDRESS'              => 'Adresse de livraison',
 'L_EMAIL_CUST_PAYMENT'              => 'Méthode de paiement',
 
-'L_EMAIL_SENT1'                     => 'Un e-mail de récapitulatif de commande vous a été envoyé.',
-'L_EMAIL_SENT2'                     => 'Si l\'e-mail de récapitulatif de commande n\'apparait pas dans votre liste d\'e-mails en attente ou que celui-ci est signalé en tant que spam, veuillez ajouter %s à votre liste de contacts.', // %s : adresse e-mail du gestionnaire des commandes
+'L_EMAIL_SENT1'                     => 'Un courriel récapitulatif de la commande vous a été envoyé.',
+'L_EMAIL_SENT2'                     => 'Si le courriel récapitulatif de votre commande est introuvable dans votre boite de réception ou que celui-ci est signalé comme indésirable, veuillez ajouter %s à votre liste de contacts dans votre courrieleur.', // %s : adresse courriel du gestionnaire des commandes
 
-'L_EMAIL_ERROR1'                    => 'Une erreur s\'est produite lors de l\'envoi de votre e-mail récapitulatif.',
-'L_EMAIL_ERROR2'                    => 'Une erreur s\'est produite lors de l\'envoi de la commande par e-mail.',
+'L_EMAIL_ERROR1'                    => 'Une erreur s\'est produite lors de l\'envoi de votre courriel récapitulatif.',
+'L_EMAIL_ERROR2'                    => 'Une erreur s\'est produite lors de l\'envoi de la commande par courriel.',
 
 'L_FILE_ORDER'                      => 'Commande du ',
 
 'L_FOR'                             => 'pour',
 'L_DEL'                             => 'Retirer',
 
-'L_MISSING_EMAIL'                   => 'l\'adresse e-mail n\'est pas définie.',
-'L_MISSING_FIRSTNAME'               => 'Le prénom n\'est pas défini.',
-'L_MISSING_LASTNAME'                => 'Le nom de famille n\'est pas défini.',
-'L_MISSING_ADDRESS'                 => 'L\'adresse n\'est pas définie.',
-'L_MISSING_ZIP'                     => 'Le code postal n\'est pas défini.',
-'L_MISSING_TOWN'                    => 'La ville n\'est pas définie.',
-'L_MISSING_COUNTRY'                 => 'Le pays n\'est pas défini.',
-'L_MISSING_GIFTNAME'                => 'Le nom du destinataire du cadeau n\'est pas défini.',
+'L_MISSING_EMAIL'                   => 'l\'adresse courriel est indéfinie.',
+'L_MISSING_FIRSTNAME'               => 'Le prénom est indéfinie.',
+'L_MISSING_LASTNAME'                => 'Le nom de famille est indéfinie.',
+'L_MISSING_ADDRESS'                 => 'L\'adresse est indéfiniee.',
+'L_MISSING_ZIP'                     => 'Le code postal est indéfinie.',
+'L_MISSING_TOWN'                    => 'La ville est indéfiniee.',
+'L_MISSING_COUNTRY'                 => 'Le pays est indéfinie.',
+'L_MISSING_GIFTNAME'                => 'Le nom du destinataire du cadeau est indéfinie.',
 
 "L_MISSING_VALIDATION_CGV"          => "Vous devez valider les conditions générales de vente.",
 
@@ -233,7 +233,7 @@ $LANG = array(
 'L_PUBLIC_ZIP'                      => 'Code postal',
 'L_PUBLIC_TOWN'                     => 'Ville',
 'L_PUBLIC_COUNTRY'                  => 'Pays',
-'L_PUBLIC_GIFT'                     => 'S\'agit-il d\'un cadeau ?',
+'L_PUBLIC_GIFT'                     => 'S\'agit-il d\'un cadeau?',
 'L_PUBLIC_GIFTNAME'                 => 'Merci d\'indiquer le prénom et le nom de la personne destinataire du cadeau',
 'L_PUBLIC_COMMENT'                  => 'Votre commentaire :',
 'L_PUBLIC_VALIDATE_ORDER'           => 'Validez la commande',
