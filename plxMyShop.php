@@ -1091,7 +1091,7 @@ class plxMyShop extends plxPlugin {
    )
   ){
    if(mail($destinataire,$sujet,$message,$headers)){
-    $msgCommand.= "<h2 class='h2okmsg' >".$this->getlang('L_EMAIL_CONFIRM_'.strtoupper($_POST['methodpayment']))."</h2>";
+    $msgCommand.= "<h5 class='msgyeah' >".$this->getlang('L_EMAIL_CONFIRM_'.strtoupper($_POST['methodpayment']))."</h5>";
     #Mail de récapitulatif de commande pour le client.
     switch ($_POST['methodpayment']){
        case 'cheque' :
@@ -1152,8 +1152,8 @@ class plxMyShop extends plxPlugin {
     $headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n";
 
     if(mail($destinataire,$sujet,$message,$headers)){
-     $msgCommand .= "<h2 class='h2okmsg2'>". $this->getlang('L_EMAIL_SENT1') . "</h2>";
-     $msgCommand .= "<h2 class='h2okmsg3'>" . sprintf($this->getlang('L_EMAIL_SENT2'), $TONMAIL) . "</h2>";
+     $msgCommand .= "<h5 class='msgyeah2'>". $this->getlang('L_EMAIL_SENT1') . "</h5>";
+     $msgCommand .= "<h5 class='msgyeah3'>" . sprintf($this->getlang('L_EMAIL_SENT2'), $TONMAIL) . "</h5>";
 
      if ($_POST['methodpayment'] === "paypal"){
       $plxPlugin = $this;
@@ -1183,39 +1183,39 @@ $message
      unset($_SESSION["plxMyShop"]['prods']);
      unset($_SESSION["plxMyShop"]['ncart']);
     }else{
-     $msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_EMAIL_ERROR1') ."</h2>";
+     $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_EMAIL_ERROR1') ."</h5>";
     }
    }else{
-    $msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_EMAIL_ERROR2') ."</h2>";
+    $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_EMAIL_ERROR2') ."</h5>";
     echo "<script type='text/javascript'>error=true;</script>";
    }
   } else {
    if ( (!isset($_POST['email']) || empty($_POST['email']) || $_POST['email']=="") ){
-    $msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_EMAIL') ."</h2>";
+    $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_EMAIL') ."</h5>";
    }
    if (  (!isset($_POST['firstname']) ||  plxUtils::cdataCheck($_POST['firstname'])=="") ){
-    $msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_FIRSTNAME') ."</h2>";
+    $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_FIRSTNAME') ."</h5>";
    }
    if ( (!isset($_POST['lastname']) ||  plxUtils::cdataCheck($_POST['lastname'])=="")  ){
-    $msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_LASTNAME')  ."</h2>";
+    $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_LASTNAME')  ."</h5>";
    }
    if ( (!isset($_POST['adress']) ||  plxUtils::cdataCheck($_POST['adress'])=="")  ){
-    $msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_ADDRESS') ."</h2>";
+    $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_ADDRESS') ."</h5>";
    }
    if ( (!isset($_POST['postcode']) ||  plxUtils::cdataCheck($_POST['postcode'])=="") ){
-    $msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_ZIP')  ."</h2>";
+    $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_ZIP')  ."</h5>";
    }
    if ( (!isset($_POST['city']) ||  plxUtils::cdataCheck($_POST['city'])=="") ){
-    $msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_TOWN') ."</h2>";
+    $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_TOWN') ."</h5>";
    }
    if ( (!isset($_POST['country']) ||  plxUtils::cdataCheck($_POST['country'])=="") ){
-    $msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_COUNTRY') ."</h2>";
+    $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_COUNTRY') ."</h5>";
    }
    if ( (isset($_POST['choixCadeau']) &&  plxUtils::cdataCheck($_POST['nomCadeau']) === "") ){
-    $msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_GIFTNAME') ."</h2>";
+    $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_GIFTNAME') ."</h5>";
    }
    if ( ("" !== $this->getParam("urlCGV")) && !isset($_POST["valideCGV"]) ){
-    $msgCommand.= "<h2 class='h2nomsg'>". $this->getlang('L_MISSING_VALIDATION_CGV') ."</h2>";
+    $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_VALIDATION_CGV') ."</h5>";
    }
    echo "<script type='text/javascript'>error=true;</script>";
   }

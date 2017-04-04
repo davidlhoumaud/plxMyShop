@@ -1,16 +1,11 @@
-
-
-.nombre
-{
-	text-align : right;
+.nombre {
+ text-align: right;
 }
-
-
-
 /* choix cadeau */
-
 .conteneurNomCadeau {
-	display : none;
+ display: none;
 }
-
-
+/* liste produits */
+.tableauProduitsPanier{
+ width: 100%;
+}

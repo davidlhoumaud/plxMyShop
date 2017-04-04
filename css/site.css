@@ -138,19 +138,19 @@
 
 .spanshippingp {}
 
-.h2okmsg {
+.msgyeah {
     background-color:green;
     color:#fff;
 }
-.h2okmsg2 {
+.msgyeah2 {
     color:green;
 }
 
-.h2okmsg3 {
+.msgyeah3 {
     font-size : 100%;
 }
 
-.h2nomsg {
+.msgerror {
     color:red;
 }
 

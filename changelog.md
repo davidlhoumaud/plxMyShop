@@ -1,6 +1,7 @@
 ## PlxMyShop Change Log
 
-##v0.12 0#/04/2017##
+##v0.12 04/04/2017##
+* [+] Panier : Style des message retour et largeur du tableau d'article mis a 100%
 * [+] Panier localStorage : Si le client change ses coordonnées le bouton re-bascule sur "enregister"
 * [+] Fichiers de langues Français & Anglais peaufinés + tentative d'occitan
 * [+] Ajout des requis aux entrées du panier
