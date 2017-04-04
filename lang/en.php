@@ -151,7 +151,7 @@ $LANG = array(
 'L_DO_NOT_SHARED'                   => '(Please, do NOT save your details if you are on a shared computer.)',
 'L_SAVE_MY_ADDRESS'                 => 'Save my address',
 'L_DELETE_MY_ADDRESS'               => 'Forget my address',
-'L_RESET_ADDRESS'                   => 'Reset form'
+'L_RESET_ADDRESS'                   => 'Reset form',
 'L_ADMIN_MODIFY'                    => 'Modify the list of',
 
 'L_PRODUCTS'                        => 'products',
