@@ -185,6 +185,12 @@ class plxMyShop extends plxPlugin {
     document.getElementById("city").value = "";
     document.getElementById("country").value = "";
    }
+   function detail(event){
+    if (event.target.type == "text" || event.target.type == "email"){
+     document.getElementById("bouton_effacer").style.display = "none";
+     document.getElementById("bouton_sauvegarder").style.display = "";
+    }
+   }
    var gm = JSON.parse(localStorage.getItem("Shop_Deliver_Adress"));
    if (gm != null){
     document.getElementById("firstname").value = gm["firstname"];
@@ -216,6 +222,9 @@ class plxMyShop extends plxPlugin {
    input_raz.setAttribute("value","<?php echo $this->lang('L_RESET_ADDRESS'); ?>");
    input_raz.setAttribute("type","button");
    input_raz.addEventListener("click",raz, false);
+
+   var form_client = document.getElementById("formcart");
+   form_client.addEventListener("change",detail, false);
 
    if (gm != null)
     bouton_un.style.display = "none";

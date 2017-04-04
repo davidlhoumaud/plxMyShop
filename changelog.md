@@ -1,6 +1,7 @@
 ## PlxMyShop Change Log
 
 ##v0.12 0#/04/2017##
+* [+] Panier localStorage : Si le client change ses coordonnées le bouton re-bascule sur "enregister"
 * [+] Fichiers de langues Français & Anglais peaufinés + tentative d'occitan
 * [+] Ajout des requis aux entrées du panier
 * FIX : webkits X-XSS-Protection Content-Security-Policy
