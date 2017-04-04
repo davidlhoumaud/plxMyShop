@@ -20,6 +20,7 @@ if ( isset($_SESSION["plxMyShop"]["messageProduitAjouter"])
  var msgAddCart = document.getElementById("msgAddCart");
  <?php if ($messageProduitAjouter) {?>
   msgAddCart.style.display = "block";
+  setTimeout(function(){document.getElementById("msgAddCart").style.display = "none"; }, 3000);
  <?php }?>
  var shoppingCart = null;
 </script>

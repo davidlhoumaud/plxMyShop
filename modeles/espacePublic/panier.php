@@ -65,13 +65,13 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
          <tr>
           <td><?php echo $plxPlugin->aProds[$pId]['name'];?></td>
           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixUnitaire);?></td>
-          <td><input type="number" name="nb[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($nb);?>" /></td>
+          <td><input type="number" name="nb[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($nb);?>"></td>
           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixttc);?></td>
-          <td><input type="submit" name="retirerProduit[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_DEL'));?>" /></td>
+          <td><input type="submit" name="retirerProduit[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_DEL'));?>"></td>
          </tr>
 <?php   } // FIN foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) ?>
         </table>
-        <input type="submit" name="recalculer" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_PANIER_RECALCULER'));?>" />
+        <input type="submit" name="recalculer" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_PANIER_RECALCULER'));?>">
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFormProdsFin')); # Hook Plugins ?>
        </form>
 <?php $totalpoidgshipping = $plxPlugin->shippingMethod($totalpoidg, 1); ?>
@@ -91,52 +91,52 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
    <form id="formcart" method="POST" action="#panier">
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsDebut')) # Hook Plugins ?>
     <p><span class='startw'><?php $plxPlugin->lang('L_PUBLIC_MANDATORY_FIELD'); ?></span></p>
-    <p><strong id="labelFirstnameCart"><?php $plxPlugin->lang('L_PUBLIC_FIRSTNAME'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="firstname" id="firstname" value="" required="required" />
-    <strong id="labelLastnameCart"><?php $plxPlugin->lang('L_PUBLIC_LASTNAME'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="lastname" id="lastname" value="" required="required" /></p>
-    <p><strong id="labelMailCart"><?php $plxPlugin->lang('L_PUBLIC_EMAIL'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="email" name="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" id="email" value="" required="required" /></p>
-    <p><strong id="labelTelCart"><?php $plxPlugin->lang('L_PUBLIC_TEL'); ?>&nbsp;:</strong> <input type="text" name="tel" id="tel" value=""></p>
-    <p><strong id="labelAddrCart"><?php $plxPlugin->lang('L_PUBLIC_ADDRESS'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="adress" id="adress" value="" required="required" /></p>
-    <p><strong id="labelPostcodeCart" ><?php $plxPlugin->lang('L_PUBLIC_ZIP'); ?><span class='star'>*</span>&nbsp;:</strong> <input  type="text" name="postcode" id="postcode" value="" required="required" />
-    <strong id="labelCityCart"><?php $plxPlugin->lang('L_PUBLIC_TOWN'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="city" id="city" value=""  required="required"></p>
-    <p><strong id="labelCountryCart"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="country" id="country" value="" required="required" /></p>
+    <p><strong id="labelFirstnameCart"><?php $plxPlugin->lang('L_PUBLIC_FIRSTNAME'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="firstname" id="firstname" value="" required>
+    <strong id="labelLastnameCart"><?php $plxPlugin->lang('L_PUBLIC_LASTNAME'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="lastname" id="lastname" value="" required></p>
+    <p><strong id="labelMailCart"><?php $plxPlugin->lang('L_PUBLIC_EMAIL'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="email" name="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" id="email" value="" required></p>
+    <p><strong id="labelTelCart"><?php $plxPlugin->lang('L_PUBLIC_TEL'); ?>&nbsp;:</strong> <input type="tel" name="tel" id="tel" value=""></p>
+    <p><strong id="labelAddrCart"><?php $plxPlugin->lang('L_PUBLIC_ADDRESS'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="adress" id="adress" value="" required></p>
+    <p><strong id="labelPostcodeCart" ><?php $plxPlugin->lang('L_PUBLIC_ZIP'); ?><span class='star'>*</span>&nbsp;:</strong> <input  type="text" name="postcode" id="postcode" value="" required>
+    <strong id="labelCityCart"><?php $plxPlugin->lang('L_PUBLIC_TOWN'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="city" id="city" value="" required></p>
+    <p><strong id="labelCountryCart"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span>&nbsp;:</strong> <input type="text" name="country" id="country" value="" required></p>
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsMilieu')) # Hook Plugins ?>
     <p>
      <label for="choixCadeau">
-      <input type="checkbox" id="choixCadeau" name="choixCadeau"<?php echo (!isset($_POST["choixCadeau"])) ? '' : ' checked="checked"';?> />
+      <input type="checkbox" id="choixCadeau" name="choixCadeau"<?php echo (!isset($_POST["choixCadeau"])) ? '' : ' checked';?>>
       <?php $plxPlugin->lang('L_PUBLIC_GIFT'); ?>
      </label>
     </p>
     <p class="conteneurNomCadeau">
      <label for="nomCadeau">
       <?php $plxPlugin->lang('L_PUBLIC_GIFTNAME'); ?>
-      <input type="text" name="nomCadeau" id="nomCadeau" value="<?php echo (!isset($_POST["nomCadeau"])) ? '' : htmlspecialchars($_POST['nomCadeau']);?>" />
+      <input type="text" name="nomCadeau" id="nomCadeau" value="<?php echo (!isset($_POST["nomCadeau"])) ? '' : htmlspecialchars($_POST['nomCadeau']);?>">
      </label>
     </p>
     <strong id="labelMsgCart"><?php $plxPlugin->lang('L_PUBLIC_COMMENT'); ?></strong><br /><textarea name="msg" id="msgCart"  rows="3"></textarea><br />
     <textarea name="prods" id="prodsCart" rows="3"></textarea>
-    <input type="hidden" name="total" id="totalcommand" value="0" />
-    <input type="hidden" name="shipping" id="shipping" value="0" />
-    <input type="hidden" name="shipping_kg" id="shipping_kg" value="0" />
-    <input type="hidden" name="idsuite" id="idsuite" value="0" />
-    <input type="hidden" name="numcart" id="numcart" value="0" />
+    <input type="hidden" name="total" id="totalcommand" value="0">
+    <input type="hidden" name="shipping" id="shipping" value="0">
+    <input type="hidden" name="shipping_kg" id="shipping_kg" value="0">
+    <input type="hidden" name="idsuite" id="idsuite" value="0">
+    <input type="hidden" name="numcart" id="numcart" value="0">
     <strong><?php $plxPlugin->lang('L_EMAIL_CUST_PAYMENT'); ?>&nbsp;:&nbsp;&nbsp;</strong><select onchange="changePaymentMethod(this.value);" name="methodpayment">
 <?php
       $methodpayment = !isset($_SESSION["plxMyShop"]["methodpayment"]) ? "" : $_SESSION["plxMyShop"]["methodpayment"];
       foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) {?>
       <option value="<?php echo htmlspecialchars($codeM);?>"<?php 
-       echo ($codeM !== $methodpayment) ? "" : " selected=\"selected\"";
+       echo ($codeM !== $methodpayment) ? "" : " selected";
       ?>><?php echo htmlspecialchars($m["libelle"]);?></option>
 <?php } ?>
     </select>
     <br />
 <?php if ("" !== $plxPlugin->getParam("urlCGV")) {?>
      <label for="valideCGV">
-      <input type="checkbox" name="valideCGV" id="valideCGV"<?php echo (!isset($_POST["valideCGV"])) ? "" : " checked=\"checked\"";?>  required="required"/>
+      <input type="checkbox" name="valideCGV" id="valideCGV"<?php echo (!isset($_POST["valideCGV"])) ? "" : " checked";?>  required>
       <span class='star'>*</span>
       <a href="<?php echo htmlspecialchars($plxPlugin->getParam("urlCGV"));?>"><?php echo htmlspecialchars($plxPlugin->getParam("libelleCGV"));?></a>
      </label>
 <?php } ?>
-    <input type="submit" id="btnCart" name="validerCommande" value="<?php $plxPlugin->lang('L_PUBLIC_VALIDATE_ORDER'); ?>"/><br />
+    <input type="submit" id="btnCart" name="validerCommande" value="<?php $plxPlugin->lang('L_PUBLIC_VALIDATE_ORDER'); ?>"><br />
    </form>
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsFin')) # Hook Plugins ?>
   </section>

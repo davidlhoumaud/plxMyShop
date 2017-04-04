@@ -7,10 +7,6 @@ $plxPlugin = $d["plxPlugin"];
 ?>
 <section class="list_products">
  <header>
-  <div class="product_priceimage">
-   <a href="<?php echo htmlspecialchars($d["lienPanier"]);?>" id="notiShoppingCart">
-   <span id="notiNumShoppingCart"></span><img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;<?php $this->lang('L_PUBLIC_BASKET'); ?></a>
-  </div>
   <div class="cat_image">
    <?php echo ($plxPlugin->aProds[$plxPlugin->productNumber()]["image"]!="") ? '<img class="product_image_cat" src="'.$plxPlugin->productImage().'">' : '';?>
   </div>

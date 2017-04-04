@@ -23,9 +23,6 @@ if (is_array($plxPlugin->productGroupTitle())) {
 <section class="product_content">
  <header>
   <div class="product_priceimage">
-   <a href="<?php echo htmlspecialchars($d["lienPanier"]);?>" id="notiShoppingCart">
-    <span id="notiNumShoppingCart"></span>
-    <img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;<?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?></a>
    <?php echo ($produit["image"]!=""?'<img class="product_image" src="'.$plxPlugin->productImage().'">':''); ?>
   </div>
 <?php if ($produit["pricettc"] > 0) { ?>
