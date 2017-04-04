@@ -9,7 +9,7 @@ $v = $this->aProds[$d["k"]];
  <header>
   <h1 class="product_poidg"><a href="<?php echo $this->productRUrl($d["k"]); ?>" ><?php echo $v['name']; ?></a></h1>
   <?php echo $v['image'] != ''
-   ? '<a href="'.$this->productRUrl($d["k"]).'"><img class="product_image" src="'.$this->plxMotor->urlRewrite(PLX_ROOT.$this->cheminImages.$v['image']).'"></a>'
+   ? '<a href="'.$this->productRUrl($d["k"]).'"><img class="product_image" src="'.$this->plxMotor->urlRewrite($this->cheminImages.$v['image']).'"></a>'
    : '<a href="'.$this->productRUrl($d["k"]).'"><img class="product_image" src="'.PLX_PLUGINS.'plxMyShop/images/none.png"></a>';
   ?><br />
   <?php if ($v['pricettc'] > 0) {?>

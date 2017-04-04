@@ -7,13 +7,34 @@ $plxPlugin = $d["plxPlugin"];
 $plxPlugin->traitementAjoutPanier();
 
 $dansShortcode = (count($d["pileModeles"]) === 1);
+
+$NOMBRE = 1;
+$PHRASE = htmlspecialchars($plxPlugin->getLang('L_PUBLIC_ADD_BASKET'));
+$MIN = 1;
+$CLASS = 'blue';
+
+if (isset($_SESSION["plxMyShop"]["prods"][$d["k"]])) 
+{
+	if ($_SESSION["plxMyShop"]["prods"][$d["k"]]<1)
+	{
+		$_SESSION["plxMyShop"]["ncart"] -= $_SESSION["plxMyShop"]["prods"][$d["k"]];
+		unset($_SESSION["plxMyShop"]["prods"][$d["k"]]);
+	}
+	else
+	{
+		$NOMBRE = $_SESSION["plxMyShop"]["prods"][$d["k"]];
+		$PHRASE = htmlspecialchars($plxPlugin->getLang('L_PUBLIC_MOD_BASKET'));
+		$MIN = 0;
+		$CLASS = 'orange';
+	}
+}
 ?>
 <form method="POST" class="formulaireAjoutProduit">
  <input type="hidden" name="idP" value="<?php echo htmlspecialchars($d["k"]);?>">
  <?php if ($dansShortcode) {?>
-  <input type="hidden" name="nb" value="1" min="1">
+  <input type="hidden" name="nb" value="<?= $NOMBRE; ?>" min="<?= $MIN; ?>">
  <?php } else {?>
-  <input type="number" name="nb" value="1" min="1">
+  <input type="number" name="nb" value="<?= $NOMBRE; ?>" min="<?= $MIN; ?>">
  <?php }?>
- <input type="submit" name="ajouterProduit" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_PUBLIC_ADD_BASKET'));?>">
+ <input class="<?= $CLASS; ?>" type="submit" name="ajouterProduit" value="<?= $PHRASE; ?>">
 </form>

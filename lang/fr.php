@@ -219,7 +219,7 @@ $LANG = array(
 
 
 #Espace public
-'L_PUBLIC_ADDBASKET'                => 'Produit ajouté au panier',
+'L_PUBLIC_ADDBASKET'                => 'Un produit à été ajouté ou supprimé de votre panier',
 'L_PUBLIC_BASKET'                   => 'Votre panier',
 'L_PUBLIC_BASKET_NIL'               => '0.00',
 'L_PUBLIC_TOTAL_BASKET'             => 'Total',
@@ -238,6 +238,7 @@ $LANG = array(
 'L_PUBLIC_COMMENT'                  => 'Votre commentaire :',
 'L_PUBLIC_VALIDATE_ORDER'           => 'Validez la commande',
 'L_PUBLIC_ADD_BASKET'               => 'Ajouter au panier',
+'L_PUBLIC_MOD_BASKET'               => 'Mettre à jour',
 'L_PUBLIC_TAX'                      => 'T.T.C.',
 
 "L_COMMANDE_LIBELLE_DEFAUT"         => "J'ai lu et j'accepte les conditions générales de vente.",
