@@ -1,5 +1,9 @@
 ## PlxMyShop Change Log
 
+##v0.12 0#/04/2017##
+* [+] Ajout des requis aux entrées du panier
+* FIX : webkits X-XSS-Protection Content-Security-Policy
+
 ##v0.11.1 03/04/2017##
 * [+] MyshopCookie intégré
 * [+] Config : Switch to Switch
