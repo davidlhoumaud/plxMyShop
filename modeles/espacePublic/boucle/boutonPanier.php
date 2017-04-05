@@ -8,33 +8,29 @@ $plxPlugin->traitementAjoutPanier();
 
 $dansShortcode = (count($d["pileModeles"]) === 1);
 
-$NOMBRE = 1;
-$PHRASE = htmlspecialchars($plxPlugin->getLang('L_PUBLIC_ADD_BASKET'));
-$MIN = 1;
-$CLASS = 'blue';
+$prodsPnr = 1;
+$txtPnrBtn = htmlspecialchars($plxPlugin->getLang('L_PUBLIC_ADD_BASKET'));
+$minPnrPrm = 1;
+$classPnrBtn = 'blue';
 
-if (isset($_SESSION["plxMyShop"]["prods"][$d["k"]])) 
-{
-	if ($_SESSION["plxMyShop"]["prods"][$d["k"]]<1)
-	{
-		$_SESSION["plxMyShop"]["ncart"] -= $_SESSION["plxMyShop"]["prods"][$d["k"]];
-		unset($_SESSION["plxMyShop"]["prods"][$d["k"]]);
-	}
-	else
-	{
-		$NOMBRE = $_SESSION["plxMyShop"]["prods"][$d["k"]];
-		$PHRASE = htmlspecialchars($plxPlugin->getLang('L_PUBLIC_MOD_BASKET'));
-		$MIN = 0;
-		$CLASS = 'orange';
-	}
+if (isset($_SESSION["plxMyShop"]["prods"][$d["k"]])) {
+ if ($_SESSION["plxMyShop"]["prods"][$d["k"]]<1) {
+  $_SESSION["plxMyShop"]["ncart"] -= $_SESSION["plxMyShop"]["prods"][$d["k"]];
+  unset($_SESSION["plxMyShop"]["prods"][$d["k"]]);
+ }else{
+  $prodsPnr = $_SESSION["plxMyShop"]["prods"][$d["k"]];
+  $txtPnrBtn = htmlspecialchars($plxPlugin->getLang('L_PUBLIC_MOD_BASKET'));
+  $minPnrPrm = 0;
+  $classPnrBtn = 'orange';
+ }
 }
 ?>
 <form method="POST" class="formulaireAjoutProduit">
  <input type="hidden" name="idP" value="<?php echo htmlspecialchars($d["k"]);?>">
  <?php if ($dansShortcode) {?>
-  <input type="hidden" name="nb" value="<?= $NOMBRE; ?>" min="<?= $MIN; ?>">
+  <input type="hidden" name="nb" value="<?php echo $prodsPnr; ?>" min="<?php echo $minPnrPrm; ?>">
  <?php } else {?>
-  <input type="number" name="nb" value="<?= $NOMBRE; ?>" min="<?= $MIN; ?>">
+  <input type="number" name="nb" value="<?php echo $prodsPnr; ?>" min="<?php echo $minPnrPrm; ?>">
  <?php }?>
- <input class="<?= $CLASS; ?>" type="submit" name="ajouterProduit" value="<?= $PHRASE; ?>">
+ <input class="<?php echo $classPnrBtn; ?>" type="submit" name="ajouterProduit" value="<?php echo $txtPnrBtn; ?>">
 </form>
