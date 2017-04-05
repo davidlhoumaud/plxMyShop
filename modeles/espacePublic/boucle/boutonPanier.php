@@ -23,19 +23,19 @@ if (isset($_SESSION["plxMyShop"]["prods"][$d["k"]])) {
 
 $dansShortcode = (count($d["pileModeles"]) === 1);
 ?>
-<form method="POST" class="formulaireAjoutProduit" id="FormAddProd<?php echo $d["k"]; ?>" onsubmit="chngBB<?php echo $d["k"]; ?>(true);">
+<form method="POST" class="formulaireAjoutProduit" id="FormAddProd<?php echo $d["k"]; ?>" onsubmit="chngNbProd('<?php echo $d["k"]; ?>',true);">
  <input type="hidden" name="idP" value="<?php echo htmlspecialchars($d["k"]);?>">
  <?php if ($dansShortcode) {?>
   <input type="hidden" name="nb" value="<?php echo $prodsPnr; ?>" min="1">
  <?php } else {?>
-  <input type="number" name="nb" value="<?php echo $prodsPnr; ?>" min="1" id="nbProd<?php echo $d["k"]; ?>" onchange="chngBB<?php echo $d["k"]; ?>(false);" data-o="<?php echo $prodsPnr; ?>">
+  <input type="number" name="nb" value="<?php echo $prodsPnr; ?>" min="1" id="nbProd<?php echo $d["k"]; ?>" onchange="chngNbProd('<?php echo $d["k"]; ?>',false);" data-o="<?php echo $prodsPnr; ?>">
  <?php }?>
  <input class="<?php echo $classPnrBtn; ?>" type="submit" id="addProd<?php echo $d["k"]; ?>" name="ajouterProduit" value="<?php echo $txtPnrBtn; ?>">
 </form>
 <script type="text/javascript">
- function chngBB<?php echo $d["k"]; ?>(sbmt){
-  var btn = document.getElementById("addProd<?php echo $d["k"]; ?>");
-  var nb = document.getElementById("nbProd<?php echo $d["k"]; ?>");
+ function chngNbProd(k,sbmt){
+  var btn = document.getElementById("addProd"+k);
+  var nb = document.getElementById("nbProd"+k);
   if(btn.value != '<?php echo htmlspecialchars($plxPlugin->getLang('L_PUBLIC_ADD_BASKET')); ?>'){
    if(nb.getAttribute("data-o") == nb.value){
     if(sbmt){//delete
