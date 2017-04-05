@@ -15,7 +15,7 @@ if ( isset($_SESSION["plxMyShop"]["messageProduitAjouter"])
  unset($_SESSION["plxMyShop"]["messageProduitAjouter"]);
 }
 ?>
-<div id="msgAddCart"><?php $this->lang('L_PUBLIC_ADDBASKET'); ?></div>
+<div id="msgAddCart"><?php $this->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
 <script type="text/JavaScript">
  var msgAddCart = document.getElementById("msgAddCart");
  <?php if ($messageProduitAjouter) {?>

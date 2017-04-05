@@ -152,6 +152,7 @@ $LANG = array(
 'L_SAVE_MY_ADDRESS'                 => 'Save my address',
 'L_DELETE_MY_ADDRESS'               => 'Forget my address',
 'L_RESET_ADDRESS'                   => 'Reset form',
+
 'L_ADMIN_MODIFY'                    => 'Modify the list of',
 
 'L_PRODUCTS'                        => 'products',
@@ -216,9 +217,8 @@ $LANG = array(
 
 'L_MISSING_VALIDATION_CGV'          => 'Please acknowledge the General Sales Terms and Conditions.',
 
-
 #Espace public
-'L_PUBLIC_ADDBASKET'                => 'Product added to the basket',
+'L_PUBLIC_MSG_BASKET_UP'            => 'Your basket is up to date',
 'L_PUBLIC_BASKET'                   => 'Your basket',
 'L_PUBLIC_BASKET_NIL'               => '0.00',
 'L_PUBLIC_TOTAL_BASKET'             => 'Total',
@@ -237,6 +237,8 @@ $LANG = array(
 'L_PUBLIC_COMMENT'                  => 'Your comment :',
 'L_PUBLIC_VALIDATE_ORDER'           => 'Confirm the order',
 'L_PUBLIC_ADD_BASKET'               => 'Add to the basket',
+'L_PUBLIC_MOD_BASKET'               => 'Modify basket',
+'L_PUBLIC_DEL_BASKET'               => 'Remove from basket',
 'L_PUBLIC_TAX'                      => 'Tax included',
 
 'L_COMMANDE_LIBELLE_DEFAUT'         => 'I have read and accept the General Sales Terms and Conditions',

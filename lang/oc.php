@@ -217,9 +217,8 @@ $LANG = array(
 
 "L_MISSING_VALIDATION_CGV"          => "Vos cal validar las condicions generalas de venta.",
 
-
 #Espace public
-'L_PUBLIC_ADDBASKET'                => 'Produit ajustat al panièr',
+'L_PUBLIC_MSG_BASKET_UP'            => 'Vòstre panièr as actualisat',#a verifier
 'L_PUBLIC_BASKET'                   => 'Vòstre panièr',
 'L_PUBLIC_BASKET_NIL'               => '0.00',
 'L_PUBLIC_TOTAL_BASKET'             => 'Total',
@@ -238,6 +237,8 @@ $LANG = array(
 'L_PUBLIC_COMMENT'                  => 'Vòstre comentari :',
 'L_PUBLIC_VALIDATE_ORDER'           => 'Validatz la comanda',
 'L_PUBLIC_ADD_BASKET'               => 'Ajustar al panièr',
+'L_PUBLIC_MOD_BASKET'               => 'Modifiar al panièr',#a verifier
+'L_PUBLIC_DEL_BASKET'               => 'Retirar da panièr',#a verifier
 'L_PUBLIC_TAX'                      => 'T.T.C.',
 
 "L_COMMANDE_LIBELLE_DEFAUT"         => "Ai legit e accepti las condicions generalas de venta.",

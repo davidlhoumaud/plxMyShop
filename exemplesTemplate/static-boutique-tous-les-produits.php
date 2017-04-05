@@ -51,7 +51,7 @@
 						
 						</script>
 						
-						<div id="msgAddCart"><?php $plxMyShop->lang('L_PUBLIC_ADDBASKET'); ?></div>
+						<div id="msgAddCart"><?php $plxMyShop->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
 
 						<script type="text/JavaScript">
 							var msgAddCart = document.getElementById("msgAddCart");

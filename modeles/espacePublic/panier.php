@@ -142,7 +142,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
   </section>
  </div>
 </div>
-<div id="msgAddCart">&darr; <?php $plxPlugin->lang('L_PUBLIC_ADDBASKET'); ?> &darr;</div>
+<div id="msgAddCart">&darr; <?php $plxPlugin->lang('L_PUBLIC_MSG_BASKET_UP'); ?> &darr;</div>
 <script type="text/JavaScript">
 <?php
  if ($nprod > 0 ) echo "var error=true;\n";
