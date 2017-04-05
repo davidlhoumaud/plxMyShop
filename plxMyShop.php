@@ -67,6 +67,8 @@ class plxMyShop extends plxPlugin {
   }
   $this->donneesModeles["tabChoixMethodespaiement"] = $tabChoixMethodespaiement;
 
+  $this->addHook('ThemeEndBody', 'ThemeEndBody');
+
   if($this->getParam('localStorage')){//MyshopCookie
    $this->addHook('plxMyShopPanierCoordsMilieu', 'inlineHtml');
    $this->addHook('plxMyShopPanierFin', 'inlineJs');
@@ -75,14 +77,39 @@ class plxMyShop extends plxPlugin {
    $this->addHook('plxMotorConstruct', 'plxMotorConstruct');
    $this->addHook('IndexEnd', 'IndexEnd');
   }
-
  }
 
- public function IndexEnd() {//MyshopCookie
+
+ public function ThemeEndBody() {//javascript de bascule des boutons produits
+  echo '<?php if($plxMotor->mode == "product"){ ?>';
+?>
+<script type="text/javascript">
+ function chngNbProd(k,sbmt){
+  var btn = document.getElementById("addProd"+k);
+  var nb = document.getElementById("nbProd"+k);
+  if(btn.value != '<?php echo htmlspecialchars($this->getLang('L_PUBLIC_ADD_BASKET')); ?>'){
+   if(nb.value == nb.getAttribute("data-o") || nb.value == 0){
+    if(sbmt){//delete
+     nb.value="0";
+    }
+    btn.value = '<?php echo htmlspecialchars($this->getLang('L_PUBLIC_DEL_BASKET')); ?>';
+    btn.setAttribute("class", "red");
+   }else{
+    btn.value = '<?php echo htmlspecialchars($this->getLang('L_PUBLIC_MOD_BASKET')); ?>';
+    btn.setAttribute("class", "orange");
+   }
+  }
+ }
+</script>
+ <?php
+  echo '<?php } ?>';
+ }
+
+ public function IndexEnd(){//MyshopCookie
 
   $string = '
   // MyShopCookie';
-  if(isset($_SESSION["plxMyShop"]["prods"])) {
+  if(isset($_SESSION["plxMyShop"]["prods"])){
 
    // localhost pour test ou véritable domaine ?
    $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
@@ -95,7 +122,7 @@ class plxMyShop extends plxPlugin {
     $temps_du_cookie = time() + 3600 * 24 * 30 * 2;
 
    $string .= '
-   if(isset($_SESSION["plxMyShop"])) {
+   if(isset($_SESSION["plxMyShop"])){
    $cookie_path = "/";
    $cookie_domain = "'.$domain.'";
    $cookie_secure = 0;
@@ -110,7 +137,7 @@ class plxMyShop extends plxPlugin {
   }
   echo "<?php ".$string." ?>";
  }
- public function plxMotorConstruct() {//MyshopCookie
+ public function plxMotorConstruct(){//MyshopCookie
   $string = '
   // MyShopCookie
   if(!empty($_COOKIE["plxMyShop"]) && !isset($_SESSION["IS_NOT_NEW"])) {
@@ -124,16 +151,16 @@ class plxMyShop extends plxPlugin {
   echo "<?php ".$string." ?>";
  }
 // hook des boutons localStorage du formulaire pour les clients au milieu du Panier
- public function inlineHtml() {//MyshopCookie ?>
+ public function inlineHtml(){//MyshopCookie ?>
     <p><span id="bouton_sauvegarder">&nbsp;</span>&nbsp;<span id="bouton_effacer">&nbsp;</span>&nbsp;<span id="bouton_raz">&nbsp;</span></p>
     <p id="alerte_sauvegarder" class="alert green" style="display:none;">&nbsp;</p>
 <?php
 }
 // hook js localStorage du formulaire pour les clients à la fin du Panier
- public function inlineJs() {//MyshopCookie ?>
+ public function inlineJs(){//MyshopCookie ?>
 <script type="text/JavaScript">
 
- if (window.localStorage) {
+ if (window.localStorage){
   function lsTest(){
    var test = "test";
    try {

@@ -6,47 +6,27 @@ version :
 $plxPlugin = $d["plxPlugin"];
 $plxPlugin->traitementAjoutPanier();
 
+$minPnr = 1;
 $prodsPnr = 1;
 $txtPnrBtn = htmlspecialchars($plxPlugin->getLang('L_PUBLIC_ADD_BASKET'));
 $classPnrBtn = "blue";
 
-if (isset($_SESSION["plxMyShop"]["prods"][$d["k"]])) {
+if (isset($_SESSION["plxMyShop"]["prods"][$d["k"]])){
  if ($_SESSION["plxMyShop"]["prods"][$d["k"]]<1) {
   $_SESSION["plxMyShop"]["ncart"] -= $_SESSION["plxMyShop"]["prods"][$d["k"]];
   unset($_SESSION["plxMyShop"]["prods"][$d["k"]]);
  }else{
+  $minPnr = 0;
   $prodsPnr = $_SESSION["plxMyShop"]["prods"][$d["k"]];
   $txtPnrBtn = htmlspecialchars($plxPlugin->getLang('L_PUBLIC_DEL_BASKET'));
   $classPnrBtn = "red";
  }
 }
 
-$dansShortcode = (count($d["pileModeles"]) === 1);
+$nbProdtype = (count($d["pileModeles"]) === 1)?'hidden':'number'; //dansShortcode = hidden
 ?>
 <form method="POST" class="formulaireAjoutProduit" id="FormAddProd<?php echo $d["k"]; ?>" onsubmit="chngNbProd('<?php echo $d["k"]; ?>',true);">
  <input type="hidden" name="idP" value="<?php echo htmlspecialchars($d["k"]);?>">
- <?php if ($dansShortcode) {?>
-  <input type="hidden" name="nb" value="<?php echo $prodsPnr; ?>" min="1">
- <?php } else {?>
-  <input type="number" name="nb" value="<?php echo $prodsPnr; ?>" min="1" id="nbProd<?php echo $d["k"]; ?>" onchange="chngNbProd('<?php echo $d["k"]; ?>',false);" data-o="<?php echo $prodsPnr; ?>">
- <?php }?>
+ <input type="<?php echo $nbProdtype; ?>" name="nb" value="<?php echo $prodsPnr; ?>" min="<?php echo $minPnr; ?>" id="nbProd<?php echo $d["k"]; ?>" onchange="chngNbProd('<?php echo $d["k"]; ?>',false);" data-o="<?php echo $prodsPnr; ?>">
  <input class="<?php echo $classPnrBtn; ?>" type="submit" id="addProd<?php echo $d["k"]; ?>" name="ajouterProduit" value="<?php echo $txtPnrBtn; ?>">
 </form>
-<script type="text/javascript">
- function chngNbProd(k,sbmt){
-  var btn = document.getElementById("addProd"+k);
-  var nb = document.getElementById("nbProd"+k);
-  if(btn.value != '<?php echo htmlspecialchars($plxPlugin->getLang('L_PUBLIC_ADD_BASKET')); ?>'){
-   if(nb.getAttribute("data-o") == nb.value){
-    if(sbmt){//delete
-     nb.value="0";
-    }
-    btn.value = '<?php echo htmlspecialchars($plxPlugin->getLang('L_PUBLIC_DEL_BASKET')); ?>';
-    btn.setAttribute("class", "red");
-   }else{
-    btn.value = '<?php echo htmlspecialchars($plxPlugin->getLang('L_PUBLIC_MOD_BASKET')); ?>';
-    btn.setAttribute("class", "orange");
-   }
-  }
- }
-</script>
