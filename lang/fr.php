@@ -239,6 +239,7 @@ $LANG = array(
 'L_PUBLIC_VALIDATE_ORDER'           => 'Validez la commande',
 'L_PUBLIC_ADD_BASKET'               => 'Ajouter au panier',
 'L_PUBLIC_MOD_BASKET'               => 'Mettre à jour',
+'L_PUBLIC_DEL_BASKET'               => 'Enlever',#penser a ajouer a oc & en
 'L_PUBLIC_TAX'                      => 'T.T.C.',
 
 "L_COMMANDE_LIBELLE_DEFAUT"         => "J'ai lu et j'accepte les conditions générales de vente.",
