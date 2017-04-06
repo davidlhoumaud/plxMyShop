@@ -372,9 +372,10 @@ if (isset($_SESSION["plxMyShop"]["msgProdUpDate"]) && $_SESSION["plxMyShop"]["ms
       $_SESSION["plxMyShop"]['msgCommand']="";
       $this->validerCommande();
       $this->modele("espacePublic/panier");
-     } else {
-      $this->modele("espacePublic/ajoutProduit");
      }
+     //~ else {
+      //~ $this->modele("espacePublic/ajoutProduit");
+     //~ }
 ?>
     <script type="text/JavaScript">
      var error = false;

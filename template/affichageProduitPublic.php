@@ -30,6 +30,7 @@ if ("1" === $plxPlugin->aProds[$plxPlugin->productNumber()]['pcat']) {
 }
 if (in_array($plxPlugin->getParam("affPanier"), array("basPage", "partout"))){
  $plxPlugin->modele("espacePublic/panier");
-} else {
- $plxPlugin->modele("espacePublic/ajoutProduit");
 }
+//~ else {
+ //~ $plxPlugin->modele("espacePublic/ajoutProduit");
+//~ }
