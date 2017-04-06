@@ -12,7 +12,6 @@ class plxMyShop extends plxPlugin {
  public $cheminImages;
  public $idProduit;
  public $shortcode = "boutonPanier";
- public $msgProdUpDate = FALSE;
 
  public function __construct($default_lang){
 
@@ -88,8 +87,8 @@ class plxMyShop extends plxPlugin {
   }
  }
 
- public function ThemeEndBody() {//javascript de bascule des boutons produits
-  echo '<?php if($plxMotor->mode == "product" || strstr($plxMotor->template,"boutique")){ ?>';
+ public function ThemeEndBody() {
+  echo '<?php if($plxMotor->mode == "product" || strstr($plxMotor->template,"boutique")){ ?>';//javascript de bascule des boutons produits
 ?>
 <script type="text/javascript">
  function chngNbProd(k,sbmt){
@@ -108,12 +107,12 @@ class plxMyShop extends plxPlugin {
    }
   }
  }
-<?php 
-if (isset($_SESSION["plxMyShop"]["msgProdUpDate"]) && $_SESSION["plxMyShop"]["msgProdUpDate"]){
- $this->msgProdUpDate = TRUE;
- unset($_SESSION["plxMyShop"]["msgProdUpDate"]);
-?>
 </script>
+<?php //Les messages
+  echo '<?php } ?>';
+  if (isset($_SESSION["plxMyShop"]["msgProdUpDate"]) && $_SESSION["plxMyShop"]["msgProdUpDate"]){
+   unset($_SESSION["plxMyShop"]["msgProdUpDate"]);
+?>
 <div id="msgUpDateCart"><?php $this->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
 <script type="text/javascript">
  var msgUpDateCart = document.getElementById("msgUpDateCart");
@@ -123,8 +122,7 @@ if (isset($_SESSION["plxMyShop"]["msgProdUpDate"]) && $_SESSION["plxMyShop"]["ms
 <?php } ?>
 </script>
  <?php
-  echo '<?php } ?>';
- }
+ }//ThemeEndBody end
 
  public function IndexEnd(){//MyshopCookie
 
@@ -1363,6 +1361,7 @@ $message
    if (isset($_SESSION["plxMyShop"]['prods'][$idP])){
     $_SESSION["plxMyShop"]['ncart'] -= $_SESSION["plxMyShop"]['prods'][$idP];
     unset($_SESSION["plxMyShop"]['prods'][$idP]);
+    $_SESSION["plxMyShop"]["msgProdUpDate"] = TRUE;
    }
    header("Location: {$_SERVER["REQUEST_URI"]}");
    exit();
@@ -1379,6 +1378,7 @@ $message
       $_SESSION["plxMyShop"]['ncart'] += $nb;
       $_SESSION["plxMyShop"]['prods'][$idP] = $nb;
      }
+     $_SESSION["plxMyShop"]["msgProdUpDate"] = TRUE;
     }
    }
    header("Location: {$_SERVER["REQUEST_URI"]}");
