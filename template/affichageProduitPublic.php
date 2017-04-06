@@ -4,7 +4,7 @@ $plxPlugin = $plxShow->plxMotor->plxPlugins->aPlugins['plxMyShop'];
 $plxPlugin->donneesModeles["plxPlugin"] = $plxPlugin;
 if (($plxPlugin->aProds[ $plxPlugin->productNumber()]['active']!=1 || $plxPlugin->aProds[ $plxPlugin->productNumber()]['readable']!=1) && ($plxPlugin->aProds[ $plxPlugin->productNumber()]['pcat']!=1)) header('Location: index.php');
 ?>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/jquery.min.js?afPP"></script>
 <script type="text/javascript">
 jQuery.noConflict();
 </script>
