@@ -1334,7 +1334,7 @@ $message
   $nombre = $_POST["nb"];
   $_SESSION["plxMyShop"]['ncart'] += $nombre;
   $_SESSION["plxMyShop"]['prods'][$_POST['idP']] = $nombre;
-  $_SESSION["plxMyShop"]["messageProduitAjouter"] = TRUE;
+  $_SESSION["plxMyShop"]["msgProdUpDate"] = TRUE;
   header("Location: {$_SERVER["REQUEST_URI"]}");
   exit();
  }

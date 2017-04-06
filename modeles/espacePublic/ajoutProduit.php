@@ -6,21 +6,21 @@ version :
 if (!isset($_SESSION)) {
  session_start();
 }
-$messageProduitAjouter = FALSE;
+$msgProdUpDate = FALSE;
 
-if ( isset($_SESSION["plxMyShop"]["messageProduitAjouter"])
- && $_SESSION["plxMyShop"]["messageProduitAjouter"]
+if ( isset($_SESSION["plxMyShop"]["msgProdUpDate"])
+ && $_SESSION["plxMyShop"]["msgProdUpDate"]
 ) {
- $messageProduitAjouter = TRUE;
- unset($_SESSION["plxMyShop"]["messageProduitAjouter"]);
+ $msgProdUpDate = TRUE;
+ unset($_SESSION["plxMyShop"]["msgProdUpDate"]);
 }
 ?>
 <div id="msgUpDateCart"><?php $this->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
 <script type="text/JavaScript">
+<?php if ($msgProdUpDate){ ?>
  var msgUpDateCart = document.getElementById("msgUpDateCart");
- <?php if ($messageProduitAjouter) {?>
-  msgUpDateCart.style.display = "block";
-  setTimeout(function(){document.getElementById("msgUpDateCart").style.display = "none"; }, 3000);
- <?php }?>
+ msgUpDateCart.style.display = "block";
+ setTimeout(function(){document.getElementById("msgUpDateCart").style.display = "none"; }, 3000);
+<?php } ?>
  var shoppingCart = null;
 </script>
