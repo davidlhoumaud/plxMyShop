@@ -1,8 +1,8 @@
 ## PlxMyShop Change Log
 
 ##v0.13 06/04/2017##
-* [+] Ajout du hook plxMyShopShowMiniPanier basé sur l'idée de WorldBot alias [ppmt](http://forum.pluxml.org/viewtopic.php?pid=53411#p53411)
-* [+] Comptatible Multilingue 0.8 & pluxml 5.6 (worldBot)
+* [+] Ajout du hook plxMyShopShowMiniPanier basé sur l'idée de WorldBot alias [Yannic](http://forum.pluxml.org/viewtopic.php?pid=53411#p53411)
+* [+] Compatible Multilingue 0.8 & pluxml 5.6 (worldBot)
 * [+] Bouton produit : Ajouter, modifier et supprimer du panier (worldBot & swd) 
 * [+] Panier : Retire Rouge, Valider Vert (worldBot)
 * [+] Shortcode : Affiche au complet le produit (worldBot)
