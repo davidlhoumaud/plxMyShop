@@ -239,6 +239,8 @@ $LANG = array(
 'L_PUBLIC_ADD_BASKET'               => 'Ajustar al panièr',
 'L_PUBLIC_MOD_BASKET'               => 'Modifiar al panièr',#a verifier
 'L_PUBLIC_DEL_BASKET'               => 'Retirar da panièr',#a verifier
+'L_PUBLIC_BASKET_MINI_TITLE'        => "Passar al commanda",#a verifier
+'L_PUBLIC_BASKET_MINI'              => "Commandar !",#a verifier
 'L_PUBLIC_TAX'                      => 'T.T.C.',
 
 "L_COMMANDE_LIBELLE_DEFAUT"         => "Ai legit e accepti las condicions generalas de venta.",

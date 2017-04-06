@@ -32,7 +32,7 @@ class plxMyShop extends plxPlugin {
    , 5
    , $this->getlang('L_ADMIN_MENU_TOOTIP')
   );
-
+//hook PluXml
   $this->addHook('plxMotorPreChauffageBegin', 'plxMotorPreChauffageBegin');
   $this->addHook('plxShowConstruct', 'plxShowConstruct');
   $this->addHook('plxShowPageTitle', 'plxShowPageTitle');
@@ -40,6 +40,7 @@ class plxMyShop extends plxPlugin {
   $this->addHook('SitemapStatics', 'SitemapStatics');
   $this->addHook('AdminPrepend', 'AdminPrepend');
   $this->addHook('plxShowStaticContent', 'plxShowStaticContent');
+  $this->addHook('ThemeEndBody', 'ThemeEndBody');
 
   $this->getProducts();
 
@@ -74,9 +75,8 @@ class plxMyShop extends plxPlugin {
    }
   }
   $this->donneesModeles["tabChoixMethodespaiement"] = $tabChoixMethodespaiement;
-
-  $this->addHook('ThemeEndBody', 'ThemeEndBody');
-
+//hook plxMyShop
+  $this->addHook('plxMyShopShowMiniPanier', 'plxMyShopShowMiniPanier');
   if($this->getParam('localStorage')){//MyshopCookie
    $this->addHook('plxMyShopPanierCoordsMilieu', 'inlineHtml');
    $this->addHook('plxMyShopPanierFin', 'inlineJs');
@@ -87,7 +87,26 @@ class plxMyShop extends plxPlugin {
   }
  }
 
- public function ThemeEndBody() {
+ public function plxMyShopShowMiniPanier(){
+  //var_dump($this->plxMotor->get);exit;
+  $class = $this->plxMotor->get=='boutique/panier'?'active':'noactive';
+?>  
+  <h3<?php if ($class=="active") echo' class="red"'; ?>>
+   <span><img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png" style="float:left;"></span>&nbsp;<?php $this->lang('L_PUBLIC_BASKET'); ?></h3>
+<?php 
+if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0  && !empty($_SESSION["plxMyShop"]["prods"])){
+   echo '<ul class="cat-list unstyled-list"><li><ul>'.PHP_EOL;
+   foreach($_SESSION["plxMyShop"]["prods"] as $k => $v){
+    echo '<li>'.$this->aProds[$k]['name'].'<sup><span class="badge">'.$v.'</span></sup></li>'.PHP_EOL;
+   }
+   echo '</ul></li></ul>
+   <p>'.($class!="active"?'<a class="button blue" href="'.$this->plxMotor->urlRewrite('?boutique/panier#panier').'" title="'.$this->getLang('L_PUBLIC_BASKET_MINI_TITLE').'">'.$this->getLang('L_PUBLIC_BASKET_MINI').'</a>':'').'</p>'.PHP_EOL;
+  }else{
+   echo '<ul class="lastart-list unstyled-list"><li><em>'.$this->getLang('L_PUBLIC_NOPRODUCT').'</em></li></ul>';
+  }
+ }
+
+ public function ThemeEndBody(){
   echo '<?php if($plxMotor->mode == "product" || strstr($plxMotor->template,"boutique")){ ?>';//javascript de bascule des boutons produits
 ?>
 <script type="text/javascript">

@@ -239,6 +239,8 @@ $LANG = array(
 'L_PUBLIC_ADD_BASKET'               => 'Add to basket',
 'L_PUBLIC_MOD_BASKET'               => 'Modify basket',
 'L_PUBLIC_DEL_BASKET'               => 'Remove from basket',
+'L_PUBLIC_BASKET_MINI_TITLE'        => 'Pass the command',
+'L_PUBLIC_BASKET_MINI'              => 'Command !',
 'L_PUBLIC_TAX'                      => 'Tax included',
 
 'L_COMMANDE_LIBELLE_DEFAUT'         => 'I have read and accept the General Sales Terms and Conditions',

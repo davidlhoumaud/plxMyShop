@@ -222,7 +222,7 @@ $LANG = array(
 'L_PUBLIC_BASKET'                   => 'Votre panier',
 'L_PUBLIC_BASKET_NIL'               => '0.00',
 'L_PUBLIC_TOTAL_BASKET'             => 'Total',
-'L_PUBLIC_NOPRODUCT'                => 'Aucun produit pour le moment.',
+'L_PUBLIC_NOPRODUCT'                => 'Votre panier est vide.',
 'L_PUBLIC_MANDATORY_FIELD'          => '* = champs obligatoire',
 'L_PUBLIC_FIRSTNAME'                => 'Prénom',
 'L_PUBLIC_LASTNAME'                 => 'Nom',
@@ -239,12 +239,14 @@ $LANG = array(
 'L_PUBLIC_ADD_BASKET'               => 'Ajouter au panier',
 'L_PUBLIC_MOD_BASKET'               => 'Modifier le panier',
 'L_PUBLIC_DEL_BASKET'               => 'Retirer du panier',
+'L_PUBLIC_BASKET_MINI_TITLE'        => "Passer la commande",
+'L_PUBLIC_BASKET_MINI'              => "Commander!",
 'L_PUBLIC_TAX'                      => 'T.T.C.',
 
-"L_COMMANDE_LIBELLE_DEFAUT"         => "J'ai lu et j'accepte les conditions générales de vente.",
-"L_CONFIG_VALIDATION_COMMANDE"      => "Validation de la commande",
-"CONFIG_LIBELLE_CGV"                => "Libellé de la demande de validation des C.G.V. (l'URL doit être indiqué pour être utilisé)",
-"CONFIG_URL_CGV"                    => "URL des C.G.V.",
+'L_COMMANDE_LIBELLE_DEFAUT'         => "J'ai lu et j'accepte les conditions générales de vente.",
+'L_CONFIG_VALIDATION_COMMANDE'      => "Validation de la commande",
+'CONFIG_LIBELLE_CGV'                => "Libellé de la demande de validation des C.G.V. (l'URL doit être indiqué pour être utilisé)",
+'CONFIG_URL_CGV'                    => "URL des C.G.V.",
 
 #panier.js
 'L_TOTAL_BASKET'                    => 'Total',
