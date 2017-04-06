@@ -6,15 +6,14 @@ version :
 $plxPlugin = $d["plxPlugin"];
 $plxPlugin->traitementPanier();
 $afficheMessage = FALSE;
-if ( isset($_SESSION["plxMyShop"]['msgCommand']) 
- && !empty($_SESSION["plxMyShop"]['msgCommand']) 
- && $_SESSION["plxMyShop"]['msgCommand']!=""
+if ( isset($_SESSION["plxMyShop"]['msgCommand'])
+ && !empty($_SESSION["plxMyShop"]['msgCommand'])
 ){
  $afficheMessage = TRUE;
  $message = $_SESSION["plxMyShop"]['msgCommand'];
  unset($_SESSION["plxMyShop"]['msgCommand']);
 }
-$cssCart=$this->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
+$cssCart=$plxPlugin->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
 # Hook Plugins
 eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
 ?>
@@ -27,13 +26,13 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
 <div align="center" class="panierbloc">
  <div align="center" id="listproducts">
   <section align="center" class="productsect">
-   <header><?php 
+   <header><?php
      $plxPlugin->lang('L_PUBLIC_BASKET');
     if ($afficheMessage) {
      echo '<br />'.$message;
-    } 
+    }
    ?></header>
-   <div id="shoppingCart" >
+   <div id="shoppingCart">
 <?php
      $sessioncart="";
      $totalpricettc=0;
@@ -141,7 +140,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
   </section>
  </div>
 </div>
-<div id="msgUpDateCart" class="alert">&darr; <?php $plxPlugin->lang('L_PUBLIC_MSG_BASKET_UP'); ?> &darr;</div>
+
 <script type="text/JavaScript">
 <?php
  if ($nprod > 0 ) echo "var error=true;\n";
@@ -159,7 +158,6 @@ var btnCart=document.getElementById('btnCart');
 var msgCart=document.getElementById('msgCart');
 var labelMsgCart=document.getElementById('labelMsgCart');
 var PRODS=document.getElementById('prodsCart');
-var msgUpDateCart=document.getElementById('msgUpDateCart');
 
 var idSuite=document.getElementById('idsuite');
 var numCart=document.getElementById('numcart');

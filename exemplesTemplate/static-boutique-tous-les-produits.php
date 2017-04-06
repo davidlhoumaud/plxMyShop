@@ -37,7 +37,6 @@
       var L_DEL = '<?php echo $plxMyShop->getlang('L_DEL'); ?>';
       var L_TOTAL = '<?php echo $plxMyShop->getlang('L_TOTAL_BASKET'); ?>';
       </script>
-      <div id="msgUpDateCart"><?php $plxMyShop->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
 <?php
      foreach ($plxMyShop->aProds as $kRubrique => $vRubrique) {
       if ( $vRubrique['menu'] === 'non'
