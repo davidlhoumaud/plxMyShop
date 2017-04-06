@@ -2,11 +2,14 @@
 # Control du token du formulaire
 plxToken::validateFormToken($_POST);
 
-if(defined('PLX_MYMULTILINGUE')) {
- $array =  explode(',', PLX_MYMULTILINGUE);
- $aLangs = array_intersect($array, array('fr', 'en', 'es'));
-} else {
- $aLangs = array($plxPlugin->default_lang);
+# Liste des langues disponibles et prises en charge par le plugin
+$aLangs = array($plxAdmin->aConf['default_lang']);
+
+# Si le plugin plxMyMultiLingue est installé on filtre sur les langues utilisées
+# On garde par défaut le fr si aucune langue sélectionnée dans plxMyMultiLingue
+if(defined('PLX_MYMULTILINGUE')){
+ $plxMML = PLX_MYMULTILINGUE; //fix old php (-5.6) http://stackoverflow.com/a/26470982 : Parse error: syntax error, unexpected '[' in plxMyShop/config.php on line 12 (old php unsupport constant array ?) origin PLX_MYMULTILINGUE['langs']
+ $aLangs = empty($plxMM['langs']) ? array() : explode(',', $plxMM['langs']); // origin ::: empty(PLX_MYMULTILINGUE['langs']) ? array() : explode(',', PLX_MYMULTILINGUE['langs']);
 }
 
 $tabAffPanier = array(
@@ -21,7 +24,7 @@ $tabPosDevise = array(
 );
 
 $var = array();
-if(!empty($_POST)) {
+if(!empty($_POST)){
  //socolissimo reco
  $plxPlugin->setParam('shipping_colissimo', isset($_POST['shipping_colissimo'])?'1':'0', 'numeric');
  $plxPlugin->setParam('acurecept', $_POST['acurecept'], 'string');

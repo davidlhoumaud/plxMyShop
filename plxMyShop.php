@@ -1,9 +1,11 @@
 <?php
 /**
  * Plugin plxMyShop
+ * Compatible urlRewrite & Multilingue
  * @author David L
  **/
 class plxMyShop extends plxPlugin {
+
  public $aProds = array(); # Tableau de tous les produits
  public $donneesModeles = array();
  public $plxMotor;
@@ -12,6 +14,12 @@ class plxMyShop extends plxPlugin {
  public $shortcode = "boutonPanier";
 
  public function __construct($default_lang){
+
+  # gestion du multilingue plxMyMultiLingue
+  if(preg_match('/([a-z]{2})\/(.*)/i', plxUtils::getGets(), $capture)) {
+   $this->lang = $capture[1].'/';
+  }
+
   # appel du constructeur de la classe plxPlugin (obligatoire)
   parent::__construct($default_lang);
   # Accès au menu admin réservé au profil administrateur et gestionnaire
@@ -330,7 +338,7 @@ class plxMyShop extends plxPlugin {
     $tabCodes[] = "[{$this->shortcode} $codeProduit]";
     ob_start();
     $this->donneesModeles["k"] = $codeProduit;
-    $this->modele("espacePublic/boucle/boutonPanier");
+    $this->modele("espacePublic/boucle/produitRubrique");
     $tabRemplacements[] = ob_get_clean();
    }
    $output = str_replace($tabCodes, $tabRemplacements, $output);
@@ -389,7 +397,7 @@ class plxMyShop extends plxPlugin {
   $nomPlugin = __CLASS__;
 
   // contrôleur des pages du plugin
-  if ("boutique/panier" === $this->plxMotor->get){
+  if (preg_match("/boutique\/panier/",$this->plxMotor->get)){
    $classeVue = "panier";
 
    require_once "classes/vues/$classeVue.php";
@@ -752,14 +760,14 @@ class plxMyShop extends plxPlugin {
   $productId = $this->productId();
   $productIdFill = str_pad($productId,3,'0',STR_PAD_LEFT);
   if(!empty($productId) AND isset($this->aProds[ $productIdFill ]))
-   echo $this->urlRewrite('index.php?product'.$productId.'/'.$this->aProds[ $productIdFill ]['url']);
+   echo $this->urlRewrite('?'.(defined('PLX_MYMULTILINGUE')&&isset($_SESSION['lang'])?$_SESSION['lang'].'/':'').'product'.$productId.'/'.$this->aProds[ $productIdFill ]['url']);
  }
 
  public function productRUrl($key){
   # Recupération ID URL
   $productId = intval($key);
   if(!empty($productId) AND isset($this->aProds[$key]))
-   return plxShow::getInstance()->plxMotor->urlRewrite('index.php?product'.$productId.'/'.$this->aProds[$key]['url']);
+   return plxShow::getInstance()->plxMotor->urlRewrite('?'.(defined('PLX_MYMULTILINGUE')&&isset($_SESSION['lang'])?$_SESSION['lang'].'/':'').'product'.$productId.'/'.$this->aProds[$key]['url']);
  }
 
  /**
@@ -946,7 +954,7 @@ class plxMyShop extends plxPlugin {
    );
 
    $classeCss = $panierSelectionne ? "active" : "noactive";
-   $lienPanier = $this->plxMotor->urlRewrite("index.php?boutique/panier");
+   $lienPanier = $this->plxMotor->urlRewrite('?'.(defined('PLX_MYMULTILINGUE')&&isset($_SESSION['lang'])?$_SESSION['lang'].'/':'').'boutique/panier');
 
    require_once "classes/vues/panier.php";
    $vuePanier = new panier();
@@ -983,7 +991,7 @@ class plxMyShop extends plxPlugin {
      );
 
      $classeCss = $categorieSelectionnee ? "active" : "noactive";
-     $lien = $this->plxMotor->urlRewrite("index.php?product$k/{$v["url"]}");
+     $lien = $this->plxMotor->urlRewrite('?'.(defined('PLX_MYMULTILINGUE')&&isset($_SESSION['lang'])?$_SESSION['lang'].'/':'')."product$k/{$v["url"]}");
 
      echo "<?php";
      echo " array_splice(\$menus, $positionMenu, 0";

@@ -67,7 +67,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixUnitaire);?></td>
           <td><input type="number" name="nb[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($nb);?>" /></td>
           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixttc);?></td>
-          <td><input type="submit" name="retirerProduit[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_DEL'));?>" /></td>
+          <td><input type="submit" class="red" name="retirerProduit[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_DEL'));?>" /></td>
          </tr>
 <?php   } // FIN foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) ?>
         </table>
@@ -136,13 +136,13 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
       <a href="<?php echo htmlspecialchars($plxPlugin->getParam("urlCGV"));?>"><?php echo htmlspecialchars($plxPlugin->getParam("libelleCGV"));?></a>
      </label>
 <?php } ?>
-    <input type="submit" id="btnCart" name="validerCommande" value="<?php $plxPlugin->lang('L_PUBLIC_VALIDATE_ORDER'); ?>" /><br />
+    <input type="submit" class="green" name="validerCommande" id="btnCart" value="<?php $plxPlugin->lang('L_PUBLIC_VALIDATE_ORDER'); ?>" /><br />
    </form>
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsFin')) # Hook Plugins ?>
   </section>
  </div>
 </div>
-<div id="msgAddCart">&darr; <?php $plxPlugin->lang('L_PUBLIC_MSG_BASKET_UP'); ?> &darr;</div>
+<div id="msgAddCart" class="alert">&darr; <?php $plxPlugin->lang('L_PUBLIC_MSG_BASKET_UP'); ?> &darr;</div>
 <script type="text/JavaScript">
 <?php
  if ($nprod > 0 ) echo "var error=true;\n";
