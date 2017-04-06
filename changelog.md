@@ -1,5 +1,18 @@
 ## PlxMyShop Change Log
 
+##v0.13 06/04/2017##
+* [+] Ajout du hook plxMyShopShowMiniPanier basé sur l'idée de WorldBot alias [ppmt](http://forum.pluxml.org/viewtopic.php?pid=53411#p53411)
+* [+] Comptatible Multilingue 0.8 & pluxml 5.6 (worldBot)
+* [+] Bouton produit : Ajouter, modifier et supprimer du panier (worldBot & swd) 
+* [+] Panier : Retire Rouge, Valider Vert (worldBot)
+* [+] Shortcode : Affiche au complet le produit (worldBot)
+* [+] Lien Panier : Classe css product_priceimage -> basket_link_image
+* [+] Produit : bouton déplacé sous l'image d'accroche
+* [+] Templates d'exemple mis à jour et fonctionnel
+* [+] Rapatriement de jquery (intégré en interne : public & admin)
+* [+] Gestion des message 'basket is up to date' inside plugin & simplifié
+* [-] Suppression du modele "espacePublic/ajoutProduit"
+
 ##v0.12 04/04/2017##
 * [+] Panier : Style des message retour et largeur du tableau d'article mis a 100%
 * [+] Panier localStorage : Si le client change ses coordonnées le bouton re-bascule sur "enregister"
@@ -61,11 +74,12 @@ v0.11a1 : Algo boucle des frais de ports config.php
 From develop branch of mathieu269 : [commit](https://github.com/davidlhoumaud/plxMyShop/commit/3f9df5b8656d989bec9827a9c0f2c477cf10758b)
 
 ##notes, todo & suggests 4 the future##
+* affichage du shortcode dans les article
+* $d = $this->donneesModeles; ($d == données modele)
 * tester paypal
 * Utiliser la gallerie de Media native de PluXml?
 * Faire évoluer les formulaires d'édition de produit (compatible PluCss) et de commande (panier coté public)
-* Que le fait de cliquer sur "Ajouter au panier" additionne a ceux déjà présent dans le panier au lieu de remplacer le compte par le nouveau nombre (ou changer l'intitulé du champ).
-* intégrer en interne? et/ou harmoniser jquery(version) front(cloudflare.com) & admin + jquery.dataTables & cdn
+* intégrer en interne? et/ou harmoniser jquery.dataTables & cdn
 * "voir" une commande en mode smoothframe (avec jquery?)
 * Vérifier comment il fonctionne sur pluxml <=5.4? (classes css pour la sidebar?)
 * Verifier la récriture d'url (activé et ou avec MyBetterUrls)
