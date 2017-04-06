@@ -9,7 +9,7 @@ $plxPlugin = $d["plxPlugin"];
  <header>
   <div class="basket_link_image">
    <a href="<?php echo htmlspecialchars($d["lienPanier"]);?>" id="notiShoppingCart">
-   <span id="notiNumShoppingCart"></span><img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;<?php $this->lang('L_PUBLIC_BASKET'); ?></a>
+   <span id="notiNumShoppingCart"></span><img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;<?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?></a>
   </div>
   <div class="cat_image">
    <?php echo ($plxPlugin->aProds[$plxPlugin->productNumber()]["image"]!="") ? '<img class="product_image_cat" src="'.$plxPlugin->productImage().'">' : '';?>
@@ -21,7 +21,7 @@ $plxPlugin = $d["plxPlugin"];
  <?php
   if (isset($plxPlugin->aProds)) {
    foreach($plxPlugin->aProds as $k => $v) {
-    if ( preg_match('#'.$plxPlugin->productNumber().'#', $v['group']) 
+    if ( preg_match('~'.$plxPlugin->productNumber().'~', $v['group']) 
      && $v['active']==1 
      && $v['readable']==1
     ) {
