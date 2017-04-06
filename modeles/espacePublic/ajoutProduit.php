@@ -15,12 +15,12 @@ if ( isset($_SESSION["plxMyShop"]["messageProduitAjouter"])
  unset($_SESSION["plxMyShop"]["messageProduitAjouter"]);
 }
 ?>
-<div id="msgAddCart"><?php $this->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
+<div id="msgUpDateCart"><?php $this->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
 <script type="text/JavaScript">
- var msgAddCart = document.getElementById("msgAddCart");
+ var msgUpDateCart = document.getElementById("msgUpDateCart");
  <?php if ($messageProduitAjouter) {?>
-  msgAddCart.style.display = "block";
-  setTimeout(function(){document.getElementById("msgAddCart").style.display = "none"; }, 3000);
+  msgUpDateCart.style.display = "block";
+  setTimeout(function(){document.getElementById("msgUpDateCart").style.display = "none"; }, 3000);
  <?php }?>
  var shoppingCart = null;
 </script>

@@ -142,7 +142,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
   </section>
  </div>
 </div>
-<div id="msgAddCart" class="alert">&darr; <?php $plxPlugin->lang('L_PUBLIC_MSG_BASKET_UP'); ?> &darr;</div>
+<div id="msgUpDateCart" class="alert">&darr; <?php $plxPlugin->lang('L_PUBLIC_MSG_BASKET_UP'); ?> &darr;</div>
 <script type="text/JavaScript">
 <?php
  if ($nprod > 0 ) echo "var error=true;\n";
@@ -160,7 +160,7 @@ var btnCart=document.getElementById('btnCart');
 var msgCart=document.getElementById('msgCart');
 var labelMsgCart=document.getElementById('labelMsgCart');
 var PRODS=document.getElementById('prodsCart');
-var msgAddCart=document.getElementById('msgAddCart');
+var msgUpDateCart=document.getElementById('msgUpDateCart');
 
 var idSuite=document.getElementById('idsuite');
 var numCart=document.getElementById('numcart');

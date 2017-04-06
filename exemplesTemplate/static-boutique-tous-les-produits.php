@@ -51,10 +51,10 @@
 						
 						</script>
 						
-						<div id="msgAddCart"><?php $plxMyShop->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
+						<div id="msgUpDateCart"><?php $plxMyShop->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
 
 						<script type="text/JavaScript">
-							var msgAddCart = document.getElementById("msgAddCart");
+							var msgUpDateCart = document.getElementById("msgUpDateCart");
 							var shoppingCart = null;
 						</script>
 
