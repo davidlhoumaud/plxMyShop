@@ -12,6 +12,7 @@ class plxMyShop extends plxPlugin {
  public $cheminImages;
  public $idProduit;
  public $shortcode = "boutonPanier";
+ public $msgProdUpDate = FALSE;
 
  public function __construct($default_lang){
 
@@ -87,9 +88,8 @@ class plxMyShop extends plxPlugin {
   }
  }
 
-
  public function ThemeEndBody() {//javascript de bascule des boutons produits
-  echo '<?php if($plxMotor->mode == "product"){ ?>';
+  echo '<?php if($plxMotor->mode == "product" || strstr($plxMotor->template,"boutique")){ ?>';
 ?>
 <script type="text/javascript">
  function chngNbProd(k,sbmt){
@@ -108,6 +108,19 @@ class plxMyShop extends plxPlugin {
    }
   }
  }
+<?php 
+if (isset($_SESSION["plxMyShop"]["msgProdUpDate"]) && $_SESSION["plxMyShop"]["msgProdUpDate"]){
+ $this->msgProdUpDate = TRUE;
+ unset($_SESSION["plxMyShop"]["msgProdUpDate"]);
+?>
+</script>
+<div id="msgUpDateCart"><?php $this->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
+<script type="text/javascript">
+ var msgUpDateCart = document.getElementById("msgUpDateCart");
+ msgUpDateCart.style.display = "block";
+ setTimeout(function(){document.getElementById("msgUpDateCart").style.display = "none"; }, 3000);
+ var shoppingCart = null;
+<?php } ?>
 </script>
  <?php
   echo '<?php } ?>';
@@ -344,12 +357,12 @@ class plxMyShop extends plxPlugin {
    $output = str_replace($tabCodes, $tabRemplacements, $output);
    ob_start();
 ?>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/jquery.min.js?pxlMS"></script>
     <script type="text/javascript">
     jQuery.noConflict();
     </script>
-    <script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/libajax.js'></script>
-    <script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js'></script>
+    <script type="text/javascript" src="<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/libajax.js"></script>
+    <script type="text/javascript" src="<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js"></script>
 <?php 
      if (in_array(
        $this->getParam("affPanier")
@@ -781,7 +794,7 @@ class plxMyShop extends plxPlugin {
    preg_replace(
     "/'/"
     , '&apos;'
-    , $this->aProds[ $this->productNumber()]['name']
+    , $this->aProds[$this->productNumber()]['name']
    )
   );
  }
