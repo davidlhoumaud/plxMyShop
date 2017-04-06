@@ -28,11 +28,10 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
  <div align="center" id="listproducts">
   <section align="center" class="productsect">
    <header><?php 
+     $plxPlugin->lang('L_PUBLIC_BASKET');
     if ($afficheMessage) {
-     echo $message;
-    } else {
-    $plxPlugin->lang('L_PUBLIC_BASKET');
-    }
+     echo '<br />'.$message;
+    } 
    ?></header>
    <div id="shoppingCart" >
 <?php
