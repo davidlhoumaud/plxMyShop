@@ -22,8 +22,17 @@ if (is_array($plxPlugin->productGroupTitle())) {
 
 <section class="product_content">
  <header>
-  <div class="product_priceimage">
-   <?php echo ($produit["image"]!=""?'<img class="product_image" src="'.$plxPlugin->productImage().'">':''); ?>
+  <div class="basket_link_image">
+   <a href="<?php echo htmlspecialchars($d["lienPanier"]);?>" id="notiShoppingCart">
+    <span id="notiNumShoppingCart"></span>
+    <img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;<?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?></a>
+  </div>
+  <div class="image_product">
+   <?php echo ($plxPlugin->aProds[$plxPlugin->productNumber()]["image"]!="") ? '<img class="product_image" src="'.$plxPlugin->productImage().'">' : '';?>
+<?php
+  $plxPlugin->donneesModeles["k"] = $plxPlugin->productNumber();
+  $plxPlugin->modele("espacePublic/boucle/boutonPanier");
+?>
   </div>
 <?php if ($produit["pricettc"] > 0) { ?>
    <span class="product_pricettc"><?php echo $plxPlugin->pos_devise($plxPlugin->productPriceTTC());?></span>
@@ -35,8 +44,5 @@ if (is_array($plxPlugin->productGroupTitle())) {
  <article>
   <?php $plxPlugin->plxShowProductContent(); ?>
  </article>
-<?php
-  $plxPlugin->donneesModeles["k"] = $plxPlugin->productNumber();
-  $plxPlugin->modele("espacePublic/boucle/boutonPanier");
-?>
+
 </section>

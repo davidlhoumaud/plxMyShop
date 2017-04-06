@@ -12,9 +12,15 @@
     height:auto;
     
 }
-.product_priceimage {
+.image_product {
     width:25%;
     float:right;
+}
+.image_product > .product_image {
+    width:100%;
+}
+.image_product form {
+    text-align:center;
 }
 .cat_image {
     width:100%;
@@ -28,6 +34,9 @@
 
 }
 
+.basket_link_image {
+    text-align:right;
+}
 #notiShoppingCart{
     
 }
