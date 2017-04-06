@@ -25,8 +25,8 @@ if (isset($_SESSION["plxMyShop"]["prods"][$d["k"]])){
 
 $nbProdtype = (count($d["pileModeles"]) === 1)?'hidden':'number'; //dansShortcode = hidden
 ?>
-<form method="POST" class="formulaireAjoutProduit" id="FormAddProd<?php echo $d["k"]; ?>" onsubmit="chngNbProd('<?php echo $d["k"]; ?>',true);">
+<form method="POST" class="formulaireAjoutProduit" id="FormAddProd<?php echo $d["k"]; ?>" onsubmit="chngNbProd('<?php echo $d["k"]; ?>',true);" />
  <input type="hidden" name="idP" value="<?php echo htmlspecialchars($d["k"]);?>">
- <input type="<?php echo $nbProdtype; ?>" name="nb" value="<?php echo $prodsPnr; ?>" min="<?php echo $minPnr; ?>" id="nbProd<?php echo $d["k"]; ?>" onchange="chngNbProd('<?php echo $d["k"]; ?>',false);" data-o="<?php echo $prodsPnr; ?>">
- <input class="<?php echo $classPnrBtn; ?>" type="submit" id="addProd<?php echo $d["k"]; ?>" name="ajouterProduit" value="<?php echo $txtPnrBtn; ?>">
+ <input type="<?php echo $nbProdtype; ?>" name="nb" value="<?php echo $prodsPnr; ?>" min="<?php echo $minPnr; ?>" id="nbProd<?php echo $d["k"]; ?>" onchange="chngNbProd('<?php echo $d["k"]; ?>',false);" data-o="<?php echo $prodsPnr; ?>" />
+ <input class="<?php echo $classPnrBtn; ?>" type="submit" id="addProd<?php echo $d["k"]; ?>" name="ajouterProduit" value="<?php echo $txtPnrBtn; ?>" />
 </form>
