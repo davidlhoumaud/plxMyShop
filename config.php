@@ -8,7 +8,7 @@ $aLangs = array($plxAdmin->aConf['default_lang']);
 # Si le plugin plxMyMultiLingue est installé on filtre sur les langues utilisées
 # On garde par défaut le fr si aucune langue sélectionnée dans plxMyMultiLingue
 if(defined('PLX_MYMULTILINGUE')){
- $plxMML = PLX_MYMULTILINGUE; //fix old php (-5.6) http://stackoverflow.com/a/26470982 : Parse error: syntax error, unexpected '[' in plxMyShop/config.php on line 12 (old php unsupport constant array ?) origin PLX_MYMULTILINGUE['langs']
+ $plxMML = is_array(PLX_MYMULTILINGUE)?PLX_MYMULTILINGUE:unserialize(PLX_MYMULTILINGUE); //fix old php (-5.6) http://stackoverflow.com/a/26470982 : Parse error: syntax error, unexpected '[' in plxMyShop/config.php on line 12 (old php unsupport constant array ?) voir : http://forum.pluxml.org/viewtopic.php?pid=53503#p53503 - code original : PLX_MYMULTILINGUE['langs']
  $aLangs = empty($plxMM['langs']) ? array() : explode(',', $plxMM['langs']); // origin ::: empty(PLX_MYMULTILINGUE['langs']) ? array() : explode(',', PLX_MYMULTILINGUE['langs']);
 }
 
@@ -37,7 +37,7 @@ for($i=1;$i<=11;$i++){
  $plxPlugin->setParam('shipping_ups', 0, 'numeric');
  $plxPlugin->setParam('shipping_tnt', 0, 'numeric');
  $plxPlugin->setParam('payment_cheque', isset($_POST['payment_cheque'])?'1':'0', 'numeric');
- $plxPlugin->setParam('payment_cash', isset($_POST['payment_cash'])?'1':'0', 'numeric'); 
+ $plxPlugin->setParam('payment_cash', isset($_POST['payment_cash'])?'1':'0', 'numeric');
  //paypal
  $plxPlugin->setParam('payment_paypal', isset($_POST['payment_paypal'])?'1':'0', 'numeric');
  $plxPlugin->setParam('payment_paypal_test', $_POST['payment_paypal_test'], 'numeric');
@@ -173,7 +173,7 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
 <form id="form_plxmyshop" action="parametres_plugin.php?p=plxMyShop" method="post">
 <?php echo plxToken::getTokenPostMethod() ?>
  <div>
-  <p class="in-action-bar"><input type="submit" name="submit" value="<?php $plxPlugin->lang('L_CONFIG_SUBMIT') ?>" /></p>
+  <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>"><input type="submit" name="submit" value="<?php $plxPlugin->lang('L_CONFIG_SUBMIT') ?>" /></p>
   <h2><?php $plxPlugin->lang('L_CONFIG_SHOP_INFO') ?></h2><br />
 
   <p class="field"><label for="id_shop_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_NAME') ?>&nbsp;:</label></p>
@@ -242,9 +242,9 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
      </td>
      <td>
       <label class="switch switch-left-right">
-       <input class="switch-input" id="id_payment_cheque" name="payment_cheque" type="checkbox" <?php echo ("0" === $var["payment_cheque"]) ? "" : " checked=\"checked\"";?> />
-       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
-       <span class="switch-handle"></span> 
+       <input class="switch-input" id="id_payment_cheque" name="payment_cheque" type="checkbox"<?php echo ("0" === $var["payment_cheque"]) ? "" : " checked=\"checked\"";?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
+       <span class="switch-handle"></span>
       </label>
      </td>
     </tr>
@@ -254,9 +254,9 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
      </td>
      <td>
       <label class="switch switch-left-right">
-       <input class="switch-input" id="id_payment_cash" name="payment_cash" type="checkbox" <?php echo ("0" === $var["payment_cash"]) ? "" : " checked=\"checked\"";?> />
-       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
-       <span class="switch-handle"></span> 
+       <input class="switch-input" id="id_payment_cash" name="payment_cash" type="checkbox"<?php echo ("0" === $var["payment_cash"]) ? "" : " checked=\"checked\"";?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
+       <span class="switch-handle"></span>
       </label>
      </td>
     </tr>
@@ -266,9 +266,9 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
      </td>
      <td>
       <label class="switch switch-left-right">
-       <input class="switch-input" id="id_payment_paypal" name="payment_paypal" type="checkbox" <?php echo (("0" === $var["payment_paypal"]) ? "" : " checked=\"checked\"").' onchange="if (this.checked) { document.getElementById(\'blockpaypal\').style.display=\'block\';}else{document.getElementById(\'blockpaypal\').style.display=\'none\';}"';?> />
-       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span> 
-       <span class="switch-handle"></span> 
+       <input class="switch-input" id="id_payment_paypal" name="payment_paypal" type="checkbox"<?php echo (("0" === $var["payment_paypal"]) ? "" : " checked=\"checked\"").' onchange="if (this.checked) { document.getElementById(\'blockpaypal\').style.display=\'block\';}else{document.getElementById(\'blockpaypal\').style.display=\'none\';}"';?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
+       <span class="switch-handle"></span>
       </label>
      </td>
     </tr>
@@ -393,6 +393,6 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
  </div>
 </form>
 </div>
-<p class="in-action-bar save-button">
+<p class="in-action-bar save-button plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
  <?php $plxPlugin->menuAdmin("configuration");?>
 </p>

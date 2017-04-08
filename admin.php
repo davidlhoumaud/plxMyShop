@@ -68,7 +68,7 @@ function checkBox(obj){
  var title = document.getElementById('pmsTitle').innerHTML;
  document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title;
 </script>
-<p class="in-action-bar"><?php $plxPlugin->menuAdmin($onglet);?></p>
+<p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>"><?php $plxPlugin->menuAdmin($onglet);?></p>
 
 <form action="plugin.php?p=plxMyShop<?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?"&mod=cat":""); ?>" method="post" id="form_products">
  <?php if (!isset($_GET['mod']) || (isset($_GET['mod']) && $_GET['mod']!='cmd')): ?>

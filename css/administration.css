@@ -13,6 +13,9 @@
 .return-link {/* produits */
  margin-top: 2.3rem;;
 }
+.return-link.plx5-6 {/* produits */ 
+ margin-top: 3.4rem;
+}
 #blocksocoreco{ /* Configuration des frais de port */
  text-align: center;
  border: 1px solid #333;
@@ -46,24 +49,23 @@
 }
 #block_select_image {
  box-shadow:0px 0px 5px #333;
- position:fixed;
- top:7rem;
- width:600px;
- height:400px;
+ position:absolute;
+ min-width:600px;
+ min-height:400px;
  overflow:auto;
  display:none;
  background-color:#dfdfdf;
- z-index:2;
+ width:80%;
+ height:80%;
 }
 .fermer-img{
- position:fixed;
- top:7rem;
  text-align:center;
  padding: 0 3px;
  border:1px solid #999;
  background-color:#dfdfdf;
  cursor:pointer;
  font-size: 2rem;
+ float: left;
 }
 .title-img-box{
  text-align:center;
@@ -217,7 +219,24 @@
 }
 
 
-/* ********************************************************************************************** */
+/* dataTable */
 table.dataTable {
  border: none;
+}
+/* surcharge plx 5.6 */
+.button{
+ padding: 0.3rem 0.7rem;
+}
+@media (max-width: 767px) {
+ .in-action-bar.plx5-6 {
+  margin-top: 4em;
+  z-index: 800;
+ }
+ .in-action-bar.plx5-6.multilingue {
+  margin-top: 6.5em;
+  z-index: 800;
+ }
+ .return-link.plx5-6.multilingue {
+  margin-top: 7.4rem;
+ }
 }
