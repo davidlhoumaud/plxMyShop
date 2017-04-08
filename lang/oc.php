@@ -4,7 +4,7 @@ $LANG = array(
 
 'L_PAGE_TITLE'                      => 'Creacion e modificacion dels produits',
 'L_ADMIN_MENU_TOOTIP'               => 'Gerir mone-comerci (produits, categorias e comandas)',
-
+'L_LANG_UNAVAILABLE'                => 'Langue non disponible : %s',
 'L_DEFAULT_NEW_PRODUCT_URL'         => 'nou-produit',
 'L_CONFIG_PRIX_BASE'                => 'Prètz del basa',
 'L_MENU_PRODUCTS_TITLE'             => 'Lista e modificacion dels produits',
@@ -22,6 +22,7 @@ $LANG = array(
 'L_EMAIL_CC'                        => 'Destinatari(s) en copia del corrièl ',
 'L_EMAIL_BCC'                       => 'Destinatari(s) en copia amagada del corrièl ',
 'L_EMAIL_SUBJECT'                   => 'Objecte del corrièl',
+'L_ERR_EMAIL'                       => 'Mercé de picar una adreça de corrièl valida',
 'L_DEFAULT_OBJECT'                  => 'Resumit de la comanda',
 'L_DEFAULT_CONFIRMATION_OBJECT'     => 'Confirmacion de la comanda',
 'L_TEMPLATE'                        => 'Modèl',

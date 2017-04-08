@@ -4,7 +4,7 @@ $LANG = array(
 
 'L_PAGE_TITLE'                      => 'Création et édition des produits',
 'L_ADMIN_MENU_TOOTIP'               => 'Gérer mon web-commerce (produits, catégories et commandes)', #Affichage des produits / catégories
-
+'L_LANG_UNAVAILABLE'                => 'Langue non disponible : %s',
 'L_DEFAULT_NEW_PRODUCT_URL'         => 'nouveau-produit',
 'L_CONFIG_PRIX_BASE'                => 'Prix de base',
 'L_MENU_PRODUCTS_TITLE'             => 'Liste et modification des produits',
@@ -22,6 +22,7 @@ $LANG = array(
 'L_EMAIL_CC'                        => 'Destinataire(s) en copie du courriel ',
 'L_EMAIL_BCC'                       => 'Destinataire(s) en copie cachée du courriel ',
 'L_EMAIL_SUBJECT'                   => 'Objet du courriel',
+'L_ERR_EMAIL'                       => 'Veuillez saisir une adresse email valide',
 'L_DEFAULT_OBJECT'                  => 'Récapitulatif de commande',
 'L_DEFAULT_CONFIRMATION_OBJECT'     => 'Confirmation de commande',
 'L_TEMPLATE'                        => 'Template',

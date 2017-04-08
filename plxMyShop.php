@@ -39,6 +39,7 @@ class plxMyShop extends plxPlugin {
   $this->addHook('plxShowStaticListEnd', 'plxShowStaticListEnd');
   $this->addHook('SitemapStatics', 'SitemapStatics');
   $this->addHook('AdminPrepend', 'AdminPrepend');
+  $this->addHook('AdminTopBottom', 'AdminTopBottom');
   $this->addHook('plxShowStaticContent', 'plxShowStaticContent');
   $this->addHook('ThemeEndBody', 'ThemeEndBody');
 
@@ -343,6 +344,27 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
   } else {
    $this->cheminImages = $this->plxMotor->aConf['medias'];
   }
+ }
+
+ /**
+  * Méthode qui affiche un message si l'adresse email du contact n'est pas renseignée ou si la langue est absente
+  *
+  * @return stdio
+  * @author Stephane F
+  **/
+ public function AdminTopBottom() {
+  echo '<?php
+  if($plxAdmin->plxPlugins->aPlugins["plxMyShop"]->getParam("email")=="") {
+   echo "<p class=\"warning\">Plugin MyShop<br />'.$this->getLang("L_ERR_EMAIL").'</p>";
+   plxMsg::Display();
+  }
+
+  $file = PLX_PLUGINS."plxMyShop/lang/".$plxAdmin->aConf["default_lang"].".php";
+  if(!file_exists($file)) {
+   echo "<p class=\"warning\">Plugin MyShop<br />".sprintf("'.$this->getLang('L_LANG_UNAVAILABLE').'", $file)."</p>";
+   plxMsg::Display();
+  }
+  ?>';
  }
 
  public function plxShowStaticContent(){

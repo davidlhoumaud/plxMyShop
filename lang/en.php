@@ -4,7 +4,7 @@ $LANG = array(
 
 'L_PAGE_TITLE'                      => 'Creation and edition of products',
 'L_ADMIN_MENU_TOOTIP'               => 'Administrate my web shop (products, categories and commands)',#List and modification of a traduire, corriger?
-
+'L_LANG_UNAVAILABLE'                => 'Language not available : %s',
 'L_DEFAULT_NEW_PRODUCT_URL'         => 'new-product',
 'L_CONFIG_PRIX_BASE'                => 'Base price',
 'L_MENU_PRODUCTS_TITLE'             => 'List and modification of products',
@@ -22,6 +22,7 @@ $LANG = array(
 'L_EMAIL_CC'                        => 'Mail\'s recipients(s) in copy ',
 'L_EMAIL_BCC'                       => 'Mail\'s recipient(s) in hidden copy ',
 'L_EMAIL_SUBJECT'                   => 'Subject of the mail',
+'L_ERR_EMAIL'                       => 'Please enter a valid e-mail',
 'L_DEFAULT_OBJECT'                  => 'Summary of the command',
 'L_DEFAULT_CONFIRMATION_OBJECT'     => 'Confirmation of the command',
 'L_TEMPLATE'                        => 'Template',
@@ -240,7 +241,7 @@ $LANG = array(
 'L_PUBLIC_MOD_BASKET'               => 'Modify basket',
 'L_PUBLIC_DEL_BASKET'               => 'Remove from basket',
 'L_PUBLIC_BASKET_MINI_TITLE'        => 'Pass the command',
-'L_PUBLIC_BASKET_MINI'              => 'Command !',
+'L_PUBLIC_BASKET_MINI'              => 'Place your order',
 'L_PUBLIC_TAX'                      => 'Tax included',
 
 'L_COMMANDE_LIBELLE_DEFAUT'         => 'I have read and accept the General Sales Terms and Conditions',
