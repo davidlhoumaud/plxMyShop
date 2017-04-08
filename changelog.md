@@ -1,5 +1,31 @@
 ## PlxMyShop Change Log
 
+##notes, todo & suggests 4 the future##
+* Pourquoi s'affiche "Cette page est actuellement en cours de rédaction" coté public dans une catégorie? (pour le panier c'est bon)
+* ajout d'une option pour afficher le lien du panier \_/
+* affichage du shortcode dans les article
+* $d = $this->donneesModeles; ($d == données modele)
+* tester paypal
+* Utiliser la gallerie de Media native de PluXml?
+* Faire évoluer les formulaires d'édition de produit (compatible PluCss) et de commande (panier coté public)
+* intégrer en interne? et/ou harmoniser jquery.dataTables & cdn
+* Vérifier comment il fonctionne sur pluxml <=5.4? (classes css pour la sidebar?) ::: v0.13 (tout semble ok)
+* Verifier la récriture d'url (activé et ou avec MyBetterUrls)
+* intégrer datatable.js pour la liste des produits et/ou des catégories de produits? (+comlexe)
+* "voir" une commande en mode smoothframe (avec jquery?)
+
+****
+* Si jamais configuré : petit BUG Config PAYPAL (JavaScript), le panneau est caché. Se régle en jouant avec le l'interupteur ou après la premiere config enregistrée tout rentre dans l'ordre ;)
+* Attention a l'utilisation de plxMultilingue : si vous le réglez pour avoir un dossier de media par langue (après avoir créé des produits avec image), il y perte de l'image du produit pour toute les langues! 
+** Solution de fortune: Placer une image avec le "même nom de fichier" dans chaque dossiers media/[lang] et elles s'afficheront (cela permet une image du produit par langue)
+
+
+##v0.13.1a 07/04/2017#
+* [+] Admin : Avertir l'utilisateur si le courriel d'envoi du plugin est non configuré ou si le fichier de langue est absent (inspiré de plxMyContact)
+* [+] Responsive : Meilleure adaptibilité des boutons et fes liens avec l'action-bar adaptative de PluXml 5.6 (rétrocompatible avec 5.4 & 5.5)
+* [+] Sélécteur d'image du produit retravaillé et en position absolue
+* [+] Fix : Espace superflu entre et dans les boutons du menu (apparait _ entre les boutons)
+
 ##v0.13 06/04/2017##
 * [+] Ajout du hook plxMyShopShowMiniPanier basé sur l'idée de WorldBot alias [Yannic](http://forum.pluxml.org/viewtopic.php?pid=53411#p53411)
 * [+] Compatible Multilingue 0.8 & pluxml 5.6 (worldBot)
@@ -73,18 +99,6 @@ v0.11a1 : Algo boucle des frais de ports config.php
 ##v0.9.9.0.dev  05/08/2016##
 From develop branch of mathieu269 : [commit](https://github.com/davidlhoumaud/plxMyShop/commit/3f9df5b8656d989bec9827a9c0f2c477cf10758b)
 
-##notes, todo & suggests 4 the future##
-* affichage du shortcode dans les article
-* $d = $this->donneesModeles; ($d == données modele)
-* tester paypal
-* Utiliser la gallerie de Media native de PluXml?
-* Faire évoluer les formulaires d'édition de produit (compatible PluCss) et de commande (panier coté public)
-* intégrer en interne? et/ou harmoniser jquery.dataTables & cdn
-* "voir" une commande en mode smoothframe (avec jquery?)
-* Vérifier comment il fonctionne sur pluxml <=5.4? (classes css pour la sidebar?)
-* Verifier la récriture d'url (activé et ou avec MyBetterUrls)
-* intégrer datatable.js pour la liste des produits et/ou des catégories de produits? (+comlexe)
-* "voir" une commande en mode smoothframe (avec jquery?)
 
 # Les Crochets (Hooks) du plugins 
       in plxMotorPreChauffageBegin() 
