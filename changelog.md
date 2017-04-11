@@ -19,12 +19,21 @@
 * Attention a l'utilisation de plxMultilingue : si vous le réglez pour avoir un dossier de media par langue (après avoir créé des produits avec image), il y perte de l'image du produit pour toute les langues! 
 ** Solution de fortune: Placer une image avec le "même nom de fichier" dans chaque dossiers media/[lang] et elles s'afficheront (cela permet une image du produit par langue)
 
+****
+* Attention Frais de port, si au dela de votre config ils deviennent zéro (bug)
+* 
+
+##v0.13.1b 11/04/2017#
+* Fix : Si utilisation shortcode (noJs bouton panier et message) : hook ThemeEndBody quant shortcode actif & clean
+* Fix : Afficher le poids d'un produits inférieur à 1 kg (yannic)
+* Fix : Cookie n'est pas toujours initialisé lors de la première session. hook plxMotorConstruct vers le hook Index (MyShopCookie) (yannic)
+* Fix : Balise de fermeture script (yannic)
 
 ##v0.13.1a 07/04/2017#
 * [+] Admin : Avertir l'utilisateur si le courriel d'envoi du plugin est non configuré ou si le fichier de langue est absent (inspiré de plxMyContact)
-* [+] Responsive : Meilleure adaptibilité des boutons et fes liens avec l'action-bar adaptative de PluXml 5.6 (rétrocompatible avec 5.4 & 5.5)
-* [+] Sélécteur d'image du produit retravaillé et en position absolue
-* [+] Fix : Espace superflu entre et dans les boutons du menu (apparait _ entre les boutons)
+* [+] Responsive : Meilleure adaptabilité des boutons et des liens avec l'action-bar adaptative de PluXml 5.6 (rétrocompatible avec 5.4 & 5.5)
+* [+] Sélecteur d'image du produit retravaillé et en position absolue
+* Fix : Espace superflu entre et dans les boutons du menu (apparaît _ entre les boutons)
 
 ##v0.13 06/04/2017##
 * [+] Ajout du hook plxMyShopShowMiniPanier basé sur l'idée de WorldBot alias [Yannic](http://forum.pluxml.org/viewtopic.php?pid=53411#p53411)
