@@ -12,6 +12,7 @@ class plxMyShop extends plxPlugin {
  public $cheminImages;
  public $idProduit;
  public $shortcode = "boutonPanier";
+ public $shortcodeactif = false;
 
  public function __construct($default_lang){
 
@@ -108,7 +109,8 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
  }
 
  public function ThemeEndBody(){
-  echo '<?php if($plxMotor->mode == "product" || strstr($plxMotor->template,"boutique")){ ?>';//javascript de bascule des boutons produits
+  echo '<?php if($plxMotor->mode == "product" || strstr($plxMotor->template,"boutique") || $plxMotor->plxPlugins->aPlugins["plxMyShop"]->shortcodeactif ){ ?>';
+//javascript de bascule des boutons produits
 ?>
 <script type="text/javascript">
  function chngNbProd(k,sbmt){
@@ -128,10 +130,11 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
   }
  }
 </script>
-<?php //Les messages
-  echo '<?php } ?>';
+<?php 
+  echo '<?php } ?>'; // fi if mode product || strstr template boutique || shrotcode
   if (isset($_SESSION["plxMyShop"]["msgProdUpDate"]) && $_SESSION["plxMyShop"]["msgProdUpDate"]){
    unset($_SESSION["plxMyShop"]["msgProdUpDate"]);
+//Les messages de MAJ panier
 ?>
 <div id="msgUpDateCart"><?php $this->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
 <script type="text/javascript">
@@ -140,9 +143,8 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
  setTimeout(function(){document.getElementById("msgUpDateCart").style.display = "none"; }, 3000);
  var shoppingCart = null;
 </script>
-<?php } ?>
- <?php
- }//ThemeEndBody end
+<?php } // fi Les messages de MAJ panier
+ }//end ThemeEndBody
 
  public function IndexEnd(){//MyshopCookie
 
@@ -380,6 +382,7 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
  public function traitementPageStatique($output){
   preg_match_all("!\\[{$this->shortcode} (.*)\\]!U", $output, $resultat);
   if (0 < count($resultat[1])){
+   $this->shortcodeactif = true;
    $resultat[1] = array_unique($resultat[1]);
    $tabCodes = array();
    $tabRemplacement = array();
@@ -395,37 +398,19 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
    }
    $output = str_replace($tabCodes, $tabRemplacements, $output);
    ob_start();
-?>
-    <script type="text/javascript" src="<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/jquery.min.js?pxlMS"></script>
-    <script type="text/javascript">
-    jQuery.noConflict();
-    </script>
-    <script type="text/javascript" src="<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/libajax.js"></script>
-    <script type="text/javascript" src="<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js"></script>
-<?php 
-     if (in_array(
-       $this->getParam("affPanier")
-       , array("basPage", "partout")
-      )
-     ){
-      $_SESSION["plxMyShop"]['msgCommand']="";
-      $this->validerCommande();
-      $this->modele("espacePublic/panier");
-     }
+
+   if (in_array(
+     $this->getParam("affPanier")
+     , array("basPage", "partout")
+    )
+   ){
+    $_SESSION["plxMyShop"]['msgCommand']="";
+    $this->validerCommande();
+    $this->modele("espacePublic/panier");
+   }
      //~ else {
       //~ $this->modele("espacePublic/ajoutProduit");
      //~ }
-?>
-    <script type="text/JavaScript">
-     var error = false;
-     var repertoireAjax = '<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
-     var devise = '<?php echo $this->getParam("devise");?>';
-     var pos_devise = '<?php echo $this->getParam("position_devise");?>';
-     var L_FOR = '<?php echo $this->getlang('L_FOR'); ?>';
-     var L_DELETE = '<?php echo $this->getlang('L_DEL'); ?>';
-     var L_TOTAL = '<?php echo $this->getlang('L_TOTAL_BASKET'); ?>';
-    </script>
-<?php
    $output .= ob_get_clean();
   }
   return $output;
