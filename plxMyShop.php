@@ -139,8 +139,8 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
  msgUpDateCart.style.display = "block";
  setTimeout(function(){document.getElementById("msgUpDateCart").style.display = "none"; }, 3000);
  var shoppingCart = null;
-<?php } ?>
 </script>
+<?php } ?>
  <?php
  }//ThemeEndBody end
 
