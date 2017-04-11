@@ -15,7 +15,7 @@ $v = $this->aProds[$d["k"]];
   <?php if ($v['pricettc'] > 0) {?>
    <span class="lproduct_pricettc"><?php echo $this->pos_devise($v['pricettc']);?></span>
   <?php }?>
-  <?php echo (int)$v['poidg']>0&&$this->getParam("shipping_colissimo")?'&nbsp;'.$this->lang('L_FOR').'<span class="product_poidg">'.$v['poidg'].'&nbsp;kg</span>':'';?>
+  <?php echo floatval($v['poidg'])>0.00&&$this->getParam("shipping_colissimo")?'&nbsp;'.$this->lang('L_FOR').'<span class="product_poidg">'.$v['poidg'].'&nbsp;kg</span>':'';?>
  </header>
  <?php $this->modele("espacePublic/boucle/boutonPanier"); ?>
 </div>
