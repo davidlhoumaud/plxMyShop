@@ -83,7 +83,7 @@ class plxMyShop extends plxPlugin {
    $this->addHook('plxMyShopPanierFin', 'inlineJs');
   }
   if($this->getParam('cookie')){//MyshopCookie
-   $this->addHook('plxMotorConstruct', 'plxMotorConstruct');
+   $this->addHook('Index', 'Index');
    $this->addHook('IndexEnd', 'IndexEnd');
   }
  }
@@ -176,7 +176,7 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
   }
   echo "<?php ".$string." ?>";
  }
- public function plxMotorConstruct(){//MyshopCookie
+ public function Index(){//MyshopCookie
   $string = '
   // MyShopCookie
   if(!empty($_COOKIE["plxMyShop"]) && !isset($_SESSION["IS_NOT_NEW"])) {
