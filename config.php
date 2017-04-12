@@ -7,11 +7,11 @@ $aLangs = array($plxAdmin->aConf['default_lang']);
 
 # Si le plugin plxMyMultiLingue est installé on filtre sur les langues utilisées
 # On garde par défaut le fr si aucune langue sélectionnée dans plxMyMultiLingue
-if(defined('PLX_MYMULTILINGUE')){
- $plxMML = is_array(PLX_MYMULTILINGUE)?PLX_MYMULTILINGUE:unserialize(PLX_MYMULTILINGUE); //fix old php (-5.6) http://stackoverflow.com/a/26470982 : Parse error: syntax error, unexpected '[' in plxMyShop/config.php on line 12 (old php unsupport constant array ?) voir : http://forum.pluxml.org/viewtopic.php?pid=53503#p53503 - code original : PLX_MYMULTILINGUE['langs']
- $aLangs = empty($plxMM['langs']) ? array() : explode(',', $plxMM['langs']); // origin ::: empty(PLX_MYMULTILINGUE['langs']) ? array() : explode(',', PLX_MYMULTILINGUE['langs']);
+if(defined('PLX_MYMULTILINGUE')) {// 0.8.1 see https://github.com/Pluxopolis/plxMyContact/commit/3e8224afd4a1e9435884219201908ffb056eb7f7
+	$langs = plxMyMultiLingue::_Langs();
+	$multiLangs = empty($langs) ? array() : explode(',', $langs);
+	$aLangs = $multiLangs;
 }
-
 $tabAffPanier = array(
  "basPage" => $plxPlugin->getlang('L_PANIER_POS_BOTTOM') ,
  "pageSeparee" => $plxPlugin->getlang('L_PANIER_POS_SEPARATE') ,
