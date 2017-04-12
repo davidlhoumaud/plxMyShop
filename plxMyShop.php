@@ -92,13 +92,13 @@ class plxMyShop extends plxPlugin {
  public function plxMyShopShowMiniPanier(){
   //var_dump($this->plxMotor->get);exit;
   $class = $this->plxMotor->get=='boutique/panier'?'active':'noactive';
-?>  
+?>
   <h3<?php if ($class=="active") echo' class="red"'; ?>>
-   <span><img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png" style="float:left;"></span>&nbsp;<?php $this->lang('L_PUBLIC_BASKET'); ?></h3>
-<?php 
-if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0  && !empty($_SESSION["plxMyShop"]["prods"])){
+   <span><img src="<?php echo PLX_PLUGINS.$this->plug['name']; ?>/icon.png" style="float:left;"></span>&nbsp;<?php $this->lang('L_PUBLIC_BASKET'); ?></h3>
+<?php
+if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['name']]["ncart"]>0  && !empty($_SESSION[$this->plug['name']]["prods"])){
    echo '<ul class="cat-list unstyled-list"><li><ul>'.PHP_EOL;
-   foreach($_SESSION["plxMyShop"]["prods"] as $k => $v){
+   foreach($_SESSION[$this->plug['name']]["prods"] as $k => $v){
     echo '<li>'.$this->aProds[$k]['name'].'<sup><span class="badge">'.$v.'</span></sup></li>'.PHP_EOL;
    }
    echo '</ul></li></ul>
@@ -109,7 +109,7 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
  }
 
  public function ThemeEndBody(){
-  echo '<?php if($plxMotor->mode == "product" || strstr($plxMotor->template,"boutique") || $plxMotor->plxPlugins->aPlugins["plxMyShop"]->shortcodeactif ){ ?>';
+  echo '<?php if($plxMotor->mode == "product" || strstr($plxMotor->template,"boutique") || $plxMotor->plxPlugins->aPlugins['.$this->plug['name'].']->shortcodeactif ){ ?>';
 //javascript de bascule des boutons produits
 ?>
 <script type="text/javascript">
@@ -130,10 +130,10 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
   }
  }
 </script>
-<?php 
+<?php
   echo '<?php } ?>'; // fi if mode product || strstr template boutique || shrotcode
-  if (isset($_SESSION["plxMyShop"]["msgProdUpDate"]) && $_SESSION["plxMyShop"]["msgProdUpDate"]){
-   unset($_SESSION["plxMyShop"]["msgProdUpDate"]);
+  if (isset($_SESSION[$this->plug['name']]["msgProdUpDate"]) && $_SESSION[$this->plug['name']]["msgProdUpDate"]){
+   unset($_SESSION[$this->plug['name']]["msgProdUpDate"]);
 //Les messages de MAJ panier
 ?>
 <div id="msgUpDateCart"><?php $this->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
@@ -150,7 +150,7 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
 
   $string = '
   // MyShopCookie';
-  if(isset($_SESSION["plxMyShop"]["prods"])){
+  if(isset($_SESSION[$this->plug['name']]["prods"])){
 
    // localhost pour test ou véritable domaine ?
    $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
@@ -159,21 +159,21 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
    $temps_du_cookie = 0;
 
    // Durée de vie du cookie = 2 mois si au moins un produit dans le panier
-   if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0)
+   if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['name']]["ncart"]>0)
     $temps_du_cookie = time() + 3600 * 24 * 30 * 2;
 
    $string .= '
-   if(isset($_SESSION["plxMyShop"])){
+   if(isset($_SESSION['.$this->plug['name'].'])){
    $cookie_path = "/";
    $cookie_domain = "'.$domain.'";
    $cookie_secure = 0;
    $cookie_expire = '.$temps_du_cookie.';
-   $cookie_value["prods"]=preg_replace("/[^0-9]/","",$_SESSION["plxMyShop"]["prods"]);
-   $cookie_value["ncart"]=intval($_SESSION["plxMyShop"]["ncart"]);
+   $cookie_value["prods"]=preg_replace("/[^0-9]/","",$_SESSION['.$this->plug['name'].']["prods"]);
+   $cookie_value["ncart"]=intval($_SESSION['.$this->plug['name'].']["ncart"]);
    if (version_compare(PHP_VERSION, "5.2.0", ">="))
-    setcookie("plxMyShop", json_encode($cookie_value), $cookie_expire, $cookie_path, $cookie_domain, $cookie_secure, true);
+    setcookie('.$this->plug['name'].', json_encode($cookie_value), $cookie_expire, $cookie_path, $cookie_domain, $cookie_secure, true);
    else
-    setcookie("plxMyShop", serialize($cookie_value), $cookie_expire, $cookie_path."; HttpOnly", $cookie_domain, $cookie_secure);
+    setcookie('.$this->plug['name'].', serialize($cookie_value), $cookie_expire, $cookie_path."; HttpOnly", $cookie_domain, $cookie_secure);
    }';
   }
   echo "<?php ".$string." ?>";
@@ -181,14 +181,15 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
  public function Index(){//MyshopCookie
   $string = '
   // MyShopCookie
-  if(!empty($_COOKIE["plxMyShop"]) && !isset($_SESSION["IS_NOT_NEW"])) {
+  if(!empty($_COOKIE['.$this->plug['name'].']) && !isset($_SESSION["IS_NOT_NEW"])) {
    if (version_compare(PHP_VERSION, "5.2.0", ">="))
-    $cookie_value = json_decode($_COOKIE["plxMyShop"],true);
+    $cookie_value = json_decode($_COOKIE['.$this->plug['name'].'],true);
    else
-    $cookie_value = unserialize($_COOKIE["plxMyShop"]);    
-   $_SESSION["plxMyShop"]["prods"] = preg_replace("/[^0-9]/","",$cookie_value["prods"]);
-   $_SESSION["plxMyShop"]["ncart"] = intval($cookie_value["ncart"]);
-  } $_SESSION["IS_NOT_NEW"]=true;';
+    $cookie_value = unserialize($_COOKIE['.$this->plug['name'].']);    
+   $_SESSION['.$this->plug['name'].']["prods"] = preg_replace("/[^0-9]/","",$cookie_value["prods"]);
+   $_SESSION['.$this->plug['name'].']["ncart"] = intval($cookie_value["ncart"]);
+  }
+  $_SESSION["IS_NOT_NEW"]=true;';
   echo "<?php ".$string." ?>";
  }
 // hook des boutons localStorage du formulaire pour les clients au milieu du Panier
@@ -356,7 +357,7 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
   **/
  public function AdminTopBottom() {
   echo '<?php
-  if($plxAdmin->plxPlugins->aPlugins["plxMyShop"]->getParam("email")=="") {
+  if($plxAdmin->plxPlugins->aPlugins["'.$this->plug['name'].'"]->getParam("email")=="") {
    echo "<p class=\"warning\">Plugin MyShop<br />'.$this->getLang("L_ERR_EMAIL").'</p>";
    plxMsg::Display();
   }
@@ -404,7 +405,7 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
      , array("basPage", "partout")
     )
    ){
-    $_SESSION["plxMyShop"]['msgCommand']="";
+    $_SESSION[$this->plug['name']]['msgCommand']="";
     $this->validerCommande();
     $this->modele("espacePublic/panier");
    }
@@ -1091,14 +1092,14 @@ if (isset($_SESSION["plxMyShop"]["ncart"]) && $_SESSION["plxMyShop"]["ncart"]>0 
   $totalpoidgshipping = 0;
   $productscart = array();
 
-  if( !isset($_SESSION["plxMyShop"]['prods'])
-   || (0 === count($_SESSION["plxMyShop"]['prods']))
+  if( !isset($_SESSION[$this->plug['name']]['prods'])
+   || (0 === count($_SESSION[$this->plug['name']]['prods']))
    || !isset($_POST["validerCommande"])
   ){
    return;
   }
 
-  foreach ($_SESSION["plxMyShop"]['prods'] as $idP => $nb){
+  foreach ($_SESSION[$this->plug['name']]['prods'] as $idP => $nb){
    $productscart[$idP] = array(
     'name' => $this->aProds[$idP]['name'],
     'pricettc' => $this->aProds[$idP]['pricettc'] * $nb,
@@ -1253,8 +1254,8 @@ $message
      fputs($monfichier, $commandeContent);
      fclose($monfichier);
      chmod($nf, 0644);
-     unset($_SESSION["plxMyShop"]['prods']);
-     unset($_SESSION["plxMyShop"]['ncart']);
+     unset($_SESSION[$this->plug['name']]['prods']);
+     unset($_SESSION[$this->plug['name']]['ncart']);
     }else{
      $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_EMAIL_ERROR1') ."</h5>";
     }
@@ -1293,8 +1294,8 @@ $message
    echo "<script type='text/javascript'>error=true;</script>";
   }
 
-  $_SESSION["plxMyShop"]['msgCommand'] = $msgCommand;
-  $_SESSION["plxMyShop"]['methodpayment'] = $_POST["methodpayment"];
+  $_SESSION[$this->plug['name']]['msgCommand'] = $msgCommand;
+  $_SESSION[$this->plug['name']]['methodpayment'] = $_POST["methodpayment"];
 
  } // FIN public function validerCommande(){
 
@@ -1363,27 +1364,27 @@ $message
  public function traitementAjoutPanier(){
   if (!isset($_POST["ajouterProduit"])) return;
   if (!isset($_SESSION)) session_start();
-  if (!isset($_SESSION["plxMyShop"]['prods'])) $_SESSION["plxMyShop"]['prods']= array();
-  if (!isset($_SESSION["plxMyShop"]['ncart'])) $_SESSION["plxMyShop"]['ncart']= 0;
+  if (!isset($_SESSION[$this->plug['name']]['prods'])) $_SESSION[$this->plug['name']]['prods']= array();
+  if (!isset($_SESSION[$this->plug['name']]['ncart'])) $_SESSION[$this->plug['name']]['ncart']= 0;
   $nombre = $_POST["nb"];
-  $_SESSION["plxMyShop"]['ncart'] += $nombre;
-  $_SESSION["plxMyShop"]['prods'][$_POST['idP']] = $nombre;
-  $_SESSION["plxMyShop"]["msgProdUpDate"] = TRUE;
+  $_SESSION[$this->plug['name']]['ncart'] += $nombre;
+  $_SESSION[$this->plug['name']]['prods'][$_POST['idP']] = $nombre;
+  $_SESSION[$this->plug['name']]["msgProdUpDate"] = TRUE;
   header("Location: {$_SERVER["REQUEST_URI"]}");
   exit();
  }
 
  public function traitementPanier(){
   if (!isset($_SESSION)) session_start();
-  if (!isset($_SESSION["plxMyShop"]['prods'])) $_SESSION["plxMyShop"]['prods'] = array();
-  if (!isset($_SESSION["plxMyShop"]['ncart'])) $_SESSION["plxMyShop"]['ncart'] = 0;
+  if (!isset($_SESSION[$this->plug['name']]['prods'])) $_SESSION[$this->plug['name']]['prods'] = array();
+  if (!isset($_SESSION[$this->plug['name']]['ncart'])) $_SESSION[$this->plug['name']]['ncart'] = 0;
   if (isset($_POST["retirerProduit"])){
    $cles = array_keys($_POST["retirerProduit"]);
    $idP = array_pop($cles);
-   if (isset($_SESSION["plxMyShop"]['prods'][$idP])){
-    $_SESSION["plxMyShop"]['ncart'] -= $_SESSION["plxMyShop"]['prods'][$idP];
-    unset($_SESSION["plxMyShop"]['prods'][$idP]);
-    $_SESSION["plxMyShop"]["msgProdUpDate"] = TRUE;
+   if (isset($_SESSION[$this->plug['name']]['prods'][$idP])){
+    $_SESSION[$this->plug['name']]['ncart'] -= $_SESSION[$this->plug['name']]['prods'][$idP];
+    unset($_SESSION[$this->plug['name']]['prods'][$idP]);
+    $_SESSION[$this->plug['name']]["msgProdUpDate"] = TRUE;
    }
    header("Location: {$_SERVER["REQUEST_URI"]}");
    exit();
@@ -1392,15 +1393,15 @@ $message
    foreach ($_POST["nb"] as $idP => $nb){
     $nb = floor($nb);
     $nb = max(0, $nb);
-    if (isset($_SESSION["plxMyShop"]['prods'][$idP])){
-     $_SESSION["plxMyShop"]['ncart'] -= $_SESSION["plxMyShop"]['prods'][$idP];
+    if (isset($_SESSION[$this->plug['name']]['prods'][$idP])){
+     $_SESSION[$this->plug['name']]['ncart'] -= $_SESSION[$this->plug['name']]['prods'][$idP];
      if (0 === $nb){
-      unset($_SESSION["plxMyShop"]['prods'][$idP]);
+      unset($_SESSION[$this->plug['name']]['prods'][$idP]);
      } else {
-      $_SESSION["plxMyShop"]['ncart'] += $nb;
-      $_SESSION["plxMyShop"]['prods'][$idP] = $nb;
+      $_SESSION[$this->plug['name']]['ncart'] += $nb;
+      $_SESSION[$this->plug['name']]['prods'][$idP] = $nb;
      }
-     $_SESSION["plxMyShop"]["msgProdUpDate"] = TRUE;
+     $_SESSION[$this->plug['name']]["msgProdUpDate"] = TRUE;
     }
    }
    header("Location: {$_SERVER["REQUEST_URI"]}");
