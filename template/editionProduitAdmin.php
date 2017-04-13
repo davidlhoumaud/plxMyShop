@@ -68,8 +68,9 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
 
 <script type='text/javascript' src='<?php echo PLX_PLUGINS;?>plxMyShop/js/libajax.js'></script>
 <p class="in-action-bar return-link plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
- <a href="plugin.php?p=plxMyShop<?php echo ($modProduit ? '' : '&mod=cat');?>">
-  <?php echo $plxPlugin->lang($modProduit ? 'L_PRODUCT_BACK_TO_PAGE' : 'L_CAT_BACK_TO_PAGE'); ?></a>
+ <a href="plugin.php?p=plxMyShop<?php echo ($modProduit ? '' : '&mod=cat');?>"><?php
+  echo $plxPlugin->lang($modProduit ? 'L_PRODUCT_BACK_TO_PAGE' : 'L_CAT_BACK_TO_PAGE');
+?></a>
 </p>
 
 <h3 id="pmsTitle" class="in-action-bar page-title hide">
@@ -102,16 +103,18 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
    null,
    null
   );"><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE'); ?></span>
+  <p><?php echo ($image!=""?'<img id="prod_img" class="product_image" src="'.PLX_ROOT.$plxPlugin->cheminImages.$image.'">':''); ?></p>
   <script type="text/javascript">
    var block_select_image=document.getElementById("block_select_image");
    var id_image=document.getElementById("id_image");
+   var prod_img=document.getElementById("prod_img");
    function selectImage(img) {
-    id_image.value=img;
+    id_image.value=img.substring(1);
+    prod_img.src='<?php echo PLX_ROOT.$plxPlugin->cheminImages ;?>'+id_image.value;
     block_select_image.style.display="none";
    }
   </script>
 
-  <p><?php echo ($image!=""?'<img class="product_image" src="'.PLX_ROOT.$plxPlugin->cheminImages.$image.'">':''); ?></p>
   <p id="p_content"><label for="id_content"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label></p>
 <?php
   plxUtils::printArea('content', plxUtils::strCheck($content),140,30);
