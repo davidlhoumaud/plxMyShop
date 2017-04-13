@@ -1,9 +1,11 @@
 ## PlxMyShop Change Log
 
+##si vous utilisez Multilingue, faite en sorte qu'il soit avant MyShop (sinon il a un temps de retards, il traduit le plug la page d'après ;)
+
 ##notes, todo & suggests 4 the future##
-* Pourquoi s'affiche "Cette page est actuellement en cours de rédaction" coté public dans une catégorie? (pour le panier c'est bon)
-* ajout d'une option pour afficher le lien du panier \_/
-* affichage du shortcode dans les article
+* Pourquoi s'affiche "Cette page est actuellement en cours de rédaction" coté public dans une catégorie? Solution: Éditer au moins une fois la catégorie de produit. Et/ou ajouter le texte et/ou l'image pour égayer ;)
+* ajout d'une option pour afficher le lien du panier \_/ et/ou un hook
+? Bizare que cela soit le même shortcode pour les prods et les catégorie ::: prod002: [boutonPanier 002], cat001: [boutonPanier 001] [pour les categories cela affiche une vignette produit et permet même de l'ajouter au panier, qui se fait avoir, le produit "catégorie"]
 * $d = $this->donneesModeles; ($d == données modele)
 * tester paypal
 * Utiliser la gallerie de Media native de PluXml?
@@ -15,13 +17,30 @@
 * "voir" une commande en mode smoothframe (avec jquery?)
 
 ****
-* Si jamais configuré : petit BUG Config PAYPAL (JavaScript), le panneau est caché. Se régle en jouant avec le l'interupteur ou après la premiere config enregistrée tout rentre dans l'ordre ;)
+* Si jamais configuré : petit BUG Config PAYPAL et frais de port (JavaScript), le panneau est caché. Se régle en jouant avec le l'interupteur ou après la premiere config enregistrée tout rentre dans l'ordre ;)
+
+****
 * Attention a l'utilisation de plxMultilingue : si vous le réglez pour avoir un dossier de media par langue (après avoir créé des produits avec image), il y perte de l'image du produit pour toute les langues! 
 ** Solution de fortune: Placer une image avec le "même nom de fichier" dans chaque dossiers media/[lang] et elles s'afficheront (cela permet une image du produit par langue)
 
 ****
 * Attention Frais de port, si au dela de votre config ils deviennent zéro (bug)
-* 
+
+**** (theme default 5.6)
+* Sur chrom(e)ium, s'il y a un souci de grosseur de characteres (gros boutons), en trifouillant les réglages du zoom de chrome tout est rentré dans l'ordre ;) (font size: medium, zoom: 100%) ::: [Huge font in Chrome 37](https://productforums.google.com/forum/?_escaped_fragment_=topic/chrome/17kfuau1ApM#!topic/chrome/17kfuau1ApM)
+
+BUG les drapeaux le multilingue disparaissent au panier, mais sont présent dans catégories & produits ;)
+BUG l'option "afficher le bouton ajouter au panier" ne fonctionne pas, si à non, l'affiche quant même ::: la changer pour le lien panier. Est-ce important?
+
+##v0.13.1b2 13/04/2017##
+* [+] Possibilité d'utiliser les shortcode dans les page du blog (articles)
+* [+] Admin : Titres dans la barre d'action (5.4+)
+* [+] Admin : Édition d'un produit, si image est changée, elle s'affiche. (Penser en enregistrer pour rendre effectif le changement)
+* [+] Public : Élargissement des affichettes produits, le 'remove from basket' dépasse a droite. (25% to 30%)
+* [+] Public : Lors de modif du panier par la vignette, revenir sur celle-ci (testé aussi sur chrome)
+* Fix : Multilingue perte de la langue en cours : Hook mini panier (Yannic) & appliqué aux endroits en conséquence.
+* Fix : décalage symbole monétaire
+* Fix : Double slash : appel des thèmes et dans l'url des images (avertir l'utilisateur d'éviter le premier slash ***a faire?)
 
 ##v0.13.1b 11/04/2017#
 * Fix : Si utilisation shortcode (noJs bouton panier et message) : hook ThemeEndBody quant shortcode actif & clean
