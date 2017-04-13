@@ -472,7 +472,7 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
    $this->plxMotor->aConf["racine_statiques"] = "";
    $this->plxMotor->aStats[$this->plxMotor->cible] = array(
     "name" => $this->vue->titre(),
-    "url" => "/../{$this->plxMotor->aConf["racine_plugins"]}/$nomPlugin/template/vue",
+    "url" => "/../{$this->plxMotor->aConf["racine_plugins"]}$nomPlugin/template/vue",#maybe in old pluxml add slash "$nomPlugin/template/vue" ?
     "active" => 1,
     "menu" => "non",
     "readable" => 1,
@@ -491,7 +491,7 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
 
    $this->plxMotor->mode = "product";
    $this->plxMotor->aConf["racine_statiques"] = "";
-   $this->plxMotor->cible = "{$this->plxMotor->aConf["racine_plugins"]}/$nomPlugin/form";
+   $this->plxMotor->cible = "{$this->plxMotor->aConf["racine_plugins"]}$nomPlugin/form";#maybe in old pluxml add slash "/$nomPlugin/form" ?
    $this->plxMotor->template = $template;
    echo "<?php return TRUE;?>";
   }
