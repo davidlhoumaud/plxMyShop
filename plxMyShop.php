@@ -103,7 +103,7 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
     echo '<li>'.$this->aProds[$k]['name'].'<sup><span class="badge">'.$v.'</span></sup></li>'.PHP_EOL;
    }
    echo '</ul></li></ul>
-   <p>'.($class!="active"?'<a class="button blue" href="'.$this->plxMotor->urlRewrite('?boutique/panier#panier').'" title="'.$this->getLang('L_PUBLIC_BASKET_MINI_TITLE').'">'.$this->getLang('L_PUBLIC_BASKET_MINI').'</a>':'').'</p>'.PHP_EOL;
+   <p>'.($class!="active"?'<a class="button blue" href="'.$this->plxMotor->urlRewrite('?'.(defined('PLX_MYMULTILINGUE')&&isset($_SESSION['lang'])?$_SESSION['lang'].'/':'').'boutique/panier#panier').'" title="'.$this->getLang('L_PUBLIC_BASKET_MINI_TITLE').'">'.$this->getLang('L_PUBLIC_BASKET_MINI').'</a>':'').'</p>'.PHP_EOL;
   }else{
    echo '<ul class="lastart-list unstyled-list"><li><em>'.$this->getLang('L_PUBLIC_NOPRODUCT').'</em></li></ul>';
   }
