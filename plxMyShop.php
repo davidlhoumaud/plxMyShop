@@ -110,7 +110,7 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
  }
 
  public function ThemeEndBody(){
-  echo '<?php if($plxMotor->mode == "product" || strstr($plxMotor->template,"boutique") || $plxMotor->plxPlugins->aPlugins['.$this->plug['name'].']->shortcodeactif ){ ?>';
+  echo '<?php if($plxMotor->mode == "product" || strstr($plxMotor->template,"boutique") || $plxMotor->plxPlugins->aPlugins["'.$this->plug['name'].'"]->shortcodeactif ){ ?>';
 //javascript de bascule des boutons produits
 ?>
 <script type="text/javascript">
@@ -164,17 +164,17 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
     $temps_du_cookie = time() + 3600 * 24 * 30 * 2;
 
    $string .= '
-   if(isset($_SESSION['.$this->plug['name'].'])){
+   if(isset($_SESSION["'.$this->plug['name'].'"])){
    $cookie_path = "/";
    $cookie_domain = "'.$domain.'";
    $cookie_secure = 0;
    $cookie_expire = '.$temps_du_cookie.';
-   $cookie_value["prods"]=preg_replace("/[^0-9]/","",$_SESSION['.$this->plug['name'].']["prods"]);
-   $cookie_value["ncart"]=intval($_SESSION['.$this->plug['name'].']["ncart"]);
+   $cookie_value["prods"]=preg_replace("/[^0-9]/","",$_SESSION["'.$this->plug['name'].'"]["prods"]);
+   $cookie_value["ncart"]=intval($_SESSION["'.$this->plug['name'].'"]["ncart"]);
    if (version_compare(PHP_VERSION, "5.2.0", ">="))
-    setcookie('.$this->plug['name'].', json_encode($cookie_value), $cookie_expire, $cookie_path, $cookie_domain, $cookie_secure, true);
+    setcookie("'.$this->plug['name'].'", json_encode($cookie_value), $cookie_expire, $cookie_path, $cookie_domain, $cookie_secure, true);
    else
-    setcookie('.$this->plug['name'].', serialize($cookie_value), $cookie_expire, $cookie_path."; HttpOnly", $cookie_domain, $cookie_secure);
+    setcookie("'.$this->plug['name'].'", serialize($cookie_value), $cookie_expire, $cookie_path."; HttpOnly", $cookie_domain, $cookie_secure);
    }';
   }
   echo "<?php ".$string." ?>";
@@ -182,13 +182,13 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
  public function Index(){//MyshopCookie
   $string = '
   // MyShopCookie
-  if(!empty($_COOKIE['.$this->plug['name'].']) && !isset($_SESSION["IS_NOT_NEW"])) {
+  if(!empty($_COOKIE["'.$this->plug['name'].'"]) && !isset($_SESSION["IS_NOT_NEW"])) {
    if (version_compare(PHP_VERSION, "5.2.0", ">="))
-    $cookie_value = json_decode($_COOKIE['.$this->plug['name'].'],true);
+    $cookie_value = json_decode($_COOKIE["'.$this->plug['name'].'"],true);
    else
-    $cookie_value = unserialize($_COOKIE['.$this->plug['name'].']);    
-   $_SESSION['.$this->plug['name'].']["prods"] = preg_replace("/[^0-9]/","",$cookie_value["prods"]);
-   $_SESSION['.$this->plug['name'].']["ncart"] = intval($cookie_value["ncart"]);
+    $cookie_value = unserialize($_COOKIE["'.$this->plug['name'].'"]);    
+   $_SESSION["'.$this->plug['name'].'"]["prods"] = preg_replace("/[^0-9]/","",$cookie_value["prods"]);
+   $_SESSION["'.$this->plug['name'].'"]["ncart"] = intval($cookie_value["ncart"]);
   }
   $_SESSION["IS_NOT_NEW"]=true;';
   echo "<?php ".$string." ?>";
