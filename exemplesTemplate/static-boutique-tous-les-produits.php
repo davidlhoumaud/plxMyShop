@@ -46,7 +46,7 @@
        continue;
       }
       $plxMyShop->idProduit = $kRubrique;
-      $lien = $plxShow->plxMotor->urlRewrite("index.php?product$kRubrique/{$vRubrique["url"]}");
+      $lien = $plxShow->plxMotor->urlRewrite("?".$plxMyShop->lang."product$kRubrique/{$vRubrique["url"]}");
 ?>
        <h2><a href="<?php echo htmlspecialchars($lien);?>"><?php echo htmlspecialchars($vRubrique['name']);?></a></h2>
        <section class="list_products">

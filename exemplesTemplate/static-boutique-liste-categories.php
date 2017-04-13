@@ -23,7 +23,7 @@
       if ( $vRubrique['menu'] === 'non' || $vRubrique['menu'] === '' || (1 !== $vRubrique["active"])) {
        continue;
       }
-      $lien = $plxShow->plxMotor->urlRewrite("index.php?product$kRubrique/{$vRubrique["url"]}");
+      $lien = $plxShow->plxMotor->urlRewrite("?".$plxMyShop->lang."product$kRubrique/{$vRubrique["url"]}");
 ?>
        <li>
         <a href="<?php echo htmlspecialchars($lien);?>">

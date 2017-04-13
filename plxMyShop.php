@@ -820,14 +820,14 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
   $productId = $this->productId();
   $productIdFill = str_pad($productId,3,'0',STR_PAD_LEFT);
   if(!empty($productId) AND isset($this->aProds[ $productIdFill ]))
-   echo $this->urlRewrite('?'.(defined('PLX_MYMULTILINGUE')&&isset($_SESSION['lang'])?$_SESSION['lang'].'/':'').'product'.$productId.'/'.$this->aProds[ $productIdFill ]['url']);
+   echo $this->urlRewrite('?'.$this->lang.'product'.$productId.'/'.$this->aProds[ $productIdFill ]['url']);
  }
 
  public function productRUrl($key){
   # Recupération ID URL
   $productId = intval($key);
   if(!empty($productId) AND isset($this->aProds[$key]))
-   return $this->plxMotor->urlRewrite('?'.(defined('PLX_MYMULTILINGUE')&&isset($_SESSION['lang'])?$_SESSION['lang'].'/':'').'product'.$productId.'/'.$this->aProds[$key]['url']);
+   return $this->plxMotor->urlRewrite('?'.$this->lang.'product'.$productId.'/'.$this->aProds[$key]['url']);
  }
 
  /**
@@ -1014,7 +1014,7 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
    );
 
    $classeCss = $panierSelectionne ? "active" : "noactive";
-   $lienPanier = $this->plxMotor->urlRewrite('?'.(defined('PLX_MYMULTILINGUE')&&isset($_SESSION['lang'])?$_SESSION['lang'].'/':'').'boutique/panier');
+   $lienPanier = $this->plxMotor->urlRewrite('?'.$this->lang.'boutique/panier');
 
    require_once "classes/vues/panier.php";
    $vuePanier = new panier();
@@ -1051,7 +1051,7 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
      );
 
      $classeCss = $categorieSelectionnee ? "active" : "noactive";
-     $lien = $this->plxMotor->urlRewrite('?'.(defined('PLX_MYMULTILINGUE')&&isset($_SESSION['lang'])?$_SESSION['lang'].'/':'')."product$k/{$v["url"]}");
+     $lien = $this->plxMotor->urlRewrite('?'.$this->lang."product$k/{$v["url"]}");
 
      echo "<?php";
      echo " array_splice(\$menus, $positionMenu, 0";
