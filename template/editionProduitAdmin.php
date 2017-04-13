@@ -103,7 +103,7 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
    null,
    null
   );"><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE'); ?></span>
-  <p><?php echo ($image!=""?'<img id="prod_img" class="product_image" src="'.PLX_ROOT.$plxPlugin->cheminImages.$image.'">':''); ?></p>
+  <p><?php echo '<img id="prod_img" class="product_image" src="'.($image!=""?PLX_ROOT.$plxPlugin->cheminImages.$image:'" style="display:none').'">'; ?></p>
   <script type="text/javascript">
    var block_select_image=document.getElementById("block_select_image");
    var id_image=document.getElementById("id_image");
@@ -111,6 +111,7 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
    function selectImage(img) {
     id_image.value=img.substring(1);
     prod_img.src='<?php echo PLX_ROOT.$plxPlugin->cheminImages ;?>'+id_image.value;
+    prod_img.style.display="";
     block_select_image.style.display="none";
    }
   </script>
