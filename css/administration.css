@@ -4,9 +4,8 @@
 .listeCategoriesProduitsAdmin img.product_image {
  width : 50px;
 }
-.page-title {
- /*margin: 6.6rem 0;*/
-}
+.page-title {}
+
 .save-button {
  margin-left: 16.18rem; /* approximatif, pousse les autres boutons lors de la config */
 }
@@ -34,14 +33,13 @@
 */
 @media (max-width: 767px) {
  .in-action-bar{
-  z-index: 0; /* surchage admin/theme.css ligne 309, sinon impossible de cliquer (5.5) */
+  z-index: 0; /* surchage admin/theme.css ligne 309, sinon impossible de cliquer (plx5.5) */
  }
 }
 /* template : editionProduitAdmin.php with js */
 .informationsShortcodeProduit {
  background-color : #CCD;
  width : 50%;
- /*float : right;*/
  padding : 1.2em;
 }
 .informationsShortcodeProduit .code {
@@ -72,9 +70,7 @@
  font-weight:bold;
 }
 
-/* ********************************************************************************************** */
 /* cases à cocher */
-
 .switch {
  position: relative;
  display: block;
@@ -165,8 +161,7 @@
  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Transition
-========================== */
+/* Transition */
 .switch-label, .switch-handle {
  transition: All 0.3s ease;
  -webkit-transition: All 0.3s ease;
@@ -174,8 +169,7 @@
  -o-transition: All 0.3s ease;
 }
 
-/* Switch Left Right
-==========================*/
+/* Switch Left Right */
 .switch-left-right .switch-label {
  overflow: hidden;
 }
@@ -190,9 +184,7 @@
  text-indent: -12px;
  border-radius: 20px;
  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2), inset 0 0 3px rgba(0, 0, 0, 0.1);
- 
  box-sizing : content-box;
- 
 }
 .switch-left-right .switch-label:before {
  background: #D00;
@@ -218,11 +210,11 @@
  background: inherit;
 }
 
-
 /* dataTable */
 table.dataTable {
  border: none;
 }
+
 /* surcharge plx 5.6 */
 .button{
  padding: 0.3rem 0.7rem;
