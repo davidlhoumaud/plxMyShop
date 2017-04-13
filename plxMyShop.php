@@ -1329,11 +1329,11 @@ $message
    , $this->getlang("L_SEPARATEUR_MILLIERS")
   );
   if ( $this->getParam('position_devise') == "before" ){
-   $pos_price = $this->getParam('devise').'&nbsp;'.$price;
+   $pos_price = trim($this->getParam('devise')).'&nbsp;'.$price;
   } elseif ( $this->getParam('position_devise') == "after" ){
-   $pos_price = $price.'&nbsp;'.$this->getParam('devise');
+   $pos_price = $price.'&nbsp;'.trim($this->getParam('devise'));
   }
-  return $pos_price; 
+  return $pos_price;
  }
 
  public function shippingMethod($kg, $op){
