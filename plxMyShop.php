@@ -39,6 +39,7 @@ class plxMyShop extends plxPlugin {
   $this->addHook('plxShowPageTitle', 'plxShowPageTitle');
   $this->addHook('plxShowStaticListEnd', 'plxShowStaticListEnd');
   $this->addHook('SitemapStatics', 'SitemapStatics');
+  $this->addHook('plxMotorParseArticle', 'plxMotorParseArticle');
   $this->addHook('AdminPrepend', 'AdminPrepend');
   $this->addHook('AdminTopBottom', 'AdminTopBottom');
   $this->addHook('plxShowStaticContent', 'plxShowStaticContent');
@@ -370,12 +371,26 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
   ?>';
  }
 
- public function plxShowStaticContent(){
+ public function plxMotorParseArticle() {// 4 shortcode in article [boutonPanier ###]
+  echo "<?php";
+?>
+  if(get_class($this)=='plxMotor'){//only 4 public page!
+   $plxPlugin = $this->plxPlugins->aPlugins['plxMyShop'];
+   if(!empty($art['chapo']))
+    $art['chapo'] = $plxPlugin->traitementPageStatique($art['chapo']);
+   $art['content'] = $plxPlugin->traitementPageStatique($art['content']);
+   unset($plxPlugin);
+  }
+  ?>
+<?php
+ }
 
+ public function plxShowStaticContent(){
   echo "<?php";
 ?>
    $plxPlugin = $this->plxMotor->plxPlugins->aPlugins['plxMyShop'];
    $output = $plxPlugin->traitementPageStatique($output);
+   unset($plxPlugin);
   ?>
 <?php
  }
@@ -806,7 +821,7 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
   # Recupération ID URL
   $productId = intval($key);
   if(!empty($productId) AND isset($this->aProds[$key]))
-   return plxShow::getInstance()->plxMotor->urlRewrite('?'.(defined('PLX_MYMULTILINGUE')&&isset($_SESSION['lang'])?$_SESSION['lang'].'/':'').'product'.$productId.'/'.$this->aProds[$key]['url']);
+   return $this->plxMotor->urlRewrite('?'.(defined('PLX_MYMULTILINGUE')&&isset($_SESSION['lang'])?$_SESSION['lang'].'/':'').'product'.$productId.'/'.$this->aProds[$key]['url']);
  }
 
  /**
