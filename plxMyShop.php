@@ -16,9 +16,15 @@ class plxMyShop extends plxPlugin {
 
  public function __construct($default_lang){
 
-  # gestion du multilingue plxMyMultiLingue
-  if(preg_match('/([a-z]{2})\/(.*)/i', plxUtils::getGets(), $capture)) {
-   $this->lang = $capture[1].'/';
+  # récupération de la langue si plugin plxMyMultilingue présent
+  $this->lang="";
+  if(defined('PLX_MYMULTILINGUE')) {
+   $lang = plxMyMultiLingue::_Lang();
+   if(!empty($lang)) {
+    if(isset($_SESSION['default_lang']) AND $_SESSION['default_lang']!=$lang) {
+     $this->lang = $lang.'/';
+    }
+   }
   }
 
   # appel du constructeur de la classe plxPlugin (obligatoire)
@@ -103,7 +109,7 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
     echo '<li>'.$this->aProds[$k]['name'].'<sup><span class="badge">'.$v.'</span></sup></li>'.PHP_EOL;
    }
    echo '</ul></li></ul>
-   <p>'.($class!="active"?'<a class="button blue" href="'.$this->plxMotor->urlRewrite('?'.(defined('PLX_MYMULTILINGUE')&&isset($_SESSION['lang'])?$_SESSION['lang'].'/':'').'boutique/panier#panier').'" title="'.$this->getLang('L_PUBLIC_BASKET_MINI_TITLE').'">'.$this->getLang('L_PUBLIC_BASKET_MINI').'</a>':'').'</p>'.PHP_EOL;
+   <p>'.($class!="active"?'<a class="button blue" href="'.$this->plxMotor->urlRewrite('?'.$this->lang.'boutique/panier#panier').'" title="'.$this->getLang('L_PUBLIC_BASKET_MINI_TITLE').'">'.$this->getLang('L_PUBLIC_BASKET_MINI').'</a>':'').'</p>'.PHP_EOL;
   }else{
    echo '<ul class="lastart-list unstyled-list"><li><em>'.$this->getLang('L_PUBLIC_NOPRODUCT').'</em></li></ul>';
   }
@@ -524,7 +530,7 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
      echo '<?php
      echo "\n";
      echo "\t<url>\n";
-     echo "\t\t<loc>".$plxMotor->urlRewrite("?product'.$key.'/'.$value['url'].'")."</loc>\n";
+     echo "\t\t<loc>".$plxMotor->urlRewrite("?'.$this->lang.'product'.$key.'/'.$value['url'].'")."</loc>\n";
      echo "\t\t<lastmod>'.date('Y-m-d').'</lastmod>\n";
      echo "\t\t<changefreq>daily</changefreq>\n";
      echo "\t\t<priority>0.8</priority>\n";
