@@ -1,12 +1,14 @@
-jQuery(function ($) {
- afficherConteneurNomCadeau($);
- $("#choixCadeau").click(function () {afficherConteneurNomCadeau($);});
+function onCheckClick(Id, callback) {
+ var e = document.getElementById(Id);
+ e.onclick = function (item) {
+  return function () {
+   callback(item);
+  };
+ }(e);
+};
+onCheckClick('choixCadeau', function (e){
+ if(e.checked)
+  document.getElementById('conteneurNomCadeau').style.display = "initial";
+ else
+  document.getElementById('conteneurNomCadeau').style.display = "";
 });
-function afficherConteneurNomCadeau($) {
- var conteneurNomCadeau = $(".conteneurNomCadeau");
- if ($("#choixCadeau").prop("checked")) {
-  conteneurNomCadeau.show();
- } else {
-  conteneurNomCadeau.hide();
- }
-}
