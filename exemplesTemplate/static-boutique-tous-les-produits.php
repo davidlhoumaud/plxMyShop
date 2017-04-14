@@ -19,14 +19,7 @@
 
     if (isset($plxMyShop->aProds) && is_array($plxMyShop->aProds)) {
 ?>
-      <script type="text/javascript" src="<?php echo $plxMyShop->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/jquery.min.js"></script>
-      <script type="text/javascript">
-      jQuery.noConflict();
-      </script>
-
-      <script type='text/javascript' src='<?php echo $plxMyShop->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/libajax.js'></script>
-      <script type='text/javascript' src='<?php echo $plxMyShop->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js'></script>
-
+      <script type='text/javascript' src='<?php echo $plxMyShop->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js?v0131'></script>
       <script type='text/javascript'>
       var error = false;
       var repertoireAjax = '<?php echo $plxMyShop->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';

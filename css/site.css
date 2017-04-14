@@ -1,3 +1,18 @@
+.nombre {
+ text-align: right;
+}
+/* choix cadeau */
+.conteneurNomCadeau {
+ display: none;
+}
+/* liste produits */
+.tableauProduitsPanier{
+ width: 100%;
+}
+
+.product_content {
+ min-height: 300px;
+}
 .product_pricettc {
  color:green;
  font-weight:bold;
@@ -210,4 +225,7 @@
 }
 #adress {
  width:75% !important;
+}
+#nomCadeau {
+ width:95% !important;
 }

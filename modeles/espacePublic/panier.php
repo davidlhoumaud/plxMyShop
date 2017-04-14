@@ -13,15 +13,9 @@ if ( isset($_SESSION["plxMyShop"]['msgCommand'])
  $message = $_SESSION["plxMyShop"]['msgCommand'];
  unset($_SESSION["plxMyShop"]['msgCommand']);
 }
-$cssCart=$plxPlugin->plxMotor->racine.PLX_PLUGINS.'plxMyShop/css/panier.css';
 # Hook Plugins
 eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
 ?>
-<script type="text/javascript">
- var s = document.createElement("link"); s.href = "<?php echo $cssCart;?>"; s.async = true; s.rel = "stylesheet"; s.type = "text/css"; s.media = "screen";
- var mx = document.getElementsByTagName('link'); mx = mx[mx.length-1]; mx.parentNode.insertBefore(s, mx.nextSibling);
-</script>
-<noscript><link rel="stylesheet" type="text/css" href="<?php echo $cssCart;?>" /></noscript>
 <a id="panier"></a>
 <div align="center" class="panierbloc">
  <div align="center" id="listproducts">
@@ -104,7 +98,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
       <?php $plxPlugin->lang('L_PUBLIC_GIFT'); ?>
      </label>
     </p>
-    <p class="conteneurNomCadeau">
+    <p class="conteneurNomCadeau" id="conteneurNomCadeau">
      <label for="nomCadeau">
       <?php $plxPlugin->lang('L_PUBLIC_GIFTNAME'); ?>
       <input type="text" name="nomCadeau" id="nomCadeau" value="<?php echo (!isset($_POST["nomCadeau"])) ? '' : htmlspecialchars($_POST['nomCadeau']);?>" />
@@ -140,7 +134,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
   </section>
  </div>
 </div>
-
+<script type='text/javascript' src='<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js?v0131'></script>
 <script type="text/JavaScript">
 <?php
  if ($nprod > 0 ) echo "var error=true;\n";
