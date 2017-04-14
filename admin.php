@@ -54,7 +54,6 @@ function checkBox(obj){
   $onglet = "commandes";
   $titre = $plxPlugin->getLang("LIST_ORDERS");
  }
-
  $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
 ?>
 <script type="text/javascript">
@@ -192,10 +191,8 @@ function checkBox(obj){
  $new_productid = str_pad($a['0']+1, 3, "0", STR_PAD_LEFT);
  if (!isset($_GET['mod']) || (isset($_GET['mod']) && $_GET['mod']!='cmd')): ?>
   <tr class="new">
-   <td>&nbsp;</td>
+   <td>&nbsp;<?php echo '<input type="hidden" name="productNum[]" value="'.$new_productid.'" />'; ?></td>
    <td><?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getlang('L_NEW_CATEGORY'):$plxPlugin->getlang('L_NEW_PRODUCT')); ?></td>
-   <?php
-    echo '<input type="hidden" name="productNum[]" value="'.$new_productid.'" />'; ?>
    <td><input title="<?php $plxPlugin->lang('L_CAT') ?><?php echo '" type="hidden" name="'.$new_productid.'_pcat" value="'.(isset($_GET['mod']) && $_GET['mod']=='cat'?'1':'0').'" '.(isset($_GET['mod']) && $_GET['mod']=='cat'?'checked':'').' onclick="checkBox(this);" ></td>';
     echo '<td>';
     plxUtils::printInput($new_productid.'_name', '', 'text', '20-255');
@@ -243,6 +240,6 @@ function checkBox(obj){
   </div>
 </form>
 
-<?php } 
+<?php }
 if($onglet=='commandes')
  include('datatables.js.php');
