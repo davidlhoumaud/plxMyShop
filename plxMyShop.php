@@ -1239,7 +1239,7 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
       require PLX_PLUGINS . 'plxMyShop/classes/paypal_api/boutonPaypalSimple.php';
      }
 
-     $nf=PLX_ROOT.(empty(trim($_POST['racine_commandes']))?'data/commandes/':trim($_POST(['racine_commandes']))).date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
+     $nf=PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes'])).date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
      $monfichier = fopen($nf, 'w+');
      $commandeContent="<!DOCTYPE html>
 <html>
