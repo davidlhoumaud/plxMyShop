@@ -85,7 +85,6 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
 <noscript><p class="warning">Oups! No JS</p></noscript>
 <?php eval($plxAdmin->plxPlugins->callHook('AdminProductTop'));?>
 
-<div id="block_select_image"></div>
 <form action="plugin.php?p=plxMyShop" method="post" id="form_article">
  <fieldset>
   <?php plxUtils::printInput('prod', $_GET['prod'], 'hidden');?>
@@ -94,30 +93,38 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
    <?php $plxPlugin->lang('L_PRODUCTS_SHORTCODE'); ?>&nbsp;:<br/>
    <span class="code">[<?php echo $plxPlugin->shortcode;?> <?php echo $id;?>]</span>
   </div>
-  <p id="p_image"><label for="id_image"><?php $plxPlugin->lang('L_PRODUCTS_IMAGE'); ?>&nbsp;:</label></p>
-  <?php plxUtils::printInput('image',plxUtils::strCheck($image),'text','50-255'); ?> <span style="padding:3px; border:1px solid #999; background-color:#dfdfdf;cursor:pointer;" onclick="sendWithAjaxE4(
-   '<?php echo PLX_PLUGINS;?>plxMyShop/ajax/select_image.php',
-   'POST',
-   'eval(xh.responseText)',
-   null,
-   null
-  );"><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE'); ?></span>
-  <p><?php echo '<img id="prod_img" class="product_image" src="'.($image!=""?PLX_ROOT.$plxPlugin->cheminImages.$image:'" style="display:none').'">'; ?></p>
-  <script type="text/javascript">
-   var block_select_image=document.getElementById("block_select_image");
-   var id_image=document.getElementById("id_image");
-   var prod_img=document.getElementById("prod_img");
-   function selectImage(img) {
-    id_image.value=img.substring(1);
-    prod_img.src='<?php echo PLX_ROOT.$plxPlugin->cheminImages ;?>'+id_image.value;
-    prod_img.style.display="";
-    block_select_image.style.display="none";
+
+  <!-- Utilisation du selecteur d'image natif à PluXml -->
+  <script>
+  function refreshImg(dta) {
+   if(dta.trim()==='') {
+    document.getElementById('id_image_img').innerHTML = '';
+   } else {
+    var link = dta.match(/^(https?:\/\/[^\s]+)/gi) ? dta : '<?php echo $plxAdmin->racine ?>'+dta;
+    document.getElementById('id_image_img').innerHTML = '<img src="'+link+'" alt="" />';
    }
+  }
   </script>
+  <fieldset>
+   <p class="field"><label><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail" href="javascript:void(0)" onclick="mediasManager.openPopup('id_image', true)" style="outline:none; text-decoration: none"> +</a></label>
+   <?php plxUtils::printInput('image',plxUtils::strCheck($image),'text','140-255',false,'','','onkeyup="refreshImg(this.value)"'); ?>
+   </p>
+  </fieldset>
+<?php
+  $imgUrl = PLX_ROOT.$plxPlugin->cheminImages.$image;
+  if(is_file($imgUrl)) {
+   echo '<div id="id_image_img"><img src="'.$imgUrl.'" alt="" /></div>';
+  }
+  else {
+   echo '<div id="id_image_img"></div>';
+  }
+?>
+<!-- Fin du selecteur d'image natif de PluXml -->
 
   <p id="p_content"><label for="id_content"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label></p>
+  <?php plxUtils::printArea('content', plxUtils::strCheck($content),140,30); ?>
+
 <?php
-  plxUtils::printArea('content', plxUtils::strCheck($content),140,30);
   if($active) : 
    $link = $plxAdmin->urlRewrite('index.php?product'.intval($id).'/'.$url);
    $codeTexte = $modProduit ? 'L_PRODUCT_VIEW_PAGE_ON_SITE' : 'L_CAT_VIEW_PAGE_ON_SITE';

@@ -672,7 +672,8 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
    $xml .= "<document>\n";
    if (isset($this->aProds) && is_array($this->aProds)){
     foreach($this->aProds as $product_id => $product){
-
+	# garder une compatibilité de l'image avec l'existant.
+	$product['image'] = str_replace($this->plxMotor->aConf['medias'],'',$product['image']);
      # control de l'unicité du titre de la page
      if(in_array($product['name'], $products_name))
       return plxMsg::Error(L_ERR_PRODUCT_ALREADY_EXISTS.' : '.plxUtils::strCheck($product['name']));
