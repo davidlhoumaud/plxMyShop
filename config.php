@@ -396,12 +396,12 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
   <p><?php plxUtils::printSelect("affPanier", $tabAffPanier, $var["affPanier"]) ?></p>
   <p class="field"><label for="id_template"><?php $plxPlugin->lang('L_CONFIG_PAGE_TEMPLATE') ?>&nbsp;:</label></p>
   <p><?php plxUtils::printSelect('template', $aTemplates, $var['template']) ?></p>
-  
+
   <h2><?php $plxPlugin->lang('L_CONFIG_FOLDERS') ?></h2>
   <p class="field"><label for="id_racine_commandes"><?php $plxPlugin->lang('L_CONFIG_ORDERS_FOLDER') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('racine_commandes',$var['racine_commandes'],'text','100-120') ?></p>
+  <p><?php plxUtils::printInput('racine_commandes',$var['racine_commandes'],'text','100-120', false, '', 'data/commandes/') ?></p>
   <p class="field"><label for="id_racine_products"><?php $plxPlugin->lang('L_CONFIG_PRODUCTS_FOLDER') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('racine_products',$var['racine_products'],'text','100-120') ?></p>
+  <p><?php plxUtils::printInput('racine_products',$var['racine_products'],'text','100-120', false, '', 'data/products/') ?></p>
  </div>
 </form>
 </div>
