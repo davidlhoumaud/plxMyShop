@@ -78,6 +78,7 @@ for($i=1;$i<=11;$i++){
 
  $afficheCategoriesMenu = isset($_POST['afficheCategoriesMenu']) ? "" : "non";
  $plxPlugin->setParam('afficheCategoriesMenu', $afficheCategoriesMenu, 'string');
+ $plxPlugin->setParam('afficheLienPanierTop', isset($_POST['afficheLienPanierTop'])?'1':'0', 'numeric');
  $plxPlugin->setParam('affPanier', $_POST['affPanier'], 'string');
  $affichePanierMenu = isset($_POST['affichePanierMenu']) ? "" : "non";
  $plxPlugin->setParam('affichePanierMenu',$affichePanierMenu, 'string');
@@ -143,6 +144,7 @@ $var['commercant_city'] = $plxPlugin->getParam('commercant_city')=='' ? 'Dun' : 
 $var['devise'] = $plxPlugin->getParam('devise')=='' ? ' €' : $plxPlugin->getParam('devise');
 $var['menu_position'] = $plxPlugin->getParam('menu_position')=='' ? 3 : $plxPlugin->getParam('menu_position');
 $var['afficheCategoriesMenu'] = $plxPlugin->getParam('afficheCategoriesMenu');
+$var['afficheLienPanierTop'] = $plxPlugin->getParam('afficheLienPanierTop');
 $var["affPanier"] = ("" === $plxPlugin->getParam("affPanier")) ? current(array_keys($tabAffPanier)) : $plxPlugin->getParam("affPanier");
 $var['affichePanierMenu'] = $plxPlugin->getParam('affichePanierMenu');
 $var['localStorage'] = $plxPlugin->getParam('localStorage')!='' ? $plxPlugin->getParam('localStorage') : '1';
@@ -180,8 +182,7 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
 <?php echo plxToken::getTokenPostMethod() ?>
  <div>
   <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>"><input type="submit" name="submit" value="<?php $plxPlugin->lang('L_CONFIG_SUBMIT') ?>" /></p>
-  <h2><?php $plxPlugin->lang('L_CONFIG_SHOP_INFO') ?></h2><br />
-
+  <h2><?php $plxPlugin->lang('L_CONFIG_SHOP_INFO') ?></h2>
   <p class="field"><label for="id_shop_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_NAME') ?>&nbsp;:</label></p>
   <p><?php plxUtils::printInput('shop_name',$var['shop_name'],'text','100-120') ?></p>
   <p></p>
@@ -358,6 +359,18 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
      <td>
       <label class="switch switch-left-right">
        <input class="switch-input" id="id_afficheCategoriesMenu" name="afficheCategoriesMenu" type="checkbox" <?php echo ("non" === $var["afficheCategoriesMenu"]) ? "" : " checked=\"checked\"";?> />
+       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
+       <span class="switch-handle"></span>
+      </label>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <label for="id_afficheLienPanierTop"><?php $plxPlugin->lang('L_CONFIG_AFFICHER_LIEN_PANIER_TOP');?>&nbsp;:</label>
+     </td>
+     <td>
+      <label class="switch switch-left-right">
+       <input class="switch-input" id="id_afficheLienPanierTop" name="afficheLienPanierTop" type="checkbox" <?php echo ("0" === $var["afficheLienPanierTop"]) ? "" : " checked=\"checked\"";?> />
        <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
        <span class="switch-handle"></span>
       </label>

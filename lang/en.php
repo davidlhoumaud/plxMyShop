@@ -99,13 +99,13 @@ $LANG = array(
 "L_POINT_DECIMAL"                   => ".",
 "L_SEPARATEUR_MILLIERS"             => " ",
 
-
 #config page
-'L_CONFIG_FOLDERS'                  => 'folders location',
-'L_CONFIG_ORDERS_FOLDER'            => 'Orders (folder) location',
-'L_CONFIG_PRODUCTS_FOLDER'          => 'Products (folder) location',
+'L_CONFIG_FOLDERS'                  => 'Data location <sup>(with end slash "/")</sup>',
+'L_CONFIG_ORDERS_FOLDER'            => 'Orders folder location',
+'L_CONFIG_PRODUCTS_FOLDER'          => 'Products folder location',
 'L_CONFIG_AFFICHER_PANIER_MENU'     => 'Display the basket in the main menu',
 'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Display the categories in the main menu',
+'L_CONFIG_AFFICHER_LIEN_PANIER_TOP' => 'Display the basket link \\_/ (products and categories)',
 'L_CONFIG_SHOP_INFO'                => 'Shop informations',
 'L_CONFIG_SHOP_NAME'                => 'Name of the Shop',
 'L_CONFIG_SHOP_OWNER'               => 'Last and first name of the shop owner',
