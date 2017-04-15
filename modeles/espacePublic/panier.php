@@ -111,7 +111,8 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
     <input type="hidden" name="shipping_kg" id="shipping_kg" value="0" />
     <input type="hidden" name="idsuite" id="idsuite" value="0" />
     <input type="hidden" name="numcart" id="numcart" value="0" />
-    <strong><?php $plxPlugin->lang('L_EMAIL_CUST_PAYMENT'); ?>&nbsp;:&nbsp;&nbsp;</strong><select onchange="changePaymentMethod(this.value);" name="methodpayment">
+    <strong><?php $plxPlugin->lang('L_EMAIL_CUST_PAYMENT'); ?>&nbsp;:&nbsp;&nbsp;</strong>
+    <select onchange="changePaymentMethod(this.value);" name="methodpayment" id="methodpayment">
 <?php
       $methodpayment = !isset($_SESSION["plxMyShop"]["methodpayment"]) ? "" : $_SESSION["plxMyShop"]["methodpayment"];
       foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) {?>

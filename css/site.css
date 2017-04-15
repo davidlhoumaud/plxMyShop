@@ -189,10 +189,10 @@
  margin-top:-7px;
 }
 
+
 #totalCart {
  color:green;
 }
-
 #formcart, #firstname, #lastname, #city, #email, #tel, #country, #adress, #postcode,
 #labelFirstnameCart, 
 #labelMailCart, 
@@ -207,19 +207,15 @@
 #labelLastnameCart {
  display:none;
 }
-
 #postcode {
  width:20% !important;
 }
-
 #firstname, #lastname {
  width:30% !important;
 }
-
 #city {
  width:40% !important;
 }
-
 #email, #tel, #country {
  width:50% !important;
 }
@@ -228,4 +224,7 @@
 }
 #nomCadeau {
  width:95% !important;
+}
+#methodpayment{
+ width:auto;
 }
