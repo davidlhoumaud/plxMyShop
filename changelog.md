@@ -1,4 +1,4 @@
-## PlxMyShop Change Log
+## PlxMyShop Change Log (incompatible 5.2 (inexistance du dossier 'media' a l'époque c'était 'images')
 
 ##si vous utilisez Multilingue, faite en sorte qu'il soit avant MyShop (sinon il a un temps de retards, il traduit le plug la page d'après ;)
 
@@ -31,6 +31,17 @@
 
 BUG les drapeaux le multilingue disparaissent au panier, mais sont présent dans catégories & produits ;)
 BUG l'option "afficher le bouton ajouter au panier" ne fonctionne pas, si à non, l'affiche quant même ::: la changer pour le lien panier. Est-ce important?
+Bug "J'ai lu et j'accepte les conditions générales de vente." reste en français ainsi que le selecteur du mode de paiement (alors que tout le panier est en anglais), il prend la phrase de la config ;)
+
+##v0.13.1b3 15/04/2017##
+* [+] Public : panier.css transfer dans site.css, Nettoyage des javascripts & jquery en Vanilla
+* [+] Admin : ajout des options du choix de l'emplacement des dossiers de données + langues (fr, en) (Yannic)
+* [+] Admin : ajout de l'option Afficher le lien votre panier \_/ en haut des pages produits et catégories
+* [+] Admin : libajax.js appeler uniquement dans l'édition de produit et de catégorie
+* [+] Bouton paypal : Nettoyage & jquery en vanilla js
+* [+] Lang English : Modify basket to Update the basket
+* Fix : Selecteur du mode de paiement 100% de large. Ajout de l'id #methodpayment et règlé en css avec width:auto;
+* Fix : Admin Html : erreur de '/' au 1er form & input hors d'élément du tableau & &amp;
 
 ##v0.13.1b2 13/04/2017##
 * [+] Possibilité d'utiliser les shortcode dans les page du blog (articles)
