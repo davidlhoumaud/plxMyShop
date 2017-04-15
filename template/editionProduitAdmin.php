@@ -10,7 +10,7 @@
 # On édite le produit
 if(!empty($_POST) AND isset($plxPlugin->aProds[$_POST['id']])) {
  $plxPlugin->editProduct($_POST);
- header('Location: plugin.php?p=plxMyShop&prod='.$_POST['id']);
+ header('Location: plugin.php?p=plxMyShop&amp;prod='.$_POST['id']);
  exit;
 } elseif(!empty($_GET['prod'])) { # On affiche le contenu de la page
  $id = plxUtils::strCheck(plxUtils::nullbyteRemove($_GET['prod']));

@@ -69,7 +69,7 @@ function checkBox(obj){
 </script>
 <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>"><?php $plxPlugin->menuAdmin($onglet);?></p>
 
-<form action="plugin.php?p=plxMyShop<?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?"&mod=cat":""); ?>" method="post" id="form_products">
+<form action="plugin.php?p=plxMyShop<?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?"&amp;mod=cat":""); ?>" method="post" id="form_products">
  <?php if (!isset($_GET['mod']) || (isset($_GET['mod']) && $_GET['mod']!='cmd')): ?>
   <p>
    <?php echo plxToken::getTokenPostMethod() ?>
@@ -167,7 +167,7 @@ function checkBox(obj){
 
    if(!plxUtils::checkSite($v['url'])){
     echo '<td>';
-    echo '<a href="plugin.php?p=plxMyShop&prod='.$k.'" title="';
+    echo '<a href="plugin.php?p=plxMyShop&amp;prod='.$k.'" title="';
     $plxPlugin->lang('L_PRODUCTS_SRC_TITLE');
     echo '">';
     $plxPlugin->lang('L_PRODUCTS_SRC');
@@ -230,9 +230,9 @@ function checkBox(obj){
    '   <td>'.$date[2].'-'.$date[1].'-'.$date[0].' &agrave; '.preg_replace('/-/',':',$namearray[1]).'</td>'.
    '   <td>'.$namearray[2].'</td>'.
    '   <td class="nombre">'.$plxPlugin->pos_devise((float)$namearray[3]+(float)preg_replace('/.html/','',$namearray[4])).'</td>'.
-   '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p=plxMyShop&mod=cmd&kill='.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a href="'.$dir.$val.'" target="_BLANK">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.
+   '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p=plxMyShop&amp;mod=cmd&amp;kill='.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a href="'.$dir.$val.'" target="_BLANK">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.
    '</tr>';
- }; 
+ };
 
  endif; ?>
     </tbody>
