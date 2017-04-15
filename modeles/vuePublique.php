@@ -11,7 +11,6 @@ $this->vue->affichageVuePublique($d["plxPlugin"]);
 <!-- this is vue public -->
 <script type='text/javascript'>
 var error = false;
-var repertoireAjax = '<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
 var devise = '<?php echo $d["plxPlugin"]->getParam("devise");?>';
 var pos_devise = '<?php echo $d["plxPlugin"]->getParam("pos_devise");?>';
 var shoppingCart = null;

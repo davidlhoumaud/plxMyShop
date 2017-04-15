@@ -3,12 +3,10 @@
   <section class="col sml-12">
    <article class="article static" role="article" id="static-page-<?php echo $plxShow->staticId(); ?>">
     <header>
-     <h1>
-      <?php $plxShow->staticTitle(); ?>
-     </h1>
+     <h1><?php $plxShow->staticTitle(); ?></h1>
     </header>
     <section>
-     <?php $plxShow->staticContent(); ?>
+<?php $plxShow->staticContent(); ?>
     </section>
    </article>
   </section>
@@ -22,7 +20,6 @@
       <script type='text/javascript' src='<?php echo $plxMyShop->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js?v0131'></script>
       <script type='text/javascript'>
       var error = false;
-      var repertoireAjax = '<?php echo $plxMyShop->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
       var devise = '<?php echo $plxMyShop->getParam("devise");?>';
       var pos_devise = '<?php echo $plxMyShop->getParam("pos_devise");?>';
       var shoppingCart = null;
@@ -58,7 +55,7 @@
            $plxMyShop->modele("espacePublic/boucle/produitRubrique");
           }
          }
-        ?>
+?>
        </section>
 <?php
      }
