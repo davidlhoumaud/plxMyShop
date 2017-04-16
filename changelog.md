@@ -4,8 +4,7 @@
 
 ##notes, todo & suggests 4 the future##
 * Pourquoi s'affiche "Cette page est actuellement en cours de rédaction" coté public dans une catégorie? Solution: Éditer au moins une fois la catégorie de produit. Et/ou ajouter le texte et/ou l'image pour égayer ;)
-* ajout d'une option pour afficher le lien du panier \_/ et/ou un hook
-? Bizare que cela soit le même shortcode pour les prods et les catégorie ::: prod002: [boutonPanier 002], cat001: [boutonPanier 001] [pour les categories cela affiche une vignette produit et permet même de l'ajouter au panier, qui se fait avoir, le produit "catégorie"]
+? Bizarre que cela soit le même shortcode pour les prods et les catégorie ::: prod002: [boutonPanier 002], cat001: [boutonPanier 001] [pour les categories cela affiche une vignette produit et permet même de l'ajouter au panier, qui se fait avoir, le produit "catégorie"]
 * $d = $this->donneesModeles; ($d == données modele)
 * tester paypal
 * Utiliser la gallerie de Media native de PluXml?
@@ -15,6 +14,9 @@
 * Verifier la récriture d'url (activé et ou avec MyBetterUrls)
 * intégrer datatable.js pour la liste des produits et/ou des catégories de produits? (+comlexe)
 * "voir" une commande en mode smoothframe (avec jquery?)
+* Une boutique par utilisateur?
+* Ajout de noscript pour avertir l'internaute (panier! et bouton produit) par ex: Afin de poursuivre et validé la commande, veuillez s'il vous plaît activer le javascript de votre navigateur.
+* Peaufiner l'aide
 
 ****
 * Si jamais configuré : petit BUG Config PAYPAL et frais de port (JavaScript), le panneau est caché. Se régle en jouant avec le l'interupteur ou après la premiere config enregistrée tout rentre dans l'ordre ;)
@@ -32,16 +34,26 @@
 BUG les drapeaux le multilingue disparaissent au panier, mais sont présent dans catégories & produits ;)
 BUG l'option "afficher le bouton ajouter au panier" ne fonctionne pas, si à non, l'affiche quant même ::: la changer pour le lien panier. Est-ce important?
 Bug "J'ai lu et j'accepte les conditions générales de vente." reste en français ainsi que le selecteur du mode de paiement (alors que tout le panier est en anglais), il prend la phrase de la config ;)
+Bug Si le produit est désactivé ou supprimé et qu'il est enregistré dans le cookie paner du client, il possible de le(s) commander quant-même. (Vérifier si le(s) produit(s) du cookie sont encores disponibles a la vente)
+
+dire a l'utilisateur que le panier s'affiche que si javascript est activé (boutons la boutique)
+le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont un admin.php (vue avec plx5.4 & maybe after)
+
+##v0.13.1b4 16/04/2017##
+* [+] Admin : Utilisation du selecteur d'image natif à PluXml (Yannic)
+* Fix Config : texte d'exemple des champs de l'emplacement des données placeholder
+* Fix menu barre d'action : boutons valide Xhtml 
 
 ##v0.13.1b3 15/04/2017##
-* [+] Public : panier.css transfer dans site.css, Nettoyage des javascripts & jquery en Vanilla
+* [+] Public : panier.css transferé dans site.css, Nettoyage des javascripts & jquery en Vanilla
 * [+] Admin : ajout des options du choix de l'emplacement des dossiers de données + langues (fr, en) (Yannic)
 * [+] Admin : ajout de l'option Afficher le lien votre panier \_/ en haut des pages produits et catégories
-* [+] Admin : libajax.js appeler uniquement dans l'édition de produit et de catégorie
+* [+] Admin : libajax.js appelé uniquement dans l'édition de produit et de catégorie
 * [+] Bouton paypal : Nettoyage & jquery en vanilla js
 * [+] Lang English : Modify basket to Update the basket
-* Fix : Selecteur du mode de paiement 100% de large. Ajout de l'id #methodpayment et règlé en css avec width:auto;
+* Fix : Sélecteur du mode de paiement 100% de large. Ajout de l'id #methodpayment et réglé en css avec width:auto;
 * Fix : Admin Html : erreur de '/' au 1er form & input hors d'élément du tableau & &amp;
+* [-] panier.css supprimé
 
 ##v0.13.1b2 13/04/2017##
 * [+] Possibilité d'utiliser les shortcode dans les page du blog (articles)
