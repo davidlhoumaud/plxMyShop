@@ -1,4 +1,4 @@
-#formcart input, #shoppingCart input, .lproduct_content input {
+#formcart input, #shoppingCart input, .lproduct_content input, .formulaireAjoutProduit input[type="submit"] {
  margin-top:0.25rem;
 margin-bottom:0.25rem;
 }
