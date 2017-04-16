@@ -412,9 +412,9 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
 
   <h2><?php $plxPlugin->lang('L_CONFIG_FOLDERS') ?></h2>
   <p class="field"><label for="id_racine_commandes"><?php $plxPlugin->lang('L_CONFIG_ORDERS_FOLDER') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('racine_commandes',$var['racine_commandes'],'text','100-120', false, '', 'data/commandes/') ?></p>
+  <p><?php plxUtils::printInput('racine_commandes',$var['racine_commandes'],'text','100-120', false, '', 'placeholder="data/commandes/"') ?></p>
   <p class="field"><label for="id_racine_products"><?php $plxPlugin->lang('L_CONFIG_PRODUCTS_FOLDER') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('racine_products',$var['racine_products'],'text','100-120', false, '', 'data/products/') ?></p>
+  <p><?php plxUtils::printInput('racine_products',$var['racine_products'],'text','100-120', false, '', 'placeholder="data/products/"') ?></p>
  </div>
 </form>
 </div>
