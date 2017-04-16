@@ -1360,7 +1360,7 @@ $message
   ];
   foreach ($listeOnglets as $codeOnglet => $o){
 ?>
-   <a href="<?php echo $o["urlHtml"];?>"><button<?php echo ($codeOnglet !== $ongletEnCours) ? "" : " disabled";?>><?php echo plxUtils::strCheck($o["titre"]);?></button></a>
+   <a href="<?php echo $o["urlHtml"];?>"><button<?php echo ($codeOnglet !== $ongletEnCours) ? "" : ' disabled="disabled"';?>><?php echo plxUtils::strCheck($o["titre"]);?></button></a>
 <?php
   }
  }
