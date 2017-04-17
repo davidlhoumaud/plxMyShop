@@ -1051,28 +1051,19 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
  } // FIN public function plxShowStaticListEnd(){
 
  public function modele($modele){
-
   if (!isset($this->donneesModeles["pileModeles"])){
    $this->donneesModeles["pileModeles"] = array();
   }
-
   $this->donneesModeles["pileModeles"][] = $modele;
-
   // fichier du modèle dans le thème
-  $plxMotor = plxMotor::getInstance();
-  $racineTheme = PLX_ROOT . $plxMotor->aConf["racine_themes"] . $plxMotor->style;
+  $racineTheme = PLX_ROOT . $this->plxMotor->aConf["racine_themes"] . $this->plxMotor->style;
   $fichier = "$racineTheme/modeles/plxMyShop/$modele.php";
-
-  // si le fichier du modèle n'existe pas dans le thème
+  // si le fichier du modèle est inexistant pas dans le thème
   if (!is_file($fichier)){
-   // on choisi le fichier par défaut dans le répertoire de l'extension
-   $fichier = "modeles/$modele.php";
+   $fichier = "modeles/$modele.php";// on choisi le fichier par défaut dans le répertoire de l'extension
   }
-
   $d = $this->donneesModeles;
-
   require $fichier;
-
   // rétablissement des noms des modèles
   array_pop($this->donneesModeles["pileModeles"]);
  }
