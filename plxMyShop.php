@@ -316,8 +316,10 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
  public function inlineBasketJs(){ ?>
 <script type="text/JavaScript">
 <?php
+echo '<?php
  if ($nprod > 0 ) echo "var error=true;\n";
  else echo "var error=false;\n";
+ ?>';
 ?>
 var total=0;
 var totalkg=0;
