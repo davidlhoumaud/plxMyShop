@@ -117,7 +117,7 @@ class plxMyShop extends plxPlugin {
 if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['name']]["ncart"]>0 && !empty($_SESSION[$this->plug['name']]["prods"])){
    echo '<ul class="cat-list unstyled-list"><li><ul>'.PHP_EOL;
    foreach($_SESSION[$this->plug['name']]["prods"] as $k => $v){
-    echo '<li>'.$this->aProds[$k]['name'].'<sup><span class="badge">'.$v.'</span></sup></li>'.PHP_EOL;
+    echo '<li><a href="'.$this->productRUrl($k).'">'.$this->aProds[$k]['name'].'</a><sup><span class="badge">'.$v.'</span></sup></li>'.PHP_EOL;
    }
    echo '</ul></li></ul>
    <p>'.($class!="active"?'<a class="button blue" href="'.$this->plxMotor->urlRewrite('?'.$this->lang.'boutique/panier#panier').'" title="'.$this->getLang('L_PUBLIC_BASKET_MINI_TITLE').'">'.$this->getLang('L_PUBLIC_BASKET_MINI').'</a>':'').'</p>'.PHP_EOL;

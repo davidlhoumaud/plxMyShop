@@ -54,7 +54,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
            $nprod++;
 ?>
          <tr>
-          <td><?php echo $plxPlugin->aProds[$pId]['name'];?></td>
+          <td><a href="<?php echo $plxPlugin->productRUrl($pId); ?>"><?php echo $plxPlugin->aProds[$pId]['name']; ?></a></td>
           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixUnitaire);?></td>
           <td><input type="number" name="nb[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($nb);?>" /></td>
           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixttc);?></td>
