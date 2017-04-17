@@ -465,18 +465,21 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
   }
 
   // pages des produits et des catégories
-  if (preg_match("#product([0-9]+)/?([a-z0-9-]+)?#", $this->plxMotor->get, $resultat)){
+  elseif (preg_match("#product([0-9]+)/?([a-z0-9-]+)?#", $this->plxMotor->get, $resultat)){
    $this->idProduit = str_pad($resultat[1], 3, "0", STR_PAD_LEFT);
+   if(isset($this->aProds[$this->productNumber()])){
+    $template = $this->aProds[$this->productNumber()]["template"] === ""
+      ? $this->getParam('template')
+      : $this->aProds[$this->productNumber()]["template"];
 
-   $template = $this->aProds[$this->productNumber()]["template"] === ""
-     ? $this->getParam('template')
-     : $this->aProds[$this->productNumber()]["template"];
-
-   $this->plxMotor->mode = "product";
-   $this->plxMotor->aConf["racine_statiques"] = "";
-   $this->plxMotor->cible = "{$this->plxMotor->aConf["racine_plugins"]}$nomPlugin/form";#maybe in old pluxml add slash "/$nomPlugin/form" ?
-   $this->plxMotor->template = $template;
-   echo "<?php return TRUE;?>";
+    $this->plxMotor->mode = "product";
+    $this->plxMotor->aConf["racine_statiques"] = "";
+    $this->plxMotor->cible = "{$this->plxMotor->aConf["racine_plugins"]}$nomPlugin/form";#maybe in old pluxml add slash "/$nomPlugin/form" ?
+    $this->plxMotor->template = $template;
+    echo "<?php return TRUE;?>";
+   }else{
+    $this->plxMotor->error404(L_ERR_PAGE_NOT_FOUND);
+   }
   }
  }
 
