@@ -1,6 +1,9 @@
-#formcart input, #shoppingCart input, .lproduct_content input, .formulaireAjoutProduit input[type="submit"] {
- margin-top:0.25rem;
-margin-bottom:0.25rem;
+#formcart input,
+#shoppingCart input,
+.lproduct_content input,
+.formulaireAjoutProduit input[type="submit"] {
+ margin-top: 0.25rem;
+ margin-bottom: 0.25rem;
 }
 
 .nombre {
@@ -11,50 +14,50 @@ margin-bottom:0.25rem;
  display: none;
 }
 /* liste produits */
-.tableauProduitsPanier{
+.tableauProduitsPanier {
  width: 100%;
- clear:both;
+ clear: both;
 }
 
 .product_content {
- min-height: 300px;
+ min-height: 400px;
 }
 .product_pricettc {
- color:green;
- font-weight:bold;
- font-size:2em;
+ color: green;
+ font-weight: bold;
+ font-size: 2em;
 }
 .product_poidg {
- font-weight:bold;
- font-size:1em;
+ font-weight: bold;
+ font-size: 1em;
 }
 .product_image {
- width:99%;
- height:auto;
+ width: 99%;
+ height: auto;
 }
 .image_product {
- width:30%;
- float:right;
+ width: 30%;
+ float: right;
 }
 .image_product > .product_image {
- width:100%;
+ width: 100%;
 }
 .image_product form {
- text-align:center;
+ text-align: center;
 }
 .cat_image {
- width:100%;
- text-align:center;
+ width: 100%;
+ text-align: center;
 }
 .product_footer {
- text-align:center;
+ text-align: center;
 }
 .product_addcart {
- cursor:pointer;
+ cursor: pointer;
 }
 
 .basket_link_image {
- text-align:right;
+ text-align: right;
 }
 .red {
  color: #e43d29;
@@ -63,24 +66,24 @@ margin-bottom:0.25rem;
  color: #bc2818;
 }
 
-#notiShoppingCart{}
+#notiShoppingCart {}
 
 .list_products {
- padding:0.25%;
- width:100%;
- text-align:center;
+ padding: 0.25%;
+ width: 100%;
+ text-align: center;
 }
 
-.lproduct_content{
- width:30%;
- min-width:180px;
- max-width:180px;
- display:inline-block;
- margin:1%;
- text-align:center;
- background-color:transparent;
- padding:10px 5px 5px 5px;
- border:1px solid #dfdfdf;
+.lproduct_content {
+ width: 30%;
+ min-width: 180px;
+ max-width: 180px;
+ display: inline-block;
+ margin: 1%;
+ text-align: center;
+ background-color: transparent;
+ padding: 10px 5px 5px 5px;
+ border: 1px solid #dfdfdf;
  -webkit-border-radius: 2px;
  -moz-border-radius: 2px;
  -ms-border-radius: 2px;
@@ -100,138 +103,137 @@ margin-bottom:0.25rem;
  background-color: rgba(0,0,0,0.1);
 }
 
-.lproduct_content header,.lproduct_content footer{
- text-align:center;
+.lproduct_content header,.lproduct_content footer {
+ text-align: center;
 }
-.lproduct_content header a img{
- min-height:125px;
- max-height:125px;
- width:auto;
- margin:0px;
+.lproduct_content header a img {
+ min-height: 125px;
+ max-height: 125px;
+ width: auto;
+ margin: 0px;
 }
-.lproduct_content footer{
- padding-top:14px;
- background-color:transparent;
+.lproduct_content footer {
+ padding-top: 14px;
+ background-color: transparent;
 }
 .lproduct_pricettc {
- color:green;
- font-weight:bold;
- font-size:1em;
+ color: green;
+ font-weight: bold;
+ font-size: 1em;
 }
 
 #msgUpDateCart {
- position:fixed;
- display:none;
- left:0px;
- bottom:0px;
- width:100%;
- text-align:center;
- height:32px;
- background-color:rgba(12,109,0,0.9);
- color:#fff;
- font-weight:bold;
+ position: fixed;
+ display: none;
+ left: 0px;
+ bottom: 0px;
+ width: 100%;
+ text-align: center;
+ height: 32px;
+ background-color: rgba(12,109,0,0.9);
+ color: #fff;
+ font-weight: bold;
 }
 
 .panierbloc {
- margin-left:30px !important;
+ margin-left: 30px !important;
 }
 
 #listproducts {
- padding:5px !important;
+ padding: 5px !important;
 }
 
 .productsect {
- box-shadow:0px 0px 2px;
- height:100% !important;
+ box-shadow: 0px 0px 2px;
+ height: 100% !important;
 }
 
 .productsect header {
- text-align:center !important;
- margin:0px !important;
- font-weight:bold !important;
+ text-align: center !important;
+ margin: 0px !important;
+ font-weight: bold !important;
 }
 
 #spanshipping {}
 
 #formcart #shoppingCart {
- margin:3px !important;
+ margin: 3px !important;
 }
 
 #formcart p {
- margin-bottom:0.1em !important;
+ margin-bottom: 0.1em !important;
 }
-.startw, .star {color:red;}
+.startw, .star {color: red;}
 
 #msgCart {
- display:none;
- margin-left:5% !important;
- margin-right:5% !important;
- width:90% !important;
+ display: none;
+ margin-left: 5% !important;
+ margin-right: 5% !important;
+ width: 90% !important;
 }
 
 .spanshippingp {}
 
 .msgyeah {
- background-color:green;
- color:#fff;
+ background-color: green;
+ color: #fff;
 }
 .msgyeah2 {
- color:green;
+ color: green;
 }
 
 .msgyeah3 {
- font-size : 100%;
+ font-size: 100%;
 }
 
 .msgerror {
- color:red;
+ color: red;
 }
 
 #notiNumShoppingCart {
- position:absolute;
- font-size:16px;
- color:red;
- width:38px;
- text-align:center;
- margin-top:-7px;
+ position: absolute;
+ font-size: 16px;
+ color: red;
+ width: 38px;
+ text-align: center;
+ margin-top: -7px;
 }
-
 
 #totalCart {
- color:green;
+ color: green;
 }
 #formcart, #firstname, #lastname, #city, #email, #tel, #country, #adress, #postcode,
-#labelFirstnameCart, 
-#labelMailCart, 
-#labelTelCart, 
-#labelAddrCart, 
-#labelPostcodeCart, 
-#labelCountryCart, 
-#labelCityCart, 
-#labelMsgCart, 
-#prodsCart, 
-#btnCart, 
+#labelFirstnameCart,
+#labelMailCart,
+#labelTelCart,
+#labelAddrCart,
+#labelPostcodeCart,
+#labelCountryCart,
+#labelCityCart,
+#labelMsgCart,
+#prodsCart,
+#btnCart,
 #labelLastnameCart {
- display:none;
+ display: none;
 }
 #postcode {
- width:20% !important;
+ width: 20% !important;
 }
 #firstname, #lastname {
- width:30% !important;
+ width: 30% !important;
 }
 #city {
- width:40% !important;
+ width: 40% !important;
 }
 #email, #tel, #country {
- width:50% !important;
+ width: 50% !important;
 }
 #adress {
- width:75% !important;
+ width: 75% !important;
 }
 #nomCadeau {
- width:95% !important;
+ width: 95% !important;
 }
-#methodpayment{
- width:auto;
+#methodpayment {
+ width: auto;
 }
