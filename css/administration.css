@@ -1,8 +1,8 @@
 .nombre {
- text-align : right;
+ text-align: right;
 }
 .listeCategoriesProduitsAdmin img.product_image {
- width : 50px;
+ height: 50px;
 }
 .page-title {}
 
@@ -19,7 +19,7 @@
  text-align: center;
  border: 1px solid #333;
  padding-bottom: 0.2em;
- max-width:480px;
+ max-width: 480px;
 }
 #blocksocoreco input {width: 100%;}
 /*
@@ -31,43 +31,15 @@
  position: fixed;
 }
 */
-@media (max-width: 767px) {
- .in-action-bar{
-  z-index: 0; /* surchage admin/theme.css ligne 309, sinon impossible de cliquer (plx5.5) */
- }
-}
+
 /* template : editionProduitAdmin.php with js */
 .informationsShortcodeProduit {
- background-color : #CCD;
- width : 50%;
- padding : 1.2em;
+ background-color: #CCD;
+ width: 50%;
+ padding: 1.2em;
 }
 .informationsShortcodeProduit .code {
- background-color : #EEF;
-}
-#block_select_image {
- box-shadow:0px 0px 5px #333;
- position:absolute;
- min-width:600px;
- min-height:400px;
- overflow:auto;
- display:none;
- background-color:#dfdfdf;
- width:80%;
- height:80%;
-}
-.fermer-img{
- text-align:center;
- padding: 0 3px;
- border:1px solid #999;
- background-color:#dfdfdf;
- cursor:pointer;
- font-size: 2rem;
- float: left;
-}
-.title-img-box{
- text-align:center;
- font-weight:bold;
+ background-color: #EEF;
 }
 
 /* cases à cocher */
@@ -222,6 +194,7 @@ table.dataTable {
 input, textarea {
  width: 100%;
 }
+
 @media (max-width: 767px) {
  #id_image_img img{
   width: 100%;
@@ -233,20 +206,26 @@ input, textarea {
  .in-action-bar {
   text-align: center;
   margin-left: -1rem;
+  z-index: 0; /* surchage admin/theme.css ligne 309, sinon impossible de cliquer (plx5.5) */
+ }
+ .in-action-bar > input[type="submit"] {
+  margin-top: 2.5em;
+  z-index: 800;
+ }
+ .in-action-bar.multilingue {
+  margin-top: 5em;
  }
 /* surcharge plx 5.6 */
  .in-action-bar.plx5-6 {
-  margin-left: -1.75em;
- }
- .in-action-bar.plx5-6 > input[type="submit"] {
-  margin-top: 2em;
-  z-index: 800;
- }
- .in-action-bar.plx5-6.multilingue {
-  margin-top: 5.6em;
+  margin-left: -2rem;
  }
  .return-link.plx5-6.multilingue {
   margin-top: 9rem;
   z-index: 801;
+ }
+}
+@media (max-width: 479px) {
+ .myhide{
+  display: none;
  }
 }
