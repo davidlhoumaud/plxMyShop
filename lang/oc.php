@@ -12,7 +12,7 @@ $LANG = array(
 'L_MENU_CATS'                       => 'Categorias',
 'L_MENU_ORDERS'                     => 'Comandas',
 'L_MENU_CONFIG'                     => 'Configuracion',
-
+'L_VIEW_ONLINE'                     => 'Visualiser %s sur le site',# a traduire
 'L_DATE'                            => 'Data',
 'L_PAIEMENT'                        => 'Mejan de pagament',
 'L_MONTANT'                         => 'Montant',
@@ -138,7 +138,7 @@ $LANG = array(
 'L_CONFIG_EMAIL_ORDER_SUBJECT_CUST' => 'Títol corrièl "Resumimt de comanda" (pel client)',
 'L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP' => 'Títol corrièl "Nòva comanda" (pel comerciant)',
 
-'L_CONFIG_MENU_TITLE'               => 'Configuracion del menú y tactica del cookie client',#a verfier
+'L_CONFIG_MENU_TITLE'               => 'Configuracion del menú e tactica del cookie client',#a verfier
 'L_CONFIG_MENU_POSITION'            => 'Posicion dins lo menú de las categorias e paginas fixas (panièr)',
 
 'L_CONFIG_PAGE'                     => 'Configuracion de las paginas',

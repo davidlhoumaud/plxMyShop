@@ -12,7 +12,7 @@ $LANG = array(
 'L_MENU_CATS'                       => 'Categories',
 'L_MENU_ORDERS'                     => 'Orders',
 'L_MENU_CONFIG'                     => 'Configuration',
-
+'L_VIEW_ONLINE'                     => 'View %s online',
 'L_DATE'                            => 'Date',
 'L_PAIEMENT'                        => 'Payment method',
 'L_MONTANT'                         => 'Amount',

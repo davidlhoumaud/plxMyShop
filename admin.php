@@ -128,7 +128,7 @@ function checkBox(obj){
    echo '
    <tr class="line-'.($num%2).'">
     <td><input type="checkbox" name="idProduct[]" value="'.$k.'" /><input type="hidden" name="productNum[]" value="'.$k.'" /></td>
-    <td>'.$k.'
+    <td><a href="plugin.php?p=plxMyShop&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').'">'.$k.'</a>
    <input type="hidden" name="'.$k.'_pcat" value="'.$valued.'"'.$selected.' onclick="checkBox(this);" />
    </td>'.PHP_EOL;
 ?>
@@ -168,13 +168,9 @@ function checkBox(obj){
 
    if(!plxUtils::checkSite($v['url'])){
     echo '<td>';
-    echo '<a href="plugin.php?p=plxMyShop&amp;prod='.$k.'" title="';
-    $plxPlugin->lang('L_PRODUCTS_SRC_TITLE');
-    echo '">';
-    $plxPlugin->lang('L_PRODUCTS_SRC');
-    echo '</a>';
+    echo '<a href="plugin.php?p=plxMyShop&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').'">'.$plxPlugin->getLang('L_PRODUCTS_SRC').'</a>';
     if($v['active']){
-     echo '&nbsp;-&nbsp;<a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="Visualiser '.plxUtils::strCheck($v['name']).' sur le site">'.L_VIEW.'</a>';
+     echo '&nbsp;-&nbsp;<a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.sprintf($plxPlugin->getLang('L_VIEW_ONLINE'), plxUtils::strCheck($v['name'])).'">'.L_VIEW.'</a>';
     }
     echo '</td></tr>';
    }
