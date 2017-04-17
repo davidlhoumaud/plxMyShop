@@ -45,8 +45,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
           <th><?php $plxPlugin->lang('L_TOTAL_PRICE'); ?></th>
           <th></th>
          </tr>
-<?php   foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) {
-           if (!isset($plxPlugin->aProds[$pId])){continue;}
+<?php   foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) { 
            $prixUnitaire = (float) $plxPlugin->aProds[$pId]['pricettc'];
            $prixttc = $prixUnitaire * $nb;
            $poidg = (float) $plxPlugin->aProds[$pId]['poidg'] * $nb;

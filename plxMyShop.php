@@ -84,7 +84,17 @@ class plxMyShop extends plxPlugin {
    }
   }
   $this->donneesModeles["tabChoixMethodespaiement"] = $tabChoixMethodespaiement;
-//hook plxMyShop
+
+  //Mise a jour des variables de sessions du panier
+  if (isset($_SESSION["plxMyShop"]['prods'])){
+   foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) { 
+    if (!isset($this->aProds[$pId]) OR $this->aProds[$pId]['active']==0){//si le produit a été désactivé ou supprimé entre temps
+     unset($_SESSION["plxMyShop"]['prods'][$pId]);//on efface sa variable de session
+    }
+   }
+  }
+
+  //hook plxMyShop
   $this->addHook('plxMyShopShowMiniPanier', 'plxMyShopShowMiniPanier');
   $this->addHook('plxMyShopPanierFin', 'inlineBasketJs');
   if($this->getParam('localStorage')){//MyshopCookie
@@ -104,7 +114,7 @@ class plxMyShop extends plxPlugin {
   <h3<?php if ($class=="active") echo' class="red"'; ?>>
    <span><img src="<?php echo PLX_PLUGINS.$this->plug['name']; ?>/icon.png" style="float:left;"></span>&nbsp;<?php $this->lang('L_PUBLIC_BASKET'); ?></h3>
 <?php
-if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['name']]["ncart"]>0  && !empty($_SESSION[$this->plug['name']]["prods"])){
+if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['name']]["ncart"]>0 && !empty($_SESSION[$this->plug['name']]["prods"])){
    echo '<ul class="cat-list unstyled-list"><li><ul>'.PHP_EOL;
    foreach($_SESSION[$this->plug['name']]["prods"] as $k => $v){
     echo '<li>'.$this->aProds[$k]['name'].'<sup><span class="badge">'.$v.'</span></sup></li>'.PHP_EOL;
