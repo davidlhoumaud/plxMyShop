@@ -1050,6 +1050,14 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
   } // FIN if ajout du menu pour accèder aux rubriques
  } // FIN public function plxShowStaticListEnd(){
 
+ /**
+  * Méthode de choix du modèle de template
+  *
+  * @param modele en cours
+  * @return stdout
+  * @scope global
+  * @author
+  **/
  public function modele($modele){
   if (!isset($this->donneesModeles["pileModeles"])){
    $this->donneesModeles["pileModeles"] = array();
@@ -1060,7 +1068,7 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
   $fichier = "$racineTheme/modeles/plxMyShop/$modele.php";
   // si le fichier du modèle est inexistant pas dans le thème
   if (!is_file($fichier)){
-   $fichier = "modeles/$modele.php";// on choisi le fichier par défaut dans le répertoire de l'extension
+   $fichier = "modeles/$modele.php";// on choisit le fichier par défaut dans le répertoire de l'extension
   }
   $d = $this->donneesModeles;
   require $fichier;
