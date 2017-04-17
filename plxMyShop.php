@@ -430,12 +430,12 @@ if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['nam
   **/
  public function plxMotorPreChauffageBegin(){
   $this->plxMotor = plxMotor::getInstance();
-  
+
   # Hook Plugins
   eval($this->plxMotor->plxPlugins->callHook("plxMyShop_debut"));
-  $this->cheminImages = $this->plxMotor->aConf['medias'];
-  if (isset($this->plxMotor->aConf['images']))// jusqu'à la version 5.3.1
-   $this->cheminImages = $this->plxMotor->aConf['images'];
+  $media = 'medias';
+  if (isset($this->plxMotor->aConf['images'])) $media = 'images';// jusqu'à la version 5.3.1
+   $this->cheminImages = $this->plxMotor->aConf[$media];
 
   $nomPlugin = __CLASS__;
 
