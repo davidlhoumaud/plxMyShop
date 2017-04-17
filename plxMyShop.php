@@ -498,6 +498,7 @@ for($i=1;$i<=11;$i++){
    echo "<p class=\"warning\">Plugin MyShop<br />".sprintf("'.$this->getLang('L_LANG_UNAVAILABLE').'", $file)."</p>";
    plxMsg::Display();
   }
+  if(strstr($plxAdmin->get,"'.$this->plug['name'].'")) echo \'<noscript><p class="warning">Oups! No JS</p></noscript>\';
   ?>';
  }
 

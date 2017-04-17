@@ -83,7 +83,7 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
  document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title.innerHTML;
 </script>
 <script type='text/javascript' src='<?php echo PLX_PLUGINS.get_class($plxPlugin); ?>/js/libajax.js'></script>
-<noscript><p class="warning">Oups! No JS</p></noscript>
+
 <?php eval($plxAdmin->plxPlugins->callHook('AdminProductTop'));?>
 
 <form action="plugin.php?p=plxMyShop" method="post" id="form_article">
