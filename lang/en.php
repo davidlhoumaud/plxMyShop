@@ -2,7 +2,7 @@
 
 $LANG = array(
 
-'L_PAGE_TITLE'                      => 'Creation and edition of products',
+'L_PAGE_TITLE'                      => 'Manage products',
 'L_ADMIN_MENU_TOOTIP'               => 'Administrate my web shop (products, categories and commands)',#List and modification of a traduire, corriger?
 'L_LANG_UNAVAILABLE'                => 'Language not available : %s',
 'L_DEFAULT_NEW_PRODUCT_URL'         => 'new-product',
@@ -30,7 +30,7 @@ $LANG = array(
 'L_PRODUCTCONTENT_INPROCESS'        => 'This product is currently being edited',
 
 # products.php
-'L_PRODUCTS_PAGE_TITLE'             => 'Creation and edition of products',
+'L_PRODUCTS_PAGE_TITLE'             => 'Manage products',
 'L_PRODUCTS_ID'                     => 'Identifier',
 'L_PRODUCTS_GROUP'                  => 'Group',
 'L_PRODUCTS_TITLE'                  => 'Title',
@@ -79,8 +79,8 @@ $LANG = array(
 'L_CAT_META_KEYWORDS'               => '"Keywords" Meta tag content for this category (optional)',
 
 #create product/cat
-'CREATE_PRODUCTS'                   => 'Creation and edition of products',
-'CREATE_CATS'                       => 'Creation and edition of categories',
+'CREATE_PRODUCTS'                   => 'Manage products',
+'CREATE_CATS'                       => 'Manage categories',
 
 'L_CAT'                             => 'Category',
 

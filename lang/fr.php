@@ -2,7 +2,7 @@
 
 $LANG = array(
 
-'L_PAGE_TITLE'                      => 'Création et édition des produits',
+'L_PAGE_TITLE'                      => 'Gérer les produits',
 'L_ADMIN_MENU_TOOTIP'               => 'Gérer mon web-commerce (produits, catégories et commandes)', #Affichage des produits / catégories
 'L_LANG_UNAVAILABLE'                => 'Langue non disponible : %s',
 'L_DEFAULT_NEW_PRODUCT_URL'         => 'nouveau-produit',
@@ -30,7 +30,7 @@ $LANG = array(
 'L_PRODUCTCONTENT_INPROCESS'        => 'Ce produit est actuellement en cours de rédaction',
 
 # products.php
-'L_PRODUCTS_PAGE_TITLE'             => 'Création et édition des produits',
+'L_PRODUCTS_PAGE_TITLE'             => 'Gérer les produits',
 'L_PRODUCTS_ID'                     => 'Identifiant',
 'L_PRODUCTS_GROUP'                  => 'Groupe',
 'L_PRODUCTS_TITLE'                  => 'Titre',
@@ -79,8 +79,8 @@ $LANG = array(
 'L_CAT_META_KEYWORDS'               => 'Contenu de la balise meta "keywords" pour cette catégorie (option)',
 
 #create product/cat
-'CREATE_PRODUCTS'                   => 'Création et édition des produits',
-'CREATE_CATS'                       => 'Création et édition des catégories',
+'CREATE_PRODUCTS'                   => 'Gérer les produits',
+'CREATE_CATS'                       => 'Gérer les catégories',
 
 'L_CAT'                             => 'Catégorie',
 

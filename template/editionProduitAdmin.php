@@ -73,13 +73,14 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
 ?></a>
 </p>
 
-<h3 id="pmsTitle" class="in-action-bar page-title hide">
+<h3 id="pmsTitle" class="page-title">
  <?php $plxPlugin->lang($modProduit ? 'L_PRODUCT_TITLE' : 'L_CAT_TITLE');?>
  &laquo;<?php echo plxUtils::strCheck($title);?>&raquo;
 </h3>
 <script type="text/javascript">//surcharge du titre dans l'admin
- var title = document.getElementById('pmsTitle').innerHTML;
- document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title;
+ var title = document.getElementById('pmsTitle');
+ title.className += " hide";
+ document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title.innerHTML;
 </script>
 <script type='text/javascript' src='<?php echo PLX_PLUGINS.get_class($plxPlugin); ?>/js/libajax.js'></script>
 <noscript><p class="warning">Oups! No JS</p></noscript>

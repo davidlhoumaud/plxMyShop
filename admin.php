@@ -62,10 +62,11 @@ function checkBox(obj){
 </script>
 <noscript><link rel="stylesheet" type="text/css" href="<?php echo $cssAdmn;?>" /></noscript>
 
-<h2 id="pmsTitle" class="in-action-bar page-title hide"><?php echo plxUtils::strCheck($titre);?></h2>
+<h2 id="pmsTitle" class="page-title"><?php echo plxUtils::strCheck($titre);?></h2>
 <script type="text/javascript">//surcharge du titre dans l'admin
- var title = document.getElementById('pmsTitle').innerHTML;
- document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title;
+ var title = document.getElementById('pmsTitle');
+ title.className += " hide";
+ document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title.innerHTML;
 </script>
 <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>"><?php $plxPlugin->menuAdmin($onglet);?></p>
 
