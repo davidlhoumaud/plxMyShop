@@ -6,6 +6,17 @@
  margin-bottom: 0.25rem;
 }
 
+/* mini panier : suppr prod */
+.formRemProd{
+ display:inline;
+}
+.miniDel{
+ text-indent:-10000px;
+ width:12px;
+ height:3px;
+ border:none;
+}
+
 .nombre {
  text-align: right;
 }

@@ -84,16 +84,18 @@ class plxMyShop extends plxPlugin {
    }
   }
   $this->donneesModeles["tabChoixMethodespaiement"] = $tabChoixMethodespaiement;
-
   //Mise a jour des variables de sessions du panier
-  if (isset($_SESSION["plxMyShop"]['prods'])){
-   foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) { 
+  if (isset($_SESSION[$this->plug['name']]['prods'])){
+   foreach ($_SESSION[$this->plug['name']]['prods'] as $pId => $nb) { 
     if (!isset($this->aProds[$pId]) OR $this->aProds[$pId]['active']==0){//si le produit a été désactivé ou supprimé entre temps
-     unset($_SESSION["plxMyShop"]['prods'][$pId]);//on efface sa variable de session
+     unset($_SESSION[$this->plug['name']]['prods'][$pId]);//on efface sa variable de session
     }
    }
+   //supprimer par mini panier
+   if(isset($_POST['remProd']) && !empty($_POST['idP']) && isset($_SESSION[$this->plug['name']]["prods"][$_POST['idP']])){
+    unset($_SESSION[$this->plug['name']]["prods"][$_POST['idP']]);
+   }
   }
-
   //hook plxMyShop
   $this->addHook('plxMyShopShowMiniPanier', 'plxMyShopShowMiniPanier');
   $this->addHook('plxMyShopPanierFin', 'inlineBasketJs');
@@ -108,18 +110,22 @@ class plxMyShop extends plxPlugin {
  }
 
  public function plxMyShopShowMiniPanier(){
-  //var_dump($this->plxMotor->get);exit;
   $class = $this->plxMotor->get=='boutique/panier'?'active':'noactive';
 ?>
   <h3<?php if ($class=="active") echo' class="red"'; ?>>
    <span><img src="<?php echo PLX_PLUGINS.$this->plug['name']; ?>/icon.png" style="float:left;"></span>&nbsp;<?php $this->lang('L_PUBLIC_BASKET'); ?></h3>
 <?php
-if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['name']]["ncart"]>0 && !empty($_SESSION[$this->plug['name']]["prods"])){
-   echo '<ul class="cat-list unstyled-list"><li><ul>'.PHP_EOL;
+  if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['name']]["ncart"]>0 && !empty($_SESSION[$this->plug['name']]["prods"])){
+   echo '<ul class="cat-list unstyled-list">'.PHP_EOL;
    foreach($_SESSION[$this->plug['name']]["prods"] as $k => $v){
-    echo '<li><a href="'.$this->productRUrl($k).'">'.$this->aProds[$k]['name'].'</a><sup><span class="badge">'.$v.'</span></sup></li>'.PHP_EOL;
+    echo '<li>
+           <form method="POST" id="FormRemProd'.$k.'" class="formRemProd">
+            <input type="hidden" name="idP" value="'.htmlspecialchars($k).'" />
+            <sub><input class="miniDel badge red" type="submit" id="remProd'.$k.'" name="remProd" value="-" title="'.$this->getLang('L_PUBLIC_DEL_BASKET').'"/></sub>
+           </form>
+           <a href="'.$this->productRUrl($k).'">'.$this->aProds[$k]['name'].'</a><sup><span class="badge">'.$v.'</span></sup></li>'.PHP_EOL;
    }
-   echo '</ul></li></ul>
+   echo '</ul>
    <p>'.($class!="active"?'<a class="button blue" href="'.$this->plxMotor->urlRewrite('?'.$this->lang.'boutique/panier#panier').'" title="'.$this->getLang('L_PUBLIC_BASKET_MINI_TITLE').'">'.$this->getLang('L_PUBLIC_BASKET_MINI').'</a>':'').'</p>'.PHP_EOL;
   }else{
    echo '<ul class="lastart-list unstyled-list"><li><em>'.$this->getLang('L_PUBLIC_NOPRODUCT').'</em></li></ul>';
