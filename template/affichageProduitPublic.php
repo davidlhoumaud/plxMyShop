@@ -14,17 +14,3 @@ if ("1" === $plxPlugin->aProds[$plxPlugin->productNumber()]['pcat']) {
 if (in_array($plxPlugin->getParam("affPanier"), array("basPage", "partout"))){
  $plxPlugin->modele("espacePublic/panier");
 }
-//~ else {
- //~ $plxPlugin->modele("espacePublic/ajoutProduit");
-//~ }
-?>
-<!-- this is aff prod public -->
-<script type='text/javascript'>
-var error = false;
-var repertoireAjax = '<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/ajax/';
-var devise = '<?php echo $plxPlugin->getParam("devise");?>';
-var pos_devise = '<?php echo $plxPlugin->getParam("pos_devise");?>';
-var L_FOR = '<?php echo $plxPlugin->getlang('L_FOR'); ?>';
-var L_DEL = '<?php echo $plxPlugin->getlang('L_DEL'); ?>';
-var L_TOTAL = '<?php echo $plxPlugin->getlang('L_TOTAL_BASKET'); ?>';
-</script>
