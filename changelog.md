@@ -34,15 +34,28 @@
 BUG les drapeaux le multilingue disparaissent au panier, mais sont présent dans catégories & produits ;)
 BUG l'option "afficher le bouton ajouter au panier" ne fonctionne pas, si à non, l'affiche quant même ::: la changer pour le lien panier. Est-ce important?
 Bug "J'ai lu et j'accepte les conditions générales de vente." reste en français ainsi que le selecteur du mode de paiement (alors que tout le panier est en anglais), il prend la phrase de la config ;)
-Bug Si le produit est désactivé ou supprimé et qu'il est enregistré dans le cookie paner du client, il possible de le(s) commander quant-même. (Vérifier si le(s) produit(s) du cookie sont encores disponibles a la vente)
+
+bug? les url sont non claire, et permettent de basculer d'une url a l'autre (attention au DC de GG) ::: produit (mauvaise redirection, ou pas, si par exemple product 2 est une catégorie alors que l'on cherche un produit atterrit sur une catégorie, et l'url n'est pas réécrite, c'est pareil avec les catégories => prod) 
 
 dire a l'utilisateur que le panier s'affiche que si javascript est activé (boutons la boutique)
-le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont un admin.php (vue avec plx5.4 & maybe after)
+le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont un admin.php (vu avec plx5.4 & maybe after)
+
+##v0.13.1b5 18/04/2017##
+* [+] Plus joli (Yannic)
+* [+] Ajout d'un bouton au mini paniers pour enlever les produits (hook plxMyShopShowMiniPanier)
+* [+] Ajout des liens produits aux paniers
+* [+] panier.php : Js en ligne déplacé dans une fonction interne du plugin et utilise le hook plxMyShopPanierFin
+* [+] Améliorer l'adaptibilité sur les petit écrans, listes + ajout des liens sur l'id pour éditer & ajout du titre "voir" dans le fichier de langue
+* Fix : Enlever les produits du panier qui ont été supprimés/désactivés entre temps
+* FiX : Utiliser plxMotor déja instancié dans la fonction "modele"
+* Fix : Si l'url de la catègorie & produit est inexistante, aucune redirction 404!
+* Fix : Texte d'exemple des champs de l'emplacement des données, placeholder pour 5.4, 5.5 & 5.6 (fonction printInput)
+* Fix : noscript sur toutes les pages de l'admin 
 
 ##v0.13.1b4 16/04/2017##
-* [+] Admin : Utilisation du selecteur d'image natif à PluXml (Yannic)
-* Fix Config : texte d'exemple des champs de l'emplacement des données placeholder
-* Fix menu barre d'action : boutons valide Xhtml 
+* [+] Admin : Utilisation du selecteur d'image natif à PluXml (Yannic) minimum compat media system 5.4
+* Fix : Config : texte d'exemple des champs de l'emplacement des données placeholder (5.6 only)
+* Fix : Admin : Menu barre d'action : boutons valide Xhtml 
 
 ##v0.13.1b3 15/04/2017##
 * [+] Public : panier.css transferé dans site.css, Nettoyage des javascripts & jquery en Vanilla
