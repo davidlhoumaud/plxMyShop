@@ -60,7 +60,6 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
 
 ?>
 
-<script type='text/javascript' src='<?php echo PLX_PLUGINS;?>plxMyShop/js/libajax.js'></script>
 <p class="in-action-bar return-link plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
  <a href="plugin.php?p=plxMyShop<?php echo ($modProduit ? '' : '&mod=cat');?>"><?php
   echo $plxPlugin->lang($modProduit ? 'L_PRODUCT_BACK_TO_PAGE' : 'L_CAT_BACK_TO_PAGE');
@@ -76,7 +75,6 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
  title.className += " hide";
  document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title.innerHTML;
 </script>
-<script type='text/javascript' src='<?php echo PLX_PLUGINS.get_class($plxPlugin); ?>/js/libajax.js'></script>
 
 <?php eval($plxAdmin->plxPlugins->callHook('AdminProductTop'));?>
 
