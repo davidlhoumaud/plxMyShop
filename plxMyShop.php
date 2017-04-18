@@ -50,6 +50,7 @@ class plxMyShop extends plxPlugin {
   $this->addHook('AdminTopBottom', 'AdminTopBottom');
   $this->addHook('plxShowStaticContent', 'plxShowStaticContent');
   $this->addHook('ThemeEndBody', 'ThemeEndBody');
+  $this->addHook('AdminTopEndHead', 'AdminTopEndHead');
 
   $this->getProducts();
 
@@ -109,6 +110,18 @@ class plxMyShop extends plxPlugin {
   }
  }
 
+ /**
+ * Méthode qui charge le code css nécessaire à la gestion de onglet dans l'écran de configuration du plugin
+ *
+ * @return	stdio
+ * @author	Stephane F
+ **/
+ public function AdminTopEndHead() {
+  if ((basename($_SERVER['SCRIPT_NAME'])=='plugin.php' || basename($_SERVER['SCRIPT_NAME'])=='parametres_plugin.php') && (isset($_GET['p']) && $_GET['p']=='plxMyShop')) {
+   echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plug['name'].'/css/administration.css" />'."\n";
+  }
+ }
+ 
  public function plxMyShopShowMiniPanier(){
   $class = $this->plxMotor->get=='boutique/panier'?'active':'noactive';
 ?>
