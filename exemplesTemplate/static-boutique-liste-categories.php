@@ -1,3 +1,5 @@
+<?php if (!defined('PLX_ROOT')) exit; ?>
+
 <?php include(dirname(__FILE__) . '/header.php'); ?>
  <main class="main grid" role="main">
   <section class="col sml-12">

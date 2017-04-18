@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('PLX_ROOT')) exit;
 
 /**
  * Edition du code source d'un produit

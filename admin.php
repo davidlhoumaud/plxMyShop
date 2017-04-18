@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('PLX_ROOT')) exit;
 /**
  * Edition des produits
  * @package PLX

@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('PLX_ROOT')) exit;
 $plxShow = plxShow::getInstance();
 $plxPlugin = $plxShow->plxMotor->plxPlugins->aPlugins['plxMyShop'];
 $plxPlugin->donneesModeles["plxPlugin"] = $plxPlugin;
