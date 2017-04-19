@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('PLX_ROOT')) exit;
 
 /**
  * Edition du code source d'un produit
@@ -6,6 +6,17 @@
  * @package PLX
  * @author David L
  **/
+ 
+# Liste des langues disponibles et prises en charge par le plugin
+$aLangs = array($plxAdmin->aConf['default_lang']);
+
+# Si le plugin plxMyMultiLingue est installé on filtre sur les langues utilisées
+# On garde par défaut le fr si aucune langue sélectionnée dans plxMyMultiLingue
+if(defined('PLX_MYMULTILINGUE')) {
+ $langs = plxMyMultiLingue::_Langs();
+ $multiLangs = empty($langs) ? array() : explode(',', $langs);
+ $aLangs = $multiLangs;
+}
 
 # On édite le produit
 if(!empty($_POST) AND isset($plxPlugin->aProds[$_POST['id']])) {
@@ -20,7 +31,10 @@ if(!empty($_POST) AND isset($plxPlugin->aProds[$_POST['id']])) {
   exit;
  }
  # On récupère le contenu
- $content = trim($plxPlugin->getFileProduct($id));
+ foreach ($aLangs as $lang)
+ {
+  $content[$lang] = trim($plxPlugin->getFileProduct($id,$lang));
+ }
  $image = $plxPlugin->aProds[$id]['image'];
  $pricettc = $plxPlugin->aProds[$id]['pricettc'];
  $pcat = $plxPlugin->aProds[$id]['pcat'];
@@ -58,15 +72,8 @@ if (!isset($_SESSION)) {
 $_SESSION["plxMyShop"]["cheminImages"] = realpath(PLX_ROOT . $plxPlugin->cheminImages);
 $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminImages);
 
-$cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
 ?>
-<script type="text/javascript">
- var s = document.createElement("link"); s.href = "<?php echo $cssAdmn;?>"; s.async = true; s.rel = "stylesheet"; s.type = "text/css"; s.media = "screen";;
- var mx = document.getElementsByTagName('link'); mx = mx[mx.length-1]; mx.parentNode.insertBefore(s, mx.nextSibling);
-</script>
-<noscript><link rel="stylesheet" type="text/css" href="<?php echo $cssAdmn;?>" /></noscript>
 
-<script type='text/javascript' src='<?php echo PLX_PLUGINS;?>plxMyShop/js/libajax.js'></script>
 <p class="in-action-bar return-link plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
  <a href="plugin.php?p=plxMyShop<?php echo ($modProduit ? '' : '&mod=cat');?>"><?php
   echo $plxPlugin->lang($modProduit ? 'L_PRODUCT_BACK_TO_PAGE' : 'L_CAT_BACK_TO_PAGE');
@@ -82,10 +89,9 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
  title.className += " hide";
  document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title.innerHTML;
 </script>
-<script type='text/javascript' src='<?php echo PLX_PLUGINS.get_class($plxPlugin); ?>/js/libajax.js'></script>
 
 <?php eval($plxAdmin->plxPlugins->callHook('AdminProductTop'));?>
-
+<div id="tabContainer">
 <form action="plugin.php?p=plxMyShop" method="post" id="form_article">
  <fieldset>
   <?php plxUtils::printInput('prod', $_GET['prod'], 'hidden');?>
@@ -94,7 +100,18 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
    <?php $plxPlugin->lang('L_PRODUCTS_SHORTCODE'); ?>&nbsp;:<br/>
    <span class="code">[<?php echo $plxPlugin->shortcode;?> <?php echo $id;?>]</span>
   </div>
-
+	<div class="tabs">
+		<ul>
+			<li id="tabHeader_main"><?php $plxPlugin->lang('L_MAIN') ?></li>
+			<?php
+			foreach($aLangs as $lang) {
+				echo '<li id="tabHeader_'.$lang.'">'.L_CONTENT_FIELD.' <sup>'.strtoupper($lang).'</sup></li>';
+			}
+			?>
+		</ul>
+	</div>
+	<div class="tabscontent">
+		<div class="tabpage" id="tabpage_main">
   <!-- Utilisation du selecteur d'image natif à PluXml -->
   <script>
   function refreshImg(dta) {
@@ -121,9 +138,6 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
   }
 ?>
 <!-- Fin du selecteur d'image natif de PluXml -->
-
-  <p id="p_content"><label for="id_content"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label></p>
-  <?php plxUtils::printArea('content', plxUtils::strCheck($content),140,30); ?>
 
 <?php
   if($active) : 
@@ -196,8 +210,25 @@ $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
   </p>
   <?php plxUtils::printInput('meta_keywords',plxUtils::strCheck($meta_keywords),'text','50-255');?>
  </fieldset>
+ 
+ <!-- Content en multilingue -->
+ </div>
+<?php
+foreach($aLangs as $lang) { ?>
+	<div class="tabpage" id="tabpage_<?php echo $lang ?>" style="display:none;">
+	<fieldset>
+		<p class="field"><label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label></p>
+		<?php plxUtils::printArea('content_'.$lang,plxUtils::strCheck($content[$lang]),140,30) ?>
+	</fieldset>
+  </div>
+<?php } ?>
+ </div>
+</div>
+<!-- Fin du content en multilingue -->
+  
  <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
   <?php echo plxToken::getTokenPostMethod() ?>
   <input type="submit" value="<?php $plxPlugin->lang($modProduit?'L_PRODUCT_UPDATE':'L_CAT_UPDATE');?>"/>
  </p>
 </form>
+<script type="text/javascript" src="<?php echo PLX_PLUGINS."plxMyShop/js/tabs.js" ?>"></script>

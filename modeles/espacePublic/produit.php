@@ -1,12 +1,12 @@
-<?php
+<?php if (!defined('PLX_ROOT')) exit;
 /*
 Si vous réutilisez ce fichier dans votre thème, nous vous conseillons de noter la version actuelle de plxMyShop
 version : 
 */
 $plxPlugin = $d["plxPlugin"];
 $produit = $plxPlugin->aProds[$plxPlugin->productNumber()];
-
 if (is_array($plxPlugin->productGroupTitle())) {
+echo '<div id="prod'.$plxPlugin->productNumber().'"></div>';
  $i=0;
  foreach($plxPlugin->productGroupTitle() as $key => $value) {
   echo ($i>0?',':'').'<a href="'.$plxPlugin->productRUrl($key).'">'.$value.'</a>';

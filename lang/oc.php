@@ -30,6 +30,7 @@ $LANG = array(
 'L_PRODUCTCONTENT_INPROCESS'        => 'Aqueste produit es a èsser escrich pel moment',
 
 # products.php
+'L_MAIN'                            => 'General',
 'L_PRODUCTS_PAGE_TITLE'             => 'Creacion e edicion dels produits',
 'L_PRODUCTS_ID'                     => 'Identificant',
 'L_PRODUCTS_GROUP'                  => 'Grop',

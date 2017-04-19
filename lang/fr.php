@@ -60,7 +60,7 @@ $LANG = array(
 
 
 # product.php
-
+'L_MAIN'                            => 'Général',
 'L_PRODUCT_BACK_TO_PAGE'            => 'Retour à la liste des produits',
 'L_CAT_BACK_TO_PAGE'                => 'Retour à la liste des catégories',
 'L_PRODUCT_UNKNOWN_PAGE'            => 'Ce produit n\'existe pas ou n\'existe plus !',

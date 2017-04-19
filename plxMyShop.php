@@ -50,6 +50,8 @@ class plxMyShop extends plxPlugin {
   $this->addHook('AdminTopBottom', 'AdminTopBottom');
   $this->addHook('plxShowStaticContent', 'plxShowStaticContent');
   $this->addHook('ThemeEndBody', 'ThemeEndBody');
+  $this->addHook('AdminTopEndHead', 'AdminTopEndHead');
+  $this->addHook('ThemeEndHead', 'ThemeEndHead');
 
   $this->getProducts();
 
@@ -108,7 +110,41 @@ class plxMyShop extends plxPlugin {
    $this->addHook('IndexEnd', 'IndexEnd');
   }
  }
-
+ /** 
+ * Méthode d'ajout des <link rel="alternate"... sur les pages
+ * 
+ **/
+ public function ThemeEndHead() {
+  if(defined('PLX_MYMULTILINGUE')) {
+   $plxMML = is_array(PLX_MYMULTILINGUE)?PLX_MYMULTILINGUE:unserialize(PLX_MYMULTILINGUE);
+   $langues = empty($plxMML['langs']) ? array() : explode(',', $plxMML['langs']);
+   $affiche = '<?php
+';
+   if($this->plxMotor->get=='boutique/panier' || preg_match("#product([0-9]+)/?([a-z0-9-]+)?#", $this->plxMotor->get)) {
+    foreach($langues as $k=>$v) {
+     $url_lang="";
+     if($_SESSION['default_lang']!=$v) $url_lang = $v.'/';
+     $affiche .= 'echo "\t<link rel=\"alternate\" hreflang=\"'.$v.'\" href=\"".$plxMotor->urlRewrite("?'.$url_lang.$this->plxMotor->get.'")."\" />\n";';
+    }
+	$affiche .= ' ?>';
+	echo $affiche;
+   }
+  }
+ }
+	
+ /**
+ * Méthode qui charge le code css nécessaire à la gestion de onglet dans l'écran de configuration du plugin
+ *
+ * @return	stdio
+ * @author	Stephane F
+ **/
+ public function AdminTopEndHead() {
+  if ((basename($_SERVER['SCRIPT_NAME'])=='plugin.php' || basename($_SERVER['SCRIPT_NAME'])=='parametres_plugin.php') && (isset($_GET['p']) && $_GET['p']=='plxMyShop')) {
+   echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plug['name'].'/css/administration.css" />'."\n";
+   echo '<link  rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plug['name'].'/css/tabs.css" />'."\n";
+  }
+ }
+ 
  public function plxMyShopShowMiniPanier(){
   $class = $this->plxMotor->get=='boutique/panier'?'active':'noactive';
 ?>
@@ -608,7 +644,7 @@ for($i=1;$i<=11;$i++){
    $this->vue->plxPlugin = $this;
    $this->vue->traitement();
 
-   $this->plxMotor->mode = "static";
+   $this->plxMotor->mode = "boutique";
    $this->plxMotor->cible = $nomPlugin;
    $this->plxMotor->template = $this->getParam("template");
 
@@ -885,9 +921,15 @@ for($i=1;$i<=11;$i++){
   * @return string contenu de la page
   * @author Stephane F.
   **/
- public function getFileProduct($num){
+ public function getFileProduct($num,$langue){
+  if (!empty($langue) && defined('PLX_MYMULTILINGUE'))
+   $langue .= '/';
+  else
+   $langue = '';
+
+  $content = '';
   # Emplacement de la page
-  $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$num.'.'.$this->aProds[ $num ]['url'].'.php';
+  $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$langue.$num.'.'.$this->aProds[ $num ]['url'].'.php';
   if(is_file($filename) AND filesize($filename) > 0){
    if($f = fopen($filename, 'r')){
     $content = fread($f, filesize($filename));
@@ -895,6 +937,18 @@ for($i=1;$i<=11;$i++){
     # On retourne le contenu
     return $content;
    }
+  }
+  if (defined('PLX_MYMULTILINGUE') && empty(trim($content))) # si contenu vide en multilingue on essaye de recuperer sans la langue.
+  {
+   $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$num.'.'.$this->aProds[ $num ]['url'].'.php';
+  if(is_file($filename) AND filesize($filename) > 0){
+   if($f = fopen($filename, 'r')){
+    $content = fread($f, filesize($filename));
+    fclose($f);
+    # On retourne le contenu
+    return $content;
+   }
+  }  
   }
   return null;
  }
@@ -933,15 +987,35 @@ for($i=1;$i<=11;$i++){
    if (!is_dir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')))){
     mkdir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')), 0755, true);
    }
-   # Génération du nom du fichier de la page statique
-   $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$content['id'].'.'.$this->aProds[ $content['id'] ]['url'].'.php';
-   # On écrit le fichier
-   if(plxUtils::write($content['content'],$filename))
-    return plxMsg::Info(L_SAVE_SUCCESSFUL);
-   else
-    return plxMsg::Error(L_SAVE_ERR.' '.$filename);
+  $aLangs = array($this->plxMotor->aConf['default_lang']);
+  if(defined('PLX_MYMULTILINGUE')) {
+   $langs = plxMyMultiLingue::_Langs();
+   $multiLangs = empty($langs) ? array() : explode(',', $langs);
+   $aLangs = $multiLangs;
+   foreach ($aLangs as $lang)
+   {
+    if (!is_dir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/')){
+     mkdir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/', 0755, true);
+    } 
+   }
   }
- }
+  $infos = null;
+  foreach ($aLangs as $lang)
+  {
+   $url_save = '';
+   if(defined('PLX_MYMULTILINGUE')) { $url_save = $lang.'/'; }
+    # Génération du nom du fichier de la page statique
+    $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_save.$content['id'].'.'.$this->aProds[ $content['id'] ]['url'].'.php';
+
+    # On écrit le fichier
+    if(!plxUtils::write($content['content_'.$lang],$filename))
+     $infos .= plxMsg::Error(L_SAVE_ERR.' '.$filename);
+    else
+	 $infos .= plxMsg::Info(L_SAVE_SUCCESSFUL.' '.$filename);
+  }
+   return $infos;
+   }
+  }
 
  /**
   * Méthode qui retourne l'id du produit active
@@ -1107,10 +1181,24 @@ for($i=1;$i<=11;$i++){
   **/
  public function plxShowProductContent(){
   # On va verifier que la page a inclure est lisible
+  
   if($this->aProds[ $this->productNumber() ]['readable'] == 1){
+
+   $url_read = '';
+   if(defined('PLX_MYMULTILINGUE') && isset($_SESSION['lang'])) {
+    $url_read = $_SESSION['lang'].'/';
+   }
+  
    # On genere le nom du fichier a inclure
-   $file = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$this->productNumber();
+   $file = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_read.$this->productNumber();
    $file .= '.'.$this->aProds[ $this->productNumber() ]['url'].'.php';
+   
+   if(!is_file($file))
+   {
+    # On tente de recuperer le contenu du fichier sans langue.
+    $file = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$this->productNumber();
+    $file .= '.'.$this->aProds[ $this->productNumber() ]['url'].'.php';
+   }
    # Inclusion du fichier
    ob_start();
    require $file;
@@ -1132,10 +1220,23 @@ for($i=1;$i<=11;$i++){
  public function plxShowProductInclude($id){
   # Hook Plugins
   //if(eval($this->plxMotor->plxPlugins->callHook('plxShowProductInclude'))) return ;
+  $url_read = '';
+  if(defined('PLX_MYMULTILINGUE') && isset($_SESSION['lang'])) {
+   $url_read = $_SESSION['lang'].'/';
+  }
+   
   # On génère un nouvel objet plxGlob
-  $plxGlob_stats = plxGlob::getInstance(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')));
+  $plxGlob_stats = plxGlob::getInstance(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_read);
   if($files = $plxGlob_stats->query('/^'.str_pad($id,3,'0',STR_PAD_LEFT).'.[a-z0-9-]+.php$/')){
-   include(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$files[0]);
+   include(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_read.$files[0]);
+  }
+  else
+  {
+   # on tente sans la langue.
+   $plxGlob_stats = plxGlob::getInstance(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')));
+   if($files = $plxGlob_stats->query('/^'.str_pad($id,3,'0',STR_PAD_LEFT).'.[a-z0-9-]+.php$/')){
+    include(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$files[0]);
+   }
   }
  }
 
@@ -1155,7 +1256,7 @@ for($i=1;$i<=11;$i++){
    // ajout du lien vers le panier
    $nomPlugin = __CLASS__;
    $panierSelectionne = (
-     ("static" === $this->plxMotor->mode)
+     ("boutique" === $this->plxMotor->mode)
     && ($nomPlugin === $this->plxMotor->cible)
     && ("panier" === get_class($this->vue))
    );

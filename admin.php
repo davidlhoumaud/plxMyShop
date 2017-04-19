@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('PLX_ROOT')) exit;
 /**
  * Edition des produits
  * @package PLX
@@ -54,13 +54,7 @@ function checkBox(obj){
   $onglet = "commandes";
   $titre = $plxPlugin->getLang("LIST_ORDERS");
  }
- $cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
 ?>
-<script type="text/javascript">
- var s = document.createElement("link"); s.href = "<?php echo $cssAdmn;?>"; s.async = true; s.rel = "stylesheet"; s.type = "text/css"; s.media = "screen";;
- var mx = document.getElementsByTagName('link'); mx = mx[mx.length-1]; mx.parentNode.insertBefore(s, mx.nextSibling);
-</script>
-<noscript><link rel="stylesheet" type="text/css" href="<?php echo $cssAdmn;?>" /></noscript>
 
 <h2 id="pmsTitle" class="page-title"><?php echo plxUtils::strCheck($titre);?></h2>
 <script type="text/javascript">//surcharge du titre dans l'admin

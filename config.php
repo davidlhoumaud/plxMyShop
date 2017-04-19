@@ -163,14 +163,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
  foreach($array as $k=>$v)
   $aTemplates[$v] = $v;
 }
-
-$cssAdmn = PLX_PLUGINS.get_class($plxPlugin).'/css/administration.css';
 ?>
-<script type="text/javascript">
- var s = document.createElement("link"); s.href = "<?php echo $cssAdmn;?>"; s.async = true; s.rel = "stylesheet"; s.type = "text/css"; s.media = "screen";;
- var mx = document.getElementsByTagName('link'); mx = mx[mx.length-1]; mx.parentNode.insertBefore(s, mx.nextSibling);
-</script>
-<noscript><link rel="stylesheet" type="text/css" href="<?php echo $cssAdmn;?>" /></noscript>
 
 <h3 id="pmsTitle" class="in-action-bar page-title hide"><?php echo $plxPlugin->lang('L_MENU_CONFIG').' '.$plxPlugin->getInfo('title');?></h3>
 <script type="text/javascript">//surcharge du titre dans l'admin
