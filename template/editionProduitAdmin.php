@@ -6,6 +6,17 @@
  * @package PLX
  * @author David L
  **/
+ 
+# Liste des langues disponibles et prises en charge par le plugin
+$aLangs = array($plxAdmin->aConf['default_lang']);
+
+# Si le plugin plxMyMultiLingue est installé on filtre sur les langues utilisées
+# On garde par défaut le fr si aucune langue sélectionnée dans plxMyMultiLingue
+if(defined('PLX_MYMULTILINGUE')) {
+ $langs = plxMyMultiLingue::_Langs();
+ $multiLangs = empty($langs) ? array() : explode(',', $langs);
+ $aLangs = $multiLangs;
+}
 
 # On édite le produit
 if(!empty($_POST) AND isset($plxPlugin->aProds[$_POST['id']])) {
@@ -20,7 +31,10 @@ if(!empty($_POST) AND isset($plxPlugin->aProds[$_POST['id']])) {
   exit;
  }
  # On récupère le contenu
- $content = trim($plxPlugin->getFileProduct($id));
+ foreach ($aLangs as $lang)
+ {
+  $content[$lang] = trim($plxPlugin->getFileProduct($id,$lang));
+ }
  $image = $plxPlugin->aProds[$id]['image'];
  $pricettc = $plxPlugin->aProds[$id]['pricettc'];
  $pcat = $plxPlugin->aProds[$id]['pcat'];
@@ -77,7 +91,7 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
 </script>
 
 <?php eval($plxAdmin->plxPlugins->callHook('AdminProductTop'));?>
-
+<div id="tabContainer">
 <form action="plugin.php?p=plxMyShop" method="post" id="form_article">
  <fieldset>
   <?php plxUtils::printInput('prod', $_GET['prod'], 'hidden');?>
@@ -86,7 +100,18 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
    <?php $plxPlugin->lang('L_PRODUCTS_SHORTCODE'); ?>&nbsp;:<br/>
    <span class="code">[<?php echo $plxPlugin->shortcode;?> <?php echo $id;?>]</span>
   </div>
-
+	<div class="tabs">
+		<ul>
+			<li id="tabHeader_main"><?php $plxPlugin->lang('L_MAIN') ?></li>
+			<?php
+			foreach($aLangs as $lang) {
+				echo '<li id="tabHeader_'.$lang.'">'.L_CONTENT_FIELD.' <sup>'.strtoupper($lang).'</sup></li>';
+			}
+			?>
+		</ul>
+	</div>
+	<div class="tabscontent">
+		<div class="tabpage" id="tabpage_main">
   <!-- Utilisation du selecteur d'image natif à PluXml -->
   <script>
   function refreshImg(dta) {
@@ -113,9 +138,6 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
   }
 ?>
 <!-- Fin du selecteur d'image natif de PluXml -->
-
-  <p id="p_content"><label for="id_content"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label></p>
-  <?php plxUtils::printArea('content', plxUtils::strCheck($content),140,30); ?>
 
 <?php
   if($active) : 
@@ -188,8 +210,25 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
   </p>
   <?php plxUtils::printInput('meta_keywords',plxUtils::strCheck($meta_keywords),'text','50-255');?>
  </fieldset>
+ 
+ <!-- Content en multilingue -->
+ </div>
+<?php
+foreach($aLangs as $lang) { ?>
+	<div class="tabpage" id="tabpage_<?php echo $lang ?>">
+	<fieldset>
+		<p class="field"><label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label></p>
+		<?php plxUtils::printArea('content_'.$lang,plxUtils::strCheck($content[$lang]),140,30) ?>
+	</fieldset>
+  </div>
+<?php } ?>
+ </div>
+</div>
+<!-- Fin du content en multilingue -->
+  
  <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
   <?php echo plxToken::getTokenPostMethod() ?>
   <input type="submit" value="<?php $plxPlugin->lang($modProduit?'L_PRODUCT_UPDATE':'L_CAT_UPDATE');?>"/>
  </p>
 </form>
+<script type="text/javascript" src="<?php echo PLX_PLUGINS."plxMyShop/js/tabs.js" ?>"></script>

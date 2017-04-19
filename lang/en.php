@@ -30,6 +30,7 @@ $LANG = array(
 'L_PRODUCTCONTENT_INPROCESS'        => 'This product is currently being edited',
 
 # products.php
+'L_MAIN'                            => 'Main',
 'L_PRODUCTS_PAGE_TITLE'             => 'Manage products',
 'L_PRODUCTS_ID'                     => 'Identifier',
 'L_PRODUCTS_GROUP'                  => 'Group',
