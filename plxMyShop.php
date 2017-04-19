@@ -644,7 +644,7 @@ for($i=1;$i<=11;$i++){
    $this->vue->plxPlugin = $this;
    $this->vue->traitement();
 
-   $this->plxMotor->mode = "static";
+   $this->plxMotor->mode = "boutique";
    $this->plxMotor->cible = $nomPlugin;
    $this->plxMotor->template = $this->getParam("template");
 
@@ -1256,7 +1256,7 @@ for($i=1;$i<=11;$i++){
    // ajout du lien vers le panier
    $nomPlugin = __CLASS__;
    $panierSelectionne = (
-     ("static" === $this->plxMotor->mode)
+     ("boutique" === $this->plxMotor->mode)
     && ($nomPlugin === $this->plxMotor->cible)
     && ("panier" === get_class($this->vue))
    );
