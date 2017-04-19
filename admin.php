@@ -132,32 +132,32 @@ function checkBox(obj){
    echo ($image!=""?'<img class="product_image" src="'.PLX_ROOT.$plxPlugin->cheminImages.$image.'">':'');
 ?>
    </td>
-   <?php
-   echo '<td>';
+<?php
+   echo '<td>'.PHP_EOL;
    plxUtils::printInput($k.'_name', plxUtils::strCheck($v['name']), 'text', '20-255');
-   echo '</td><td>';
+   echo '</td><td>'.PHP_EOL;
    plxUtils::printInput($k.'_url', $v['url'], 'text', '12-255');
-   echo '</td><td>';
+   echo '</td><td>'.PHP_EOL;
    plxUtils::printSelect($k.'_active', array('1'=>L_YES,'0'=>L_NO), $v['active']);
-   echo '</td><td>';
+   echo '</td><td>'.PHP_EOL;
    plxUtils::printInput($k.'_ordre', $ordre, 'text', '2-3');
-   echo '</td>';
+   echo '</td>'.PHP_EOL;
 
    if ($v['pcat']==1){
     echo '<td>';
     plxUtils::printSelect($k.'_menu', array('oui'=>L_DISPLAY,'non'=>L_HIDE), $v['menu']);
-    echo '</td>';
+    echo '</td>'.PHP_EOL;
    } else {
     echo '<td class="nombre">';
     if ($v["pricettc"] > 0){
      echo $plxPlugin->pos_devise($v["pricettc"]);
     }
-    echo '</td>';
+    echo '</td>'.PHP_EOL;
     echo '<td class="nombre">';
     if ($v["poidg"] > 0){
      echo $v["poidg"];
     }
-    echo '</td>';
+    echo '</td>'.PHP_EOL;
    }
 
    if(!plxUtils::checkSite($v['url'])){
@@ -166,12 +166,12 @@ function checkBox(obj){
     if($v['active']){
      echo '&nbsp;-&nbsp;<a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.sprintf($plxPlugin->getLang('L_VIEW_ONLINE'), plxUtils::strCheck($v['name'])).'">'.L_VIEW.'</a>';
     }
-    echo '</td></tr>';
+    echo '</td></tr>'.PHP_EOL;
    }
    elseif($url[0]=='?')
-    echo '</td><td>b <a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.plxUtils::strCheck($v['name']).'">'.L_VIEW.'</a></td></tr>';
+    echo '</td><td>b <a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.plxUtils::strCheck($v['name']).'">'.L_VIEW.'</a></td></tr>'.PHP_EOL;
    else
-    echo '</td><td>c <a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.plxUtils::strCheck($v['name']).'">'.L_VIEW.'</a></td></tr>';
+    echo '</td><td>c <a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.plxUtils::strCheck($v['name']).'">'.L_VIEW.'</a></td></tr>'.PHP_EOL;
   }
   # On récupère le dernier identifiant
   $a = array_keys($plxPlugin->aProds);
@@ -184,23 +184,23 @@ function checkBox(obj){
   <tr class="new">
    <td>&nbsp;<?php echo '<input type="hidden" name="productNum[]" value="'.$new_productid.'" />'; ?></td>
    <td><?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getlang('L_NEW_CATEGORY'):$plxPlugin->getlang('L_NEW_PRODUCT')); ?></td>
-   <td><input title="<?php $plxPlugin->lang('L_CAT') ?><?php echo '" type="hidden" name="'.$new_productid.'_pcat" value="'.(isset($_GET['mod']) && $_GET['mod']=='cat'?'1':'0').'" '.(isset($_GET['mod']) && $_GET['mod']=='cat'?'checked':'').' onclick="checkBox(this);" ></td>';
+   <td><input title="<?php $plxPlugin->lang('L_CAT') ?><?php echo '" type="hidden" name="'.$new_productid.'_pcat" value="'.(isset($_GET['mod']) && $_GET['mod']=='cat'?'1':'0').'" '.(isset($_GET['mod']) && $_GET['mod']=='cat'?'checked':'').' onclick="checkBox(this);" /></td>'.PHP_EOL;
     echo '<td>';
     plxUtils::printInput($new_productid.'_name', '', 'text', '20-255');
     plxUtils::printInput($new_productid.'_template', $plxPlugin->getParam('template'), 'hidden');
-    echo '</td><td>';
+    echo '</td><td>'.PHP_EOL;
     plxUtils::printInput($new_productid.'_url', '', 'text', '12-255');
-    echo '</td><td>';
+    echo '</td><td>'.PHP_EOL;
     plxUtils::printSelect($new_productid.'_active', array('1'=>L_YES,'0'=>L_NO), '0');
-    echo '</td><td>';
+    echo '</td><td>'.PHP_EOL;
     plxUtils::printInput($new_productid.'_ordre', ++$num, 'text', '2-3');
-    echo '</td>';
+    echo '</td>'.PHP_EOL;
     if (isset($_GET['mod']) && $_GET['mod']=='cat'){
      echo '<td>';
      plxUtils::printSelect($new_productid.'_menu', array('oui'=>L_DISPLAY,'non'=>L_HIDE), '0');
-     echo '</td>';
+     echo '</td>'.PHP_EOL;
     } else {
-     echo "<td colspan=\"3\">&nbsp;</td>";
+     echo '<td colspan="3">&nbsp;</td>'.PHP_EOL;
     }
 ?>
   </tr>
@@ -217,11 +217,11 @@ function checkBox(obj){
  while (list ($key, $val) = each ($filescommande) ){
   $namearray=preg_split('/_/',$val);
   $date=preg_split('/-/',$namearray[0]);
-  echo '<tr>'.
-   '   <td>'.$date[2].'-'.$date[1].'-'.$date[0].' &agrave; '.preg_replace('/-/',':',$namearray[1]).'</td>'.
-   '   <td>'.$namearray[2].'</td>'.
-   '   <td class="nombre">'.$plxPlugin->pos_devise((float)$namearray[3]+(float)preg_replace('/.html/','',$namearray[4])).'</td>'.
-   '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p=plxMyShop&amp;mod=cmd&amp;kill='.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a href="'.$dir.$val.'" target="_BLANK">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.
+  echo '<tr>'.PHP_EOL.
+   '   <td>'.$date[2].'-'.$date[1].'-'.$date[0].' &agrave; '.preg_replace('/-/',':',$namearray[1]).'</td>'.PHP_EOL.
+   '   <td>'.$namearray[2].'</td>'.PHP_EOL.
+   '   <td class="nombre">'.$plxPlugin->pos_devise((float)$namearray[3]+(float)preg_replace('/.html/','',$namearray[4])).'</td>'.PHP_EOL.
+   '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p=plxMyShop&amp;mod=cmd&amp;kill='.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a href="'.$dir.$val.'" target="_BLANK">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.PHP_EOL.
    '</tr>';
  };
 
@@ -230,7 +230,6 @@ function checkBox(obj){
    </table>
   </div>
 </form>
-
 <?php }
 if($onglet=='commandes')
  include('datatables.js.php');
