@@ -209,7 +209,7 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
       <div class="tabpage" id="tabpage_<?php echo $lang ?>" style="display:none;">
        <fieldset>
         <p class="field"><label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label></p>
-        <?php plxUtils::printArea('content_'.$lang,plxUtils::strCheck($content[$lang]),140,30) ?>
+        <?php plxUtils::printArea('content',plxUtils::strCheck($content[$lang]),140,30) ?>
        </fieldset>
       </div>
 <?php } ?>
