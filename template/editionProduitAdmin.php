@@ -119,8 +119,8 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
     <fieldset>
      <p class="field">
       <label><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail" href="javascript:void(0)" onclick="mediasManager.openPopup('id_image', true)" style="outline:none; text-decoration: none"> +</a></label>
-     <?php plxUtils::printInput('image',plxUtils::strCheck($image),'text','140-255',false,'','','onkeyup="refreshImg(this.value)"'); ?>
      </p>
+     <?php plxUtils::printInput('image',plxUtils::strCheck($image),'text','140-255',false,'','','onkeyup="refreshImg(this.value)"'); ?>
     </fieldset>
 <?php
     $imgUrl = PLX_ROOT.$plxPlugin->cheminImages.$image;
@@ -178,43 +178,27 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
      <?php plxUtils::printInput('noaddcart', plxUtils::strCheck($noaddcart),'hidden','50-255');?>
      <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'hidden','50-255');?>
 <?php } ?>
-    <p>
-     <label for="id_template">
-      <?php $plxPlugin->lang('L_PRODUCTS_TEMPLATE_FIELD');?>&nbsp;:
-     </label>
-    </p>
+    <p><label for="id_template"><?php $plxPlugin->lang('L_PRODUCTS_TEMPLATE_FIELD');?>&nbsp;:</label></p>
     <?php plxUtils::printSelect('template', $aTemplates, $template);?>
-    <p>
-     <label for="id_title_htmltag">
-      <?php $plxPlugin->lang('L_PRODUCT_TITLE_HTMLTAG');?>&nbsp;:
-     </label>
-    </p>
+    <p><label for="id_title_htmltag"><?php $plxPlugin->lang('L_PRODUCT_TITLE_HTMLTAG');?>&nbsp;:</label></p>
     <?php plxUtils::printInput('title_htmltag',plxUtils::strCheck($title_htmltag),'text','50-255');?>
-    <p>
-     <label for="id_meta_description">
-      <?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_DESCRIPTION':'L_CAT_META_DESCRIPTION');?>&nbsp;:
-     </label>
-    </p>
+    <p><label for="id_meta_description"><?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_DESCRIPTION':'L_CAT_META_DESCRIPTION');?>&nbsp;:</label></p>
     <?php plxUtils::printInput('meta_description',plxUtils::strCheck($meta_description),'text','50-255'); ?>
-    <p>
-     <label for="id_meta_keywords">
-      <?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_KEYWORDS':'L_CAT_META_KEYWORDS');?>&nbsp;:
-     </label>
-    </p>
+    <p><label for="id_meta_keywords"><?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_KEYWORDS':'L_CAT_META_KEYWORDS');?>&nbsp;:</label></p>
     <?php plxUtils::printInput('meta_keywords',plxUtils::strCheck($meta_keywords),'text','50-255');?>
    </div><!-- fi tabpage_main -->
 
-  <!-- Content en multilingue -->
+<!-- Content en multilingue -->
 <?php foreach($aLangs as $lang) { ?>
-      <div class="tabpage" id="tabpage_<?php echo $lang ?>" style="display:none;">
-       <fieldset>
-        <p class="field"><label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label></p>
-        <?php plxUtils::printArea('content_'.$lang,plxUtils::strCheck($content[$lang]),140,30) ?>
-       </fieldset>
-      </div>
-<?php } ?>
- <!-- Fin du content en multilingue -->
+   <div class="tabpage" id="tabpage_<?php echo $lang ?>" style="display:none;">
+    <fieldset>
+     <p class="field"><label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label></p>
+     <?php plxUtils::printArea('content_'.$lang,plxUtils::strCheck($content[$lang]),140,30) ?>
+    </fieldset>
    </div>
+<?php } ?>
+<!-- Fin du content en multilingue -->
+  </div><!-- fi tabpage id:tabscontent -->
 
   <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
    <?php echo plxToken::getTokenPostMethod() ?>

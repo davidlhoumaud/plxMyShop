@@ -190,10 +190,14 @@ table.dataTable {
 /* surcharge plx 5.6 */
 .button{
  padding: 0.3rem 0.7rem;
-}
-input, textarea {
+} /* */
+input[type="text"], textarea {
  width: 100%;
 }
+form#form_plxmyshop input[type="text"] {
+ width: inherit;
+}
+
 
 @media (max-width: 767px) {
  #id_image_img img{
