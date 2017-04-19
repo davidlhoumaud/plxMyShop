@@ -53,13 +53,19 @@ class plxMyShop extends plxPlugin {
   $this->addHook('AdminTopEndHead', 'AdminTopEndHead');
   $this->addHook('ThemeEndHead', 'ThemeEndHead');
 
+  // Ajout de variables non protégé facilement accessible via $(plxShow->)plxMotor->plxPlugins->aPlugins['plxMyShop']->aConf['racine_XXX'] dans les themes ou dans d'autres plugins.
+  $this->aConf['racine_products'] = (empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products'));
+  $this->aConf['racine_commandes'] = (empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes'));
+  if(defined('PLX_MYMULTILINGUE') && !empty($default_lang))
+	  $this->aConf['racine_products_lang'] = $this->aConf['racine_products'].$default_lang.'/';
+  
   $this->getProducts();
 
-  if (!is_dir(PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')))){
-   mkdir(PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')), 0755, true);
+  if (!is_dir(PLX_ROOT.$this->aConf['racine_commandes'])){
+   mkdir(PLX_ROOT.$this->aConf['racine_commandes'], 0755, true);
   }
-  if (!is_file(PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')).'index.html')){
-   $mescommandeindex = fopen(PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')).'index.html', 'w+');
+  if (!is_file(PLX_ROOT.$this->aConf['racine_commandes'].'index.html')){
+   $mescommandeindex = fopen(PLX_ROOT.$this->aConf['racine_commandes'].'index.html', 'w+');
    fclose($mescommandeindex);
   }
 
