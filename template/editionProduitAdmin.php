@@ -31,8 +31,7 @@ if(!empty($_POST) AND isset($plxPlugin->aProds[$_POST['id']])) {
   exit;
  }
  # On récupère le contenu
- foreach ($aLangs as $lang)
- {
+ foreach ($aLangs as $lang) {
   $content[$lang] = trim($plxPlugin->getFileProduct($id,$lang));
  }
  $image = $plxPlugin->aProds[$id]['image'];
@@ -59,21 +58,15 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
   $aTemplates[$v] = $v;
 }
 
-# On inclut le header
-//include(dirname(__FILE__).'/top.php');
-
 $modProduit = ("1" !== $pcat);
 
-
-if (!isset($_SESSION)) {
+if (!isset($_SESSION)) {// inutile?
  session_start();
 }
-
 $_SESSION["plxMyShop"]["cheminImages"] = realpath(PLX_ROOT . $plxPlugin->cheminImages);
 $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminImages);
 
 ?>
-
 <p class="in-action-bar return-link plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
  <a href="plugin.php?p=plxMyShop<?php echo ($modProduit ? '' : '&mod=cat');?>"><?php
   echo $plxPlugin->lang($modProduit ? 'L_PRODUCT_BACK_TO_PAGE' : 'L_CAT_BACK_TO_PAGE');
@@ -84,151 +77,150 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
  <?php $plxPlugin->lang($modProduit ? 'L_PRODUCT_TITLE' : 'L_CAT_TITLE');?>
  &laquo;<?php echo plxUtils::strCheck($title);?>&raquo;
 </h3>
-<script type="text/javascript">//surcharge du titre dans l'admin
+<script type="text/javascript">//surcharge du titre dans l'action bar
  var title = document.getElementById('pmsTitle');
  title.className += " hide";
  document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title.innerHTML;
 </script>
 
-<?php eval($plxAdmin->plxPlugins->callHook('AdminProductTop'));?>
-<div id="tabContainer">
+<?php eval($plxAdmin->plxPlugins->callHook('AdminProductTop')); // hook plugin ?>
 <form action="plugin.php?p=plxMyShop" method="post" id="form_article">
- <fieldset>
-  <?php plxUtils::printInput('prod', $_GET['prod'], 'hidden');?>
-  <?php plxUtils::printInput('id', $id, 'hidden');?>
-  <div class="informationsShortcodeProduit">
-   <?php $plxPlugin->lang('L_PRODUCTS_SHORTCODE'); ?>&nbsp;:<br/>
-   <span class="code">[<?php echo $plxPlugin->shortcode;?> <?php echo $id;?>]</span>
-  </div>
-	<div class="tabs">
-		<ul>
-			<li id="tabHeader_main"><?php $plxPlugin->lang('L_MAIN') ?></li>
-			<?php
-			foreach($aLangs as $lang) {
-				echo '<li id="tabHeader_'.$lang.'">'.L_CONTENT_FIELD.' <sup>'.strtoupper($lang).'</sup></li>';
-			}
-			?>
-		</ul>
-	</div>
-	<div class="tabscontent">
-		<div class="tabpage" id="tabpage_main">
-  <!-- Utilisation du selecteur d'image natif à PluXml -->
-  <script>
-  function refreshImg(dta) {
-   if(dta.trim()==='') {
-    document.getElementById('id_image_img').innerHTML = '';
-   } else {
-    var link = dta.match(/^(https?:\/\/[^\s]+)/gi) ? dta : '<?php echo $plxAdmin->racine ?>'+dta;
-    document.getElementById('id_image_img').innerHTML = '<img src="'+link+'" alt="" />';
-   }
-  }
-  </script>
+ <div id="tabContainer">
   <fieldset>
-   <p class="field"><label><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail" href="javascript:void(0)" onclick="mediasManager.openPopup('id_image', true)" style="outline:none; text-decoration: none"> +</a></label>
-   <?php plxUtils::printInput('image',plxUtils::strCheck($image),'text','140-255',false,'','','onkeyup="refreshImg(this.value)"'); ?>
-   </p>
-  </fieldset>
+   <?php plxUtils::printInput('prod', $_GET['prod'], 'hidden');?>
+   <?php plxUtils::printInput('id', $id, 'hidden');?>
+   <div class="informationsShortcodeProduit">
+    <?php $plxPlugin->lang('L_PRODUCTS_SHORTCODE'); ?>&nbsp;:<br/>
+    <span class="code">[<?php echo $plxPlugin->shortcode;?> <?php echo $id;?>]</span>
+   </div>
+   <div class="tabs">
+    <ul>
+     <li id="tabHeader_main"><?php $plxPlugin->lang('L_MAIN') ?></li>
 <?php
-  $imgUrl = PLX_ROOT.$plxPlugin->cheminImages.$image;
-  if(is_file($imgUrl)) {
-   echo '<div id="id_image_img"><img src="'.$imgUrl.'" alt="" /></div>';
-  }
-  else {
-   echo '<div id="id_image_img"></div>';
-  }
-?>
-<!-- Fin du selecteur d'image natif de PluXml -->
-
-<?php
-  if($active) : 
-   $link = $plxAdmin->urlRewrite('index.php?product'.intval($id).'/'.$url);
-   $codeTexte = $modProduit ? 'L_PRODUCT_VIEW_PAGE_ON_SITE' : 'L_CAT_VIEW_PAGE_ON_SITE';
-   $texte = sprintf($plxPlugin->getLang($codeTexte), $title);
-?>
-   <p><a href="<?php echo $link;?>"><?php echo plxUtils::strCheck($texte);?></a></p>
-  <?php endif; ?>
-
-  <?php if ($modProduit): ?>
-   <p><label for="id_pricettc"><?php $plxPlugin->lang('L_PRODUCTS_PRICE') ;?> (<?php echo $plxPlugin->getParam("devise");?>) &nbsp;:</label></p>
-   <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'text','50-255'); ?>
-   <p><label for="id_poidg"><?php $plxPlugin->lang('L_PRODUCTS_WEIGHT') ;?>&nbsp;:</label></p>
-   <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'text','50-255'); ?>
-   <p><label for="id_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_BUTTON') ;?>&nbsp;:</label></p>
-   <?php plxUtils::printSelect('noaddcart', array('1'=>L_YES,'0'=>L_NO), plxUtils::strCheck($noaddcart)); ?>
-   <p><label for="id_notice_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_NO_BUTTON') ;?>&nbsp;:</label></p>
-   <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'text','50-255'); ?>
-   <hr/>
-   <?php $plxPlugin->lang('L_PRODUCTS_CATEGORIES');?>&nbsp;:<br/>
-   <?php $listeCategories = explode(",", $plxPlugin->aProds[$id]["group"]);?>
-   <?php foreach ($plxPlugin->aProds as $idCategorie => $p) {?>
-    <?php 
-     if ("1" !== $p["pcat"]) {
-      continue;
+     foreach($aLangs as $lang){
+      echo '<li id="tabHeader_'.$lang.'">'.L_CONTENT_FIELD.' <sup>'.strtoupper($lang).'</sup></li>';
      }
-    ?>
-    <label for="categorie_<?php echo $idCategorie;?>">
-     <input type="checkbox"
-       name="listeCategories[]"
-       value="<?php echo $idCategorie;?>"
-       id="categorie_<?php echo $idCategorie;?>"
-       <?php echo (!in_array($idCategorie, $listeCategories)) 
-       ? "" : " checked=\"checked\"";?>
-      />
-     <?php echo plxUtils::strCheck($p["name"]); ?>
-    </label>
-    <br/>
-   <?php } ?>
-   <hr/>
-  <?php else: ?>
-   <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'hidden','50-255');?>
-   <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'hidden','50-255');?>
-   <?php plxUtils::printInput('noaddcart', plxUtils::strCheck($noaddcart),'hidden','50-255');?>
-   <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'hidden','50-255');?>
-  <?php endif; ?>
-  <p>
-   <label for="id_template">
-    <?php $plxPlugin->lang('L_PRODUCTS_TEMPLATE_FIELD');?>&nbsp;:
-   </label>
-  </p>
-  <?php plxUtils::printSelect('template', $aTemplates, $template);?>
-  <p>
-   <label for="id_title_htmltag">
-    <?php $plxPlugin->lang('L_PRODUCT_TITLE_HTMLTAG');?>&nbsp;:
-   </label>
-  </p>
-  <?php plxUtils::printInput('title_htmltag',plxUtils::strCheck($title_htmltag),'text','50-255');?>
-  <p>
-   <label for="id_meta_description">
-    <?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_DESCRIPTION':'L_CAT_META_DESCRIPTION');?>&nbsp;:
-   </label>
-  </p>
-  <?php plxUtils::printInput('meta_description',plxUtils::strCheck($meta_description),'text','50-255'); ?>
-  <p>
-   <label for="id_meta_keywords">
-    <?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_KEYWORDS':'L_CAT_META_KEYWORDS');?>&nbsp;:
-   </label>
-  </p>
-  <?php plxUtils::printInput('meta_keywords',plxUtils::strCheck($meta_keywords),'text','50-255');?>
- </fieldset>
- 
- <!-- Content en multilingue -->
- </div>
+?>
+    </ul>
+   </div>
+   <div class="tabscontent">
+    <div class="tabpage" id="tabpage_main">
+    <!-- Utilisation du selecteur d'image natif à PluXml -->
+    <script type="text/javascript">
+    function refreshImg(dta) {
+     if(dta.trim()==='') {
+      document.getElementById('id_image_img').innerHTML = '';
+     } else {
+      var link = dta.match(/^(https?:\/\/[^\s]+)/gi) ? dta : '<?php echo $plxAdmin->racine ?>'+dta;
+      document.getElementById('id_image_img').innerHTML = '<img src="'+link+'" alt="" />';
+     }
+    }
+    </script>
+    <fieldset>
+     <p class="field">
+      <label><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail" href="javascript:void(0)" onclick="mediasManager.openPopup('id_image', true)" style="outline:none; text-decoration: none"> +</a></label>
+     <?php plxUtils::printInput('image',plxUtils::strCheck($image),'text','140-255',false,'','','onkeyup="refreshImg(this.value)"'); ?>
+     </p>
+    </fieldset>
 <?php
-foreach($aLangs as $lang) { ?>
-	<div class="tabpage" id="tabpage_<?php echo $lang ?>" style="display:none;">
-	<fieldset>
-		<p class="field"><label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label></p>
-		<?php plxUtils::printArea('content_'.$lang,plxUtils::strCheck($content[$lang]),140,30) ?>
-	</fieldset>
-  </div>
+    $imgUrl = PLX_ROOT.$plxPlugin->cheminImages.$image;
+    if(is_file($imgUrl)){
+     echo '<div id="id_image_img"><img src="'.$imgUrl.'" alt="" /></div>';
+    }
+    else{
+     echo '<div id="id_image_img"></div>';
+    }
+?>
+  <!-- Fin du selecteur d'image natif de PluXml -->
+
+<?php
+    if($active){ 
+     $link = $plxAdmin->urlRewrite('index.php?product'.intval($id).'/'.$url);
+     $codeTexte = $modProduit ? 'L_PRODUCT_VIEW_PAGE_ON_SITE' : 'L_CAT_VIEW_PAGE_ON_SITE';
+     $texte = sprintf($plxPlugin->getLang($codeTexte), $title);
+?>
+     <p><a href="<?php echo $link;?>"><?php echo plxUtils::strCheck($texte);?></a></p>
+<?php } 
+    if ($modProduit){ ?>
+     <p><label for="id_pricettc"><?php $plxPlugin->lang('L_PRODUCTS_PRICE') ;?> (<?php echo $plxPlugin->getParam("devise");?>) &nbsp;:</label></p>
+     <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'text','50-255'); ?>
+     <p><label for="id_poidg"><?php $plxPlugin->lang('L_PRODUCTS_WEIGHT') ;?>&nbsp;:</label></p>
+     <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'text','50-255'); ?>
+     <p><label for="id_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_BUTTON') ;?>&nbsp;:</label></p>
+     <?php plxUtils::printSelect('noaddcart', array('1'=>L_YES,'0'=>L_NO), plxUtils::strCheck($noaddcart)); ?>
+     <p><label for="id_notice_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_NO_BUTTON') ;?>&nbsp;:</label></p>
+     <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'text','50-255'); ?>
+     <hr/>
+     <?php $plxPlugin->lang('L_PRODUCTS_CATEGORIES');?>&nbsp;:<br/>
+     <?php $listeCategories = explode(",", $plxPlugin->aProds[$id]["group"]);?>
+     <?php foreach ($plxPlugin->aProds as $idCategorie => $p) {?>
+<?php 
+       if ("1" !== $p["pcat"]) {
+        continue;
+       }
+?>
+      <label for="categorie_<?php echo $idCategorie;?>">
+       <input type="checkbox"
+         name="listeCategories[]"
+         value="<?php echo $idCategorie;?>"
+         id="categorie_<?php echo $idCategorie;?>"
+         <?php echo (!in_array($idCategorie, $listeCategories)) 
+         ? "" : " checked=\"checked\"";?>
+        />
+       <?php echo plxUtils::strCheck($p["name"]); ?>
+      </label>
+      <br/>
+     <?php } ?>
+     <hr/>
+<?php } else { ?>
+     <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'hidden','50-255');?>
+     <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'hidden','50-255');?>
+     <?php plxUtils::printInput('noaddcart', plxUtils::strCheck($noaddcart),'hidden','50-255');?>
+     <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'hidden','50-255');?>
 <?php } ?>
- </div>
-</div>
-<!-- Fin du content en multilingue -->
-  
- <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
-  <?php echo plxToken::getTokenPostMethod() ?>
-  <input type="submit" value="<?php $plxPlugin->lang($modProduit?'L_PRODUCT_UPDATE':'L_CAT_UPDATE');?>"/>
- </p>
+    <p>
+     <label for="id_template">
+      <?php $plxPlugin->lang('L_PRODUCTS_TEMPLATE_FIELD');?>&nbsp;:
+     </label>
+    </p>
+    <?php plxUtils::printSelect('template', $aTemplates, $template);?>
+    <p>
+     <label for="id_title_htmltag">
+      <?php $plxPlugin->lang('L_PRODUCT_TITLE_HTMLTAG');?>&nbsp;:
+     </label>
+    </p>
+    <?php plxUtils::printInput('title_htmltag',plxUtils::strCheck($title_htmltag),'text','50-255');?>
+    <p>
+     <label for="id_meta_description">
+      <?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_DESCRIPTION':'L_CAT_META_DESCRIPTION');?>&nbsp;:
+     </label>
+    </p>
+    <?php plxUtils::printInput('meta_description',plxUtils::strCheck($meta_description),'text','50-255'); ?>
+    <p>
+     <label for="id_meta_keywords">
+      <?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_KEYWORDS':'L_CAT_META_KEYWORDS');?>&nbsp;:
+     </label>
+    </p>
+    <?php plxUtils::printInput('meta_keywords',plxUtils::strCheck($meta_keywords),'text','50-255');?>
+   </div><!-- fi tabpage_main -->
+
+  <!-- Content en multilingue -->
+<?php foreach($aLangs as $lang) { ?>
+      <div class="tabpage" id="tabpage_<?php echo $lang ?>" style="display:none;">
+       <fieldset>
+        <p class="field"><label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label></p>
+        <?php plxUtils::printArea('content_'.$lang,plxUtils::strCheck($content[$lang]),140,30) ?>
+       </fieldset>
+      </div>
+<?php } ?>
+ <!-- Fin du content en multilingue -->
+   </div>
+
+  <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
+   <?php echo plxToken::getTokenPostMethod() ?>
+   <input type="submit" value="<?php $plxPlugin->lang($modProduit?'L_PRODUCT_UPDATE':'L_CAT_UPDATE');?>"/>
+  </p>
+  </fieldset>
+ </div><!-- fi tabContainer -->
 </form>
 <script type="text/javascript" src="<?php echo PLX_PLUGINS."plxMyShop/js/tabs.js" ?>"></script>
