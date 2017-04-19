@@ -826,8 +826,21 @@ for($i=1;$i<=11;$i++){
   # suppression
   if(!empty($content['selection']) AND $content['selection']=='delete' AND isset($content['idProduct'])){
    foreach($content['idProduct'] as $product_id){
-    $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
-    if(is_file($filename)) unlink($filename);
+
+    if(defined('PLX_MYMULTILINGUE')){
+     $langs = plxMyMultiLingue::_Langs();
+     $multiLangs = empty($langs) ? array() : explode(',', $langs);
+     $aLangs = $multiLangs;
+     foreach ($aLangs as $lang){
+      $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
+      if(is_file($filename)) unlink($filename);
+     }
+    }
+    else{
+     $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
+     if(is_file($filename)) unlink($filename);
+    }
+
     # si le produit supprimée est en page d'accueil on met à jour le parametre
     unset($this->aProds[$product_id]);
     $action = true;
