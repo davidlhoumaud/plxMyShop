@@ -806,7 +806,10 @@ for($i=1;$i<=11;$i++){
     $this->aProds[$number]['template']=isset($attributes['template'])?$attributes['template']:$this->getParam('template');
 
     # On verifie que le produit existe bien
-    $file = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$number.'.'.$attributes['url'].'.php';
+    if(defined('PLX_MYMULTILINGUE'))
+     $file = PLX_ROOT.$this->aConf['racine_products_lang'].$number.'.'.$attributes['url'].'.php';
+    else
+     $file = PLX_ROOT.$this->aConf['racine_products'].$number.'.'.$attributes['url'].'.php';
 
     # On test si le fichier est lisible
     $this->aProds[$number]['readable'] = (is_readable($file) ? 1 : 0);
