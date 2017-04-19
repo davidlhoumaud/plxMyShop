@@ -8,9 +8,9 @@ $aLangs = array($plxAdmin->aConf['default_lang']);
 # Si le plugin plxMyMultiLingue est installé on filtre sur les langues utilisées
 # On garde par défaut le fr si aucune langue sélectionnée dans plxMyMultiLingue
 if(defined('PLX_MYMULTILINGUE')) {// 0.8.1 see https://github.com/Pluxopolis/plxMyContact/commit/3e8224afd4a1e9435884219201908ffb056eb7f7
-	$langs = plxMyMultiLingue::_Langs();
-	$multiLangs = empty($langs) ? array() : explode(',', $langs);
-	$aLangs = $multiLangs;
+ $langs = plxMyMultiLingue::_Langs();
+ $multiLangs = empty($langs) ? array() : explode(',', $langs);
+ $aLangs = $multiLangs;
 }
 $tabAffPanier = array(
  "basPage" => $plxPlugin->getlang('L_PANIER_POS_BOTTOM') ,
@@ -28,11 +28,11 @@ if(!empty($_POST)){
  //socolissimo reco
  $plxPlugin->setParam('shipping_colissimo', isset($_POST['shipping_colissimo'])?'1':'0', 'numeric');
  $plxPlugin->setParam('acurecept', $_POST['acurecept'], 'string');
-for($i=1;$i<=11;$i++){
- $num=str_pad($i, 2, "0", STR_PAD_LEFT);
- $plxPlugin->setParam('p'.$num, $_POST['p'.$num], 'string');
- $plxPlugin->setParam('pv'.$num, $_POST['pv'.$num], 'string');
-}
+ for($i=1;$i<=11;$i++){
+  $num=str_pad($i, 2, "0", STR_PAD_LEFT);
+  $plxPlugin->setParam('p'.$num, $_POST['p'.$num], 'string');
+  $plxPlugin->setParam('pv'.$num, $_POST['pv'.$num], 'string');
+ }
  //end socolissimo reco
  $plxPlugin->setParam('shipping_ups', 0, 'numeric');
  $plxPlugin->setParam('shipping_tnt', 0, 'numeric');
@@ -170,37 +170,74 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
  var title = document.getElementById('pmsTitle').innerHTML;
  document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title;
 </script>
-<div id="tabContainer">
+
 <form id="form_plxmyshop" action="parametres_plugin.php?p=plxMyShop" method="post">
 <?php echo plxToken::getTokenPostMethod() ?>
- <div>
-  <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>"><input type="submit" name="submit" value="<?php $plxPlugin->lang('L_CONFIG_SUBMIT') ?>" /></p>
+ <fieldset class="config">
+  <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
+   <input type="submit" name="submit" value="<?php $plxPlugin->lang('L_CONFIG_SUBMIT') ?>" />
+  </p>
   <h2><?php $plxPlugin->lang('L_CONFIG_SHOP_INFO') ?></h2>
-  <p class="field"><label for="id_shop_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_NAME') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('shop_name',$var['shop_name'],'text','100-120') ?></p>
-  <p></p>
-  <p class="field"><label for="id_commercant_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_OWNER') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('commercant_name',$var['commercant_name'],'text','100-120') ?></p>
-  <p></p>
-  <p class="field"><label for="id_commercant_street"><?php $plxPlugin->lang('L_CONFIG_SHOP_STREET') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('commercant_street',$var['commercant_street'],'text','100-120') ?></p>
-  <p></p>
-  <p class="field"><label for="id_commercant_postcode"><?php $plxPlugin->lang('L_CONFIG_SHOP_ZIP') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('commercant_postcode',$var['commercant_postcode'],'text','100-120') ?></p>
-  <p></p>
-  <p class="field"><label for="id_commercant_city"><?php $plxPlugin->lang('L_CONFIG_SHOP_TOWN') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('commercant_city',$var['commercant_city'],'text','100-120') ?></p>
-  <p></p>
-  <p class="field"><label for="id_devise"><?php $plxPlugin->lang('L_CONFIG_SHOP_CURRENCY') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('devise',$var['devise'],'text','100-120') ?></p>
-  <p></p>
-  <p class="field"><label for="id_position_devise"><?php $plxPlugin->lang('L_CONFIG_POSITION_CURRENCY') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printSelect("position_devise", $tabPosDevise, $var["position_devise"]) ?></p>
-  <p></p>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_shop_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_NAME') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printInput('shop_name',$var['shop_name'],'text','100-120') ?>
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_commercant_name"><?php $plxPlugin->lang('L_CONFIG_SHOP_OWNER') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printInput('commercant_name',$var['commercant_name'],'text','100-120') ?>
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_commercant_street"><?php $plxPlugin->lang('L_CONFIG_SHOP_STREET') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printInput('commercant_street',$var['commercant_street'],'text','100-120') ?>
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_commercant_postcode"><?php $plxPlugin->lang('L_CONFIG_SHOP_ZIP') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printInput('commercant_postcode',$var['commercant_postcode'],'text','100-120') ?>
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_commercant_city"><?php $plxPlugin->lang('L_CONFIG_SHOP_TOWN') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printInput('commercant_city',$var['commercant_city'],'text','100-120') ?>
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_devise"><?php $plxPlugin->lang('L_CONFIG_SHOP_CURRENCY') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printInput('devise',$var['devise'],'text','100-120') ?>
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_position_devise"><?php $plxPlugin->lang('L_CONFIG_POSITION_CURRENCY') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printSelect("position_devise", $tabPosDevise, $var["position_devise"]) ?>
+   </div>
+  </div>
 
-  <h2><?php $plxPlugin->lang('L_CONFIG_DELIVERY_TITLE') ?></h2><br />
-  <div class="full-width field">
-   <table class="full-width scrollable-table">
+  <h2><?php $plxPlugin->lang('L_CONFIG_DELIVERY_TITLE') ?></h2>
+  <div class="scrollable-table">
+   <table class="full-width">
     <tr>
      <td>
       <label for="id_shipping_colissimo"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_SHIPPING');?>&nbsp;:</label>
@@ -215,27 +252,29 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
     </tr>
    </table>
   </div>
-  <p></p>
+
   <fieldset id="blocksocoreco" style="display:<?php echo ($var['shipping_colissimo']==1?"block":"none"); ?>;">
    <legend><?php $plxPlugin->lang('L_CONFIG_DELIVERY_CONFIG') ?></legend>
-   <div class="full-width field">
-    <table class="scrollable-table">
+   <div class="scrollable-table">
+    <table class="full-width">
      <tr>
       <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_PRIX_BASE') ?>&nbsp;:</td><td colspanb='4'><?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
      </tr>
 <?php for($i=1;$i<=11;$i++){ $num=str_pad($i, 2, "0", STR_PAD_LEFT); ?>
      <tr>
-      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:</td><td><?php plxUtils::printInput('p'.$num,$var['p'.$num],'text','25-120') ?></td><td class="text-center"><=</td>
-      <td><?php plxUtils::printInput('pv'.$num,$var['pv'.$num],'text','25-120') ?></td><td><?php echo $var['devise'];?></td>
+      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:</td>
+      <td><?php plxUtils::printInput('p'.$num,$var['p'.$num],'text','25-120') ?></td>
+      <td class="text-center">&lt;=</td>
+      <td><?php plxUtils::printInput('pv'.$num,$var['pv'.$num],'text','25-120') ?></td>
+      <td><?php echo $var['devise'];?></td>
      </tr>
 <?php } ?>
     </table>
    </div>
   </fieldset>
-  <p></p>
 
-  <div class="full-width full-width field">
-   <table class="full-width scrollable-table">
+  <div class="scrollable-table">
+   <table class="full-width">
     <tr>
      <td>
       <label for="id_payment_cheque"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_CHEQUE');?>&nbsp;:</label>
@@ -289,50 +328,111 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
    <input type="hidden" name="payment_paypal_payflowcolor" value="<?php echo $var["payment_paypal_payflowcolor"];?>"/>
    <input type="hidden" name="payment_paypal_cartbordercolor" value="<?php echo $var["payment_paypal_cartbordercolor"];?>"/>
 
-   <p class="field"><label for="payment_paypal_user"><?php $plxPlugin->lang('L_CONFIG_EMAIL_PAYPAL') ?>&nbsp;:</label></p>
-   <p><input name='payment_paypal_user' value="<?php echo $var['payment_paypal_user'];?>" type='text' ></p>
-   <p></p>
-   <p class="field" ><label for="payment_paypal_currencycode"><?php $plxPlugin->lang('L_CONFIG_CURRENCY_PAYPAL') ?> (<?php echo $var['payment_paypal_currencycode']; ?>)&nbsp;:</label></p>
-   <p><input name='payment_paypal_currencycode' value="<?php echo ($var['payment_paypal_currencycode']!=""?$var['payment_paypal_currencycode']:"EUR"); ?>" type='text' ></p>
-   <p></p>
-   <p class="field" ><label for="payment_paypal_returnurl"><?php $plxPlugin->lang('L_CONFIG_RETURN_URL_PAYPAL') ?>&nbsp;:</label></p>
-   <p><input name='payment_paypal_returnurl' value="<?php echo ($var['payment_paypal_returnurl']!=""?$var['payment_paypal_returnurl']:$_SERVER['HTTP_HOST']); ?>" type='text' ></p>
-   <p></p>
-   <p class="field" ><label for="payment_paypal_cancelurl"><?php $plxPlugin->lang('L_CONFIG_CANCEL_URL_PAYPAL') ?>&nbsp;:</label></p>
-   <p><input name='payment_paypal_cancelurl' value="<?php echo ($var['payment_paypal_cancelurl']!=""?$var['payment_paypal_cancelurl']:$_SERVER['HTTP_HOST']); ?>" type='text' ></p>
-   <p></p>
+   <div class="grid">
+    <div class="col sml-12 med-5 label-centered">
+     <label for="payment_paypal_user"><?php $plxPlugin->lang('L_CONFIG_EMAIL_PAYPAL') ?>&nbsp;:</label>
+    </div>
+    <div class="col sml-12 med-7">
+     <input name='payment_paypal_user' value="<?php echo $var['payment_paypal_user'];?>" type='text' >
+    </div>
+   </div>
+   <div class="grid">
+    <div class="col sml-12 med-5 label-centered">
+     <label for="payment_paypal_currencycode"><?php $plxPlugin->lang('L_CONFIG_CURRENCY_PAYPAL') ?> (<?php echo $var['payment_paypal_currencycode']; ?>)&nbsp;:</label>
+    </div>
+    <div class="col sml-12 med-7">
+     <input name='payment_paypal_currencycode' value="<?php echo ($var['payment_paypal_currencycode']!=""?$var['payment_paypal_currencycode']:"EUR"); ?>" type='text' >
+    </div>
+   </div>
+   <div class="grid">
+    <div class="col sml-12 med-5 label-centered">
+     <label for="payment_paypal_returnurl"><?php $plxPlugin->lang('L_CONFIG_RETURN_URL_PAYPAL') ?>&nbsp;:</label>
+    </div>
+    <div class="col sml-12 med-7">
+     <input name='payment_paypal_returnurl' value="<?php echo ($var['payment_paypal_returnurl']!=""?$var['payment_paypal_returnurl']:$_SERVER['HTTP_HOST']); ?>" type='text' >
+    </div>
+   </div>
+   <div class="grid">
+    <div class="col sml-12 med-5 label-centered">
+     <label for="payment_paypal_cancelurl"><?php $plxPlugin->lang('L_CONFIG_CANCEL_URL_PAYPAL') ?>&nbsp;:</label>
+    </div>
+    <div class="col sml-12 med-7">
+     <input name='payment_paypal_cancelurl' value="<?php echo ($var['payment_paypal_cancelurl']!=""?$var['payment_paypal_cancelurl']:$_SERVER['HTTP_HOST']); ?>" type='text' >
+    </div>
+   </div>
   </fieldset>
-  <p></p>
 
-  <h2><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_TITLE') ?></h2><br />
-  <p class="field"><label for="id_email"><?php $plxPlugin->lang('L_EMAIL') ?>&nbsp;:</label></p>
-  <p><input name='email' value="<?php echo $var['email']; ?>" type='text' ></p>
-  <p></p>
-  <p class="field"><label for="id_email_cc"><?php $plxPlugin->lang('L_EMAIL_CC') ?>&nbsp;:</label></p>
-  <p><input name='email_cc' value="<?php echo $var['email_cc']; ?>" type='text' ></p>
-  <p></p>
-  <p class="field"><label for="id_email_bcc"><?php $plxPlugin->lang('L_EMAIL_BCC') ?>&nbsp;:</label></p>
-  <p><input name='email_bcc' value="<?php echo $var['email_bcc']; ?>" type='text' ></p>
-  <p></p>
-  <p class="field"><label for="id_subject"><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_SUBJECT_CUST') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('subject',$var['subject'],'text','100-120') ?></p>
-  <p></p>
-  <p class="field"><label for="id_newsubject"><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('newsubject',$var['newsubject'],'text','100-120') ?></p>
-  <p></p>
+  <h2><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_TITLE') ?></h2>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_email"><?php $plxPlugin->lang('L_EMAIL') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <input name='email' value="<?php echo $var['email']; ?>" type='text' >
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_email_cc"><?php $plxPlugin->lang('L_EMAIL_CC') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <input name='email_cc' value="<?php echo $var['email_cc']; ?>" type='text' >
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_email_bcc"><?php $plxPlugin->lang('L_EMAIL_BCC') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <input name='email_bcc' value="<?php echo $var['email_bcc']; ?>" type='text' >
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_subject"><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_SUBJECT_CUST') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printInput('subject',$var['subject'],'text','100-120') ?>
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_newsubject"><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_SUBJECT_SHOP') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printInput('newsubject',$var['newsubject'],'text','100-120') ?>
+   </div>
+  </div>
 
   <h2><?php $plxPlugin->lang('L_CONFIG_VALIDATION_COMMANDE') ?></h2>
-  <p class="field"><label><?php $plxPlugin->lang('CONFIG_LIBELLE_CGV') ?>&nbsp;:</label></p>
-  <p><input name='libelleCGV' value="<?php echo $var['libelleCGV']; ?>" type='text' size="100"></p>
-  <p class="field"><label><?php $plxPlugin->lang('CONFIG_URL_CGV') ?>&nbsp;:</label></p>
-  <p><input name='urlCGV' value="<?php echo $var['urlCGV']; ?>" type='text' size="100"></p>
-  <p></p>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label><?php $plxPlugin->lang('CONFIG_LIBELLE_CGV') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <input name='libelleCGV' value="<?php echo $var['libelleCGV']; ?>" type='text' size="100">
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label><?php $plxPlugin->lang('CONFIG_URL_CGV') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <input name='urlCGV' value="<?php echo $var['urlCGV']; ?>" type='text' size="100">
+   </div>
+  </div>
 
   <h2><?php $plxPlugin->lang('L_CONFIG_MENU_TITLE') ?></h2>
-  <p class="field"><label for="id_menu_position"><?php $plxPlugin->lang('L_CONFIG_MENU_POSITION') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('menu_position',$var['menu_position'],'number','100-120') ?></p>
-  <div class="full-width field">
-   <table class="full-width scrollable-table">
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_menu_position"><?php $plxPlugin->lang('L_CONFIG_MENU_POSITION') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printInput('menu_position',$var['menu_position'],'number','100-120') ?>
+   </div>
+  </div>
+  <div class="scrollable-table">
+   <table class="full-width">
     <tr>
      <td>
       <label for="id_affichePanierMenu"><?php $plxPlugin->lang('L_CONFIG_AFFICHER_PANIER_MENU');?>&nbsp;:</label>
@@ -395,22 +495,46 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
     </tr>
    </table>
   </div>
-  <p></p>
 
   <h2><?php $plxPlugin->lang('L_CONFIG_PAGE') ?></h2>
-  <p class="field"><label for="id_affPanier"><?php $plxPlugin->lang('L_CONFIG_BASKET_DISPLAY') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printSelect("affPanier", $tabAffPanier, $var["affPanier"]) ?></p>
-  <p class="field"><label for="id_template"><?php $plxPlugin->lang('L_CONFIG_PAGE_TEMPLATE') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printSelect('template', $aTemplates, $var['template']) ?></p>
-<?php $placeholder = (defined('PLX_VERSION') && PLX_VERSION > '5.5')?' placeholder="data/commandes/"':'data/commandes'; ?>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_affPanier"><?php $plxPlugin->lang('L_CONFIG_BASKET_DISPLAY') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printSelect("affPanier", $tabAffPanier, $var["affPanier"]) ?>
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_template"><?php $plxPlugin->lang('L_CONFIG_PAGE_TEMPLATE') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printSelect('template', $aTemplates, $var['template']) ?>
+   </div>
+  </div>
+
   <h2><?php $plxPlugin->lang('L_CONFIG_FOLDERS') ?></h2>
-  <p class="field"><label for="id_racine_commandes"><?php $plxPlugin->lang('L_CONFIG_ORDERS_FOLDER') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('racine_commandes',$var['racine_commandes'],'text','100-120', false, '', $placeholder) ?></p>
-  <p class="field"><label for="id_racine_products"><?php $plxPlugin->lang('L_CONFIG_PRODUCTS_FOLDER') ?>&nbsp;:</label></p>
-  <p><?php plxUtils::printInput('racine_products',$var['racine_products'],'text','100-120', false, '', $placeholder) ?></p>
- </div>
+<?php $placeholder = (defined('PLX_VERSION') && PLX_VERSION > '5.5')?' placeholder="data/commandes/"':'data/commandes'; ?>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_racine_commandes"><?php $plxPlugin->lang('L_CONFIG_ORDERS_FOLDER') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printInput('racine_commandes',$var['racine_commandes'],'text','100-120', false, '', $placeholder) ?>
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_racine_products"><?php $plxPlugin->lang('L_CONFIG_PRODUCTS_FOLDER') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printInput('racine_products',$var['racine_products'],'text','100-120', false, '', $placeholder) ?>
+   </div>
+  </div>
+ </fieldset>
 </form>
-</div>
+
 <p class="in-action-bar save-button plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
  <?php $plxPlugin->menuAdmin("configuration");?>
 </p>
