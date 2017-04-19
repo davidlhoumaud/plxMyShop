@@ -867,11 +867,9 @@ for($i=1;$i<=11;$i++){
         if(is_file($oldfilename)) rename($oldfilename, $newfilename);
        }
       }
-      else{
-       $oldfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
-       $newfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$stat_url.'.php';
-       if(is_file($oldfilename)) rename($oldfilename, $newfilename);
-      }	  
+      $oldfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
+      $newfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$stat_url.'.php';
+      if(is_file($oldfilename)) rename($oldfilename, $newfilename);
      }
      $this->aProds[$product_id]['pcat'] = trim($content[$product_id.'_pcat']);
      $this->aProds[$product_id]['menu'] = trim($content[$product_id.'_menu']);
