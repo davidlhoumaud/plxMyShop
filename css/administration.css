@@ -210,8 +210,11 @@ form#config_plxmyshop input[type="text"] {
   z-index: 0; /* surchage admin/theme.css ligne 309, sinon impossible de cliquer (plx5.5) */
  }
  .in-action-bar > input[type="submit"] {
-  margin-top: 2.5em;
+  margin-top: 2.2em;
   z-index: 800;
+ }
+ .return-link {
+  z-index: 801;
  }
  .in-action-bar.multilingue {
   margin-top: 5em;
@@ -221,8 +224,7 @@ form#config_plxmyshop input[type="text"] {
   margin-left: -2rem;
  }
  .return-link.plx5-6.multilingue {
-  margin-top: 9rem;
-  z-index: 801;
+  margin-top: 8.5rem;
  }
 }
 @media (max-width: 479px) {
