@@ -53,13 +53,19 @@ class plxMyShop extends plxPlugin {
   $this->addHook('AdminTopEndHead', 'AdminTopEndHead');
   $this->addHook('ThemeEndHead', 'ThemeEndHead');
 
+  // Ajout de variables non protégé facilement accessible via $(plxShow->)plxMotor->plxPlugins->aPlugins['plxMyShop']->aConf['racine_XXX'] dans les themes ou dans d'autres plugins.
+  $this->aConf['racine_products'] = (empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products'));
+  $this->aConf['racine_commandes'] = (empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes'));
+  if(defined('PLX_MYMULTILINGUE') && !empty($default_lang))
+	  $this->aConf['racine_products_lang'] = $this->aConf['racine_products'].$default_lang.'/';
+  
   $this->getProducts();
 
-  if (!is_dir(PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')))){
-   mkdir(PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')), 0755, true);
+  if (!is_dir(PLX_ROOT.$this->aConf['racine_commandes'])){
+   mkdir(PLX_ROOT.$this->aConf['racine_commandes'], 0755, true);
   }
-  if (!is_file(PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')).'index.html')){
-   $mescommandeindex = fopen(PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')).'index.html', 'w+');
+  if (!is_file(PLX_ROOT.$this->aConf['racine_commandes'].'index.html')){
+   $mescommandeindex = fopen(PLX_ROOT.$this->aConf['racine_commandes'].'index.html', 'w+');
    fclose($mescommandeindex);
   }
 
@@ -800,7 +806,10 @@ for($i=1;$i<=11;$i++){
     $this->aProds[$number]['template']=isset($attributes['template'])?$attributes['template']:$this->getParam('template');
 
     # On verifie que le produit existe bien
-    $file = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$number.'.'.$attributes['url'].'.php';
+    if(defined('PLX_MYMULTILINGUE'))
+     $file = PLX_ROOT.$this->aConf['racine_products_lang'].$number.'.'.$attributes['url'].'.php';
+    else
+     $file = PLX_ROOT.$this->aConf['racine_products'].$number.'.'.$attributes['url'].'.php';
 
     # On test si le fichier est lisible
     $this->aProds[$number]['readable'] = (is_readable($file) ? 1 : 0);
@@ -820,8 +829,21 @@ for($i=1;$i<=11;$i++){
   # suppression
   if(!empty($content['selection']) AND $content['selection']=='delete' AND isset($content['idProduct'])){
    foreach($content['idProduct'] as $product_id){
-    $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
-    if(is_file($filename)) unlink($filename);
+
+    if(defined('PLX_MYMULTILINGUE')){
+     $langs = plxMyMultiLingue::_Langs();
+     $multiLangs = empty($langs) ? array() : explode(',', $langs);
+     $aLangs = $multiLangs;
+     foreach ($aLangs as $lang){
+      $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
+      if(is_file($filename)) unlink($filename);
+     }
+    }
+    else{
+     $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
+     if(is_file($filename)) unlink($filename);
+    }
+
     # si le produit supprimée est en page d'accueil on met à jour le parametre
     unset($this->aProds[$product_id]);
     $action = true;
@@ -837,6 +859,17 @@ for($i=1;$i<=11;$i++){
      if($stat_url=='') $stat_url = L_DEFAULT_NEW_PRODUCT_URL;
      # On vérifie si on a besoin de renommer le fichier du produit
      if(isset($this->aProds[$product_id]) AND $this->aProds[$product_id]['url']!=$stat_url){
+
+      if(defined('PLX_MYMULTILINGUE')){
+       $langs = plxMyMultiLingue::_Langs();
+       $multiLangs = empty($langs) ? array() : explode(',', $langs);
+       $aLangs = $multiLangs;
+       foreach ($aLangs as $lang){
+        $oldfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
+        $newfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$stat_url.'.php';
+        if(is_file($oldfilename)) rename($oldfilename, $newfilename);
+       }
+      }
       $oldfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
       $newfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$stat_url.'.php';
       if(is_file($oldfilename)) rename($oldfilename, $newfilename);
@@ -1006,6 +1039,9 @@ for($i=1;$i<=11;$i++){
      $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_save.$content['id'].'.'.$this->aProds[ $content['id'] ]['url'].'.php';
 
      # On écrit le fichier
+     if ($lang == $this->plxMotor->aConf['default_lang'])
+      $content['content_'.$lang] = $content['content'];
+
      if(!plxUtils::write($content['content_'.$lang],$filename))
       $infos .= plxMsg::Error(L_SAVE_ERR.' '.$filename);
      else
