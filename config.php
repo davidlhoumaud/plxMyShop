@@ -171,7 +171,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
  document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title;
 </script>
 
-<form id="form_plxmyshop" action="parametres_plugin.php?p=plxMyShop" method="post">
+<form id="config_plxmyshop" action="parametres_plugin.php?p=plxMyShop" method="post">
 <?php echo plxToken::getTokenPostMethod() ?>
  <fieldset class="config">
   <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
