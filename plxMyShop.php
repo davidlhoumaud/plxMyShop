@@ -57,8 +57,8 @@ class plxMyShop extends plxPlugin {
   $this->aConf['racine_products'] = (empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products'));
   $this->aConf['racine_commandes'] = (empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes'));
   if(defined('PLX_MYMULTILINGUE') && !empty($default_lang))
-	  $this->aConf['racine_products_lang'] = $this->aConf['racine_products'].$default_lang.'/';
-  
+   $this->aConf['racine_products_lang'] = $this->aConf['racine_products'].$default_lang.'/';
+
   $this->getProducts();
 
   if (!is_dir(PLX_ROOT.$this->aConf['racine_commandes'])){
@@ -125,16 +125,14 @@ class plxMyShop extends plxPlugin {
   if(defined('PLX_MYMULTILINGUE')) {
    $plxMML = is_array(PLX_MYMULTILINGUE)?PLX_MYMULTILINGUE:unserialize(PLX_MYMULTILINGUE);
    $langues = empty($plxMML['langs']) ? array() : explode(',', $plxMML['langs']);
-   $affiche = '<?php
-';
+   $affiche = '<?php'.PHP_EOL;
    if($this->plxMotor->get=='boutique/panier' || preg_match("#product([0-9]+)/?([a-z0-9-]+)?#", $this->plxMotor->get)) {
     foreach($langues as $k=>$v) {
-     $url_lang="";
-     if($_SESSION['default_lang']!=$v) $url_lang = $v.'/';
+     $url_lang = ($_SESSION['default_lang']!=$v)?$v.'/':'';
      $affiche .= 'echo "\t<link rel=\"alternate\" hreflang=\"'.$v.'\" href=\"".$plxMotor->urlRewrite("?'.$url_lang.$this->plxMotor->get.'")."\" />\n";';
     }
-	$affiche .= ' ?>';
-	echo $affiche;
+    $affiche .= ' ?>';
+    echo $affiche;
    }
   }
  }
@@ -905,8 +903,8 @@ for($i=1;$i<=11;$i++){
    $xml .= "<document>\n";
    if (isset($this->aProds) && is_array($this->aProds)){
     foreach($this->aProds as $product_id => $product){
-	# garder une compatibilité de l'image avec l'existant.
-	$product['image'] = str_replace($this->plxMotor->aConf['medias'],'',$product['image']);
+     # garder une compatibilité de l'image avec l'existant.
+     $product['image'] = str_replace($this->plxMotor->aConf['medias'],'',$product['image']);
      # control de l'unicité du titre de la page
      if(in_array($product['name'], $products_name))
       return plxMsg::Error(L_ERR_PRODUCT_ALREADY_EXISTS.' : '.plxUtils::strCheck($product['name']));

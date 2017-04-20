@@ -8,9 +8,9 @@ $aLangs = array($plxAdmin->aConf['default_lang']);
 # Si le plugin plxMyMultiLingue est installé on filtre sur les langues utilisées
 # On garde par défaut le fr si aucune langue sélectionnée dans plxMyMultiLingue
 if(defined('PLX_MYMULTILINGUE')) {// 0.8.1 see https://github.com/Pluxopolis/plxMyContact/commit/3e8224afd4a1e9435884219201908ffb056eb7f7
-	$langs = plxMyMultiLingue::_Langs();
-	$multiLangs = empty($langs) ? array() : explode(',', $langs);
-	$aLangs = $multiLangs;
+ $langs = plxMyMultiLingue::_Langs();
+ $multiLangs = empty($langs) ? array() : explode(',', $langs);
+ $aLangs = $multiLangs;
 }
 $tabAffPanier = array(
  "basPage" => $plxPlugin->getlang('L_PANIER_POS_BOTTOM') ,
