@@ -198,12 +198,12 @@ form#form_plxmyshop input[type="text"] {
  width: inherit;
 }
 
+#id_thumbnail_img img{
+ width: 30%;
+ height: auto;
+}
 
 @media (max-width: 767px) {
- #id_image_img img{
-  width: 100%;
-  height: auto;
- }
  .section .action-bar h2{
   font-size: 1.1em;
  }
