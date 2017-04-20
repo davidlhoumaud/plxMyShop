@@ -1039,8 +1039,7 @@ for($i=1;$i<=11;$i++){
      $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_save.$content['id'].'.'.$this->aProds[ $content['id'] ]['url'].'.php';
 
      # On écrit le fichier
-	 $plxMotor = plxMotor::getInstance();
-     if ($lang == $plxMotor->aConf['default_lang'])
+     if ($lang == $this->plxMotor->aConf['default_lang'])
       $content['content_'.$lang] = $content['content'];
 
      if(!plxUtils::write($content['content_'.$lang],$filename))
