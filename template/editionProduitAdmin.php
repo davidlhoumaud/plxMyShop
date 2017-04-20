@@ -118,20 +118,17 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
     </script>
     <div class="grid gridthumb">
      <div class="col sml-12 med-5 label-centered">
-      <label><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail" href="javascript:void(0)" onclick="mediasManager.openPopup('id_image', true)" style="outline:none; text-decoration: none"> +</a></label></p>
+      <label><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail" href="javascript:void(0)" onclick="mediasManager.openPopup('id_image', true)" style="outline:none; text-decoration: none"> +</a></label>
       <?php plxUtils::printInput('image',plxUtils::strCheck($image),'text','255-255',false,'full-width','','onkeyup="refreshImg(this.value)"'); ?>
      </div>
-    </div>
-
+     <div class="col sml-12 med-7">
 <?php
     $imgUrl = PLX_ROOT.$plxPlugin->cheminImages.$image;
-    if(is_file($imgUrl)){
-     echo '<div id="id_image_img"><img src="'.$imgUrl.'" alt="" /></div>';
-    }
-    else{
-     echo '<div id="id_image_img"></div>';
-    }
+    if(is_file($imgUrl))
+     echo '<div><img id="id_thumbnail_img" src="'.$imgUrl.'" alt="" /></div>';
 ?>
+     </div>
+    </div>
   <!-- Fin du selecteur d'image natif de PluXml -->
 
 <?php
@@ -242,14 +239,14 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
 
 <!-- Content en multilingue -->
 <?php foreach($aLangs as $lang) { ?>
-   <div class="tabpage" id="tabpage_<?php echo $lang ?>" style="display:none;">
-    <div class="grid">
-     <div class="col sml-12">
-      <label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label>
-      <?php plxUtils::printArea('content',plxUtils::strCheck($content[$lang]),140,30) ?>
+    <div class="tabpage" id="tabpage_<?php echo $lang ?>" style="display:none;">
+     <div class="grid">
+      <div class="col sml-12">
+       <label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label>
+       <?php plxUtils::printArea('content',plxUtils::strCheck($content[$lang]),140,30) ?>
+      </div>
      </div>
     </div>
-   </div>
 <?php } ?>
 <!-- Fin du content en multilingue -->
   </div><!-- fi tabpage id:tabscontent -->
