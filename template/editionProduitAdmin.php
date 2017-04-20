@@ -206,38 +206,38 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
      <?php plxUtils::printInput('noaddcart', plxUtils::strCheck($noaddcart),'hidden','50-255');?>
      <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'hidden','50-255');?>
 <?php } ?>
-  <div class="grid">
-   <div class="col sml-12 med-5 label-centered">
-    <label for="id_template"><?php $plxPlugin->lang('L_PRODUCTS_TEMPLATE_FIELD');?>&nbsp;:</label>
-   </div>
-   <div class="col sml-12 med-7">
-    <?php plxUtils::printSelect('template', $aTemplates, $template);?>
-   </div>
-  </div>
-  <div class="grid">
-   <div class="col sml-12 med-5 label-centered">
-    <label for="id_title_htmltag"><?php $plxPlugin->lang('L_PRODUCT_TITLE_HTMLTAG');?>&nbsp;:</label>
-   </div>
-   <div class="col sml-12 med-7">
-    <?php plxUtils::printInput('title_htmltag',plxUtils::strCheck($title_htmltag),'text','50-255');?>
-   </div>
-  </div>
-  <div class="grid">
-   <div class="col sml-12 med-5 label-centered">
-    <label for="id_meta_description"><?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_DESCRIPTION':'L_CAT_META_DESCRIPTION');?>&nbsp;:</label>
-   </div>
-   <div class="col sml-12 med-7">
-    <?php plxUtils::printInput('meta_description',plxUtils::strCheck($meta_description),'text','50-255'); ?>
-   </div>
-  </div>
-  <div class="grid">
-   <div class="col sml-12 med-5 label-centered">
-    <label for="id_meta_keywords"><?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_KEYWORDS':'L_CAT_META_KEYWORDS');?>&nbsp;:</label>
-   </div>
-   <div class="col sml-12 med-7">
-    <?php plxUtils::printInput('meta_keywords',plxUtils::strCheck($meta_keywords),'text','50-255');?>
-   </div>
-  </div>
+    <div class="grid">
+     <div class="col sml-12 med-5 label-centered">
+      <label for="id_template"><?php $plxPlugin->lang('L_PRODUCTS_TEMPLATE_FIELD');?>&nbsp;:</label>
+     </div>
+     <div class="col sml-12 med-7">
+      <?php plxUtils::printSelect('template', $aTemplates, $template);?>
+     </div>
+    </div>
+    <div class="grid">
+     <div class="col sml-12 med-5 label-centered">
+      <label for="id_title_htmltag"><?php $plxPlugin->lang('L_PRODUCT_TITLE_HTMLTAG');?>&nbsp;:</label>
+     </div>
+     <div class="col sml-12 med-7">
+      <?php plxUtils::printInput('title_htmltag',plxUtils::strCheck($title_htmltag),'text','50-255');?>
+     </div>
+    </div>
+    <div class="grid">
+     <div class="col sml-12 med-5 label-centered">
+      <label for="id_meta_description"><?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_DESCRIPTION':'L_CAT_META_DESCRIPTION');?>&nbsp;:</label>
+     </div>
+     <div class="col sml-12 med-7">
+      <?php plxUtils::printInput('meta_description',plxUtils::strCheck($meta_description),'text','50-255'); ?>
+     </div>
+    </div>
+    <div class="grid">
+     <div class="col sml-12 med-5 label-centered">
+      <label for="id_meta_keywords"><?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_KEYWORDS':'L_CAT_META_KEYWORDS');?>&nbsp;:</label>
+     </div>
+     <div class="col sml-12 med-7">
+      <?php plxUtils::printInput('meta_keywords',plxUtils::strCheck($meta_keywords),'text','50-255');?>
+     </div>
+    </div>
    </div><!-- fi tabpage_main -->
 
 <!-- Content en multilingue -->
