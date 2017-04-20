@@ -98,7 +98,7 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
      <li id="tabHeader_main"><?php $plxPlugin->lang('L_MAIN') ?></li>
 <?php
      foreach($aLangs as $lang){
-      echo PHP_EOL.'<li id="tabHeader_'.$lang.'">'.L_CONTENT_FIELD.' <sup>'.strtoupper($lang).'</sup></li>';
+      echo '     <li id="tabHeader_'.$lang.'">'.L_CONTENT_FIELD.' <sup>'.strtoupper($lang).'</sup></li>'.PHP_EOL;
      }
 ?>
     </ul>
@@ -239,14 +239,19 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
 
 <!-- Content en multilingue -->
 <?php foreach($aLangs as $lang) { ?>
-    <div class="tabpage" id="tabpage_<?php echo $lang ?>" style="display:none;">
-     <div class="grid">
-      <div class="col sml-12">
-       <label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label>
-       <?php plxUtils::printArea('content',plxUtils::strCheck($content[$lang]),140,30) ?>
-      </div>
+   <div class="tabpage" id="tabpage_<?php echo $lang ?>" style="display:none;">
+    <div class="grid">
+     <div class="col sml-12">
+      <label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label>
+      <?php 
+      if(!defined('PLX_MYMULTILINGUE') || $lang==$plxAdmin->aConf['default_lang'])
+       plxUtils::printArea('content',plxUtils::strCheck($content[$lang]),140,30);
+      else
+       plxUtils::printArea('content_'.$lang,plxUtils::strCheck($content[$lang]),140,30);
+?>
      </div>
     </div>
+   </div>
 <?php } ?>
 <!-- Fin du content en multilingue -->
   </div><!-- fi tabpage id:tabscontent -->
