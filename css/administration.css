@@ -10,9 +10,10 @@
  margin-left: 16.18rem; /* approximatif, pousse les autres boutons lors de la config */
 }
 .return-link {/* produits */
+ background-color: rgba(238,238,238,0.8); /* si titre prod très long */
  margin-top: 2.3rem;;
 }
-.return-link.plx5-6 {/* produits */ 
+.return-link.plx5-6 {/* produits */
  margin-top: 3.4rem;
 }
 #blocksocoreco{ /* Configuration des frais de port */
