@@ -123,11 +123,11 @@ class plxMyShop extends plxPlugin {
  **/
  public function ThemeEndHead() {
   if(defined('PLX_MYMULTILINGUE')) {
-   $plxMML = is_array(PLX_MYMULTILINGUE)?PLX_MYMULTILINGUE:unserialize(PLX_MYMULTILINGUE);
-   $langues = empty($plxMML['langs']) ? array() : explode(',', $plxMML['langs']);
+   $langs = plxMyMultiLingue::_Langs();
+   $langs = empty($langs) ? array() : explode(',', $langs);
    $affiche = '<?php'.PHP_EOL;
    if($this->plxMotor->get=='boutique/panier' || preg_match("#product([0-9]+)/?([a-z0-9-]+)?#", $this->plxMotor->get)) {
-    foreach($langues as $k=>$v) {
+    foreach($langs as $k=>$v) {
      $url_lang = ($_SESSION['default_lang']!=$v)?$v.'/':'';
      $affiche .= 'echo "\t<link rel=\"alternate\" hreflang=\"'.$v.'\" href=\"".$plxMotor->urlRewrite("?'.$url_lang.$this->plxMotor->get.'")."\" />\n";';
     }
