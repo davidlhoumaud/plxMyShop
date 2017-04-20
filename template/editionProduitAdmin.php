@@ -98,7 +98,7 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
      <li id="tabHeader_main"><?php $plxPlugin->lang('L_MAIN') ?></li>
 <?php
      foreach($aLangs as $lang){
-      echo '<li id="tabHeader_'.$lang.'">'.L_CONTENT_FIELD.' <sup>'.strtoupper($lang).'</sup></li>';
+      echo PHP_EOL.'<li id="tabHeader_'.$lang.'">'.L_CONTENT_FIELD.' <sup>'.strtoupper($lang).'</sup></li>';
      }
 ?>
     </ul>
