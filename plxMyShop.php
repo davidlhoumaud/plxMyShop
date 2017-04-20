@@ -1039,6 +1039,9 @@ for($i=1;$i<=11;$i++){
      $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_save.$content['id'].'.'.$this->aProds[ $content['id'] ]['url'].'.php';
 
      # On écrit le fichier
+     if ($lang == $_SESSION['default_lang'])
+      $content['content_'.$lang] = $content['content'];
+
      if(!plxUtils::write($content['content_'.$lang],$filename))
       $infos .= plxMsg::Error(L_SAVE_ERR.' '.$filename);
      else
