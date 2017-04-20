@@ -98,7 +98,7 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
      <li id="tabHeader_main"><?php $plxPlugin->lang('L_MAIN') ?></li>
 <?php
      foreach($aLangs as $lang){
-      echo '<li id="tabHeader_'.$lang.'">'.L_CONTENT_FIELD.' <sup>'.strtoupper($lang).'</sup></li>';
+      echo '     <li id="tabHeader_'.$lang.'">'.L_CONTENT_FIELD.' <sup>'.strtoupper($lang).'</sup></li>'.PHP_EOL;
      }
 ?>
     </ul>
@@ -116,21 +116,19 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
      }
     }
     </script>
-    <fieldset>
-     <p class="field">
-      <label><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail" href="javascript:void(0)" onclick="mediasManager.openPopup('id_image', true)" style="outline:none; text-decoration: none"> +</a></label>
-     <?php plxUtils::printInput('image',plxUtils::strCheck($image),'text','140-255',false,'','','onkeyup="refreshImg(this.value)"'); ?>
-     </p>
-    </fieldset>
+    <div class="grid gridthumb">
+     <div class="col sml-12 med-5 label-centered">
+      <label><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail" href="javascript:void(0)" onclick="mediasManager.openPopup('id_thumbnail', true)" style="outline:none; text-decoration: none"> +</a></label>
+      <?php plxUtils::printInput('image',plxUtils::strCheck($image),'text','255-255',false,'full-width','','onkeyup="refreshImg(this.value)"'); ?>
+     </div>
+     <div class="col sml-12 med-7">
 <?php
     $imgUrl = PLX_ROOT.$plxPlugin->cheminImages.$image;
-    if(is_file($imgUrl)){
-     echo '<div id="id_image_img"><img src="'.$imgUrl.'" alt="" /></div>';
-    }
-    else{
-     echo '<div id="id_image_img"></div>';
-    }
+    if(is_file($imgUrl))
+     echo '<div id="id_thumbnail_img"><img src="'.$imgUrl.'" alt="" /></div>';
 ?>
+     </div>
+    </div>
   <!-- Fin du selecteur d'image natif de PluXml -->
 
 <?php
@@ -139,17 +137,45 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
      $codeTexte = $modProduit ? 'L_PRODUCT_VIEW_PAGE_ON_SITE' : 'L_CAT_VIEW_PAGE_ON_SITE';
      $texte = sprintf($plxPlugin->getLang($codeTexte), $title);
 ?>
-     <p><a href="<?php echo $link;?>"><?php echo plxUtils::strCheck($texte);?></a></p>
-<?php } 
+     <div class="grid">
+      <div class="col sml-12">
+       <p><a href="<?php echo $link;?>"><?php echo plxUtils::strCheck($texte);?></a></p>
+      </div>
+     </div>
+<?php }
     if ($modProduit){ ?>
-     <p><label for="id_pricettc"><?php $plxPlugin->lang('L_PRODUCTS_PRICE') ;?> (<?php echo $plxPlugin->getParam("devise");?>) &nbsp;:</label></p>
-     <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'text','50-255'); ?>
-     <p><label for="id_poidg"><?php $plxPlugin->lang('L_PRODUCTS_WEIGHT') ;?>&nbsp;:</label></p>
-     <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'text','50-255'); ?>
-     <p><label for="id_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_BUTTON') ;?>&nbsp;:</label></p>
-     <?php plxUtils::printSelect('noaddcart', array('1'=>L_YES,'0'=>L_NO), plxUtils::strCheck($noaddcart)); ?>
-     <p><label for="id_notice_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_NO_BUTTON') ;?>&nbsp;:</label></p>
-     <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'text','50-255'); ?>
+     <div class="grid">
+      <div class="col sml-12 med-5 label-centered">
+       <label for="id_pricettc"><?php $plxPlugin->lang('L_PRODUCTS_PRICE') ;?> (<?php echo $plxPlugin->getParam("devise");?>) &nbsp;:</label>
+      </div>
+      <div class="col sml-12 med-7">
+       <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'text','50-255'); ?>
+      </div>
+     </div>
+     <div class="grid">
+      <div class="col sml-12 med-5 label-centered">
+       <label for="id_poidg"><?php $plxPlugin->lang('L_PRODUCTS_WEIGHT') ;?>&nbsp;:</label>
+      </div>
+      <div class="col sml-12 med-7">
+       <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'text','50-255'); ?>
+      </div>
+     </div>
+     <div class="grid">
+      <div class="col sml-12 med-5 label-centered">
+       <label for="id_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_BUTTON') ;?>&nbsp;:</label>
+      </div>
+      <div class="col sml-12 med-7">
+       <?php plxUtils::printSelect('noaddcart', array('1'=>L_YES,'0'=>L_NO), plxUtils::strCheck($noaddcart)); ?>
+      </div>
+     </div>
+     <div class="grid">
+      <div class="col sml-12 med-5 label-centered">
+       <label for="id_notice_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_NO_BUTTON') ;?>&nbsp;:</label>
+      </div>
+      <div class="col sml-12 med-7">
+       <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'text','50-255'); ?>
+      </div>
+     </div>
      <hr/>
      <?php $plxPlugin->lang('L_PRODUCTS_CATEGORIES');?>&nbsp;:<br/>
      <?php $listeCategories = explode(",", $plxPlugin->aProds[$id]["group"]);?>
@@ -169,7 +195,6 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
         />
        <?php echo plxUtils::strCheck($p["name"]); ?>
       </label>
-      <br/>
      <?php } ?>
      <hr/>
 <?php } else { ?>
@@ -178,48 +203,58 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
      <?php plxUtils::printInput('noaddcart', plxUtils::strCheck($noaddcart),'hidden','50-255');?>
      <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'hidden','50-255');?>
 <?php } ?>
-    <p>
-     <label for="id_template">
-      <?php $plxPlugin->lang('L_PRODUCTS_TEMPLATE_FIELD');?>&nbsp;:
-     </label>
-    </p>
-    <?php plxUtils::printSelect('template', $aTemplates, $template);?>
-    <p>
-     <label for="id_title_htmltag">
-      <?php $plxPlugin->lang('L_PRODUCT_TITLE_HTMLTAG');?>&nbsp;:
-     </label>
-    </p>
-    <?php plxUtils::printInput('title_htmltag',plxUtils::strCheck($title_htmltag),'text','50-255');?>
-    <p>
-     <label for="id_meta_description">
-      <?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_DESCRIPTION':'L_CAT_META_DESCRIPTION');?>&nbsp;:
-     </label>
-    </p>
-    <?php plxUtils::printInput('meta_description',plxUtils::strCheck($meta_description),'text','50-255'); ?>
-    <p>
-     <label for="id_meta_keywords">
-      <?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_KEYWORDS':'L_CAT_META_KEYWORDS');?>&nbsp;:
-     </label>
-    </p>
-    <?php plxUtils::printInput('meta_keywords',plxUtils::strCheck($meta_keywords),'text','50-255');?>
+    <div class="grid">
+     <div class="col sml-12 med-5 label-centered">
+      <label for="id_template"><?php $plxPlugin->lang('L_PRODUCTS_TEMPLATE_FIELD');?>&nbsp;:</label>
+     </div>
+     <div class="col sml-12 med-7">
+      <?php plxUtils::printSelect('template', $aTemplates, $template);?>
+     </div>
+    </div>
+    <div class="grid">
+     <div class="col sml-12 med-5 label-centered">
+      <label for="id_title_htmltag"><?php $plxPlugin->lang('L_PRODUCT_TITLE_HTMLTAG');?>&nbsp;:</label>
+     </div>
+     <div class="col sml-12 med-7">
+      <?php plxUtils::printInput('title_htmltag',plxUtils::strCheck($title_htmltag),'text','50-255');?>
+     </div>
+    </div>
+    <div class="grid">
+     <div class="col sml-12 med-5 label-centered">
+      <label for="id_meta_description"><?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_DESCRIPTION':'L_CAT_META_DESCRIPTION');?>&nbsp;:</label>
+     </div>
+     <div class="col sml-12 med-7">
+      <?php plxUtils::printInput('meta_description',plxUtils::strCheck($meta_description),'text','50-255'); ?>
+     </div>
+    </div>
+    <div class="grid">
+     <div class="col sml-12 med-5 label-centered">
+      <label for="id_meta_keywords"><?php $plxPlugin->lang($modProduit?'L_PRODUCT_META_KEYWORDS':'L_CAT_META_KEYWORDS');?>&nbsp;:</label>
+     </div>
+     <div class="col sml-12 med-7">
+      <?php plxUtils::printInput('meta_keywords',plxUtils::strCheck($meta_keywords),'text','50-255');?>
+     </div>
+    </div>
    </div><!-- fi tabpage_main -->
 
-  <!-- Content en multilingue -->
+<!-- Content en multilingue -->
 <?php foreach($aLangs as $lang) { ?>
-      <div class="tabpage" id="tabpage_<?php echo $lang ?>" style="display:none;">
-       <fieldset>
-        <p class="field"><label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label></p>
-<?php 
-        if(!defined('PLX_MYMULTILINGUE') || $lang==$plxAdmin->aConf['default_lang'])
-         plxUtils::printArea('content',plxUtils::strCheck($content[$lang]),140,30);
-        else
-         plxUtils::printArea('content_'.$lang,plxUtils::strCheck($content[$lang]),140,30);
+   <div class="tabpage" id="tabpage_<?php echo $lang ?>" style="display:none;">
+    <div class="grid">
+     <div class="col sml-12">
+      <label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label>
+      <?php 
+      if(!defined('PLX_MYMULTILINGUE') || $lang==$plxAdmin->aConf['default_lang'])
+       plxUtils::printArea('content',plxUtils::strCheck($content[$lang]),140,30);
+      else
+       plxUtils::printArea('content_'.$lang,plxUtils::strCheck($content[$lang]),140,30);
 ?>
-       </fieldset>
-      </div>
-<?php } ?>
- <!-- Fin du content en multilingue -->
+     </div>
+    </div>
    </div>
+<?php } ?>
+<!-- Fin du content en multilingue -->
+  </div><!-- fi tabpage id:tabscontent -->
 
   <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
    <?php echo plxToken::getTokenPostMethod() ?>
@@ -228,4 +263,4 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
   </fieldset>
  </div><!-- fi tabContainer -->
 </form>
-<script type="text/javascript" src="<?php echo PLX_PLUGINS."plxMyShop/js/tabs.js" ?>"></script>
+<script type="text/javascript" src="<?php echo PLX_PLUGINS.get_class($plxPlugin)."/js/tabs.js" ?>"></script>

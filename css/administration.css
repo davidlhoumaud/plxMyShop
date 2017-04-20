@@ -10,9 +10,10 @@
  margin-left: 16.18rem; /* approximatif, pousse les autres boutons lors de la config */
 }
 .return-link {/* produits */
+ background-color: rgba(238,238,238,0.8); /* si titre prod très long */
  margin-top: 2.3rem;;
 }
-.return-link.plx5-6 {/* produits */ 
+.return-link.plx5-6 {/* produits */
  margin-top: 3.4rem;
 }
 #blocksocoreco{ /* Configuration des frais de port */
@@ -191,15 +192,16 @@ table.dataTable {
 .button{
  padding: 0.3rem 0.7rem;
 }
-input, textarea {
- width: 100%;
+
+form#config_plxmyshop input[type="text"] {
+ width: inherit;
+}
+#id_thumbnail_img img{
+ width: 30%;
+ height: auto;
 }
 
 @media (max-width: 767px) {
- #id_image_img img{
-  width: 100%;
-  height: auto;
- }
  .section .action-bar h2{
   font-size: 1.1em;
  }
@@ -209,8 +211,11 @@ input, textarea {
   z-index: 0; /* surchage admin/theme.css ligne 309, sinon impossible de cliquer (plx5.5) */
  }
  .in-action-bar > input[type="submit"] {
-  margin-top: 2.5em;
+  margin-top: 2.2em;
   z-index: 800;
+ }
+ .return-link {
+  z-index: 801;
  }
  .in-action-bar.multilingue {
   margin-top: 5em;
@@ -220,8 +225,7 @@ input, textarea {
   margin-left: -2rem;
  }
  .return-link.plx5-6.multilingue {
-  margin-top: 9rem;
-  z-index: 801;
+  margin-top: 8.5rem;
  }
 }
 @media (max-width: 479px) {
