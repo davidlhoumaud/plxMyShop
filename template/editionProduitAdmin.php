@@ -258,4 +258,4 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
   </fieldset>
  </div><!-- fi tabContainer -->
 </form>
-<script type="text/javascript" src="<?php echo PLX_PLUGINS."plxMyShop/js/tabs.js" ?>"></script>
+<script type="text/javascript" src="<?php echo PLX_PLUGINS.get_class($plxPlugin)."/js/tabs.js" ?>"></script>
