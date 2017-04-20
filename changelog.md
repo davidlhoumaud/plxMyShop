@@ -40,6 +40,16 @@ bug? les url sont non claire, et permettent de basculer d'une url a l'autre (att
 dire a l'utilisateur que le panier s'affiche que si javascript est activé (boutons la boutique)
 le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont un admin.php (vu avec plx5.4 & maybe after)
 
+short code change (très peu) de largeur quant les langues (tabs) sont sélectionnées
+
+##v0.13.1b6 20/04/2017##
+* [+] Contenu des produits compatible Mulitingue.0.8.1 (Yannic)
+* [+] Admin : Grille PluCss
+* [+] Public : Anglais bouton trop large (Remove from basket => Remove of basket)
+Éditeurs compatible: 
+ 100%: plxToolbar.1.4.1
+ onglet de la langue en cour: CKEditor.4.6.2 et WymEditor.1.1.2
+
 ##v0.13.1b5 18/04/2017##
 * [+] Plus joli (Yannic)
 * [+] Ajout d'un bouton au mini paniers pour enlever les produits (hook plxMyShopShowMiniPanier)
