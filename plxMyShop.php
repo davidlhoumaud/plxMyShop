@@ -184,7 +184,7 @@ class plxMyShop extends plxPlugin {
    unset($_SESSION[$this->plug['name']]["msgProdUpDate"]);
 //Les messages de MAJ panier
 ?>
-<div id="msgUpDateCart"><?php $this->lang('L_PUBLIC_MSG_BASKET_UP'); ?></div>
+<div id="msgUpDateCart"><?php ((isset($_SESSION["plxMyShop"]['prods']) && $_SESSION["plxMyShop"]['prods'])?$this->lang('L_PUBLIC_MSG_BASKET_UP'):$this->lang('L_PUBLIC_NOPRODUCT')); ?></div>
 <script type="text/javascript">
  var msgUpDateCart = document.getElementById("msgUpDateCart");
  msgUpDateCart.style.display = "block";
