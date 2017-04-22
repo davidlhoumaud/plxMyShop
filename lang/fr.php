@@ -86,6 +86,7 @@ $LANG = array(
 
 #commandes
 'LIST_ORDERS'                       => 'Liste des commandes',
+'L_DATABLEJS'                       => 'French',
 
 #Related to panier
 'L_PANIER_POS_BOTTOM'               => 'En bas des pages de catégories et des produits',

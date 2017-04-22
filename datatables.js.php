@@ -6,10 +6,10 @@ $(document).ready(function(){
  $("head link[rel='stylesheet']").last().after("<style>.dataTables_wrapper{position: static !important;}</style><link rel='stylesheet' href='//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css' type='text/css' media='screen'><link rel='stylesheet' href='//cdn.datatables.net/responsive/1.0.0/css/dataTables.responsive.css' type='text/css' media='screen'>");
  var table = $('#myShop-table').DataTable({// DataTable
   "language":{
-   "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/French.json"
+   "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/<?php $plxPlugin->lang('L_DATABLEJS'); ?>.json"
   }
  });
- 
+
  table.columns().every(function(){// Apply the search
  //console.log('table.columns.every',this.value);
   if($(this).text()!=''){

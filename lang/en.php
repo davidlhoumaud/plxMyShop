@@ -87,6 +87,7 @@ $LANG = array(
 
 #commandes
 'LIST_ORDERS'                       => 'List of orders',
+'L_DATABLEJS'                       => 'English',
 
 #Related to panier
 'L_PANIER_POS_BOTTOM'               => 'At the bottom of the products and categories pages',
@@ -243,7 +244,7 @@ $LANG = array(
 'L_PUBLIC_VALIDATE_ORDER'           => 'Confirm the order',
 'L_PUBLIC_ADD_BASKET'               => 'Add to basket',
 'L_PUBLIC_MOD_BASKET'               => 'Update the basket',
-'L_PUBLIC_DEL_BASKET'               => 'Remove of basket',
+'L_PUBLIC_DEL_BASKET'               => 'Remove',
 'L_PUBLIC_BASKET_MINI_TITLE'        => 'Pass the command',
 'L_PUBLIC_BASKET_MINI'              => 'Place your order',
 'L_PUBLIC_TAX'                      => 'Tax included',
