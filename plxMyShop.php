@@ -1070,7 +1070,7 @@ for($i=1;$i<=11;$i++){
   **/
  public function productUrl($type='relatif'){
   # Recupération ID URL
-  $productId = $this->productId();
+  $productId = intval($this->productId());
   $productIdFill = str_pad($productId,3,'0',STR_PAD_LEFT);
   if(!empty($productId) AND isset($this->aProds[ $productIdFill ]))
    echo $this->urlRewrite('?'.$this->lang.'product'.$productId.'/'.$this->aProds[ $productIdFill ]['url']);
@@ -1322,6 +1322,7 @@ for($i=1;$i<=11;$i++){
    foreach(array_reverse($this->aProds) as $k=>$v){
     if ($v['menu']!='non' && $v['menu']!=''){
      $nomProtege = self::nomProtege($v['name']);
+     $k = intval($k);
      $categorieSelectionnee = (
        ("product" === $this->plxMotor->mode)
       && ("product$k/{$v["url"]}" === $this->plxMotor->get)
