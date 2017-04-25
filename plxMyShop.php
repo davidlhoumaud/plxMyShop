@@ -1276,6 +1276,13 @@ for($i=1;$i<=11;$i++){
   * @author David.L
   **/
  public function plxShowStaticListEnd(){
+  # initialise submenu
+  $submenu = ($this->getParam('submenu')!=''?true:false);
+  $submenuCategories = '';
+  $submenuPanier = '';
+  $active = ("product" === $this->plxMotor->mode?'active':'noactive');
+  $active = ("boutique" === $this->plxMotor->mode?'active':$active);
+
   $positionMenu = $this->getParam('menu_position') - 1;
   if (in_array(
     $this->getParam("affPanier")
@@ -1300,11 +1307,10 @@ for($i=1;$i<=11;$i++){
 
    // Afficher la page panier dans le menu ?
    if ($this->getParam("affichePanierMenu")!="non") {
-    echo "<?php";
-    echo " array_splice(\$menus, $positionMenu, 0";
-    echo "  , '<li><a class=\"static $classeCss\" href=\"$lienPanier\" title=\"' . htmlspecialchars('$titreProtege') . '\">$titreProtege</a></li>'";
-    echo " );";
-    echo "?>";
+    $submenuPanier = "<li><a class=\"static $classeCss\" href=\"$lienPanier\" title=\"' . htmlspecialchars('$titreProtege') . '\">$titreProtege</a></li>";
+    if (!$submenu){
+     echo "<?php array_splice(\$menus, $positionMenu, 0, '$submenuPanier'); ?>";
+    }
    }
   }
 
@@ -1330,13 +1336,17 @@ for($i=1;$i<=11;$i++){
 
      $classeCss = $categorieSelectionnee ? "active" : "noactive";
      $lien = $this->plxMotor->urlRewrite('?'.$this->lang."product$k/{$v["url"]}");
-
-     echo "<?php";
-     echo " array_splice(\$menus, $positionMenu, 0";
-     echo "  , '<li><a class=\"static $classeCss\" href=\"$lien\" title=\"' . htmlspecialchars('$nomProtege') . '\">$nomProtege</a></li>'";
-     echo " );";
-     echo "?>";
+     $submenuTemp = "<li><a class=\"static $classeCss\" href=\"$lien\" title=\"' . htmlspecialchars('$nomProtege') . '\">$nomProtege</a></li>";
+	 $submenuCategories .= $submenuTemp;
+     if (!$submenu){
+      echo "<?php array_splice(\$menus, $positionMenu, 0, '$submenuTemp'); ?>";
+     }
     }
+   }
+   if ($submenu){
+    echo "<?php array_splice(\$menus, $positionMenu, 0,";
+    echo " '<li><span class=\"static group $active\">".$this->getParam('submenu')."</span><ul>$submenuCategories$submenuPanier</ul></li>' ";
+    echo " ) ?>";
    }
   } // FIN if ajout du menu pour accèder aux rubriques
  } // FIN public function plxShowStaticListEnd(){
