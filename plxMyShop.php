@@ -1605,7 +1605,7 @@ $message
    , $this->getlang("L_SEPARATEUR_MILLIERS")
   );
   if ( $this->getParam('position_devise') == "before" ){
-   $pos_price = trim($this->getParam('devise')).'&nbsp;'.$price;
+   $pos_price = trim($this->getParam('devise')).''.$price;
   } elseif ( $this->getParam('position_devise') == "after" ){
    $pos_price = $price.'&nbsp;'.trim($this->getParam('devise'));
   }
