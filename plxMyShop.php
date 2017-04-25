@@ -717,7 +717,7 @@ for($i=1;$i<=11;$i++){
      echo '<?php
      echo "\n";
      echo "\t<url>\n";
-     echo "\t\t<loc>".$plxMotor->urlRewrite("?'.$this->lang.'product'.$key.'/'.$value['url'].'")."</loc>\n";
+     echo "\t\t<loc>".$plxMotor->urlRewrite("?'.$this->lang.'product'.intval($key).'/'.$value['url'].'")."</loc>\n";
      echo "\t\t<lastmod>'.date('Y-m-d').'</lastmod>\n";
      echo "\t\t<changefreq>daily</changefreq>\n";
      echo "\t\t<priority>0.8</priority>\n";
