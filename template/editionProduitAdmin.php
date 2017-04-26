@@ -82,6 +82,12 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
  title.className += " hide";
  document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title.innerHTML;
 </script>
+<div class="grid">
+ <div class="col sml-12 med-6 informationsShortcodeProduit">
+  <?php $plxPlugin->lang('L_PRODUCTS_SHORTCODE'); ?>&nbsp;:<br/>
+  <span class="code">[<?php echo $plxPlugin->shortcode;?> <?php echo $id;?>]</span>
+ </div>
+</div>
 
 <?php eval($plxAdmin->plxPlugins->callHook('AdminProductTop')); // hook plugin ?>
 <form action="plugin.php?p=plxMyShop" method="post" id="form_article">
@@ -89,16 +95,12 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
   <fieldset>
    <?php plxUtils::printInput('prod', $_GET['prod'], 'hidden');?>
    <?php plxUtils::printInput('id', $id, 'hidden');?>
-   <div class="informationsShortcodeProduit">
-    <?php $plxPlugin->lang('L_PRODUCTS_SHORTCODE'); ?>&nbsp;:<br/>
-    <span class="code">[<?php echo $plxPlugin->shortcode;?> <?php echo $id;?>]</span>
-   </div>
    <div class="grid tabs">
     <ul>
      <li id="tabHeader_main"><?php $plxPlugin->lang('L_MAIN') ?></li>
 <?php
      foreach($aLangs as $lang){
-      echo '     <li id="tabHeader_'.$lang.'"><span class="myhide">'.L_CONTENT_FIELD.'</span> '.strtoupper($lang).'</li>'.PHP_EOL;
+      echo '     <li id="tabHeader_'.$lang.'"><span class="myhide">'.L_CONTENT_FIELD.'</span> <sup>'.strtoupper($lang).'</sup></li>'.PHP_EOL;
      }
 ?>
     </ul>
@@ -243,7 +245,7 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
     <div class="grid">
      <div class="col sml-12">
       <label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label>
-      <?php 
+       <?php 
       if(!defined('PLX_MYMULTILINGUE') || $lang==$plxAdmin->aConf['default_lang'])
        plxUtils::printArea('content',plxUtils::strCheck($content[$lang]),140,30);
       else
