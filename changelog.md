@@ -37,13 +37,14 @@ DBug : short code change (très peu) de largeur quant les langues (tabs) sont s�
 
 bug? les url sont non claire, et permettent de basculer d'une url a l'autre (attention au DC de GG) ::: produit (mauvaise redirection, ou pas, si par exemple product 2 est une catégorie alors que l'on cherche un produit atterrit sur une catégorie, et l'url n'est pas réécrite, c'est pareil avec les catégories => prod) 
 
-dire a l'utilisateur que le panier s'affiche que si javascript est activé (boutons la boutique)
+
 le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont un admin.php (vu avec plx5.4 & maybe after)
 #1 (option afficher bouton ajout) Ajout d'une option générale au produit, ce produit est indiponible et en cours de réaprovisionement
 
 ##v0.13.1r ##/##/2017##
-* Formulaires d'édition de produit & config compatible grille PluCss1.2
-
+* [+] Formulaires d'édition de produit & config compatible grille PluCss1.2
+* [+] dire a l'utilisateur que le panier s'affiche que si javascript est activé (boutons la boutique)
+* [+] Ajout du hook plxMyShopShippingMethod
 
 ##v0.13.1b6 20/04/2017##
 * [+] Contenu des produits compatible Mulitilingue.0.8.1 (Yannic)

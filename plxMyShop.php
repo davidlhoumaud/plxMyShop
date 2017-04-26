@@ -1628,6 +1628,8 @@ $message
   if($this->getParam("shipping_colissimo")=='0'){
    return (float) $shippingPrice;
   }
+  #hook plugin
+  if(eval($this->plxPlugins->callHook('plxMyShopShippingMethod'))) return;
   $accurecept = (float) $this->getParam('acurecept');
   if ($kg<=0){
    $shippingPrice=$accurecept;
