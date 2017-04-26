@@ -1,5 +1,5 @@
 .tabs{
-	height:30px;
+	min-height:30px;
 }
 .tabs > ul{
 	font-size: 1em;

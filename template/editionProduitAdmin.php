@@ -93,12 +93,12 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
     <?php $plxPlugin->lang('L_PRODUCTS_SHORTCODE'); ?>&nbsp;:<br/>
     <span class="code">[<?php echo $plxPlugin->shortcode;?> <?php echo $id;?>]</span>
    </div>
-   <div class="tabs">
+   <div class="grid tabs">
     <ul>
      <li id="tabHeader_main"><?php $plxPlugin->lang('L_MAIN') ?></li>
 <?php
      foreach($aLangs as $lang){
-      echo '     <li id="tabHeader_'.$lang.'">'.L_CONTENT_FIELD.' <sup>'.strtoupper($lang).'</sup></li>'.PHP_EOL;
+      echo '     <li id="tabHeader_'.$lang.'"><span class="myhide">'.L_CONTENT_FIELD.'</span> '.strtoupper($lang).'</li>'.PHP_EOL;
      }
 ?>
     </ul>
