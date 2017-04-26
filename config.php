@@ -75,7 +75,7 @@ if(!empty($_POST)){
  $plxPlugin->setParam('devise', $_POST['devise'], 'string');
  $plxPlugin->setParam('commercant_postcode', $_POST['commercant_postcode'], 'string');
  $plxPlugin->setParam('menu_position', $_POST['menu_position'], 'numeric');
-
+ $plxPlugin->setParam('submenu', trim($_POST['submenu']), 'string');
  $afficheCategoriesMenu = isset($_POST['afficheCategoriesMenu']) ? "" : "non";
  $plxPlugin->setParam('afficheCategoriesMenu', $afficheCategoriesMenu, 'string');
  $plxPlugin->setParam('afficheLienPanierTop', isset($_POST['afficheLienPanierTop'])?'1':'0', 'numeric');
@@ -143,6 +143,7 @@ $var['commercant_postcode'] = $plxPlugin->getParam('commercant_postcode')=='' ? 
 $var['commercant_city'] = $plxPlugin->getParam('commercant_city')=='' ? 'Dun' : $plxPlugin->getParam('commercant_city');
 $var['devise'] = $plxPlugin->getParam('devise')=='' ? ' €' : $plxPlugin->getParam('devise');
 $var['menu_position'] = $plxPlugin->getParam('menu_position')=='' ? 3 : $plxPlugin->getParam('menu_position');
+$var['submenu'] = $plxPlugin->getParam('submenu')=='' ? '' : $plxPlugin->getParam('submenu');
 $var['afficheCategoriesMenu'] = $plxPlugin->getParam('afficheCategoriesMenu');
 $var['afficheLienPanierTop'] = $plxPlugin->getParam('afficheLienPanierTop');
 $var["affPanier"] = ("" === $plxPlugin->getParam("affPanier")) ? current(array_keys($tabAffPanier)) : $plxPlugin->getParam("affPanier");
@@ -429,6 +430,14 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
    </div>
    <div class="col sml-12 med-7">
     <?php plxUtils::printInput('menu_position',$var['menu_position'],'number','100-120') ?>
+   </div>
+  </div>
+  <div class="grid">
+   <div class="col sml-12 med-5 label-centered">
+    <label for="id_submenu"><?php $plxPlugin->lang('L_CONFIG_SUBMENU') ?>&nbsp;:</label>
+   </div>
+   <div class="col sml-12 med-7">
+    <?php plxUtils::printInput('submenu',$var['submenu'],'text','100-120') ?>
    </div>
   </div>
   <div class="scrollable-table">
