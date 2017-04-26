@@ -41,12 +41,13 @@ bug? les url sont non claire, et permettent de basculer d'une url a l'autre (att
 le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont un admin.php (vu avec plx5.4 & maybe after)
 #1 (option afficher bouton ajout) Ajout d'une option générale au produit, ce produit est indiponible et en cours de réaprovisionement
 
-##v0.13.1r ##/##/2017##
+##v0.13.1r 26/04/2017##
+* [+] Possibilité d'ajouter un sous-menu dédié a la boutique groupant les catégories et le panier (Yannic)
+* [+] Ajout du hook plxMyShopShippingMethod pour avoir la possibilité de modifier les frais de port
 * [+] Formulaires d'édition de produit & config compatible grille PluCss1.2
 * [+] dire a l'utilisateur que le panier s'affiche que si javascript est activé (boutons la boutique)
-* [+] Ajout du hook plxMyShopShippingMethod
 * [+] Compatible avec les fonction de plxMyMultilingue 0.8.1 (remove personal tests jobs)
-
+* Fix zéros superflus dans urls et ancres & espace entre devise non attendu (Yannic)
 
 ##v0.13.1b6 20/04/2017##
 * [+] Contenu des produits compatible Mulitilingue.0.8.1 (Yannic)
