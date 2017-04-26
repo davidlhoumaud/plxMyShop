@@ -6,7 +6,7 @@ version :
 $plxPlugin = $d["plxPlugin"];
 $produit = $plxPlugin->aProds[$plxPlugin->productNumber()];
 if (is_array($plxPlugin->productGroupTitle())) {
-echo '<div id="prod'.$plxPlugin->productNumber().'"></div>';
+echo '<div id="prod'.intval($plxPlugin->productNumber()).'"></div>';
  $i=0;
  foreach($plxPlugin->productGroupTitle() as $key => $value) {
   echo ($i>0?',':'').'<a href="'.$plxPlugin->productRUrl($key).'">'.$value.'</a>';

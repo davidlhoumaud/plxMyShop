@@ -87,6 +87,7 @@ $LANG = array(
 
 #commandes
 'LIST_ORDERS'                       => 'Lista de las comandas',
+'L_DATABLEJS'                       => 'Catalan',
 
 #Related to panier
 'L_PANIER_POS_BOTTOM'               => 'Aval de las paginas de categorias e dels produits',
@@ -102,7 +103,7 @@ $LANG = array(
 
 #config page
 'L_CONFIG_FOLDERS'                  => 'Emplacement des données <sup>(avec un slash "/" de fin)</sup>',# a traduire
-'L_CONFIG_ORDERS_FOLDER'            => 'Emplacement du dossier des commandes',,# a traduire
+'L_CONFIG_ORDERS_FOLDER'            => 'Emplacement du dossier des commandes',# a traduire
 'L_CONFIG_PRODUCTS_FOLDER'          => 'Emplacement du dossier des produits',# a traduire
 'L_CONFIG_AFFICHER_PANIER_MENU'     => 'Afichar el Panièr dins lo menú',# a verifier
 'L_CONFIG_AFFICHER_CATEGORIES_MENU' => 'Afichar las categorias dins lo menú',
@@ -141,6 +142,7 @@ $LANG = array(
 
 'L_CONFIG_MENU_TITLE'               => 'Configuracion del menú e tactica del cookie client',#a verfier
 'L_CONFIG_MENU_POSITION'            => 'Posicion dins lo menú de las categorias e paginas fixas (panièr)',
+'L_CONFIG_SUBMENU'                  => 'Nom du sous-menu principal de la boutique (optionel)',# groupe les catégories et le panier
 
 'L_CONFIG_PAGE'                     => 'Configuracion de las paginas',
 
@@ -156,7 +158,7 @@ $LANG = array(
 'L_DO_NOT_SHARED'                   => '( Utilizar pas sus un ordinador partejat. )',
 'L_SAVE_MY_ADDRESS'                 => 'Enregistrar vòstras coordenadas',
 'L_DELETE_MY_ADDRESS'               => 'Escafar vòstras coordenadas',
-'L_RESET_ADDRESS'                   => 'Reïnicializar'
+'L_RESET_ADDRESS'                   => 'Reïnicializar',
 
 'L_ADMIN_MODIFY'                    => 'Modificar la lista',
 
@@ -246,6 +248,7 @@ $LANG = array(
 'L_PUBLIC_DEL_BASKET'               => 'Retirar da panièr',#a verifier
 'L_PUBLIC_BASKET_MINI_TITLE'        => "Passar al commanda",#a verifier
 'L_PUBLIC_BASKET_MINI'              => "Commandar !",#a verifier
+'L_PUBLIC_NOJS'                     => 'Veuillez activer le JavaScript de votre navigateur pour accéder au formulaire de commande.',
 'L_PUBLIC_TAX'                      => 'T.T.C.',
 
 "L_COMMANDE_LIBELLE_DEFAUT"         => "Ai legit e accepti las condicions generalas de venta.",

@@ -7,8 +7,7 @@
 ? Bizarre que cela soit le même shortcode pour les prods et les catégorie ::: prod002: [boutonPanier 002], cat001: [boutonPanier 001] [pour les categories cela affiche une vignette produit et permet même de l'ajouter au panier, qui se fait avoir, le produit "catégorie"]
 * $d = $this->donneesModeles; ($d == données modele)
 * tester paypal
-* Utiliser la gallerie de Media native de PluXml?
-* Faire évoluer les formulaires d'édition de produit (compatible PluCss) et de commande (panier coté public)
+* Faire évoluer les formulaires de commande (panier coté public) (compatible PluCss)
 * intégrer en interne? et/ou harmoniser jquery.dataTables & cdn
 * Vérifier comment il fonctionne sur pluxml <=5.4? (classes css pour la sidebar?) ::: v0.13 (tout semble ok)
 * Verifier la récriture d'url (activé et ou avec MyBetterUrls)
@@ -25,20 +24,34 @@
 * Attention a l'utilisation de plxMultilingue : si vous le réglez pour avoir un dossier de media par langue (après avoir créé des produits avec image), il y perte de l'image du produit pour toute les langues! 
 ** Solution de fortune: Placer une image avec le "même nom de fichier" dans chaque dossiers media/[lang] et elles s'afficheront (cela permet une image du produit par langue)
 
-****
+****https://www.colissimo.entreprise.laposte.fr/fr/faq-technique
 * Attention Frais de port, si au dela de votre config ils deviennent zéro (bug)
 
 **** (theme default 5.6)
 * Sur chrom(e)ium, s'il y a un souci de grosseur de characteres (gros boutons), en trifouillant les réglages du zoom de chrome tout est rentré dans l'ordre ;) (font size: medium, zoom: 100%) ::: [Huge font in Chrome 37](https://productforums.google.com/forum/?_escaped_fragment_=topic/chrome/17kfuau1ApM#!topic/chrome/17kfuau1ApM)
 
 BUG les drapeaux le multilingue disparaissent au panier, mais sont présent dans catégories & produits ;)
-BUG l'option "afficher le bouton ajouter au panier" ne fonctionne pas, si à non, l'affiche quant même ::: la changer pour le lien panier. Est-ce important?
+#1 BUG l'option "afficher le bouton ajouter au panier" ne fonctionne pas, si à non, l'affiche quant même ::: la changer pour le lien panier. Est-ce important?
 Bug "J'ai lu et j'accepte les conditions générales de vente." reste en français ainsi que le selecteur du mode de paiement (alors que tout le panier est en anglais), il prend la phrase de la config ;)
+DBug : short code change (très peu) de largeur quant les langues (tabs) sont sélectionnées
 
 bug? les url sont non claire, et permettent de basculer d'une url a l'autre (attention au DC de GG) ::: produit (mauvaise redirection, ou pas, si par exemple product 2 est une catégorie alors que l'on cherche un produit atterrit sur une catégorie, et l'url n'est pas réécrite, c'est pareil avec les catégories => prod) 
 
 dire a l'utilisateur que le panier s'affiche que si javascript est activé (boutons la boutique)
 le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont un admin.php (vu avec plx5.4 & maybe after)
+#1 (option afficher bouton ajout) Ajout d'une option générale au produit, ce produit est indiponible et en cours de réaprovisionement
+
+##v0.13.1r ##/##/2017##
+* [+] Formulaires d'édition de produit & config compatible grille PluCss1.2
+* [+] Compatible multilingue 0.8.1
+
+##v0.13.1b6 20/04/2017##
+* [+] Contenu des produits compatible Mulitilingue.0.8.1 (Yannic)
+* [+] Admin : Grille PluCss
+* [+] Public : Anglais bouton trop large (Remove from basket => Remove of basket)
+Éditeurs compatible: 
+ 100%: plxToolbar.1.4.1
+ onglet de la langue en cour: CKEditor.4.6.2 et WymEditor.1.1.2
 
 ##v0.13.1b5 18/04/2017##
 * [+] Plus joli (Yannic)

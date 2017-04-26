@@ -87,6 +87,7 @@ $LANG = array(
 
 #commandes
 'LIST_ORDERS'                       => 'List of orders',
+'L_DATABLEJS'                       => 'English',
 
 #Related to panier
 'L_PANIER_POS_BOTTOM'               => 'At the bottom of the products and categories pages',
@@ -141,6 +142,7 @@ $LANG = array(
 
 'L_CONFIG_MENU_TITLE'               => 'Configuration of menu and customer cookie policy',
 'L_CONFIG_MENU_POSITION'            => 'Position in the menu of the categories and static pages (basket)',
+'L_CONFIG_SUBMENU'                  => 'Sub-menu name of Your Shop (optional)',# group of categories & basket
 
 'L_CONFIG_PAGE'                     => 'Configuration of pages',
 
@@ -243,9 +245,10 @@ $LANG = array(
 'L_PUBLIC_VALIDATE_ORDER'           => 'Confirm the order',
 'L_PUBLIC_ADD_BASKET'               => 'Add to basket',
 'L_PUBLIC_MOD_BASKET'               => 'Update the basket',
-'L_PUBLIC_DEL_BASKET'               => 'Remove of basket',
+'L_PUBLIC_DEL_BASKET'               => 'Remove',
 'L_PUBLIC_BASKET_MINI_TITLE'        => 'Pass the command',
 'L_PUBLIC_BASKET_MINI'              => 'Place your order',
+'L_PUBLIC_NOJS'                     => 'Please activate JavaScript in your browser to access the order form.',
 'L_PUBLIC_TAX'                      => 'Tax included',
 
 'L_COMMANDE_LIBELLE_DEFAUT'         => 'I have read and accept the General Sales Terms and Conditions',

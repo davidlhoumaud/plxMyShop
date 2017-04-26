@@ -86,6 +86,7 @@ $LANG = array(
 
 #commandes
 'LIST_ORDERS'                       => 'Liste des commandes',
+'L_DATABLEJS'                       => 'French',
 
 #Related to panier
 'L_PANIER_POS_BOTTOM'               => 'En bas des pages de catégories et des produits',
@@ -140,6 +141,7 @@ $LANG = array(
 
 'L_CONFIG_MENU_TITLE'               => 'Configuration menu et tactique du cookie client',
 'L_CONFIG_MENU_POSITION'            => 'Position dans le menu des catégories et pages fixes (panier)',
+'L_CONFIG_SUBMENU'                  => 'Nom du sous-menu principal de la boutique (optionel)',# groupe les catégories et le panier
 
 'L_CONFIG_PAGE'                     => 'Configuration des pages',
 
@@ -245,6 +247,7 @@ $LANG = array(
 'L_PUBLIC_DEL_BASKET'               => 'Retirer du panier',
 'L_PUBLIC_BASKET_MINI_TITLE'        => "Passer la commande",
 'L_PUBLIC_BASKET_MINI'              => "Commander!",
+'L_PUBLIC_NOJS'                     => 'Veuillez activer le JavaScript de votre navigateur pour accéder au formulaire de commande.',
 'L_PUBLIC_TAX'                      => 'T.T.C.',
 
 'L_COMMANDE_LIBELLE_DEFAUT'         => "J'ai lu et j'accepte les conditions générales de vente.",

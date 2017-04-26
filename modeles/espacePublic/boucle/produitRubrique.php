@@ -5,7 +5,7 @@ version :
 */
 $v = $this->aProds[$d["k"]];
 ?>
-<div id="prod<?php echo $d["k"]; ?>" class="lproduct_content" align="center">
+<div id="prod<?php echo intval($d["k"]); ?>" class="lproduct_content" align="center">
  <header>
   <h1 class="product_poidg"><a href="<?php echo $this->productRUrl($d["k"]); ?>" ><?php echo $v['name']; ?></a></h1>
   <?php echo $v['image'] != ''

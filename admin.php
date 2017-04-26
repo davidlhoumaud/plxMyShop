@@ -33,7 +33,7 @@ if (isset($_GET['kill']) && !empty($_GET['kill']) && is_file($dir.$_GET['kill'])
 }
 
 if ((isset($_GET['prod']) && !empty($_GET['prod'])) || (isset($_POST['prod']) && !empty($_POST['prod'])))
-   include(dirname(__FILE__).'/template/editionProduitAdmin.php');
+ include(dirname(__FILE__).'/template/editionProduitAdmin.php');
 else {
 # On inclut le header
 //include(dirname(__FILE__).'/top.php');
@@ -215,10 +215,10 @@ function checkBox(obj){
  }
  rsort($filescommande);
  while (list ($key, $val) = each ($filescommande) ){
-  $namearray=preg_split('/_/',$val);
-  $date=preg_split('/-/',$namearray[0]);
+  $namearray=explode('_',$val);
+  $date=implode('/',explode('-',$namearray[0]));
   echo '<tr>'.PHP_EOL.
-   '   <td>'.$date[2].'-'.$date[1].'-'.$date[0].' &agrave; '.preg_replace('/-/',':',$namearray[1]).'</td>'.PHP_EOL.
+   '   <td id="dateTime">'.$date.' - '.str_replace('-',':',$namearray[1]).'</td>'.PHP_EOL.
    '   <td>'.$namearray[2].'</td>'.PHP_EOL.
    '   <td class="nombre">'.$plxPlugin->pos_devise((float)$namearray[3]+(float)preg_replace('/.html/','',$namearray[4])).'</td>'.PHP_EOL.
    '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p=plxMyShop&amp;mod=cmd&amp;kill='.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a href="'.$dir.$val.'" target="_BLANK">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.PHP_EOL.
