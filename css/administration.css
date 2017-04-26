@@ -211,7 +211,7 @@ form#config_plxmyshop input[type="text"] {
   z-index: 0; /* surchage admin/theme.css ligne 309, sinon impossible de cliquer (plx5.5) */
  }
  .in-action-bar > input[type="submit"] {
-  margin-top: 2.3em;
+  margin-top: 2.2em;
   z-index: 800;
  }
  .return-link {
