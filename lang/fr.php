@@ -246,6 +246,7 @@ $LANG = array(
 'L_PUBLIC_DEL_BASKET'               => 'Retirer du panier',
 'L_PUBLIC_BASKET_MINI_TITLE'        => "Passer la commande",
 'L_PUBLIC_BASKET_MINI'              => "Commander!",
+'L_PUBLIC_NOJS'                     => 'Veuillez activer le JavaScript de votre navigateur pour accéder au formulaire de commande.',
 'L_PUBLIC_TAX'                      => 'T.T.C.',
 
 'L_COMMANDE_LIBELLE_DEFAUT'         => "J'ai lu et j'accepte les conditions générales de vente.",

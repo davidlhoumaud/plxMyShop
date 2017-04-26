@@ -79,6 +79,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
      <em><?php $plxPlugin->lang('L_PUBLIC_NOPRODUCT'); ?></em>
 <?php } ?>
    </div>
+   <noscript><p class="red"><?php $plxPlugin->lang('L_PUBLIC_NOJS'); ?></p></noscript>
    <form id="formcart" method="POST" action="#panier">
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsDebut')) # Hook Plugins ?>
     <p><span class='startw'><?php $plxPlugin->lang('L_PUBLIC_MANDATORY_FIELD'); ?></span></p>

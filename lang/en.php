@@ -247,6 +247,7 @@ $LANG = array(
 'L_PUBLIC_DEL_BASKET'               => 'Remove',
 'L_PUBLIC_BASKET_MINI_TITLE'        => 'Pass the command',
 'L_PUBLIC_BASKET_MINI'              => 'Place your order',
+'L_PUBLIC_NOJS'                     => 'Please activate JavaScript in your browser to access the order form.',
 'L_PUBLIC_TAX'                      => 'Tax included',
 
 'L_COMMANDE_LIBELLE_DEFAUT'         => 'I have read and accept the General Sales Terms and Conditions',
