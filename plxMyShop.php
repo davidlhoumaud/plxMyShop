@@ -717,7 +717,7 @@ for($i=1;$i<=11;$i++){
      echo '<?php
      echo "\n";
      echo "\t<url>\n";
-     echo "\t\t<loc>".$plxMotor->urlRewrite("?'.$this->lang.'product'.$key.'/'.$value['url'].'")."</loc>\n";
+     echo "\t\t<loc>".$plxMotor->urlRewrite("?'.$this->lang.'product'.intval($key).'/'.$value['url'].'")."</loc>\n";
      echo "\t\t<lastmod>'.date('Y-m-d').'</lastmod>\n";
      echo "\t\t<changefreq>daily</changefreq>\n";
      echo "\t\t<priority>0.8</priority>\n";
@@ -1070,7 +1070,7 @@ for($i=1;$i<=11;$i++){
   **/
  public function productUrl($type='relatif'){
   # Recupération ID URL
-  $productId = $this->productId();
+  $productId = intval($this->productId());
   $productIdFill = str_pad($productId,3,'0',STR_PAD_LEFT);
   if(!empty($productId) AND isset($this->aProds[ $productIdFill ]))
    echo $this->urlRewrite('?'.$this->lang.'product'.$productId.'/'.$this->aProds[ $productIdFill ]['url']);
@@ -1276,6 +1276,13 @@ for($i=1;$i<=11;$i++){
   * @author David.L
   **/
  public function plxShowStaticListEnd(){
+  # initialise submenu
+  $submenu = ($this->getParam('submenu')!=''?true:false);
+  $submenuCategories = '';
+  $submenuPanier = '';
+  $active = ("product" === $this->plxMotor->mode?'active':'noactive');
+  $active = ("boutique" === $this->plxMotor->mode?'active':$active);
+
   $positionMenu = $this->getParam('menu_position') - 1;
   if (in_array(
     $this->getParam("affPanier")
@@ -1300,11 +1307,10 @@ for($i=1;$i<=11;$i++){
 
    // Afficher la page panier dans le menu ?
    if ($this->getParam("affichePanierMenu")!="non") {
-    echo "<?php";
-    echo " array_splice(\$menus, $positionMenu, 0";
-    echo "  , '<li><a class=\"static $classeCss\" href=\"$lienPanier\" title=\"' . htmlspecialchars('$titreProtege') . '\">$titreProtege</a></li>'";
-    echo " );";
-    echo "?>";
+    $submenuPanier = "<li><a class=\"static $classeCss\" href=\"$lienPanier\" title=\"' . htmlspecialchars('$titreProtege') . '\">$titreProtege</a></li>";
+    if (!$submenu){
+     echo "<?php array_splice(\$menus, $positionMenu, 0, '$submenuPanier'); ?>";
+    }
    }
   }
 
@@ -1322,6 +1328,7 @@ for($i=1;$i<=11;$i++){
    foreach(array_reverse($this->aProds) as $k=>$v){
     if ($v['menu']!='non' && $v['menu']!=''){
      $nomProtege = self::nomProtege($v['name']);
+     $k = intval($k);
      $categorieSelectionnee = (
        ("product" === $this->plxMotor->mode)
       && ("product$k/{$v["url"]}" === $this->plxMotor->get)
@@ -1329,13 +1336,17 @@ for($i=1;$i<=11;$i++){
 
      $classeCss = $categorieSelectionnee ? "active" : "noactive";
      $lien = $this->plxMotor->urlRewrite('?'.$this->lang."product$k/{$v["url"]}");
-
-     echo "<?php";
-     echo " array_splice(\$menus, $positionMenu, 0";
-     echo "  , '<li><a class=\"static $classeCss\" href=\"$lien\" title=\"' . htmlspecialchars('$nomProtege') . '\">$nomProtege</a></li>'";
-     echo " );";
-     echo "?>";
+     $submenuTemp = "<li><a class=\"static $classeCss\" href=\"$lien\" title=\"' . htmlspecialchars('$nomProtege') . '\">$nomProtege</a></li>";
+	 $submenuCategories .= $submenuTemp;
+     if (!$submenu){
+      echo "<?php array_splice(\$menus, $positionMenu, 0, '$submenuTemp'); ?>";
+     }
     }
+   }
+   if ($submenu){
+    echo "<?php array_splice(\$menus, $positionMenu, 0,";
+    echo " '<li><span class=\"static group $active\">".$this->getParam('submenu')."</span><ul>$submenuCategories$submenuPanier</ul></li>' ";
+    echo " ) ?>";
    }
   } // FIN if ajout du menu pour accèder aux rubriques
  } // FIN public function plxShowStaticListEnd(){
@@ -1605,7 +1616,7 @@ $message
    , $this->getlang("L_SEPARATEUR_MILLIERS")
   );
   if ( $this->getParam('position_devise') == "before" ){
-   $pos_price = trim($this->getParam('devise')).'&nbsp;'.$price;
+   $pos_price = trim($this->getParam('devise')).''.$price;
   } elseif ( $this->getParam('position_devise') == "after" ){
    $pos_price = $price.'&nbsp;'.trim($this->getParam('devise'));
   }
