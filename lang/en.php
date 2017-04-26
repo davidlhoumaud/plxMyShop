@@ -142,6 +142,7 @@ $LANG = array(
 
 'L_CONFIG_MENU_TITLE'               => 'Configuration of menu and customer cookie policy',
 'L_CONFIG_MENU_POSITION'            => 'Position in the menu of the categories and static pages (basket)',
+'L_CONFIG_SUBMENU'                  => 'Sub-menu name of Your Shop (optional)',# group of categories & basket
 
 'L_CONFIG_PAGE'                     => 'Configuration of pages',
 

@@ -141,7 +141,7 @@ $LANG = array(
 
 'L_CONFIG_MENU_TITLE'               => 'Configuration menu et tactique du cookie client',
 'L_CONFIG_MENU_POSITION'            => 'Position dans le menu des catégories et pages fixes (panier)',
-'L_CONFIG_SUBMENU'                  => 'Afficher ( case vide = non ) les catégories et le panier dans un sous-menu nommé',
+'L_CONFIG_SUBMENU'                  => 'Nom du sous-menu principal de la boutique (optionel)',# groupe les catégories et le panier
 
 'L_CONFIG_PAGE'                     => 'Configuration des pages',
 
