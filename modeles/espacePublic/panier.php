@@ -65,7 +65,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
         <input type="submit" name="recalculer" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_PANIER_RECALCULER'));?>" />
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFormProdsFin')); # Hook Plugins ?>
        </form>
-<?php $totalpoidgshipping = $plxPlugin->shippingMethod($totalpoidg, 1); ?>
+<?php $totalpoidgshipping = $plxPlugin->shippingMethod($totalpoidg, $totalpricettc); ?>
        <span id="spanshipping"></span>
        <span id='totalCart'><?php
         echo htmlspecialchars($plxPlugin->getLang('L_TOTAL_BASKET').

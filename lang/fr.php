@@ -17,6 +17,9 @@ $LANG = array(
 'L_PAIEMENT'                        => 'Moyen de paiement',
 'L_MONTANT'                         => 'Montant',
 'L_ACTIONS'                         => 'Actions',
+'L_AND'                             => 'et',
+'L_OR'                              => 'ou',
+'L_A'                               => 'à',
 
 'L_EMAIL'                           => 'Destinataire(s) du courriel *',
 'L_EMAIL_CC'                        => 'Destinataire(s) en copie du courriel ',
@@ -125,6 +128,10 @@ $LANG = array(
 
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration des moyens de livraison et paiement',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Ajout de frais de port',
+'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',
+'L_CONFIG_FREE'                     => 'Gratuité',
+'L_CONFIG_FREESHIPP'                => '(optionel) À partir de',
+'L_FREESHIP'                        => 'Frais de ports offert',
 'L_CONFIG_DELIVERY_CONFIG'          => 'Configuration des frais de port',
 'L_CONFIG_DELIVERY_RECORDED'        => 'Accusé de réception',
 'L_CONFIG_DELIVERY_WEIGHT'          => 'Poids en kg',

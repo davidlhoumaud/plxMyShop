@@ -17,6 +17,9 @@ $LANG = array(
 'L_PAIEMENT'                        => 'Mejan de pagament',
 'L_MONTANT'                         => 'Montant',
 'L_ACTIONS'                         => 'Accions',
+'L_AND'                             => 'et',# a traduire
+'L_OR'                              => 'ou',# a traduire
+'L_A'                               => 'à',# a traduire
 
 'L_EMAIL'                           => 'Destinatari(s) del corrièl *',
 'L_EMAIL_CC'                        => 'Destinatari(s) en copia del corrièl ',
@@ -125,6 +128,10 @@ $LANG = array(
 
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuracion dels mejans de liurason e pagament',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Liurason per "SoColissimo Recommandé"',
+'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',# atraduire
+'L_CONFIG_FREE'                     => 'Gratuité',# atraduire
+'L_CONFIG_FREESHIPP'                => '(optionel) À partir de',# atraduire
+'L_FREESHIP'                        => 'Frais de ports offert',# atraduire
 'L_CONFIG_DELIVERY_CONFIG'          => 'Configuracion "SoColissimo Recommandé"',
 'L_CONFIG_DELIVERY_RECORDED'        => 'Acusat de recepcion',
 'L_CONFIG_DELIVERY_WEIGHT'          => 'Pes en kg',

@@ -105,6 +105,7 @@ class plxMyShop extends plxPlugin {
    }
   }
   //hook plxMyShop
+  $this->addHook('plxMyShopShippingMethod', 'plxMyShopShippingMethod');
   $this->addHook('plxMyShopShowMiniPanier', 'plxMyShopShowMiniPanier');
   $this->addHook('plxMyShopPanierFin', 'inlineBasketJs');
   if($this->getParam('localStorage')){//MyshopCookie
@@ -1418,7 +1419,7 @@ for($i=1;$i<=11;$i++){
    $totalpoidg += $productscart[$idP]["poidg"];
   }
 
-  $totalpoidgshipping = $this->shippingMethod($totalpoidg, 1);
+  $totalpoidgshipping = $this->shippingMethod($totalpoidg, $totalpricettc);
 
   #Mail de nouvelle commande pour le commerçant.
   $sujet = $this->getlang('L_EMAIL_SUBJECT').$SHOPNAME;
@@ -1623,26 +1624,62 @@ $message
   return $pos_price;
  }
 
- public function shippingMethod($kg, $op){
+ public function shippingMethod($kg, $prx){
   $shippingPrice=0.00;
   if($this->getParam("shipping_colissimo")=='0'){
    return (float) $shippingPrice;
   }
+  $accurecept = (float) $this->getParam('acurecept');
   #hook plugin
   if(eval($this->plxMotor->plxPlugins->callHook('plxMyShopShippingMethod'))) return;
-  $accurecept = (float) $this->getParam('acurecept');
   if ($kg<=0){
    $shippingPrice=$accurecept;
   }else{
-   for($i=1;$i<=11;$i++){ 
+   for($i=1;$i<=11;$i++){
     $num=str_pad($i, 2, "0", STR_PAD_LEFT);
     if ((float)$kg<=(float)$this->getParam('p'.$num)){
      $shippingPrice=((float)$this->getParam('pv'.$num)+$accurecept);
      break;
     }
-   } 
+   }
+   if($kg > $this->getParam('p'.$num)){
+    $this->lang('L_SHIPMAXWEIGHT');
+    return (float) (($kg / $this->getParam('p'.$num)) * $this->getParam('pv'.$num)) + $accurecept;
+   }
   }
   return (float) $shippingPrice;
+ }
+
+ /**
+ * hook gratuité des frais de port
+ * config et public
+ **/
+ public function plxMyShopShippingMethod() {
+  echo '<?php
+  if(
+   (!empty($this->getParam("freeshipw")) && $kg>=$this->getParam("freeshipw"))
+   OR
+   (!empty($this->getParam("freeshipp")) && $prx>=$this->getParam("freeshipp"))
+  ){
+   echo "<p class=\'msgyeah\'><b>".$this->getLang("L_FREESHIP")."</b></p>";
+   return true; //4 stop shippingmethod return true ;)
+  }
+  $freeShipM = "";
+  if(!empty($this->getParam("freeshipw")) OR !empty($this->getParam("freeshipp"))){
+   $freeShipM .= "<b class=\'msgyeah2\'>".$this->getLang("L_FREESHIP")."</b>";
+  }
+  if(!empty($this->getParam("freeshipw"))){
+   $freeShipM .= "&nbsp;".$this->getLang("L_A")."&nbsp;<b class=\'msgyeah2\'>".$this->getParam("freeshipw")."&nbsp;kg</b>";
+  }
+  if(!empty($this->getParam("freeshipp"))){
+   if(!empty($this->getParam("freeshipw")))
+    $freeShipM .= "&nbsp;".$this->getLang("L_AND");
+   $freeShipM .= "&nbsp;".$this->getLang("L_A")."&nbsp;<b class=\'msgyeah2\'>".$this->pos_devise($this->getParam("freeshipp"))."</b>";
+  }
+  if(!empty($freeShipM))
+   echo "<p>".$freeShipM."</p>";
+  unset($freeShipM);
+  ?>';
  }
 
  public function menuAdmin($ongletEnCours){

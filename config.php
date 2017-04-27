@@ -27,6 +27,8 @@ $var = array();
 if(!empty($_POST)){
  //socolissimo reco
  $plxPlugin->setParam('shipping_colissimo', isset($_POST['shipping_colissimo'])?'1':'0', 'numeric');
+ $plxPlugin->setParam('freeshipw', $_POST['freeshipw'], 'string');//free shipping weight
+ $plxPlugin->setParam('freeshipp', $_POST['freeshipp'], 'string');//free shipping price
  $plxPlugin->setParam('acurecept', $_POST['acurecept'], 'string');
  for($i=1;$i<=11;$i++){
   $num=str_pad($i, 2, "0", STR_PAD_LEFT);
@@ -124,6 +126,8 @@ $var['payment_paypal_cartbordercolor'] = $plxPlugin->getParam('payment_paypal_ca
 //end paypal
 //socolissimo reco
 $var['shipping_colissimo'] = $plxPlugin->getParam('shipping_colissimo')=='' ? '' : $plxPlugin->getParam('shipping_colissimo');
+$var['freeshipw'] = $plxPlugin->getParam('freeshipw')=='' ? '' : $plxPlugin->getParam('freeshipw');
+$var['freeshipp'] = $plxPlugin->getParam('freeshipp')=='' ? '' : $plxPlugin->getParam('freeshipp');
 $var['acurecept'] = $plxPlugin->getParam('acurecept')=='' ? '' : $plxPlugin->getParam('acurecept');
 
 for($i=1;$i<=11;$i++){
@@ -259,7 +263,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
    <div class="scrollable-table">
     <table class="full-width">
      <tr>
-      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_PRIX_BASE') ?>&nbsp;:</td><td colspanb='4'><?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?>&nbsp;<?php echo $var['devise'];?></td>
+      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_PRIX_BASE') ?>&nbsp;:</td><td colspanb='4'><?php plxUtils::printInput('acurecept',$var['acurecept'],'text','23-120') ?>&nbsp;<?php echo $var['devise'];?></td>
      </tr>
 <?php for($i=1;$i<=11;$i++){ $num=str_pad($i, 2, "0", STR_PAD_LEFT); ?>
      <tr>
@@ -270,6 +274,13 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
       <td><?php echo $var['devise'];?></td>
      </tr>
 <?php } ?>
+     <tr>
+      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_FREE') ?>&nbsp;:</td>
+      <td><?php $plxPlugin->lang('L_CONFIG_FREESHIPP') ?>&nbsp;<?php plxUtils::printInput('freeshipw',$var['freeshipw'],'text','11-30') ?>&nbsp;kg</td>
+      <td><?php $plxPlugin->lang('L_AND'); ?>/<?php $plxPlugin->lang('L_OR'); ?></td>
+      <td><?php plxUtils::printInput('freeshipp',$var['freeshipp'],'text','25-120') ?></td>
+      <td><?php echo $var['devise'];?></td>
+     </tr>
     </table>
    </div>
   </fieldset>
