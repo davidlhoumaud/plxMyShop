@@ -43,6 +43,9 @@ le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont u
 
 Admin : Faire en sorte que l'onglet de la langue en cours soit activé lors de l'édition (option)
 
+##v0.13.1r2 ##/04/2017##
+* [+] Admin : Ordre des commandes, les dernières en premières
+
 ##v0.13.1r1 27/04/2017##
 * Fix SHIPMAXWEIGHT ::: si dépassement de proids prévu au maximum de la config (calcul approximatif du prix est appliqué aux frais de port et le client en est avertit par un message en rouge dans le formulaire de commande
 * [+] Config hook gratuité des frais de port** : options SHIPFREEWEIGHT & SHIPFREEPRICE ::(laisser vide pour le(s) désactivé(s)):: Frais de port gratuit si superieur ou égale a tel poids et/ou superieur ou égale a tel prix (ttc)
