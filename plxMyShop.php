@@ -1629,7 +1629,7 @@ $message
    return (float) $shippingPrice;
   }
   #hook plugin
-  if(eval($this->plxPlugins->callHook('plxMyShopShippingMethod'))) return;
+  if(eval($this->plxMotor->plxPlugins->callHook('plxMyShopShippingMethod'))) return;
   $accurecept = (float) $this->getParam('acurecept');
   if ($kg<=0){
    $shippingPrice=$accurecept;
