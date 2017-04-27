@@ -148,7 +148,7 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
     if ($modProduit){ ?>
      <div class="grid">
       <div class="col sml-12 med-5 label-centered">
-       <label for="id_pricettc"><?php $plxPlugin->lang('L_PRODUCTS_PRICE') ;?> (<?php echo $plxPlugin->getParam("devise");?>) &nbsp;:</label>
+       <label for="id_pricettc"><?php $plxPlugin->lang('L_PRODUCTS_PRICE') ;?> (<?php echo trim($plxPlugin->getParam("devise"));?>)&nbsp;:</label>
       </div>
       <div class="col sml-12 med-7">
        <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'text','50-255'); ?>
