@@ -47,6 +47,7 @@ le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont u
 * [+] Formulaires d'édition de produit & config compatible grille PluCss1.2
 * [+] dire a l'utilisateur que le panier s'affiche que si javascript est activé (boutons la boutique)
 * [+] Compatible avec les fonction de plxMyMultilingue 0.8.1 (remove personal tests jobs)
+* [+] Formulaire PayPal Multilingue
 * Fix zéros superflus dans urls et ancres & espace entre devise non attendu (Yannic)
 
 ##v0.13.1b6 20/04/2017##
