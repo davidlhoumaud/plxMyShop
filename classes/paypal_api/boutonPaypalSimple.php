@@ -22,13 +22,14 @@ ob_start();
   <input type="hidden" name="no_note" value="0"/>
   <input type="hidden" name="lc" value="<?php echo strtoupper($plxPlugin->default_lang); ?>"/>
   <input type="hidden" name="bn" value="PP-BuyNowBF"/>
-  <input 
+  <input
    type="image"
+   name="submit"
    onClick="postFormPayPal();"
-   name="submit" 
+   style="width:auto;height:auto;border:none;"
    alt="<?php $plxPlugin->lang('PAYPAL_ALT'); ?>"
    src="https://www.paypalobjects.com/<?php $plxPlugin->lang('PAYPAL_IMG'); ?>/i/btn/btn_buynow_LG.gif"
-   style="width:auto;height:auto;border:none;"/>
+  />
  </form>
  <p><img src="<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/images/icon_load.gif" alt=""/></p>
  <script type="text/JavaScript">
