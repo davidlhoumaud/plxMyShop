@@ -999,7 +999,7 @@ for($i=1;$i<=11;$i++){
 
   // formatage du prix et du poids à l'édition
   foreach (array("pricettc", "poidg") as $champ){
-   $content[$champ] = number_format($content[$champ], 2, ".", "");
+   $content[$champ] = floatval(number_format($content[$champ], 2, ".", ""));
   }
 
   // données du produit
