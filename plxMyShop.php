@@ -1476,21 +1476,21 @@ for($i=1;$i<=11;$i++){
     $msgCommand.= "<h5 class='msgyeah' >".$this->getlang('L_EMAIL_CONFIRM_'.strtoupper($_POST['methodpayment']))."</h5>";
     #Mail de récapitulatif de commande pour le client.
     switch ($_POST['methodpayment']){
-       case 'cheque' :
-      $status = $this->getlang('L_WAITING'); 
+     case 'cheque' :
+      $status = $this->getlang('L_WAITING');
       $method = $this->getlang('L_PAYMENT_CHEQUE');
-      break; 
-       case 'cash':
-        $status = $this->getlang('L_WAITING'); 
-        $method = $this->getlang('L_PAYMENT_CASH');
       break;
-       case 'paypal':
-        $status = $this->getlang('L_ONGOING'); 
-        $method = $this->getlang('L_PAYMENT_PAYPAL');
+     case 'cash':
+      $status = $this->getlang('L_WAITING');
+      $method = $this->getlang('L_PAYMENT_CASH');
       break;
-       default:
-      echo 'A method of payment is required!'; 
-    } 
+     case 'paypal':
+      $status = $this->getlang('L_ONGOING');
+      $method = $this->getlang('L_PAYMENT_PAYPAL');
+      break;
+     default:
+      echo 'A method of payment is required!';
+    }
     $sujet = $this->getlang('L_EMAIL_CUST_SUBJECT') . $SHOPNAME;
     $message = "<p>" . $this->getlang('L_EMAIL_CUST_MESSAGE1') . " <a href='http://".$_SERVER["HTTP_HOST"]."'>".$SHOPNAME."</a><br/>".
      $this->getlang('L_EMAIL_CUST_MESSAGE2')." ". $status ." ".$this->getlang('L_EMAIL_CUST_MESSAGE3')."</p>";
