@@ -8,6 +8,7 @@ $adresseEmailPaypal = $plxPlugin->getParam("payment_paypal_user");;
 $nomClient = "{$_POST["firstname"]} {$_POST["lastname"]}";
 ob_start();
 ?>
+ <p><img src="<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/images/paypal_logo.gif" alt=""/></p>
  <form id="paypal_form" action="https://www.paypal.com/cgi-bin/webscr" method="post">
   <input type="hidden" name="amount" value="<?php echo htmlspecialchars($montant);?>"/>
   <input type="hidden" name="currency_code" value="<?php echo htmlspecialchars($devise);?>"/>
@@ -17,13 +18,19 @@ ob_start();
   <input type="hidden" name="cancel_return" value="<?php echo htmlspecialchars($urlAnnulation);?>"/>
   <input type="hidden" name="cmd" value="_xclick"/>
   <input type="hidden" name="business" value="<?php echo htmlspecialchars($adresseEmailPaypal);?>"/>
-  <input type="hidden" name="item_name" value="Commande de <?php echo htmlspecialchars($nomClient);?>"/>
+  <input type="hidden" name="item_name" value="<?php $plxPlugin->lang('L_COMMAND_OF'); ?> <?php echo htmlspecialchars($nomClient);?>"/>
   <input type="hidden" name="no_note" value="0"/>
-  <input type="hidden" name="lc" value="FR"/>
+  <input type="hidden" name="lc" value="<?php echo strtoupper($plxPlugin->default_lang); ?>"/>
   <input type="hidden" name="bn" value="PP-BuyNowBF"/>
-  <input type="image" onClick="postFormPayPal();" alt="" name="submit" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_buynow_LG.gif" style="width:initial;"/>
+  <input
+   type="image"
+   name="submit"
+   onClick="postFormPayPal();"
+   style="width:auto;height:auto;border:none;"
+   alt="<?php $plxPlugin->lang('PAYPAL_ALT'); ?>"
+   src="https://www.paypalobjects.com/<?php $plxPlugin->lang('PAYPAL_IMG'); ?>/i/btn/btn_buynow_LG.gif"
+  />
  </form>
- <p><img src="<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/images/paypal_logo.gif" alt=""/></p>
  <p><img src="<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/images/icon_load.gif" alt=""/></p>
  <script type="text/JavaScript">
   function postFormPayPal() {

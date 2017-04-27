@@ -58,7 +58,9 @@ $LANG = array(
 'L_PRODUCTS_PRICE'                  => 'Price tax included',
 'L_PRODUCTS_WEIGHT'                 => 'Weight (kg)',
 
-
+'L_COMMAND_OF'                      => 'Command of',
+'PAYPAL_ALT'                        => 'Buy Now With Credit Cards',
+'PAYPAL_IMG'                        => 'en_US',
 
 # product.php
 

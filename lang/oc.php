@@ -58,7 +58,9 @@ $LANG = array(
 'L_PRODUCTS_PRICE'                  => 'Prètz T.T.C.',
 'L_PRODUCTS_WEIGHT'                 => 'Pes (kg)',
 
-
+'L_COMMAND_OF'                      => 'Commande de',# a traduire
+'PAYPAL_ALT'                        => 'Commander avec une CB',# a traduire
+'PAYPAL_IMG'                        => 'fr_FR/FR',# a trouver
 
 # product.php
 

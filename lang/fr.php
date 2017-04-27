@@ -58,7 +58,9 @@ $LANG = array(
 'L_PRODUCTS_PRICE'                  => 'Prix T.T.C.',
 'L_PRODUCTS_WEIGHT'                 => 'Poids (kg)',
 
-
+'L_COMMAND_OF'                      => 'Commande de',
+'PAYPAL_ALT'                        => 'Commander avec une CB',
+'PAYPAL_IMG'                        => 'fr_FR/FR', #https://www.paypal(objects).com/fr_FR/FR/i/btn/btn_buynow_LG.gif
 
 # product.php
 'L_MAIN'                            => 'Général',
