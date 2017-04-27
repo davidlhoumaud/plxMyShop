@@ -17,7 +17,7 @@ ob_start();
   <input type="hidden" name="cancel_return" value="<?php echo htmlspecialchars($urlAnnulation);?>"/>
   <input type="hidden" name="cmd" value="_xclick"/>
   <input type="hidden" name="business" value="<?php echo htmlspecialchars($adresseEmailPaypal);?>"/>
-  <input type="hidden" name="item_name" value="Commande de <?php echo htmlspecialchars($nomClient);?>"/>
+  <input type="hidden" name="item_name" value="<?php $plxPlugin->lang('L_COMMAND_OF'); ?> <?php echo htmlspecialchars($nomClient);?>"/>
   <input type="hidden" name="no_note" value="0"/>
   <input type="hidden" name="lc" value="FR"/>
   <input type="hidden" name="bn" value="PP-BuyNowBF"/>

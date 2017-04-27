@@ -58,7 +58,7 @@ $LANG = array(
 'L_PRODUCTS_PRICE'                  => 'Price tax included',
 'L_PRODUCTS_WEIGHT'                 => 'Weight (kg)',
 
-
+'L_COMMAND_OF'                      => 'Command of',
 
 # product.php
 

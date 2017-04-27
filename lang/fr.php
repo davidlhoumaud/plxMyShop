@@ -30,6 +30,7 @@ $LANG = array(
 'L_PRODUCTCONTENT_INPROCESS'        => 'Ce produit est actuellement en cours de rédaction',
 
 # products.php
+'L_MAIN'                            => 'Général',
 'L_PRODUCTS_PAGE_TITLE'             => 'Gérer les produits',
 'L_PRODUCTS_ID'                     => 'Identifiant',
 'L_PRODUCTS_GROUP'                  => 'Groupe',
@@ -57,7 +58,7 @@ $LANG = array(
 'L_PRODUCTS_PRICE'                  => 'Prix T.T.C.',
 'L_PRODUCTS_WEIGHT'                 => 'Poids (kg)',
 
-
+'L_COMMAND_OF'                      => 'Commande de',
 
 # product.php
 'L_MAIN'                            => 'Général',
