@@ -1419,7 +1419,7 @@ for($i=1;$i<=11;$i++){
    $totalpoidg += $productscart[$idP]["poidg"];
   }
 
-  $totalpoidgshipping = $this->shippingMethod($totalpoidg, $totalpricettc);
+  $totalpoidgshipping = $this->shippingMethod($totalpoidg, $totalpricettc, 0);
 
   #Mail de nouvelle commande pour le commerçant.
   $sujet = $this->getlang('L_EMAIL_SUBJECT').$SHOPNAME;
@@ -1624,7 +1624,7 @@ $message
   return $pos_price;
  }
 
- public function shippingMethod($kg, $prx){
+ public function shippingMethod($kg, $prx, $op = 1){
   $shippingPrice=0.00;
   if($this->getParam("shipping_colissimo")=='0'){
    return (float) $shippingPrice;
@@ -1656,29 +1656,31 @@ $message
  **/
  public function plxMyShopShippingMethod() {
   echo '<?php
-  if(
-   (!empty($this->getParam("freeshipw")) && $kg>=$this->getParam("freeshipw"))
-   OR
-   (!empty($this->getParam("freeshipp")) && $prx>=$this->getParam("freeshipp"))
-  ){
-   echo "<p class=\'msgyeah\'><b>".$this->getLang("L_FREESHIP")."</b></p>";
-   return true; //4 stop shippingmethod return true ;)
+  if($op){
+   if(
+    (!empty($this->getParam("freeshipw")) && $kg>=$this->getParam("freeshipw"))
+    OR
+    (!empty($this->getParam("freeshipp")) && $prx>=$this->getParam("freeshipp"))
+   ){
+    echo "<p class=\'msgyeah\'><b>".$this->getLang("L_FREESHIP")."</b></p>";
+    return true; //4 stop shippingmethod return true ;)
+   }
+   $freeShipM = "";
+   if(!empty($this->getParam("freeshipw")) OR !empty($this->getParam("freeshipp"))){
+    $freeShipM .= "<b class=\'msgyeah2\'>".$this->getLang("L_FREESHIP")."</b>";
+   }
+   if(!empty($this->getParam("freeshipw"))){
+    $freeShipM .= "&nbsp;".$this->getLang("L_A")."&nbsp;<b class=\'msgyeah2\'>".$this->getParam("freeshipw")."&nbsp;kg</b>";
+   }
+   if(!empty($this->getParam("freeshipp"))){
+    if(!empty($this->getParam("freeshipw")))
+     $freeShipM .= "&nbsp;".$this->getLang("L_AND");
+    $freeShipM .= "&nbsp;".$this->getLang("L_A")."&nbsp;<b class=\'msgyeah2\'>".$this->pos_devise($this->getParam("freeshipp"))."</b>";
+   }
+   if(!empty($freeShipM))
+    echo "<p>".$freeShipM."</p>";
+   unset($freeShipM);
   }
-  $freeShipM = "";
-  if(!empty($this->getParam("freeshipw")) OR !empty($this->getParam("freeshipp"))){
-   $freeShipM .= "<b class=\'msgyeah2\'>".$this->getLang("L_FREESHIP")."</b>";
-  }
-  if(!empty($this->getParam("freeshipw"))){
-   $freeShipM .= "&nbsp;".$this->getLang("L_A")."&nbsp;<b class=\'msgyeah2\'>".$this->getParam("freeshipw")."&nbsp;kg</b>";
-  }
-  if(!empty($this->getParam("freeshipp"))){
-   if(!empty($this->getParam("freeshipw")))
-    $freeShipM .= "&nbsp;".$this->getLang("L_AND");
-   $freeShipM .= "&nbsp;".$this->getLang("L_A")."&nbsp;<b class=\'msgyeah2\'>".$this->pos_devise($this->getParam("freeshipp"))."</b>";
-  }
-  if(!empty($freeShipM))
-   echo "<p>".$freeShipM."</p>";
-  unset($freeShipM);
   ?>';
  }
 
