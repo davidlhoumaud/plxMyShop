@@ -26,7 +26,7 @@ $(document).ready(function(){
  "<link rel='stylesheet' href='../../plugins/plxMyShop/css/dataTables.responsive-1.0.0.css' type='text/css' media='screen' />"+
  "<link rel='stylesheet' href='../../plugins/plxMyShop/css/featherlight-1.7.2.min.css' type='text/css' />");
  var table = $('#myShop-table').DataTable({// DataTable
-  "order": [[ 1, "desc" ]],
+  "order": [[ 0, "desc" ]],
   "language":{
    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/<?php $plxPlugin->lang('L_DATABLEJS'); ?>.json"
   }
