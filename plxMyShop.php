@@ -1426,15 +1426,14 @@ for($i=1;$i<=11;$i++){
   plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
   plxUtils::cdataCheck($_POST['country'])."<br/>".
   $this->getlang('L_EMAIL_TEL').
-  plxUtils::cdataCheck($_POST['tel']);
-
-  $messCommon = "<br/><br/>" . (!isset($_POST["choixCadeau"]) 
-   ? $this->getlang('L_EMAIL_NOGIFT') 
-   : $this->getlang('L_EMAIL_GIFT_FOR')." <strong>".htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
-  )
+  plxUtils::cdataCheck($_POST['tel'])
   ."<br/><br/>".
   $this->getlang('L_PAIEMENT').": ".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE'));
 
+  $messCommon = "<br/><br/>" . (!isset($_POST["choixCadeau"])
+   ? $this->getlang('L_EMAIL_NOGIFT')
+   : $this->getlang('L_EMAIL_GIFT_FOR')." <strong>".htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
+  );
   $messCommon .= "<br/>".$this->getlang('L_EMAIL_PRODUCTLIST')." :<br/><ul>";
   foreach ($productscart as $k => $v){
    $messCommon.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."&nbsp;kg":"")."</li>";
@@ -1495,7 +1494,6 @@ for($i=1;$i<=11;$i++){
      default:
       echo 'A method of payment is required!';
     }
-    $sujet = $this->getlang('L_EMAIL_CUST_SUBJECT') . $SHOPNAME;
 
     $message = "<p>" . $this->getlang('L_EMAIL_CUST_MESSAGE1') . " <a href='http://".$_SERVER["HTTP_HOST"]."'>".$SHOPNAME."</a><br/>".
      $this->getlang('L_EMAIL_CUST_MESSAGE2')." ". $status ." ".$this->getlang('L_EMAIL_CUST_MESSAGE3')."</p>";
@@ -1516,8 +1514,9 @@ for($i=1;$i<=11;$i++){
     plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
     plxUtils::cdataCheck($_POST['country'])."<br/>".
     "<strong>Tel : </strong>".plxUtils::cdataCheck($_POST['tel']) .
-    "<strong>" . $this->getlang('L_EMAIL_CUST_PAYMENT') . ": </strong>". $method;
+    "<br/><br/><strong>" . $this->getlang('L_EMAIL_CUST_PAYMENT') . ": </strong>". $method;
 
+    $sujet = $this->getlang('L_EMAIL_CUST_SUBJECT') . $SHOPNAME;
     $destinataire = $_POST['email'];
     $message .= $messCommon;
     $headers  = "From: \"".$SHOPNAME."\" <".$TONMAIL.">\r\n";
