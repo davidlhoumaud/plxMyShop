@@ -46,8 +46,9 @@ Admin : Faire en sorte que l'onglet de la langue en cours soit activé lors de l
 ##v0.13.1r2 28/04/2017##
 * [+] Option Config : nombre de ligne de configurations des Frais de portd
 * [+] Option Config : [Frais de port suivant le montant de la commande](http://forum.pluxml.org/viewtopic.php?pid=53688#p53688)
-* [+] Admin : Ordre des commandes, les dernières en premières + big locals & updates js/css
+* [+] Admin : Ordre des commandes, les dernières en premières + big locals updates js/css + adaptative au petits écrans
 * [+] Admin : Voir les commandes dans une lightbox iframe [featherlight](http://noelboss.github.io/featherlight/)
+* [+] Core des messages de Commandes simplifié et amélioré (il y avait des parties commune aux 2 messages + backup)
 * Fix float number
 
 ##v0.13.1r1 27/04/2017##
