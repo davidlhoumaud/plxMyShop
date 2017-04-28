@@ -20,7 +20,7 @@
 $(document).ready(function(){
  $("head link[rel='stylesheet']").last().after("<style>"+
  ".dataTables_wrapper{position: static !important;}"+
- ".lightbox { display: none; }.featherlight-iframe .featherlight-content {overflow-y: auto !important;width:92%;height:92%;}iframe.featherlight-inner{width: 100%;height: 100%;}"+
+ ".lightbox { display: none; }.featherlight .featherlight-content {min-width:51%;}"+
  "</style>"+
  "<link rel='stylesheet' href='../../plugins/plxMyShop/css/jquery.dataTables-1.10.15.min.css' type='text/css' media='screen' />"+
  "<link rel='stylesheet' href='../../plugins/plxMyShop/css/responsive.dataTables-2.1.1.min.css' type='text/css' media='screen' />"+
