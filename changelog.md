@@ -44,6 +44,7 @@ le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont u
 Admin : Faire en sorte que l'onglet de la langue en cours soit activé lors de l'édition (option)
 
 ##v0.13.1r3 ##/04/2017##
+* Fix erreur responsive en mode mobile pour le lien voir, (2 clics pour afficher la lightbox featherlight) ::: Featherlight: no content filter found  (no target specified)
 * Fix Bad id's : Admin edit thumbnail image
 
 ##v0.13.1r2 28/04/2017##
