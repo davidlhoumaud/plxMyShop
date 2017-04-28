@@ -1,7 +1,8 @@
 <script src="../../plugins/plxMyShop/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="../../plugins/plxMyShop/js/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../plugins/plxMyShop/js/featherlight-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../plugins/plxMyShop/js/jquery.dataTables-1.10.13.min.js" type="text/javascript"></script>
 <script src="../../plugins/plxMyShop/js/dataTables.responsive-1.0.0.min.js" type="text/javascript"></script>
+<?php /*
 <!--
 <script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -9,6 +10,14 @@
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" language="javascript" src="//cdn.datatables.net/responsive/1.0.0/js/dataTables.responsive.min.js"></script>
 -->
+js cdn
+ "<link rel='stylesheet' href='//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css' type='text/css' media='screen' />"+
+ "<link rel='stylesheet' href='//cdn.datatables.net/responsive/1.0.0/css/dataTables.responsive.css' type='text/css' media='screen' />"+
+ "<link rel='stylesheet' href='//cdn.rawgit.com/noelboss/featherlight/1.7.2/release/featherlight.min.css' type='text/css' />"
+
+
+*/
+?>
 <script type="text/javascript" class="init">
 $(document).ready(function(){
  $("head link[rel='stylesheet']").last().after("<style>"+
@@ -17,7 +26,7 @@ $(document).ready(function(){
  "</style>"+
  "<link rel='stylesheet' href='//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css' type='text/css' media='screen' />"+
  "<link rel='stylesheet' href='//cdn.datatables.net/responsive/1.0.0/css/dataTables.responsive.css' type='text/css' media='screen' />"+
- "<link href='../../plugins/plxMyShop/css/featherlight.min.css' type='text/css' rel='stylesheet' />");
+ "<link rel='stylesheet' href='../../plugins/plxMyShop/css/featherlight-1.7.2.min.css' type='text/css' />");
  var table = $('#myShop-table').DataTable({// DataTable
   "order": [[ 1, "desc" ]],
   "language":{
