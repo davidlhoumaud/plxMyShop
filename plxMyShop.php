@@ -470,7 +470,7 @@ if (error) {
 <?php if ($this->getParam("shipping_colissimo")):?>
  if (pos_devise == "before") { price= devise+"<?php echo '<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>'; ?>";}
  else { price= "<?php echo '<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>'; ?>&nbsp;"+devise;}
- spanshipping.innerHTML="<p class='spanshippingp'><?php $this->lang('L_EMAIL_DELIVERY_COST'); ?>&nbsp;: " + price + " <?php $this->lang('L_FOR'); ?> <?php echo '<?php echo $totalpoidg; ?>'; ?>&nbsp;kg</p>";
+ spanshipping.innerHTML="<p class='spanshippingp'><?php $this->lang('L_EMAIL_DELIVERY_COST'); ?>&nbsp;: " + price + " <?php echo ($this->getParam('shipping_by_price')) ? '' : $this->getLang('L_FOR').' <?php echo $totalpoidg; ?>&nbsp;kg'; ?></p>";
 <?php endif; ?>
  totalcommand.value=total;
 }
@@ -488,11 +488,11 @@ function shippingMethod(kg, op){
  if (totalkg.toFixed(3)<=0.000) {
   shippingPrice=accurecept;
  }<?php #beau js
-for($i=1;$i<=11;$i++){
-  $num=str_pad($i, 2, "0", STR_PAD_LEFT); 
-  ?>else if (totalkg.toFixed(3)<=<?php echo (float)$this->getParam('p'.$num); ?>) {
+for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
+  $num=str_pad($i, 2, "0", STR_PAD_LEFT);
+  ?>else if (totalkg.toFixed(3)<=<?php echo (float)$this->getParam('p'.$num); ?>){
   shippingPrice=<?php echo (float)$this->getParam('pv'.$num); ?>+accurecept;
- }<?php 
+ }<?php
 }#en php ?>
 
  return shippingPrice;
@@ -1442,7 +1442,8 @@ for($i=1;$i<=11;$i++){
   $messCommon .= "<br/><br/>";
   $messCommon .= "<em><strong>". $this->getlang('L_EMAIL_DELIVERY_COST'). " : ".$this->pos_devise($totalpoidgshipping). "</strong>";
   $messCommon .= "<br/>";
-  $messCommon .= "<strong>".$this->getlang('L_EMAIL_WEIGHT')." : ".$totalpoidg."&nbsp;kg</strong></em>";
+  if(!$this->getParam('shipping_by_price'))
+   $messCommon .= "<strong>".$this->getlang('L_EMAIL_WEIGHT')." : ".$totalpoidg."&nbsp;kg</strong></em>";
   $messCommon .= "<br/>";
   $messCommon .= "<strong>" . $this->getlang('L_TOTAL_BASKET')." ".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "</strong>";
   $messCommon .= "<br/><br/>";
@@ -1625,7 +1626,7 @@ $message
   if ($kg<=0){
    $shippingPrice=$accurecept;
   }else{
-   for($i=1;$i<=11;$i++){
+   for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
     $num=str_pad($i, 2, "0", STR_PAD_LEFT);
     if ((float)$kg<=(float)$this->getParam('p'.$num)){
      $shippingPrice=((float)$this->getParam('pv'.$num)+$accurecept);
@@ -1646,6 +1647,11 @@ $message
  **/
  public function plxMyShopShippingMethod() {
   echo '<?php
+  if($this->getParam("shipping_by_price")){
+   $kg=$prx;//Transform to total price
+   //$op=0;//lock display free shipping
+   //$this->setParam("shipping_colissimo","0");//lock display shipping (kg)
+  }
   if($op){
    if(
     (!empty($this->getParam("freeshipw")) && $kg>=$this->getParam("freeshipw"))

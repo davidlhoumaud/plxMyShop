@@ -26,11 +26,13 @@ $tabPosDevise = array(
 $var = array();
 if(!empty($_POST)){
  //socolissimo reco
+ $plxPlugin->setParam('shipping_by_price', isset($_POST['shipping_by_price'])?'1':'0', 'numeric');
+ $plxPlugin->setParam('shipping_nb_lines', isset($_POST['shipping_nb_lines'])?$_POST['shipping_nb_lines']:'11', 'numeric');
  $plxPlugin->setParam('shipping_colissimo', isset($_POST['shipping_colissimo'])?'1':'0', 'numeric');
  $plxPlugin->setParam('freeshipw', $_POST['freeshipw'], 'string');//free shipping weight
  $plxPlugin->setParam('freeshipp', $_POST['freeshipp'], 'string');//free shipping price
  $plxPlugin->setParam('acurecept', $_POST['acurecept'], 'string');
- for($i=1;$i<=11;$i++){
+ for($i=1;$i<=$plxPlugin->getParam('shipping_nb_lines');$i++){
   $num=str_pad($i, 2, "0", STR_PAD_LEFT);
   $plxPlugin->setParam('p'.$num, $_POST['p'.$num], 'string');
   $plxPlugin->setParam('pv'.$num, $_POST['pv'.$num], 'string');
@@ -125,12 +127,14 @@ $var['payment_paypal_payflowcolor'] = $plxPlugin->getParam('payment_paypal_payfl
 $var['payment_paypal_cartbordercolor'] = $plxPlugin->getParam('payment_paypal_cartbordercolor')=='' ? '' : $plxPlugin->getParam('payment_paypal_cartbordercolor');
 //end paypal
 //socolissimo reco
+$var['shipping_by_price'] = $plxPlugin->getParam('shipping_by_price')=='' ? '0' : $plxPlugin->getParam('shipping_by_price');
+$var['shipping_nb_lines'] = $plxPlugin->getParam('shipping_nb_lines')=='' ? '11' : $plxPlugin->getParam('shipping_nb_lines');
 $var['shipping_colissimo'] = $plxPlugin->getParam('shipping_colissimo')=='' ? '' : $plxPlugin->getParam('shipping_colissimo');
 $var['freeshipw'] = $plxPlugin->getParam('freeshipw')=='' ? '' : $plxPlugin->getParam('freeshipw');
 $var['freeshipp'] = $plxPlugin->getParam('freeshipp')=='' ? '' : $plxPlugin->getParam('freeshipp');
 $var['acurecept'] = $plxPlugin->getParam('acurecept')=='' ? '' : $plxPlugin->getParam('acurecept');
 
-for($i=1;$i<=11;$i++){
+for($i=1;$i<=$var['shipping_nb_lines'];$i++){
  $num=str_pad($i, 2, "0", STR_PAD_LEFT);
  $var['p'.$num] = $plxPlugin->getParam('p'.$num)=='' ? '' : $plxPlugin->getParam('p'.$num);
  $var['pv'.$num] = $plxPlugin->getParam('pv'.$num)=='' ? '' : $plxPlugin->getParam('pv'.$num);
@@ -263,24 +267,61 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
    <div class="scrollable-table">
     <table class="full-width">
      <tr>
-      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_PRIX_BASE') ?>&nbsp;:</td><td colspanb='4'><?php plxUtils::printInput('acurecept',$var['acurecept'],'text','23-120') ?>&nbsp;<?php echo $var['devise'];?></td>
+      <td class="text-right"><b title="<?php $plxPlugin->lang('L_CONFIG_FREESHIPP') ?>"><?php $plxPlugin->lang('L_CONFIG_FREE') ?></b>&nbsp;:</td>
+      <td><?php plxUtils::printInput('freeshipw',$var['freeshipw'],'text','11-30') ?></td>
+      <td>kg&nbsp;<sub><?php $plxPlugin->lang('L_AND'); ?>/<?php $plxPlugin->lang('L_OR'); ?></sub></td>
+      <td><?php plxUtils::printInput('freeshipp',$var['freeshipp'],'text','25-120') ?></td>
+      <td><?php echo $var['devise'];?></td>
      </tr>
-<?php for($i=1;$i<=11;$i++){ $num=str_pad($i, 2, "0", STR_PAD_LEFT); ?>
      <tr>
-      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_WEIGHT') ?>&nbsp;:</td>
+      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_PRIX_BASE') ?>&nbsp;:</td>
+      <td><?php plxUtils::printInput('acurecept',$var['acurecept'],'text','25-120') ?></td>
+      <td><?php echo $var['devise'];?></td>
+      <td colspan="2">&nbsp;</td>
+     </tr>
+     <tr>
+      <td colspan="3" class="text-right"><?php $plxPlugin->lang('L_CONFIG_NB_LINES') ?>&nbsp;:</td>
+      <td colspan="2"><?php plxUtils::printInput('shipping_nb_lines',$var['shipping_nb_lines'],'number','5-10',false,'',' min="1"') ?></td>
+     </tr>
+     <tr>
+      <td class="text-left" colspan="2">
+       <label for="id_shipping_by_price"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_BY_PRICE');?>&nbsp;:</label>
+      </td>
+      <td colspan="3">
+       <label class="switch switch-left-right">
+        <input class="switch-input" id="id_shipping_by_price" name="shipping_by_price" type="checkbox"<?php
+        echo 
+         (("0" === $var["shipping_by_price"]) ? '' : ' checked="checked"')
+         .' onchange="if (this.checked) {confdelivery(\''.$plxPlugin->getLang('L_CONFIG_DELIVERY_PRICE').$var['devise'].'\')}else{confdelivery(\''.$plxPlugin->getLang('L_CONFIG_DELIVERY_WEIGHT').'\')}"';
+        ?> />
+        <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
+        <span class="switch-handle"></span>
+        <script type="text/javascript">
+        function confdelivery(content) {
+         var elems = document.getElementsByTagName('td'), i;
+         for (i in elems) {
+          if((' ' + elems[i].className + ' ').indexOf(' confdelivery ') > -1) {
+           elems[i].innerHTML = content + '&nbsp:';
+          }
+         }
+        }    
+        </script>
+       </label>
+      </td>
+     </tr>
+<?php
+      for($i=1;$i<=$var["shipping_nb_lines"];$i++){
+       $num=str_pad($i, 2, "0", STR_PAD_LEFT);
+       $cnf=("0" === $var["shipping_by_price"]) ? $plxPlugin->getLang('L_CONFIG_DELIVERY_WEIGHT'): $plxPlugin->getLang('L_CONFIG_DELIVERY_PRICE').$var['devise'];
+?>
+     <tr>
+      <td class="text-right confdelivery"><?php echo $cnf; ?>&nbsp;:</td>
       <td><?php plxUtils::printInput('p'.$num,$var['p'.$num],'text','25-120') ?></td>
       <td class="text-center">&lt;=</td>
       <td><?php plxUtils::printInput('pv'.$num,$var['pv'.$num],'text','25-120') ?></td>
       <td><?php echo $var['devise'];?></td>
      </tr>
 <?php } ?>
-     <tr>
-      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_FREE') ?>&nbsp;:</td>
-      <td><?php $plxPlugin->lang('L_CONFIG_FREESHIPP') ?>&nbsp;<?php plxUtils::printInput('freeshipw',$var['freeshipw'],'text','11-30') ?>&nbsp;kg</td>
-      <td><?php $plxPlugin->lang('L_AND'); ?>/<?php $plxPlugin->lang('L_OR'); ?></td>
-      <td><?php plxUtils::printInput('freeshipp',$var['freeshipp'],'text','25-120') ?></td>
-      <td><?php echo $var['devise'];?></td>
-     </tr>
     </table>
    </div>
   </fieldset>

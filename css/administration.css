@@ -22,7 +22,7 @@
  padding-bottom: 0.2em;
  max-width: 480px;
 }
-#blocksocoreco input {width: 100%;}
+#blocksocoreco input[type="text"],#blocksocoreco  input[type="number"] {width: 100%;}
 /*
 .return-link, .back {
  left: 72%;
@@ -193,9 +193,6 @@ table.dataTable {
  padding: 0.3rem 0.7rem;
 }
 
-form#config_plxmyshop input[type="text"] {
- width: inherit;
-}
 #id_thumbnail_img img{
  width: 30%;
  height: auto;

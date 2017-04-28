@@ -128,6 +128,7 @@ $LANG = array(
 
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration des moyens de livraison et paiement',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Ajout de frais de port',
+'L_CONFIG_DELIVERY_BY_PRICE'        => 'Basé sur le prix total (ttc)',
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',
 'L_CONFIG_FREE'                     => 'Gratuité',
 'L_CONFIG_FREESHIPP'                => '(optionel) À partir de',
@@ -135,6 +136,8 @@ $LANG = array(
 'L_CONFIG_DELIVERY_CONFIG'          => 'Configuration des frais de port',
 'L_CONFIG_DELIVERY_RECORDED'        => 'Accusé de réception',
 'L_CONFIG_DELIVERY_WEIGHT'          => 'Poids en kg',
+'L_CONFIG_DELIVERY_PRICE'           => 'Prix en ',
+'L_CONFIG_NB_LINES'                 => '<b title="Nombre de lignes de configuration du tableau des frais de port. Sauvegarder pour rendre effectif le nombre de lignes, puis en suite modifier et re-sauvegarder">Nombre de lignes de config du tableau</b>',
 
 'L_CONFIG_PAYMENT_CHEQUE'           => 'Paiement par chèque',
 'L_CONFIG_PAYMENT_CASH'             => 'Paiement en argent comptant',
