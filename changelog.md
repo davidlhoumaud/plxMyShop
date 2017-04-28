@@ -43,7 +43,7 @@ le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont u
 
 Admin : Faire en sorte que l'onglet de la langue en cours soit activé lors de l'édition (option)
 
-##v0.13.1r2 ##/04/2017##
+##v0.13.1r2 28/04/2017##
 * [+] Option Config : nombre de ligne de configurations des Frais de portd
 * [+] Option Config : [Frais de port suivant le montant de la commande](http://forum.pluxml.org/viewtopic.php?pid=53688#p53688)
 * [+] Admin : Ordre des commandes, les dernières en premières + big locals & updates js/css
