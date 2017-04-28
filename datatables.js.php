@@ -1,15 +1,14 @@
-<script src="../../plugins/plxMyShop/js/jquery-1.7.0.min.js"></script>
+<script src="../../plugins/plxMyShop/js/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script src="../../plugins/plxMyShop/js/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
-
+<script src="../../plugins/plxMyShop/js/jquery.dataTables-1.10.13.min.js" type="text/javascript"></script>
+<script src="../../plugins/plxMyShop/js/dataTables.responsive-1.0.0.min.js" type="text/javascript"></script>
 <!--
 <script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="//cdn.rawgit.com/noelboss/featherlight/1.7.2/release/featherlight.min.js" charset="utf-8"></script>
-
-<script type="text/javascript" language="javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
--->
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" language="javascript" src="//cdn.datatables.net/responsive/1.0.0/js/dataTables.responsive.min.js"></script>
-
+-->
 <script type="text/javascript" class="init">
 $(document).ready(function(){
  $("head link[rel='stylesheet']").last().after("<style>"+
