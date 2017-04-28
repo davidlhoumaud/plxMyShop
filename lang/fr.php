@@ -92,6 +92,7 @@ $LANG = array(
 
 #commandes
 'LIST_ORDERS'                       => 'Liste des commandes',
+'DATEFORMAT'                        => 'd/m/Y H:i:s',
 'L_DATABLEJS'                       => 'French',
 
 #Related to panier
@@ -99,7 +100,6 @@ $LANG = array(
 'L_PANIER_POS_SEPARATE'             => 'Sur une page séparée',
 'L_PANIER_POS_BOTH'                 => 'En bas des pages et sur une page séparée',
 'L_PANIER_RECALCULER'               => 'Recalculer le total',
-
 
 // formatage des prix
 "L_NOMBRE_DECIMALES"                => "2",
