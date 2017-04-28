@@ -27,6 +27,7 @@ $(document).ready(function(){
  "<link rel='stylesheet' href='../../plugins/plxMyShop/css/featherlight-1.7.2.min.css' type='text/css' />");
  var table = $('#myShop-table').DataTable({// DataTable
   "order": [[ 0, "desc" ]],
+  "responsive": true,
   "language":{
    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/<?php $plxPlugin->lang('L_DATABLEJS'); ?>.json"
   }

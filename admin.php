@@ -74,7 +74,7 @@ function checkBox(obj){
   </p>
  <?php endif; ?>
   <div class="scrollable-table">
-   <table id="myShop-table" class="table full-width listeCategoriesProduitsAdmin liste<?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?"Categories":"Produits");?>Admin">
+   <table id="myShop-table" class="table full-width listeCategoriesProduitsAdmin liste<?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?"Categories":"Produits");?>Admin display responsive no-wrap" width="100%">
     <thead>
      <tr>
 <?php if (!isset($_GET['mod']) || (isset($_GET['mod']) && $_GET['mod']!='cmd')): ?>
