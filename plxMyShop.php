@@ -1421,37 +1421,40 @@ for($i=1;$i<=11;$i++){
 
   $totalpoidgshipping = $this->shippingMethod($totalpoidg, $totalpricettc, 0);
 
-  #Mail de nouvelle commande pour le commerçant.
-  $sujet = $this->getlang('L_EMAIL_SUBJECT').$SHOPNAME;
   $message = plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."<br/>".
   plxUtils::cdataCheck($_POST['adress'])."<br/>".
   plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
   plxUtils::cdataCheck($_POST['country'])."<br/>".
   $this->getlang('L_EMAIL_TEL').
-  plxUtils::cdataCheck($_POST['tel'])."<br/><br/>".
-  (!isset($_POST["choixCadeau"]) 
+  plxUtils::cdataCheck($_POST['tel']);
+
+  $messCommon = "<br/><br/>" . (!isset($_POST["choixCadeau"]) 
    ? $this->getlang('L_EMAIL_NOGIFT') 
    : $this->getlang('L_EMAIL_GIFT_FOR')." <strong>".htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
   )
   ."<br/><br/>".
-  $this->getlang('L_PAIEMENT').": ".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE')).
-  "<br/>".$this->getlang('L_EMAIL_PRODUCTLIST')." :<br/><ul>";
-  foreach ($productscart as $k => $v){
-   $message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."&nbsp;kg":"")."</li>";
-  }
-  $message .= "</ul>";
-  $message .= "<br/><br/>";
-  $message .= "<em><strong>". $this->getlang('L_EMAIL_DELIVERY_COST'). " : ".$this->pos_devise($totalpoidgshipping). "</strong>";
-  $message .= "<br/>";
-  $message .= "<strong>".$this->getlang('L_EMAIL_WEIGHT')." : ".$totalpoidg."&nbsp;kg</strong></em>";
-  $message .= "<br/>";
-  $message .= "<strong>" . $this->getlang('L_TOTAL_BASKET')." ".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "</strong>";
-  $message .= "<br/><br/>";
-  $message .= $this->getlang('L_EMAIL_COMMENT')." : ";
-  $message .= "<br/>";
-  $message .= $_POST['msg'];
+  $this->getlang('L_PAIEMENT').": ".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE'));
 
+  $messCommon .= "<br/>".$this->getlang('L_EMAIL_PRODUCTLIST')." :<br/><ul>";
+  foreach ($productscart as $k => $v){
+   $messCommon.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."&nbsp;kg":"")."</li>";
+  }
+  $messCommon .= "</ul>";
+  $messCommon .= "<br/><br/>";
+  $messCommon .= "<em><strong>". $this->getlang('L_EMAIL_DELIVERY_COST'). " : ".$this->pos_devise($totalpoidgshipping). "</strong>";
+  $messCommon .= "<br/>";
+  $messCommon .= "<strong>".$this->getlang('L_EMAIL_WEIGHT')." : ".$totalpoidg."&nbsp;kg</strong></em>";
+  $messCommon .= "<br/>";
+  $messCommon .= "<strong>" . $this->getlang('L_TOTAL_BASKET')." ".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "</strong>";
+  $messCommon .= "<br/><br/>";
+  $messCommon .= $this->getlang('L_EMAIL_COMMENT')." : ";
+  $messCommon .= "<br/>";
+  $messCommon .= $_POST['msg'];
+
+  #Mail de nouvelle commande pour le commerçant.
+  $sujet = $this->getlang('L_EMAIL_SUBJECT').$SHOPNAME;
   $destinataire = $TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"");
+  $message .= $messCommon;
 
   $headers  = "From: \"".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."\" <".$_POST['email'].">\r\n";
   $headers .= "Reply-To: ".$_POST['email']."\r\n";
@@ -1473,7 +1476,7 @@ for($i=1;$i<=11;$i++){
     )
    )
   ){
-   if(mail($destinataire,$sujet,$message,$headers)){
+   if(mail($destinataire,$sujet,$message,$headers)){//si envoi au commerçant
     $msgCommand.= "<h5 class='msgyeah' >".$this->getlang('L_EMAIL_CONFIRM_'.strtoupper($_POST['methodpayment']))."</h5>";
     #Mail de récapitulatif de commande pour le client.
     switch ($_POST['methodpayment']){
@@ -1493,6 +1496,7 @@ for($i=1;$i<=11;$i++){
       echo 'A method of payment is required!';
     }
     $sujet = $this->getlang('L_EMAIL_CUST_SUBJECT') . $SHOPNAME;
+
     $message = "<p>" . $this->getlang('L_EMAIL_CUST_MESSAGE1') . " <a href='http://".$_SERVER["HTTP_HOST"]."'>".$SHOPNAME."</a><br/>".
      $this->getlang('L_EMAIL_CUST_MESSAGE2')." ". $status ." ".$this->getlang('L_EMAIL_CUST_MESSAGE3')."</p>";
     if ($_POST['methodpayment']=="cheque"){
@@ -1511,25 +1515,11 @@ for($i=1;$i<=11;$i++){
     plxUtils::cdataCheck($_POST['adress'])."<br/>".
     plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
     plxUtils::cdataCheck($_POST['country'])."<br/>".
-    "<strong>Tel : </strong>".plxUtils::cdataCheck($_POST['tel'])
-    . "<br/><br/>" .
-    (!isset($_POST["choixCadeau"]) 
-     ? $this->getlang('L_EMAIL_NOGIFT') 
-     : $this->getlang('L_EMAIL_GIFT_FOR') . " <strong>" . htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
-    )
-    . "<br/><br/>" .
-    "<strong>" . $this->getlang('L_EMAIL_CUST_PAYMENT') . ": </strong>". $method .
-    "<br/><strong>" . $this->getlang('L_EMAIL_PRODUCTLIST') . " :</strong><br/>";
-    foreach ($productscart as $k => $v){
-     $message.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ".$this->getlang('L_FOR')." ".$v['poidg']."&nbsp;kg":"")."</li>";
-    }
-    $message.= "<br/><br/>".
-    "<strong>". $this->getlang('L_TOTAL_BASKET') ." : </strong>".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "<br/>".
-    "<em><strong>". $this->getlang('L_EMAIL_DELIVERY_COST') ." : </strong>".$this->pos_devise($totalpoidgshipping)."<br/>".
-    "<strong>". $this->getlang('L_EMAIL_WEIGHT') ." : </strong>".$totalpoidg."&nbsp;kg<br/><br/></em>".
-    "<strong>". $this->getlang('L_EMAIL_COMMENT') ." : </strong><br/>".plxUtils::cdataCheck($_POST['msg']);
- 
+    "<strong>Tel : </strong>".plxUtils::cdataCheck($_POST['tel']) .
+    "<strong>" . $this->getlang('L_EMAIL_CUST_PAYMENT') . ": </strong>". $method;
+
     $destinataire = $_POST['email'];
+    $message .= $messCommon;
     $headers  = "From: \"".$SHOPNAME."\" <".$TONMAIL.">\r\n";
     $headers .= "Reply-To: ".$TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"")."\r\n";
     $headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n";
