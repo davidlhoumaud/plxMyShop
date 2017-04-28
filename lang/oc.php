@@ -92,6 +92,7 @@ $LANG = array(
 
 #commandes
 'LIST_ORDERS'                       => 'Lista de las comandas',
+'DATEFORMAT'                        => 'd/m/Y H:i:s',
 'L_DATABLEJS'                       => 'Catalan',
 
 #Related to panier

@@ -1544,8 +1544,9 @@ for($i=1;$i<=11;$i++){
 <meta name=\"author\" content=\"plxMyShop\">
 </head>
 <body>
+<sup>".date($this->getLang('DATEFORMAT'))."</sup><hr/>
 $message
-<hr>
+<hr/>
 <a href=\"mailto:$destinataire\">$destinataire</a>
 </body>
 </html>";
