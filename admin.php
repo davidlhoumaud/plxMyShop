@@ -221,7 +221,7 @@ function checkBox(obj){
    '   <td id="dateTime">'.$date.' - '.str_replace('-',':',$namearray[1]).'</td>'.PHP_EOL.
    '   <td>'.$namearray[2].'</td>'.PHP_EOL.
    '   <td class="nombre">'.$plxPlugin->pos_devise((float)$namearray[3]+(float)preg_replace('/.html/','',$namearray[4])).'</td>'.PHP_EOL.
-   '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p=plxMyShop&amp;mod=cmd&amp;kill='.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a href="'.$dir.$val.'" target="_BLANK">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.PHP_EOL.
+   '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p=plxMyShop&amp;mod=cmd&amp;kill='.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a href="'.$dir.$val.'"  target="_blank" data-featherlight="iframe" data-featherlight-iframe-allowfullscreen="true">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.PHP_EOL.
    '</tr>';
  };
 
