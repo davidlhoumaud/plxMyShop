@@ -120,15 +120,17 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
     </script>
     <div class="grid gridthumb">
      <div class="col sml-12 med-5 label-centered">
-      <label><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail" href="javascript:void(0)" onclick="mediasManager.openPopup('id_thumbnail', true)" style="outline:none; text-decoration: none"> +</a></label>
+      <label><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail" href="javascript:void(0)" onclick="mediasManager.openPopup('id_image', true)" style="outline:none; text-decoration: none"> +</a></label>
       <?php plxUtils::printInput('image',plxUtils::strCheck($image),'text','255-255',false,'full-width','','onkeyup="refreshImg(this.value)"'); ?>
      </div>
      <div class="col sml-12 med-7">
+      <div id="id_image_img">
 <?php
     $imgUrl = PLX_ROOT.$plxPlugin->cheminImages.$image;
     if(is_file($imgUrl))
-     echo '<div id="id_thumbnail_img"><img src="'.$imgUrl.'" alt="" /></div>';
+     echo '<img src="'.$imgUrl.'" alt="" />';
 ?>
+      </div>
      </div>
     </div>
   <!-- Fin du selecteur d'image natif de PluXml -->
