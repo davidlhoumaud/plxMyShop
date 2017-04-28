@@ -101,7 +101,6 @@ $LANG = array(
 'L_PANIER_POS_BOTH'                 => 'Aval de las paginas e sus una pagina a despart',
 'L_PANIER_RECALCULER'               => 'Tornar calcular lo total',
 
-
 // formatage des prix
 "L_NOMBRE_DECIMALES"                => "2",
 "L_POINT_DECIMAL"                   => ",",

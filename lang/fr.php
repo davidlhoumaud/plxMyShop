@@ -101,7 +101,6 @@ $LANG = array(
 'L_PANIER_POS_BOTH'                 => 'En bas des pages et sur une page séparée',
 'L_PANIER_RECALCULER'               => 'Recalculer le total',
 
-
 // formatage des prix
 "L_NOMBRE_DECIMALES"                => "2",
 "L_POINT_DECIMAL"                   => ",",
