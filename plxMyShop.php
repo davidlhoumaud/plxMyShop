@@ -13,6 +13,7 @@ class plxMyShop extends plxPlugin {
  public $idProduit;
  public $shortcode = "boutonPanier";
  public $shortcodeactif = false;
+ public $shipOverload = false;
 
  public function __construct($default_lang){
 
@@ -1338,7 +1339,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
      $classeCss = $categorieSelectionnee ? "active" : "noactive";
      $lien = $this->plxMotor->urlRewrite('?'.$this->lang."product$k/{$v["url"]}");
      $submenuTemp = "<li><a class=\"static $classeCss\" href=\"$lien\" title=\"' . htmlspecialchars('$nomProtege') . '\">$nomProtege</a></li>";
-	 $submenuCategories .= $submenuTemp;
+     $submenuCategories .= $submenuTemp;
      if (!$submenu){
       echo "<?php array_splice(\$menus, $positionMenu, 0, '$submenuTemp'); ?>";
      }
@@ -1454,7 +1455,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
   #Mail de nouvelle commande pour le commerçant.
   $sujet = $this->getlang('L_EMAIL_SUBJECT').$SHOPNAME;
   $destinataire = $TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"");
-  $message .= $messCommon;
+  $message .= ($this->shipOverload?"<h5>".$this->getLang('L_SHIPMAXWEIGHT')."</h5>":'').$messCommon;
 
   $headers  = "From: \"".plxUtils::cdataCheck($_POST['firstname'])." ".plxUtils::cdataCheck($_POST['lastname'])."\" <".$_POST['email'].">\r\n";
   $headers .= "Reply-To: ".$_POST['email']."\r\n";
@@ -1519,7 +1520,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
 
     $sujet = $this->getlang('L_EMAIL_CUST_SUBJECT') . $SHOPNAME;
     $destinataire = $_POST['email'];
-    $message .= $messCommon;
+    $message .= ($this->shipOverload?"<h5>".$this->getLang('L_SHIPMAXWEIGHTADMIN')."</h5>":'').$messCommon;
     $headers  = "From: \"".$SHOPNAME."\" <".$TONMAIL.">\r\n";
     $headers .= "Reply-To: ".$TONMAIL.(isset($TON2EMEMAIL) && !empty($TON2EMEMAIL)?', '.$TON2EMEMAIL:"")."\r\n";
     $headers .= "Content-Type: text/html;charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n";
@@ -1635,6 +1636,7 @@ $message
    }
    if($kg > 0 && ($this->getParam('p'.$num) * $this->getParam('pv'.$num)) > 0){
     if($kg > $this->getParam('p'.$num)){
+     $this->shipOverload = true;
      $this->lang('L_SHIPMAXWEIGHT');
      return (float) (($kg / $this->getParam('p'.$num)) * $this->getParam('pv'.$num)) + $accurecept;
     }

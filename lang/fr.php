@@ -129,6 +129,7 @@ $LANG = array(
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration des moyens de livraison et paiement',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Ajout de frais de port',
 'L_CONFIG_DELIVERY_BY_PRICE'        => 'Basé sur le prix total (ttc)',
+'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Les montants des frais de ports sont peut être a réévaluer ou a reconfigurer.</b>',
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',
 'L_CONFIG_FREE'                     => 'Gratuité',
 'L_CONFIG_FREESHIPP'                => '(optionel) À partir de',

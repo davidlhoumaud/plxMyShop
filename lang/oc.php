@@ -129,6 +129,7 @@ $LANG = array(
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuracion dels mejans de liurason e pagament',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Liurason per "SoColissimo Recommandé"',
 'L_CONFIG_DELIVERY_BY_PRICE'        => 'Basé sur le prix total (ttc)',# atraduire
+'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Les montants des frais de ports sont peut être a réévaluer ou a reconfigurer.</b>',# atraduire
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',# atraduire
 'L_CONFIG_FREE'                     => 'Gratuité',# atraduire
 'L_CONFIG_FREESHIPP'                => '(optionel) À partir de',# atraduire
