@@ -1633,9 +1633,11 @@ $message
      break;
     }
    }
-   if($kg > $this->getParam('p'.$num)){
-    $this->lang('L_SHIPMAXWEIGHT');
-    return (float) (($kg / $this->getParam('p'.$num)) * $this->getParam('pv'.$num)) + $accurecept;
+   if($kg > 0 && ($this->getParam('p'.$num) * $this->getParam('pv'.$num)) > 0){
+    if($kg > $this->getParam('p'.$num)){
+     $this->lang('L_SHIPMAXWEIGHT');
+     return (float) (($kg / $this->getParam('p'.$num)) * $this->getParam('pv'.$num)) + $accurecept;
+    }
    }
   }
   return (float) $shippingPrice;
