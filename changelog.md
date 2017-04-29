@@ -8,13 +8,11 @@
 * $d = $this->donneesModeles; ($d == données modele)
 * tester paypal
 * Faire évoluer les formulaires de commande (panier coté public) (compatible PluCss)
-* intégrer en interne? et/ou harmoniser jquery.dataTables & cdn
 * Vérifier comment il fonctionne sur pluxml <=5.4? (classes css pour la sidebar?) ::: v0.13 (tout semble ok)
 * Verifier la récriture d'url (activé et ou avec MyBetterUrls)
 * intégrer datatable.js pour la liste des produits et/ou des catégories de produits? (+comlexe)
-* "voir" une commande en mode smoothframe (avec jquery?)
 * Une boutique par utilisateur?
-* Ajout de noscript pour avertir l'internaute (panier! et bouton produit) par ex: Afin de poursuivre et validé la commande, veuillez s'il vous plaît activer le javascript de votre navigateur.
+cfait, Mais quant? ::: Ajout de noscript pour avertir l'internaute (panier! et bouton produit) par ex: Afin de poursuivre et validé la commande, veuillez s'il vous plaît activer le javascript de votre navigateur.
 * Peaufiner l'aide
 
 ****
@@ -25,7 +23,7 @@
 ** Solution de fortune: Placer une image avec le "même nom de fichier" dans chaque dossiers media/[lang] et elles s'afficheront (cela permet une image du produit par langue)
 
 ****https://www.colissimo.entreprise.laposte.fr/fr/faq-technique
-* Attention Frais de port, si au dela de votre config ils deviennent zéro (bug)
+* Attention Frais de port, si au dela de votre config il y a une règles qui calcule approximativement le tarif et le client est avertit)
 
 **** (theme default 5.6)
 * Sur chrom(e)ium, s'il y a un souci de grosseur de characteres (gros boutons), en trifouillant les réglages du zoom de chrome tout est rentré dans l'ordre ;) (font size: medium, zoom: 100%) ::: [Huge font in Chrome 37](https://productforums.google.com/forum/?_escaped_fragment_=topic/chrome/17kfuau1ApM#!topic/chrome/17kfuau1ApM)
@@ -33,10 +31,6 @@
 BUG les drapeaux le multilingue disparaissent au panier, mais sont présent dans catégories & produits ;)
 #1 BUG l'option "afficher le bouton ajouter au panier" ne fonctionne pas, si à non, l'affiche quant même ::: la changer pour le lien panier. Est-ce important?
 Bug "J'ai lu et j'accepte les conditions générales de vente." reste en français ainsi que le selecteur du mode de paiement (alors que tout le panier est en anglais), il prend la phrase de la config ;)
-DBug : short code change (très peu) de largeur quant les langues (tabs) sont sélectionnées
-
-bug? les url sont non claire, et permettent de basculer d'une url a l'autre (attention au DC de GG) ::: produit (mauvaise redirection, ou pas, si par exemple product 2 est une catégorie alors que l'on cherche un produit atterrit sur une catégorie, et l'url n'est pas réécrite, c'est pareil avec les catégories => prod) 
-
 
 le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont un admin.php (vu avec plx5.4 & maybe after)
 #1 (option afficher bouton ajout) Ajout d'une option générale au produit, ce produit est indiponible et en cours de réaprovisionement
@@ -44,14 +38,15 @@ le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont u
 Admin : Faire en sorte que l'onglet de la langue en cours soit activé lors de l'édition (option)
 
 ##v0.13.1r3 ##/04/2017##
+* Fix Panier : Warning division / 0 si ligne de frais de ports non configuré
 * Fix erreur responsive en mode mobile pour le lien voir, (2 clics pour afficher la lightbox featherlight) ::: Featherlight: no content filter found  (no target specified)
 * Fix Bad id's : Admin edit thumbnail image
 
 ##v0.13.1r2 28/04/2017##
 * [+] Option Config : nombre de ligne de configurations des Frais de portd
 * [+] Option Config : [Frais de port suivant le montant de la commande](http://forum.pluxml.org/viewtopic.php?pid=53688#p53688)
-* [+] Admin : Ordre des commandes, les dernières en premières + big locals updates js/css + adaptative au petits écrans
-* [+] Admin : Voir les commandes dans une lightbox iframe [featherlight](http://noelboss.github.io/featherlight/)
+* [+] Admin : Ordre des commandes, les dernières en premières + big locals updates js/css + adaptative au petits écrans ::: intégrer en interne? et/ou harmoniser jquery.dataTables & cdn
+* [+] Admin : Voir les commandes dans une lightbox iframe [featherlight](http://noelboss.github.io/featherlight/) ::: "voir" une commande en mode smoothframe (avec jquery?)
 * [+] Core des messages de Commandes simplifié et amélioré (il y avait des parties commune aux 2 messages + backup)
 * Fix float number
 
@@ -70,7 +65,8 @@ Admin : Faire en sorte que l'onglet de la langue en cours soit activé lors de l
 * [+] Formulaires d'édition de produit & config compatible grille PluCss1.2
 * [+] dire a l'utilisateur que le panier s'affiche que si javascript est activé (boutons la boutique)
 * [+] Compatible avec les fonctions de plxMyMultilingue 0.8.1 (remove personal tests jobs)
-* Fix zéros superflus dans urls et ancres & espace entre devise non attendu (Yannic)
+* Fix zéros superflus dans urls et ancres & espace entre devise non attendu (Yannic) ::: bug? les url sont non claire, et permettent de basculer d'une url a l'autre (attention au DC de GG) ::: produit (mauvaise redirection, ou pas, si par exemple product 2 est une catégorie alors que l'on cherche un produit atterrit sur une catégorie, et l'url n'est pas réécrite, c'est pareil avec les catégories => prod) 
+
 
 ##v0.13.1b6 20/04/2017##
 * [+] Contenu des produits compatible Mulitilingue.0.8.1 (Yannic)
