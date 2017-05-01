@@ -462,7 +462,7 @@ if (error) {
 <?php if ($this->getParam("shipping_colissimo")):?>
  spanshipping.innerHTML="<p class='spanshippingp'><?php
  echo $this->getLang('L_EMAIL_DELIVERY_COST').'&nbsp;: <?php echo $this->pos_devise($totalpoidgshipping); ?>'
- .($this->getParam('shipping_by_price') ? '' : ' '.$this->getLang('L_FOR').' <?php echo $totalpoidg; ?>&nbsp;kg'); ?></p>";
+ .'<?php echo ($totalpoidg)?($this->getParam("shipping_by_price") ? "" : " ".$this->getLang("L_FOR"))." ".$totalpoidg."&nbsp;kg":""; ?>'; ?></p>";
 <?php endif; ?>
  totalcommand.value=price;//total
 }
