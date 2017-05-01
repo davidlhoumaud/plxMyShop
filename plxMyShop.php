@@ -1420,7 +1420,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
   $this->getlang('L_EMAIL_TEL').
   plxUtils::cdataCheck($_POST['tel'])
   ."<br/><br/>".
-  $this->getlang('L_PAIEMENT').": ".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE'));
+  $this->getlang('L_PAIEMENT').": ".$this->getlang('L_PAYMENT'.strtoupper($_POST['methodpayment']));
 
   $messCommon = "<br/><br/>" . (!isset($_POST["choixCadeau"])
    ? $this->getlang('L_EMAIL_NOGIFT')
