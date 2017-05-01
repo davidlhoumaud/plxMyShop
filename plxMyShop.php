@@ -373,7 +373,7 @@ echo '<?php
 var total=0;
 var totalkg=0;
 var shippingPrice=0;
-var tmpship=0;
+//var tmpship=0;
 var nprod=0;
 var realnprod=0;
 var formCart=document.getElementById('formcart');
@@ -475,7 +475,7 @@ if (error) {
  //~ else { price= "<?php echo '<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>'; ?>&nbsp;"+devise;}
  spanshipping.innerHTML="<p class='spanshippingp'><?php
  echo $this->getLang('L_EMAIL_DELIVERY_COST').'&nbsp;: <?php echo $this->pos_devise($totalpricettc+$totalpoidgshipping); ?>'
- .($this->getParam('shipping_by_price') ? '' : ' '.$this->getLang('L_FOR')).' <?php echo $totalpoidg; ?>&nbsp;kg'; ?></p>";
+ .($this->getParam('shipping_by_price') ? '' : ' '.$this->getLang('L_FOR').' <?php echo $totalpoidg; ?>&nbsp;kg'); ?></p>";
 <?php endif; ?>
  totalcommand.value=price;//total
 }
