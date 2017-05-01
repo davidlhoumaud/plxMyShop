@@ -468,11 +468,11 @@ if (error) {
 }
 
 function changePaymentMethod(method) {
- if (method=="cheque")formCart.action="#panier";
+ if (method=="cheque") formCart.action="#panier";
  else if (method=="cash") formCart.action="#panier";
  else if (method=="paypal") formCart.action="#panier";
 }
-
+/* inutilisé
 function shippingMethod(kg, op){
  if (op==1)totalkg=(parseFloat(totalkg.toFixed(3))+parseFloat(kg));
  if (op==0)totalkg=(parseFloat(totalkg.toFixed(3))-parseFloat(kg));
@@ -489,6 +489,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
 
  return shippingPrice;
 }
+*/
 </script>
 <?php
  }
@@ -1613,6 +1614,11 @@ $message
    return (float) $shippingPrice;
   }
   $accurecept = (float) $this->getParam('acurecept');
+  if($this->getParam("shipping_by_price")){
+   $kg=$prx;//Transform to total price
+   //$op=0;//lock display free shipping (in hook)
+   //$this->setParam("shipping_colissimo","0");//lock display shipping (kg)(in hook)
+  }
   #hook plugin
   if(eval($this->plxMotor->plxPlugins->callHook('plxMyShopShippingMethod'))) return;
   if ($kg<=0){
@@ -1642,11 +1648,6 @@ $message
  **/
  public function plxMyShopShippingMethod() {
   echo '<?php
-  if($this->getParam("shipping_by_price")){
-   $kg=$prx;//Transform to total price
-   //$op=0;//lock display free shipping
-   //$this->setParam("shipping_colissimo","0");//lock display shipping (kg)
-  }
   if($op){
    if(
     (!empty($this->getParam("freeshipw")) && $kg>=$this->getParam("freeshipw"))
