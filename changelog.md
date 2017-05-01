@@ -41,6 +41,7 @@ Admin : Faire en sorte que l'onglet de la langue en cours soit activé lors de l
 * [+] Avertir dans les courriels de commandes (admin et client) qu'il est détecté que "Le montant des frais de port peut être réévalué."
 * Fix Panier : Warning division / 0 si ligne de frais de ports non configuré
 * Fix erreur responsive en mode mobile pour le lien voir, (2 clics pour afficher la lightbox featherlight) ::: Featherlight: no content filter found  (no target specified)
+* Fix Lignes max : Config Frais de port (impossible au dela de 99 lignes)
 * Fix Bad id's : Admin edit thumbnail image
 
 ##v0.13.1r2 28/04/2017##

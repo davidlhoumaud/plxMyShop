@@ -27,7 +27,7 @@ $var = array();
 if(!empty($_POST)){
  //socolissimo reco
  $plxPlugin->setParam('shipping_by_price', isset($_POST['shipping_by_price'])?'1':'0', 'numeric');
- $plxPlugin->setParam('shipping_nb_lines', isset($_POST['shipping_nb_lines'])?$_POST['shipping_nb_lines']:'11', 'numeric');
+ $plxPlugin->setParam('shipping_nb_lines', isset($_POST['shipping_nb_lines'])?($_POST['shipping_nb_lines']>='99'?'99':$_POST['shipping_nb_lines']):'11', 'numeric');
  $plxPlugin->setParam('shipping_colissimo', isset($_POST['shipping_colissimo'])?'1':'0', 'numeric');
  $plxPlugin->setParam('freeshipw', $_POST['freeshipw'], 'string');//free shipping weight
  $plxPlugin->setParam('freeshipp', $_POST['freeshipp'], 'string');//free shipping price
@@ -281,7 +281,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
      </tr>
      <tr>
       <td colspan="3" class="text-right"><?php $plxPlugin->lang('L_CONFIG_NB_LINES') ?>&nbsp;:</td>
-      <td colspan="2"><?php plxUtils::printInput('shipping_nb_lines',$var['shipping_nb_lines'],'number','5-10',false,'',' min="1"') ?></td>
+      <td colspan="2"><?php plxUtils::printInput('shipping_nb_lines',$var['shipping_nb_lines'],'number','5-10',false,'',' min="1" max="99"') ?></td>
      </tr>
      <tr>
       <td class="text-left" colspan="2">
