@@ -456,23 +456,10 @@ if (error) {
  numCart.value="<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?$_SESSION["plxMyShop"]["ncart"]:""); ?>";
  nprod=<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?(int)$_SESSION["plxMyShop"]["ncart"]:0); ?>;
  realnprod=<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?(int)$_SESSION["plxMyShop"]["ncart"]:0); ?>;
- //~ tmpship=<?php echo '<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>'; ?>;
- //~ total=<?php echo '<?php echo (isset($totalpricettc)?$totalpricettc:0.00); ?>'; ?>;
- //~ if (total > 0) displayTotal=(total+tmpship);
- //~ else displayTotal=0;
 
- //~ pos_devise= "<?php echo $this->getParam("position_devise");?>";
- //~ devise= "<?php echo $this->getParam("devise");?>";
-//~ 
- //~ if (pos_devise == "before") { price= devise+displayTotal.toFixed(2);}
- //~ else { price= displayTotal.toFixed(2)+devise;}
- //~ price = displayTotal.toFixed(2)+devise;
- //~ totalCart.innerHTML="<?php $this->lang('L_TOTAL_BASKET'); ?>&nbsp;: "+price;
  price = "<?php echo '<?php echo $this->pos_devise($totalpricettc+$totalpoidgshipping); ?>'; ?>";
  //totalCart.innerHTML="<?php echo $this->getLang('L_TOTAL_BASKET').'&nbsp;: '?>"+price;
 <?php if ($this->getParam("shipping_colissimo")):?>
- //~ if (pos_devise == "before") { price= devise+"<?php echo '<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>'; ?>";}
- //~ else { price= "<?php echo '<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>'; ?>&nbsp;"+devise;}
  spanshipping.innerHTML="<p class='spanshippingp'><?php
  echo $this->getLang('L_EMAIL_DELIVERY_COST').'&nbsp;: <?php echo $this->pos_devise($totalpoidgshipping); ?>'
  .($this->getParam('shipping_by_price') ? '' : ' '.$this->getLang('L_FOR').' <?php echo $totalpoidg; ?>&nbsp;kg'); ?></p>";
