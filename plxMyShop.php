@@ -415,42 +415,14 @@ if (error) {
  PRODS.value=shoppingCart.innerHTML;
 
  formcart.style.display='inline-block';
-
- btnCart.style.display='inline-block';
- msgCart.style.display='inline-block';
- labelMsgCart.style.display='inline-block';
-
- mailCart.style.display='inline-block';
  mailCart.value="<?php echo (isset($_POST['email'])?$_POST['email']:''); ?>";
- labelMailCart.style.display='inline-block';
-
- firstnameCart.style.display='inline-block';
  firstnameCart.value="<?php echo (isset($_POST['firstname'])?preg_replace('/\"/','\\\"',$_POST['firstname']):''); ?>";
- labelFirstnameCart.style.display='inline-block';
-
- lastnameCart.style.display='inline-block';
  lastnameCart.value="<?php echo (isset($_POST['lastname'])?preg_replace('/\"/','\\\"',$_POST['lastname']):''); ?>";
- labelLastnameCart.style.display='inline-block';
- 
- adressCart.style.display='inline-block';
  adressCart.value="<?php echo (isset($_POST['adress'])?preg_replace('/\"/','\\\"',$_POST['adress']):''); ?>";
- labelAddrCart.style.display='inline-block';
-
- postcodeCart.style.display='inline-block';
  postcodeCart.value="<?php echo (isset($_POST['postcode'])?preg_replace('/\"/','\\\"',$_POST['postcode']):''); ?>";
- labelPostcodeCart.style.display='inline-block';
-
- cityCart.style.display='inline-block';
  cityCart.value="<?php echo (isset($_POST['city'])?preg_replace('/\"/','\\\"',$_POST['city']):''); ?>";
- labelCityCart.style.display='inline-block';
-
- countryCart.style.display='inline-block';
  countryCart.value="<?php echo (isset($_POST['country'])?preg_replace('/\"/','\\\"',$_POST['country']):''); ?>";
- labelCountryCart.style.display='inline-block';
-
- telCart.style.display='inline-block';
  telCart.value="<?php echo (isset($_POST['tel'])?preg_replace('/\"/','\\\"',$_POST['tel']):''); ?>";
- labelTelCart.style.display='inline-block';
 
  idSuite.value="<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?$_SESSION["plxMyShop"]["ncart"]:""); ?>";
  numCart.value="<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?$_SESSION["plxMyShop"]["ncart"]:""); ?>";
