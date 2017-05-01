@@ -469,7 +469,7 @@ if (error) {
  //~ price = displayTotal.toFixed(2)+devise;
  //~ totalCart.innerHTML="<?php $this->lang('L_TOTAL_BASKET'); ?>&nbsp;: "+price;
  price = "<?php echo '<?php echo $this->pos_devise($totalpricettc+$totalpoidgshipping); ?>'; ?>";
- totalCart.innerHTML="<?php echo $this->getLang('L_TOTAL_BASKET').'&nbsp;: '?>"+price;
+ //totalCart.innerHTML="<?php echo $this->getLang('L_TOTAL_BASKET').'&nbsp;: '?>"+price;
 <?php if ($this->getParam("shipping_colissimo")):?>
  //~ if (pos_devise == "before") { price= devise+"<?php echo '<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>'; ?>";}
  //~ else { price= "<?php echo '<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>'; ?>&nbsp;"+devise;}
