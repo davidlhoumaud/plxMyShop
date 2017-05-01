@@ -1625,7 +1625,7 @@ $message
      break;
     }
    }
-   if($kg > 0 && ($this->getParam('p'.$num) * $this->getParam('pv'.$num)) > 0){
+   if(!$this->getParam("shipping_by_price") && $kg > 0 && ($this->getParam('p'.$num) * $this->getParam('pv'.$num)) > 0){
     if($kg > $this->getParam('p'.$num)){
      $this->shipOverload = true;
      $this->lang('L_SHIPMAXWEIGHT');
