@@ -177,9 +177,7 @@
 .startw, .star {color: red;}
 
 #msgCart {
- display: none;
- margin-left: 5% !important;
- margin-right: 5% !important;
+ margin-bottom: 1%;
  width: 90% !important;
 }
 
@@ -213,7 +211,7 @@
 #totalCart {
  color: green;
 }
-#formcart {
+#formcart, #prodsCart {
  display: none;
 }
 #postcode {

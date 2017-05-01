@@ -373,37 +373,26 @@ echo '<?php
 var total=0;
 var totalkg=0;
 var shippingPrice=0;
-//var tmpship=0;
+
 var nprod=0;
 var realnprod=0;
 var formCart=document.getElementById('formcart');
 var shoppingCart=document.getElementById('shoppingCart');
 var btnCart=document.getElementById('btnCart');
 var msgCart=document.getElementById('msgCart');
-var labelMsgCart=document.getElementById('labelMsgCart');
 var PRODS=document.getElementById('prodsCart');
 
 var idSuite=document.getElementById('idsuite');
 var numCart=document.getElementById('numcart');
 
 var mailCart=document.getElementById('email');
-var labelMailCart=document.getElementById('labelMailCart');
 var firstnameCart=document.getElementById('firstname');
-var labelFirstnameCart=document.getElementById('labelFirstnameCart');
 var lastnameCart=document.getElementById('lastname');
-var labelLastnameCart=document.getElementById('labelLastnameCart');
-
 var adressCart=document.getElementById('adress');
-var labelAddrCart=document.getElementById('labelAddrCart');
 var postcodeCart=document.getElementById('postcode');
-var labelPostcodeCart=document.getElementById('labelPostcodeCart');
 var cityCart=document.getElementById('city');
-var labelCityCart=document.getElementById('labelCityCart');
 var countryCart=document.getElementById('country');
-var labelCountryCart=document.getElementById('labelCountryCart');
-
 var telCart=document.getElementById('tel');
-var labelTelCart=document.getElementById('labelTelCart');
 
 var totalCart=document.getElementById('totalCart');
 var totalcommand=document.getElementById('totalcommand');
@@ -429,39 +418,8 @@ if (error) {
  nprod=<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?(int)$_SESSION["plxMyShop"]["ncart"]:0); ?>;
  realnprod=<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?(int)$_SESSION["plxMyShop"]["ncart"]:0); ?>;
 
- price = "<?php echo '<?php echo $this->pos_devise($totalpricettc+$totalpoidgshipping); ?>'; ?>";
- //totalCart.innerHTML="<?php echo $this->getLang('L_TOTAL_BASKET').'&nbsp;: '?>"+price;
-<?php if ($this->getParam("shipping_colissimo")):?>
- spanshipping.innerHTML="<p class='spanshippingp'><?php
- echo $this->getLang('L_EMAIL_DELIVERY_COST').'&nbsp;: <?php echo $this->pos_devise($totalpoidgshipping); ?>'
- .'<?php echo ($this->getParam("shipping_by_price") ? "" : ($totalpoidg)?" ".$this->getLang("L_FOR")." ".$totalpoidg."&nbsp;kg":""); ?>'; ?></p>";
-<?php endif; ?>
- totalcommand.value=price;//total
+ totalcommand.value = "<?php echo '<?php echo $this->pos_devise($totalpricettc+$totalpoidgshipping); ?>'; ?>";//total
 }
-/* inutilisé
-function changePaymentMethod(method) {
- if (method=="cheque") formCart.action="#panier";
- else if (method=="cash") formCart.action="#panier";
- else if (method=="paypal") formCart.action="#panier";
-}
-
-function shippingMethod(kg, op){
- if (op==1)totalkg=(parseFloat(totalkg.toFixed(3))+parseFloat(kg));
- if (op==0)totalkg=(parseFloat(totalkg.toFixed(3))-parseFloat(kg));
- accurecept=<?php echo (float)$this->getParam('acurecept'); ?>;
- if (totalkg.toFixed(3)<=0.000) {
-  shippingPrice=accurecept;
- }<?php #beau js
-for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
-  $num=str_pad($i, 2, "0", STR_PAD_LEFT);
-  ?>else if (totalkg.toFixed(3)<=<?php echo (float)$this->getParam('p'.$num); ?>){
-  shippingPrice=<?php echo (float)$this->getParam('pv'.$num); ?>+accurecept;
- }<?php
-}#en php ?>
-
- return shippingPrice;
-}
-*/
 </script>
 <?php
  }
