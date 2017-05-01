@@ -466,13 +466,13 @@ if (error) {
 <?php endif; ?>
  totalcommand.value=price;//total
 }
-
+/* inutilisé
 function changePaymentMethod(method) {
  if (method=="cheque") formCart.action="#panier";
  else if (method=="cash") formCart.action="#panier";
  else if (method=="paypal") formCart.action="#panier";
 }
-/* inutilisé
+
 function shippingMethod(kg, op){
  if (op==1)totalkg=(parseFloat(totalkg.toFixed(3))+parseFloat(kg));
  if (op==0)totalkg=(parseFloat(totalkg.toFixed(3))-parseFloat(kg));
