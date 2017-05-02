@@ -127,7 +127,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
      </label>
     </p>
 
-    <p class="conteneurNomCadeau ninety fl pl" id="conteneurNomCadeau">
+    <p class="conteneurNomCadeau ninety fl pl" id="conteneurNomCadeau"<?php echo (!isset($_POST["choixCadeau"])) ? '' : ' style="display:block;"';?>>
      <label for="nomCadeau"><?php $plxPlugin->lang('L_PUBLIC_GIFTNAME'); ?>&nbsp;:</label>
       <input type="text" name="nomCadeau" id="nomCadeau" value="<?php echo (!isset($_POST["nomCadeau"])) ? '' : htmlspecialchars($_POST['nomCadeau']);?>" />
     </p>
