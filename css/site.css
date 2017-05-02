@@ -172,7 +172,8 @@
 }
 
 #formcart p {
- margin-bottom: 0.1em !important;
+ margin: 0.2em !important;
+ /* float: left; */
 }
 .startw, .star {color: red;}
 
@@ -207,31 +208,45 @@
  text-align: center;
  margin-top: -7px;
 }
-
-#totalCart {
+.clear{
+ clear: both;
+}
+.green, #totalCart {
  color: green;
 }
-#formcart, #prodsCart {
+.hide, #formcart, #prodsCart {
  display: none;
 }
-#postcode {
+.twenty, #postcode, #country {
  width: 20% !important;
+ /* float: left; */
 }
-#firstname, #lastname {
+.thirty, #firstname, #lastname {
  width: 30% !important;
+ /* float: left; */
 }
-#city {
+b.thirty.clear {
+ margin: 0 0 0 30%;
+}
+.forty, #city {
  width: 40% !important;
+ /* float: left; */
 }
-#email, #tel, #country {
+b.forty {
+ margin: 0 10% 0 30%;
+}
+.fifty, #email, #tel {
  width: 50% !important;
+ /* float: left; */
 }
-#adress {
+.seventy, #adress {
  width: 75% !important;
+ /* float: left; */
 }
-#nomCadeau {
+.ninety, #nomCadeau {
  width: 95% !important;
+ /* float: left; */
 }
-#methodpayment {
+.auto, #methodpayment {
  width: auto;
 }
