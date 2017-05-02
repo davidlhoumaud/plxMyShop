@@ -97,26 +97,26 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsDebut')) # Hook Plugins ?>
     <p><span class='startw'><?php $plxPlugin->lang('L_PUBLIC_MANDATORY_FIELD'); ?></span></p>
 
-    <p><b class="thirty"><?php $plxPlugin->lang('L_PUBLIC_FIRSTNAME'); ?><span class='star'>*</span>&nbsp;:</b>
-    <b class="thirty clear"><?php $plxPlugin->lang('L_PUBLIC_LASTNAME'); ?><span class='star'>*</span>&nbsp;:</b></p>
-    <p><input type="text" name="firstname" id="firstname" value="" required="required" />
-    <input type="text" name="lastname" id="lastname" value="" required="required" /></p>
+    <p class="thirty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_FIRSTNAME'); ?><span class='star'>*</span>&nbsp;:<br />
+    <input type="text" name="firstname" id="firstname" value="" required="required" /></p>
+    <p class="thirty fl tal"><?php $plxPlugin->lang('L_PUBLIC_LASTNAME'); ?><span class='star'>*</span>&nbsp;:<br />
+    <input type="text" name="lastname" id="lastname" value="" required="required" /></p><br class="clear" />
 
-    <p><b class="fifty"><?php $plxPlugin->lang('L_PUBLIC_EMAIL'); ?><span class='star'>*</span>&nbsp;:</b></p>
-    <p><input type="email" name="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" id="email" value="" required="required" /></p>
+    <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_EMAIL'); ?><span class='star'>*</span>&nbsp;:<br />
+    <input type="email" name="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" id="email" value="" required="required" /></p>
 
-    <p><b class="fifty"><?php $plxPlugin->lang('L_PUBLIC_TEL'); ?>&nbsp;:</b></p>
-    <p><input type="text" name="tel" id="tel" value=""></p>
+    <p class="fifty fl tal"><?php $plxPlugin->lang('L_PUBLIC_TEL'); ?>&nbsp;:<br />
+    <input type="text" name="tel" id="tel" value=""></p><br class="clear" />
 
-    <p><b class="seventy"><?php $plxPlugin->lang('L_PUBLIC_ADDRESS'); ?><span class='star'>*</span>&nbsp;:</b></p>
-    <p><input type="text" name="adress" id="adress" value="" required="required" /></p>
+    <p class="ninety fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_ADDRESS'); ?><span class='star'>*</span>&nbsp;:<br />
+    <input type="text" name="adress" id="adress" value="" required="required" /></p><br class="clear" />
 
-    <p><b class="twenty"><?php $plxPlugin->lang('L_PUBLIC_ZIP'); ?><span class='star'>*</span>&nbsp;:</b>
-    <b class="forty"><?php $plxPlugin->lang('L_PUBLIC_TOWN'); ?><span class='star'>*</span>&nbsp;:</b>
-    <b class="twenty"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span>&nbsp;:</b></p>
-    <p><input type="text" name="postcode" id="postcode" value="" required="required" />
-    <input type="text" name="city" id="city" value=""  required="required">
-    <input type="text" name="country" id="country" value="" required="required" /></p>
+    <p class="thirty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_ZIP'); ?><span class='star'>*</span>&nbsp;:<br />
+    <input type="text" name="postcode" id="postcode" value="" required="required" /></p>
+    <p class="forty fl tal"><?php $plxPlugin->lang('L_PUBLIC_TOWN'); ?><span class='star'>*</span>&nbsp;:<br />
+    <input type="text" name="city" id="city" value=""  required="required"></p>
+    <p class="twenty fl tal"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span>&nbsp;:<br />
+    <input type="text" name="country" id="country" value="" required="required" /></p><br class="clear" />
 
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsMilieu')) # Hook Plugins ?>
 
@@ -133,7 +133,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
       <input type="text" name="nomCadeau" id="nomCadeau" value="<?php echo (!isset($_POST["nomCadeau"])) ? '' : htmlspecialchars($_POST['nomCadeau']);?>" />
      </label>
     </p>
-    <?php $plxPlugin->lang('L_PUBLIC_COMMENT'); ?><br /><textarea name="msg" id="msgCart"  rows="3"></textarea><br />
+    <p><?php $plxPlugin->lang('L_PUBLIC_COMMENT'); ?></p><textarea name="msg" id="msgCart"  rows="3"></textarea>
     <textarea name="prods" id="prodsCart" rows="3"></textarea>
     <input type="hidden" name="total" id="totalcommand" value="0" />
     <input type="hidden" name="shipping" id="shipping" value="0" />

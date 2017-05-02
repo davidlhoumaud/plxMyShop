@@ -208,44 +208,39 @@
  text-align: center;
  margin-top: -7px;
 }
-.clear{
- clear: both;
-}
+.clear{clear: both;}
+.fl{float: left;}
+.pl{padding-left: 5%;}
+.tal{text-align: left;}
 .green, #totalCart {
  color: green;
 }
 .hide, #formcart, #prodsCart {
  display: none;
 }
-.twenty, #postcode, #country {
+.twenty/*, #postcode, #country */{
  width: 20% !important;
- /* float: left; */
+  
 }
-.thirty, #firstname, #lastname {
+.thirty/*, #firstname, #lastname */{
  width: 30% !important;
- /* float: left; */
+ float: left;
 }
-b.thirty.clear {
- margin: 0 0 0 30%;
+.forty/*, #city */{
+ width: 43% !important;
+ float: left;
 }
-.forty, #city {
- width: 40% !important;
- /* float: left; */
+.fifty/*, #email, #tel */{
+ width: 47% !important;
+ float: left;
 }
-b.forty {
- margin: 0 10% 0 30%;
-}
-.fifty, #email, #tel {
- width: 50% !important;
- /* float: left; */
-}
-.seventy, #adress {
+.seventy/*, #adress */{
  width: 75% !important;
- /* float: left; */
+ float: left;
 }
-.ninety, #nomCadeau {
+.ninety/*, #nomCadeau */{
  width: 95% !important;
- /* float: left; */
+ float: left;
 }
 .auto, #methodpayment {
  width: auto;
