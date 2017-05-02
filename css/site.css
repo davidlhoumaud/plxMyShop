@@ -212,6 +212,7 @@
 .fl{float: left;}
 .pl{padding-left: 5%;}
 .tal{text-align: left;}
+.tac{text-align: center;}
 .tar{text-align: right;}
 .green, #totalCart {
  color: green;
@@ -219,7 +220,7 @@
 .hide, #formcart, #prodsCart {
  display: none;
 }
-.twenty/* #country */{
+.twenty/*, #country */{
  width: 20% !important;
 }
 .thirty/*, #postcode, */{
