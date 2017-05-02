@@ -39,13 +39,12 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFormProdsDebut')); # Hook Plugins ?>
         <table class="tableauProduitsPanier">
          <tr>
-          <th><?php $plxPlugin->lang('L_PRODUCT'); ?></th>
-          <th><?php $plxPlugin->lang('L_UNIT_PRICE'); ?></th>
+          <th><?php $plxPlugin->lang('L_PRODUCT'.(count($_SESSION["plxMyShop"]['prods'])>=2?'S':'')); ?></th>
+          <th class="nombre"><?php $plxPlugin->lang('L_UNIT_PRICE'); ?></th>
           <th><?php $plxPlugin->lang('L_NUMBER'); ?></th>
-          <th><?php $plxPlugin->lang('L_TOTAL_PRICE'); ?></th>
-          <th></th>
+          <th colspan="2" class="nombre"><?php $plxPlugin->lang('L_TOTAL_PRICE'); ?></th>
          </tr>
-<?php   foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) { 
+<?php   foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) {
            $prixUnitaire = (float) $plxPlugin->aProds[$pId]['pricettc'];
            $prixttc = $prixUnitaire * $nb;
            $poidg = (float) $plxPlugin->aProds[$pId]['poidg'] * $nb;
@@ -56,34 +55,35 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
          <tr>
           <td><a href="<?php echo $plxPlugin->productRUrl($pId); ?>"><?php echo $plxPlugin->aProds[$pId]['name']; ?></a></td>
           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixUnitaire);?></td>
-          <td><input type="number" name="nb[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($nb);?>" /></td>
+          <td width="10%"><input type="number" name="nb[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($nb);?>" /></td>
+          <td class="nombre"><input type="submit" class="red" name="retirerProduit[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_DEL'));?>" /></td>
           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixttc);?></td>
-          <td><input type="submit" class="red" name="retirerProduit[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_DEL'));?>" /></td>
          </tr>
-<?php   } // FIN foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb) ?>
+<?php   } // FIN foreach ($_SESSION["plxMyShop"]['prods'] as $pId => $nb)
+
+        $totalpoidgshipping = 0;
+        if($plxPlugin->getParam("shipping_colissimo")){ ?>
          <tr>
-          <td colspan="3"><?php $totalpoidgshipping = $plxPlugin->shippingMethod($totalpoidg, $totalpricettc); ?></td>
-          <td class="nombre" colspan="2"><input type="submit" name="recalculer" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_PANIER_RECALCULER'));?>" /></td>
-         </tr>
-         <tr>
-          <td class="nombre" colspan="3"><?php $plxPlugin->lang('L_TOTAL_BASKET');?>&nbsp;:</td>
+          <td class="nombre" colspan="4"><?php $plxPlugin->lang('L_TOTAL_BASKET');?>&nbsp;:</td>
           <td class="nombre"><?php echo $plxPlugin->pos_devise($totalpricettc);?></td>
-          <td>&nbsp;</td>
          </tr>
-<?php   if($plxPlugin->getParam("shipping_colissimo")){ ?>
          <tr>
-          <td class="nombre" colspan="3"><?php echo $plxPlugin->getLang('L_EMAIL_DELIVERY_COST').($plxPlugin->getParam("shipping_by_price") ? "" : ($totalpoidg?" ".$plxPlugin->getLang("L_FOR")." ".$totalpoidg."&nbsp;kg":""));?>&nbsp;:</td>
+          <td class="nombre" colspan="5"><?php $totalpoidgshipping = $plxPlugin->shippingMethod($totalpoidg, $totalpricettc); ?></td>
+         </tr>
+         <tr>
+          <td class="nombre" colspan="4"><?php echo $plxPlugin->getLang('L_EMAIL_DELIVERY_COST').($plxPlugin->getParam("shipping_by_price") ? "" : ($totalpoidg?" ".$plxPlugin->getLang("L_FOR")." ".$totalpoidg."&nbsp;kg":""));?>&nbsp;:</td>
           <td class="nombre" id="spanshipping"><?php echo $plxPlugin->pos_devise($totalpoidgshipping);?></td>
-          <td>&nbsp;</td>
          </tr>
 <?php   } ?>
          <tr class="msgyeah2">
-          <td class="nombre" colspan="3"><?php echo htmlspecialchars($plxPlugin->getLang('L_TOTAL_BASKET').
+          <td class="nombre" colspan="4"><?php echo htmlspecialchars($plxPlugin->getLang('L_TOTAL_BASKET').
            (($plxPlugin->getParam("shipping_colissimo"))?$plxPlugin->getLang('L_TOTAL_BASKET_PORT'):''));?>&nbsp;:</td>
           <td class="nombre" id='totalCart'><?php echo $plxPlugin->pos_devise($totalpricettc + $totalpoidgshipping);?></td>
-          <td>&nbsp;</td>
          </tr>
-       </table>
+         <tr>
+          <td class="nombre" colspan="5"><input type="submit" name="recalculer" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_PANIER_RECALCULER'));?>" /></td>
+         </tr>
+        </table>
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFormProdsFin')); # Hook Plugins ?>
        </form>
 <?php 
