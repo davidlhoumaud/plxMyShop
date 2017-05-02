@@ -212,17 +212,17 @@
 .fl{float: left;}
 .pl{padding-left: 5%;}
 .tal{text-align: left;}
+.tar{text-align: right;}
 .green, #totalCart {
  color: green;
 }
 .hide, #formcart, #prodsCart {
  display: none;
 }
-.twenty/*, #postcode, #country */{
+.twenty/* #country */{
  width: 20% !important;
-  
 }
-.thirty/*, #firstname, #lastname */{
+.thirty/*, #postcode, */{
  width: 30% !important;
  float: left;
 }
@@ -230,7 +230,7 @@
  width: 43% !important;
  float: left;
 }
-.fifty/*, #email, #tel */{
+.fifty/*, #firstname, #lastname, #email, #tel */{
  width: 47% !important;
  float: left;
 }

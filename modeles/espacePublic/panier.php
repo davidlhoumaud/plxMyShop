@@ -95,11 +95,11 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
    <noscript><p class="red"><?php $plxPlugin->lang('L_PUBLIC_NOJS'); ?></p></noscript>
    <form id="formcart" method="POST" action="#panier">
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsDebut')) # Hook Plugins ?>
-    <p><span class='startw'><?php $plxPlugin->lang('L_PUBLIC_MANDATORY_FIELD'); ?></span></p>
+    <p class="tar"><span class="startw"><?php $plxPlugin->lang('L_PUBLIC_MANDATORY_FIELD'); ?></span></p>
 
-    <p class="thirty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_FIRSTNAME'); ?><span class='star'>*</span>&nbsp;:<br />
+    <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_FIRSTNAME'); ?><span class='star'>*</span>&nbsp;:<br />
     <input type="text" name="firstname" id="firstname" value="" required="required" /></p>
-    <p class="thirty fl tal"><?php $plxPlugin->lang('L_PUBLIC_LASTNAME'); ?><span class='star'>*</span>&nbsp;:<br />
+    <p class="fifty fl tal"><?php $plxPlugin->lang('L_PUBLIC_LASTNAME'); ?><span class='star'>*</span>&nbsp;:<br />
     <input type="text" name="lastname" id="lastname" value="" required="required" /></p><br class="clear" />
 
     <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_EMAIL'); ?><span class='star'>*</span>&nbsp;:<br />
@@ -127,11 +127,9 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
      </label>
     </p>
 
-    <p class="conteneurNomCadeau" id="conteneurNomCadeau">
-     <label for="nomCadeau">
-      <?php $plxPlugin->lang('L_PUBLIC_GIFTNAME'); ?>
+    <p class="conteneurNomCadeau ninety fl pl" id="conteneurNomCadeau">
+     <label for="nomCadeau"><?php $plxPlugin->lang('L_PUBLIC_GIFTNAME'); ?>&nbsp;:</label>
       <input type="text" name="nomCadeau" id="nomCadeau" value="<?php echo (!isset($_POST["nomCadeau"])) ? '' : htmlspecialchars($_POST['nomCadeau']);?>" />
-     </label>
     </p>
     <p><?php $plxPlugin->lang('L_PUBLIC_COMMENT'); ?></p><textarea name="msg" id="msgCart"  rows="3"></textarea>
     <textarea name="prods" id="prodsCart" rows="3"></textarea>
