@@ -100,8 +100,8 @@ if(!empty($_POST)){
  exit;
 }
 # initialisation des variables communes à chaque langue
-$var['subject'] = $plxPlugin->getParam('subject')=='' ? "Récapitulatif de commande" : $plxPlugin->getParam('subject');
-$var['newsubject'] = $plxPlugin->getParam('newsubject')=='' ? "Nouvelle commande" : $plxPlugin->getParam('newsubject');
+$var['subject'] = $plxPlugin->getParam('subject')=='' ? $plxPlugin->lang('L_DEFAULT_OBJECT') : $plxPlugin->getParam('subject');
+$var['newsubject'] = $plxPlugin->getParam('newsubject')=='' ? $plxPlugin->lang('L_EMAIL_SUBJECT') : $plxPlugin->getParam('newsubject');
 $var['payment_cheque'] = $plxPlugin->getParam('payment_cheque')=='' ? '' : $plxPlugin->getParam('payment_cheque');
 $var['payment_cash'] = $plxPlugin->getParam('payment_cash')=='' ? '' : $plxPlugin->getParam('payment_cash');
 //paypal
