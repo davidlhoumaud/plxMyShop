@@ -39,7 +39,10 @@ Admin : Faire en sorte que l'onglet de la langue en cours soit activé lors de l
 
 ##v0.13.1r3 ##/04/2017##
 * [+] Avertir dans les courriels de commandes (admin et client) qu'il est détecté que "Le montant des frais de port peut être réévalué."
-* Fix Panier : Warning division / 0 si ligne de frais de ports non configuré
+*NewShip [+] Nouveau formulaire de commandes client (simplifier html, js & css).
+*NewShip Fix Panier : Si erreur d'envoi des courriels, commentaires & conteneurNomCadeau non affiché
+*NewShip Fix courriel de commande : La methode de paiement "cash" et transformé en chèque
+* Fix Panier : Warning division / 0 si ligne de frais de ports non configuré & Prevenir si erreur de réglage des frais de port (client & admin)
 * Fix erreur responsive en mode mobile pour le lien voir, (2 clics pour afficher la lightbox featherlight) ::: Featherlight: no content filter found  (no target specified)
 * Fix Lignes max : Config Frais de port (impossible au dela de 99 lignes)
 * Fix Bad id's : Admin edit thumbnail image
