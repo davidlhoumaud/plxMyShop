@@ -1470,7 +1470,7 @@ if (error) {
 <meta name=\"author\" content=\"plxMyShop\">
 </head>
 <body>
-<sup>".date($this->getLang('DATEFORMAT'))."</sup><hr/>
+<sup>".date($this->getLang('DATEFORMAT').' H:i:s')."</sup><hr/>
 $message
 <hr/>
 <a href=\"mailto:$destinataire\">$destinataire</a>
