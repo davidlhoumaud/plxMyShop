@@ -393,6 +393,7 @@ var postcodeCart=document.getElementById('postcode');
 var cityCart=document.getElementById('city');
 var countryCart=document.getElementById('country');
 var telCart=document.getElementById('tel');
+var msgCart=document.getElementById('msgCart');
 
 var totalCart=document.getElementById('totalCart');
 var totalcommand=document.getElementById('totalcommand');
@@ -412,6 +413,7 @@ if (error) {
  cityCart.value="<?php echo (isset($_POST['city'])?preg_replace('/\"/','\\\"',$_POST['city']):''); ?>";
  countryCart.value="<?php echo (isset($_POST['country'])?preg_replace('/\"/','\\\"',$_POST['country']):''); ?>";
  telCart.value="<?php echo (isset($_POST['tel'])?preg_replace('/\"/','\\\"',$_POST['tel']):''); ?>";
+ msgCart.value="<?php echo (isset($_POST['msg'])?preg_replace('/\"/','\\\"',$_POST['msg']):''); ?>";
 
  idSuite.value="<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?$_SESSION["plxMyShop"]["ncart"]:""); ?>";
  numCart.value="<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?$_SESSION["plxMyShop"]["ncart"]:""); ?>";
