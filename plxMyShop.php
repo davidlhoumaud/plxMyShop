@@ -1464,13 +1464,13 @@ if (error) {
      $commandeContent="<!DOCTYPE html>
 <html>
 <head>
-<title>".$this->getlang('L_FILE_ORDER').date("d m Y")."</title>
+<title>".$this->getlang('L_FILE_ORDER').date($this->getLang('DATEFORMAT'))."</title>
 <meta charset=\"UTF-8\">
 <meta name=\"description\" content=\"Commande\">
 <meta name=\"author\" content=\"plxMyShop\">
 </head>
 <body>
-<sup>".date($this->getLang('DATEFORMAT').' H:i:s')."</sup><hr/>
+<hr/>
 $message
 <hr/>
 <a href=\"mailto:$destinataire\">$destinataire</a>
