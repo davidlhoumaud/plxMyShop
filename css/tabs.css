@@ -17,13 +17,13 @@
 	background: #F7F7F7; /* old browsers */
 	cursor:pointer;
 	color: #333;
-	border-bottom: 2px solid #DA7418;
+	border-bottom: 1px solid #C96307;
 }
 .tabs > ul > li.tabActiveHeader{
 	background: #F7F7F7; /* old browsers */
 	cursor:pointer;
 	color: #333;
-	border-bottom: 2px solid #DA7418;
+	border-bottom: 1px solid #DA7418;
 }
 .tabscontent {
 	padding:10px 10px 0 0;

@@ -17,9 +17,11 @@ $LANG = array(
 'L_PAIEMENT'                        => 'Moyen de paiement',
 'L_MONTANT'                         => 'Montant',
 'L_ACTIONS'                         => 'Actions',
+'L_BY_DEFAULT'                      => 'Par défaut',
 'L_AND'                             => 'et',
 'L_OR'                              => 'ou',
 'L_A'                               => 'à',
+'L_OPTIONEL'                        => 'optionel',
 
 'L_EMAIL'                           => 'Destinataire(s) du courriel *',
 'L_EMAIL_CC'                        => 'Destinataire(s) en copie du courriel ',
@@ -54,9 +56,10 @@ $LANG = array(
 'L_ERR_PRODUCT_ALREADY_EXISTS'      => 'Titre du produit déjà utilisé',
 'L_PRODUCTS_IMAGE'                  => 'Image de présentation',
 'L_PRODUCTS_IMAGE_CHOICE'           => 'Choisir une image',
-'L_PRODUCTS_SHORTCODE'              => 'Shortcode utilisable dans une page statique',
-'L_PRODUCTS_BASKET_BUTTON'          => 'Cacher le bouton "Ajouter au panier"',
-'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Afficher un message si le bouton "Ajouter au panier" n\'est pas affiché',
+'L_PRODUCTS_SHORTCODE'              => 'Shortcode pour article et page statique',
+'L_PRODUCTS_BASKET_BUTTON'          => 'Produit Indisponible (Bouton "Ajouter au panier" caché)',
+'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Message substitutif au bouton "Ajouter au panier"',
+
 'L_PRODUCTS_CATEGORIES'             => 'Catégories de ce produit',
 'L_PRODUCTS_PRICE'                  => 'Prix T.T.C.',
 'L_PRODUCTS_WEIGHT'                 => 'Poids (kg)',
@@ -78,11 +81,11 @@ $LANG = array(
 
 'L_PRODUCT_UPDATE'                  => 'Enregistrer ce produit',
 'L_CAT_UPDATE'                      => 'Enregistrer cette catégorie',
-'L_PRODUCT_TITLE_HTMLTAG'           => 'Contenu de la balise "title" (option)',
-'L_PRODUCT_META_DESCRIPTION'        => 'Contenu de la balise meta "description" pour ce produit (option)',
-'L_CAT_META_DESCRIPTION'            => 'Contenu de la balise meta "description" pour cette catégorie (option)',
-'L_PRODUCT_META_KEYWORDS'           => 'Contenu de la balise meta "keywords" pour ce produit (option)',
-'L_CAT_META_KEYWORDS'               => 'Contenu de la balise meta "keywords" pour cette catégorie (option)',
+'L_PRODUCT_TITLE_HTMLTAG'           => 'Contenu de la balise "title"',
+'L_PRODUCT_META_DESCRIPTION'        => 'Contenu de la balise meta "description" pour ce produit',
+'L_CAT_META_DESCRIPTION'            => 'Contenu de la balise meta "description" pour cette catégorie',
+'L_PRODUCT_META_KEYWORDS'           => 'Contenu de la balise meta "keywords" pour ce produit',
+'L_CAT_META_KEYWORDS'               => 'Contenu de la balise meta "keywords" pour cette catégorie',
 
 #create product/cat
 'CREATE_PRODUCTS'                   => 'Gérer les produits',
@@ -128,17 +131,17 @@ $LANG = array(
 
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration des moyens de livraison et paiement',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Ajout de frais de port',
-'L_CONFIG_DELIVERY_BY_PRICE'        => 'Basé sur le prix total (ttc)',
+'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Basé sur le prix total (ttc)">Basé sur le total du panier</b>',
 'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Les montants des frais de ports sont peut être a réévaluer ou a reconfigurer.</b>',
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',
 'L_CONFIG_FREE'                     => 'Gratuité',
-'L_CONFIG_FREESHIPP'                => '(optionel) À partir de',
+'L_CONFIG_FREESHIPP'                => 'à partir de',
 'L_FREESHIP'                        => 'Frais de ports offert',
 'L_CONFIG_DELIVERY_CONFIG'          => 'Configuration des frais de port',
 'L_CONFIG_DELIVERY_RECORDED'        => 'Accusé de réception',
 'L_CONFIG_DELIVERY_WEIGHT'          => 'Poids en kg',
 'L_CONFIG_DELIVERY_PRICE'           => 'Prix en ',
-'L_CONFIG_NB_LINES'                 => '<b title="Nombre de lignes de configuration du tableau des frais de port. Sauvegarder pour rendre effectif le nombre de lignes, puis en suite modifier et re-sauvegarder">Nombre de lignes de config du tableau</b>',
+'L_CONFIG_NB_LINES'                 => '<b title="Nombre de lignes de configuration du tableau des frais de port. Sauvegarder pour rendre effectif le nombre de lignes, puis en suite modifier et re-sauvegarder">Nombre de lignes du tableau</b>',
 
 'L_CONFIG_PAYMENT_CHEQUE'           => 'Paiement par chèque',
 'L_CONFIG_PAYMENT_CASH'             => 'Paiement en argent comptant',
@@ -266,8 +269,13 @@ $LANG = array(
 
 'L_COMMANDE_LIBELLE_DEFAUT'         => "J'ai lu et j'accepte les conditions générales de vente.",
 'L_CONFIG_VALIDATION_COMMANDE'      => "Validation de la commande",
-'CONFIG_LIBELLE_CGV'                => "Libellé de la demande de validation des C.G.V. (l'URL doit être indiqué pour être utilisé)",
-'CONFIG_URL_CGV'                    => "URL des C.G.V.",
+'L_CONFIG_INFO_CGV'                 => 'Le champ "URL des C.G.V." ci-dessous doit être indiqué pour être actif.<br />(Attention! Url Réécrite par PluXml'.(defined('PLX_MYMULTILINGUE')?' ainsi que le préfixe "##/" est ajouté aux autres langues':'').')',
+'L_CONFIG_LIBELLE_CGV'              => "Libellé de la demande de validation des C.G.V.",
+'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Utiliser les phrases par defaut des C.G.V. du plugin",
+'L_CONFIG_URL_CGV'                  => "URL des C.G.V.",
+
+#boutonPanier.php
+'L_NOTICE_NOADDCART'                => 'En rupture de stock',
 
 #panier.js
 'L_TOTAL_BASKET'                    => 'Total',

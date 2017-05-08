@@ -1,8 +1,12 @@
 .nombre {
  text-align: right;
 }
+.noaddcartImg{
+ height: 20px;
+}
 .listeCategoriesProduitsAdmin img.product_image {
- height: 50px;
+ max-height: 50px;
+ min-width: 16px;
 }
 .page-title {}
 
@@ -20,6 +24,7 @@
  text-align: center;
  border: 1px solid #333;
  padding-bottom: 0.2em;
+ margin-bottom: 1em;
  max-width: 480px;
 }
 #blocksocoreco input[type="text"],#blocksocoreco  input[type="number"] {width: 100%;}
@@ -36,13 +41,17 @@
 /* template : editionProduitAdmin.php with js */
 .informationsShortcodeProduit {
  background-color: #CCD;
- width: 50%;
  padding: 1.2em;
 }
 .informationsShortcodeProduit .code {
  background-color: #EEF;
 }
-
+#id_image_img{
+ max-width: 320px;
+}
+#id_image_img img {
+ width: 100%;
+}
 /* cases à cocher */
 .switch {
  position: relative;
