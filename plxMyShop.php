@@ -486,6 +486,11 @@ if (error) {
   return $this->idProduit;
  }
 
+ # Change (') simple quote &#39; to Right single quotation mark &#146; &rsquo; ::: http://ascii-code.com/
+ static function apostrophe($str){
+  return str_replace(chr(39),'’',$str);#tips iso = chr(146)
+ }
+
  /**
   * Méthode de traitement du hook plxShowConstruct
   * @return stdio
@@ -497,7 +502,7 @@ if (error) {
    $string  = "if(\$this->plxMotor->mode=='product'){";
    $string .= " \$array = array();";
    $string .= " \$array[\$this->plxMotor->cible] = array(
-    'name'  => '" . plxUtils::strCheck($this->aProds[$this->productNumber()]["name"]) . "',
+    'name'  => '" . $this->aProds[$this->productNumber()]["name"] . "',
     'menu'  => '',
     'url'  => '/../template/affichageProduitPublic',
     'readable' => 1,
@@ -848,7 +853,7 @@ if (error) {
      $this->aProds[$product_id]['pcat'] = trim($content[$product_id.'_pcat']);
      $this->aProds[$product_id]['menu'] = trim($content[$product_id.'_menu']);
      $this->aProds[$product_id]['group'] = (isset($this->aProds[$product_id]['group'])?$this->aProds[$product_id]['group']:'');
-     $this->aProds[$product_id]['name'] = $stat_name;
+     $this->aProds[$product_id]['name'] = self::apostrophe($stat_name);
      $this->aProds[$product_id]['url'] = plxUtils::checkSite($url)?$url:$stat_url;
      $this->aProds[$product_id]['active'] = $content[$product_id.'_active'];
      $this->aProds[$product_id]['ordre'] = intval($content[$product_id.'_ordre']);
@@ -1065,15 +1070,9 @@ if (error) {
   * @author David.L
   **/
  public function productTitle(){
-  echo plxUtils::strCheck(
-   preg_replace(
-    "/'/"
-    , '&apos;'
-    , $this->aProds[$this->productNumber()]['name']
-   )
-  );
+  echo plxUtils::strCheck($this->aProds[$this->productNumber()]['name']);
  }
- 
+
  /**
   * Méthode qui affiche l'image du produit
   * @return stdout
@@ -1308,7 +1307,7 @@ if (error) {
 
      $classeCss = $categorieSelectionnee ? "active" : "noactive";
      $lien = $this->plxMotor->urlRewrite('?'.$this->lang."product$k/{$v["url"]}");
-     $submenuTemp = '<li><a class="static '.$classeCss.'" href="'.$lien.'" title="' . plxUtils::strCheck($v['name']) . '">'.$v['name'].'</a></li>';
+     $submenuTemp = '   <li><a class="static '.$classeCss.'" href="'.$lien.'" title="'.plxUtils::strCheck($v['name']).'">'.plxUtils::strCheck($v['name']).'</a></li>'.PHP_EOL;
      $submenuCategories .= $submenuTemp;
      if (!$submenu){
       echo "<?php array_splice(\$menus, $positionMenu, 0, '$submenuTemp'); ?>";
@@ -1317,7 +1316,7 @@ if (error) {
    }
    if ($submenu){
     echo "<?php array_splice(\$menus, $positionMenu, 0,";
-    echo " '<li><span class=\"static group $active\">".$this->getParam('submenu')."</span><ul>$submenuCategories$submenuPanier</ul></li>' ";
+    echo "' <li><span class=\"static group $active\">".$this->getParam('submenu')."</span>".PHP_EOL."  <ul>".PHP_EOL."$submenuCategories   $submenuPanier".PHP_EOL."  </ul>".PHP_EOL." </li>'".PHP_EOL;
     echo " ) ?>";
    }
   } // FIN if ajout du menu pour accèder aux rubriques
