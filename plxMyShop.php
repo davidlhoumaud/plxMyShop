@@ -497,7 +497,7 @@ if (error) {
    $string  = "if(\$this->plxMotor->mode=='product'){";
    $string .= " \$array = array();";
    $string .= " \$array[\$this->plxMotor->cible] = array(
-    'name'  => '" . self::nomProtege($this->aProds[$this->productNumber()]["name"]) . "',
+    'name'  => '" . plxUtils::strCheck($this->aProds[$this->productNumber()]["name"]) . "',
     'menu'  => '',
     'url'  => '/../template/affichageProduitPublic',
     'readable' => 1,
@@ -682,10 +682,6 @@ if (error) {
   header('Status: 301 Moved Permanently', false, 301);
   header('Location: '.$url);
   exit();
- }
-
- public static function nomProtege($nomProduit){
-  return str_replace("\\\"", "\"", addslashes($nomProduit));
  }
 
  /**
@@ -1282,11 +1278,9 @@ if (error) {
    require_once "classes/vues/panier.php";
    $vuePanier = new panier();
    $vuePanier->plxPlugin = $this;
-   $titreProtege = plxMyShop::nomProtege($vuePanier->titre());
-
-   // Afficher la page panier dans le menu ?
-   if ($this->getParam("affichePanierMenu")!="non") {
-    $submenuPanier = "<li><a class=\"static $classeCss\" href=\"$lienPanier\" title=\"' . htmlspecialchars('$titreProtege') . '\">$titreProtege</a></li>";
+   
+   if ($this->getParam("affichePanierMenu")!="non") {// Afficher la page panier dans le menu ?
+    $submenuPanier = '<li><a class="static '.$classeCss.'" href="'.$lienPanier.'" title="' . plxUtils::strCheck($vuePanier->titre()) . '">'.$vuePanier->titre().'</a></li>';
     if (!$submenu){
      echo "<?php array_splice(\$menus, $positionMenu, 0, '$submenuPanier'); ?>";
     }
@@ -1306,7 +1300,6 @@ if (error) {
   ){
    foreach(array_reverse($this->aProds) as $k=>$v){
     if ($v['menu']!='non' && $v['menu']!=''){
-     $nomProtege = self::nomProtege($v['name']);
      $k = intval($k);
      $categorieSelectionnee = (
        ("product" === $this->plxMotor->mode)
@@ -1315,7 +1308,7 @@ if (error) {
 
      $classeCss = $categorieSelectionnee ? "active" : "noactive";
      $lien = $this->plxMotor->urlRewrite('?'.$this->lang."product$k/{$v["url"]}");
-     $submenuTemp = "<li><a class=\"static $classeCss\" href=\"$lien\" title=\"' . htmlspecialchars('$nomProtege') . '\">$nomProtege</a></li>";
+     $submenuTemp = '<li><a class="static '.$classeCss.'" href="'.$lien.'" title="' . plxUtils::strCheck($v['name']) . '">'.$v['name'].'</a></li>';
      $submenuCategories .= $submenuTemp;
      if (!$submenu){
       echo "<?php array_splice(\$menus, $positionMenu, 0, '$submenuTemp'); ?>";

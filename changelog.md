@@ -35,6 +35,7 @@ le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont u
 
 ##v0.13.1r3 ##/05/2017##
 * [+] Appel des hook selon l'espace en cours (public ou admin)
+* [+] Fonction nomProtege($nomProduit) remplacé par plxUtils::strCheck()
 * Fix le titre (prod/cat) optionnel n'est pas affiché (réécriture du hook plxShowPageTitle + Ajout de "Votre panier" a la balise du titre)
 * Fix manque les metas prod & cat (keyWords & desc) : Ajout du hook plxShowMeta dans plxShow->meta($meta='')
 * [+] Avertir dans les courriels de commandes (admin et client) qu'il est détecté que "Le montant des frais de port (sont) peut être (à) réévalué."
