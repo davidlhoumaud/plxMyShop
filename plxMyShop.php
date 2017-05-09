@@ -131,6 +131,35 @@ class plxMyShop extends plxPlugin {
  }
 
  /**
+ * hook plxShow->pageTitle($format='',$sep=";")
+ * Méthode qui affiche le titre de la page selon le mode
+ **/
+ public function plxShowPageTitle() {
+  if($this->plxMotor->mode == 'product') {
+   $affiche = "<?php 
+    \$aProd = \$this->plxMotor->plxPlugins->aPlugins['".$this->plug['name']."']->aProds[ '".$this->idProduit."' ];
+    \$title_htmltag =  \$aProd['title_htmltag'];
+    \$title = \$title_htmltag !='' ? \$title_htmltag : \$aProd['name'];
+    \$subtitle = \$this->plxMotor->aConf['title'];
+
+    \$fmt = '';
+    if(preg_match('/'.\$this->plxMotor->mode.'\s*=\s*(.*?)\s*('.\$sep.'|\$)/i',\$format,\$capture)) {
+     \$fmt = trim(\$capture[1]);
+    }
+
+    \$format = \$fmt=='' ? '#title - #subtitle' : \$fmt;
+    \$txt = str_replace('#title', trim(\$title), \$format);
+    \$txt = str_replace('#subtitle', trim(\$subtitle), \$txt);
+    echo plxUtils::strCheck(trim(\$txt, ' - '));
+    return true; ?>";//stop hooked func
+   echo $affiche;
+  }
+  elseif($this->plxMotor->mode == 'boutique') {//panier
+   echo $this->getLang('L_PUBLIC_BASKET').' - ';
+  }
+ }
+
+ /**
  * hook plxMotor->meta($meta='')
  * Méthode qui affiche le meta passé en paramètre
  **/
@@ -146,6 +175,7 @@ class plxMyShop extends plxPlugin {
    echo $affiche;
   }
  }
+
  /**
  * Méthode d'ajout des <link rel="alternate"... sur les pages
  *
@@ -652,23 +682,6 @@ if (error) {
   header('Status: 301 Moved Permanently', false, 301);
   header('Location: '.$url);
   exit();
- }
-
- /**
-  * Méthode qui renseigne le titre de la page dans la balise html <title>
-  * @return stdio
-  * @author Stephane F
-  **/
- public function plxShowPageTitle(){
-  if (isset($this->aProds[$this->productNumber()]['name'])){
-   echo '<?php
-    if($this->plxMotor->mode == "product"){
-     echo plxUtils::strCheck($this->plxMotor->aConf["title"]  . \' - '
-      . self::nomProtege($this->aProds[$this->productNumber()]["name"]) .'\');
-     return true;
-    }
-   ?>';
-  }
  }
 
  public static function nomProtege($nomProduit){
