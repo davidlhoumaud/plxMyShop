@@ -6,7 +6,7 @@ version :
 $plxPlugin = $d["plxPlugin"];
 $produit = $plxPlugin->aProds[$plxPlugin->productNumber()];
 if (is_array($plxPlugin->productGroupTitle())) {
-echo '<div id="prod'.intval($plxPlugin->productNumber()).'"></div>';
+ echo '<div id="prod'.intval($plxPlugin->productNumber()).'"></div>';
  $i=0;
  foreach($plxPlugin->productGroupTitle() as $key => $value) {
   echo ($i>0?',':'').'<a href="'.$plxPlugin->productRUrl($key).'">'.$value.'</a>';
@@ -26,7 +26,7 @@ echo '<div id="prod'.intval($plxPlugin->productNumber()).'"></div>';
   <div class="basket_link_image">
    <a href="<?php echo htmlspecialchars($d["lienPanier"]);?>" id="notiShoppingCart">
     <span id="notiNumShoppingCart"></span>
-    <img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;<?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?></a>
+    <img src="<?php echo PLX_PLUGINS.get_class($plxPlugin); ?>/icon.png">&nbsp;<?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?></a>
   </div>
 <?php } ?>
   <div class="image_product">

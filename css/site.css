@@ -172,14 +172,13 @@
 }
 
 #formcart p {
- margin-bottom: 0.1em !important;
+ margin: 0.2em !important;
+ /* float: left; */
 }
 .startw, .star {color: red;}
 
 #msgCart {
- display: none;
- margin-left: 5% !important;
- margin-right: 5% !important;
+ margin-bottom: 1%;
  width: 90% !important;
 }
 
@@ -209,42 +208,41 @@
  text-align: center;
  margin-top: -7px;
 }
-
-#totalCart {
+.clear{clear: both;}
+.fl{float: left;}
+.pl{padding-left: 5%;}
+.tal{text-align: left;}
+.tac{text-align: center;}
+.tar{text-align: right;}
+.green, #totalCart {
  color: green;
 }
-#formcart, #firstname, #lastname, #city, #email, #tel, #country, #adress, #postcode,
-#labelFirstnameCart,
-#labelMailCart,
-#labelTelCart,
-#labelAddrCart,
-#labelPostcodeCart,
-#labelCountryCart,
-#labelCityCart,
-#labelMsgCart,
-#prodsCart,
-#btnCart,
-#labelLastnameCart {
+.hide, #formcart, #prodsCart {
  display: none;
 }
-#postcode {
+.twenty/*, #country */{
  width: 20% !important;
 }
-#firstname, #lastname {
+.thirty/*, #postcode, */{
  width: 30% !important;
+ float: left;
 }
-#city {
- width: 40% !important;
+.forty/*, #city */{
+ width: 43% !important;
+ float: left;
 }
-#email, #tel, #country {
- width: 50% !important;
+.fifty/*, #firstname, #lastname, #email, #tel */{
+ width: 47% !important;
+ float: left;
 }
-#adress {
+.seventy/*, #adress */{
  width: 75% !important;
+ float: left;
 }
-#nomCadeau {
+.ninety/*, #nomCadeau */{
  width: 95% !important;
+ float: left;
 }
-#methodpayment {
+.auto, #methodpayment {
  width: auto;
 }

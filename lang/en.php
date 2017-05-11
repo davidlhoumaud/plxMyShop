@@ -17,9 +17,11 @@ $LANG = array(
 'L_PAIEMENT'                        => 'Payment method',
 'L_MONTANT'                         => 'Amount',
 'L_ACTIONS'                         => 'Actions',
+'L_BY_DEFAULT'                      => 'By default',
 'L_AND'                             => 'and',
 'L_OR'                              => 'or',
 'L_A'                               => 'with',# a vérifier
+'L_OPTIONEL'                        => 'optional',
 
 'L_EMAIL'                           => 'Mail\'s recipient(s) *',
 'L_EMAIL_CC'                        => 'Mail\'s recipients(s) in copy ',
@@ -54,9 +56,9 @@ $LANG = array(
 'L_ERR_PRODUCT_ALREADY_EXISTS'      => 'Product title already in use',
 'L_PRODUCTS_IMAGE'                  => 'Product image',
 'L_PRODUCTS_IMAGE_CHOICE'           => 'Choose an image',
-'L_PRODUCTS_SHORTCODE'              => 'shortcode to use in a static page',
-'L_PRODUCTS_BASKET_BUTTON'          => 'Hide the button "Add to the basket"',
-'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Display a message if the button "Add to the basket" is not displayed',
+'L_PRODUCTS_SHORTCODE'              => 'shortcode to use in article and static page',
+'L_PRODUCTS_BASKET_BUTTON'          => 'Unavailable Product ("Add to the basket" button Hidden)',
+'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Message to replacement "Add to the basket" button',
 'L_PRODUCTS_CATEGORIES'             => 'Categories of this product',
 'L_PRODUCTS_PRICE'                  => 'Price tax included',
 'L_PRODUCTS_WEIGHT'                 => 'Weight (kg)',
@@ -66,7 +68,7 @@ $LANG = array(
 'PAYPAL_IMG'                        => 'en_US',
 
 # product.php
-
+'L_MAIN'                            => 'Global',
 'L_PRODUCT_BACK_TO_PAGE'            => 'Return to the product list',
 'L_CAT_BACK_TO_PAGE'                => 'Return to the category list',
 'L_PRODUCT_UNKNOWN_PAGE'            => 'This product doesn\'t exist or is no longer available !',
@@ -78,11 +80,11 @@ $LANG = array(
 
 'L_PRODUCT_UPDATE'                  => 'Save this product',
 'L_CAT_UPDATE'                      => 'Save this category',
-'L_PRODUCT_TITLE_HTMLTAG'           => 'Title tag contents (optional)',
-'L_PRODUCT_META_DESCRIPTION'        => '"Description" Meta tag content  for this product (optional)',
-'L_CAT_META_DESCRIPTION'            => '"Description" Meta tag content for this category (optional)',
-'L_PRODUCT_META_KEYWORDS'           => '"Keywords" Meta tag content for this product (optional)',
-'L_CAT_META_KEYWORDS'               => '"Keywords" Meta tag content for this category (optional)',
+'L_PRODUCT_TITLE_HTMLTAG'           => 'Title tag contents',
+'L_PRODUCT_META_DESCRIPTION'        => '"Description" Meta tag content  for this product',
+'L_CAT_META_DESCRIPTION'            => '"Description" Meta tag content for this category',
+'L_PRODUCT_META_KEYWORDS'           => '"Keywords" Meta tag content for this product',
+'L_CAT_META_KEYWORDS'               => '"Keywords" Meta tag content for this category',
 
 #create product/cat
 'CREATE_PRODUCTS'                   => 'Manage products',
@@ -128,16 +130,17 @@ $LANG = array(
 
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration of delivery and payment methods',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Add Delivery fee',
-'L_CONFIG_DELIVERY_BY_PRICE'        => 'Based on total price',# averfier
+'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Based on the price of the order">Price Based</b>',
 'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Les montants des frais de ports sont peut être a réévaluer ou a reconfigurer.</b>',# atraduire
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',# atraduire
-'L_CONFIG_FREE'                     => 'Gratuité',# atraduire
-'L_CONFIG_FREESHIPP'                => '(optionel) À partir de',# atraduire
+'L_CONFIG_FREE'                     => 'Free',
+'L_CONFIG_FREESHIPP'                => 'for order over',
 'L_FREESHIP'                        => 'The costs of port offered',# averifier
 'L_CONFIG_DELIVERY_CONFIG'          => 'Configuration of Delivery fees',
 'L_CONFIG_DELIVERY_RECORDED'        => 'Recorded delivery',
 'L_CONFIG_DELIVERY_WEIGHT'          => 'Weight in kg',
 'L_CONFIG_DELIVERY_PRICE'           => 'Price in ',
+'L_CONFIG_NB_LINES'                 => '<b title="Number of line in the delivery free configuration table. Save the configuration to activate the new number of lines then apply your modification and save again">Number of line.</b>',
 
 'L_CONFIG_PAYMENT_CHEQUE'           => 'Payment by cheque',
 'L_CONFIG_PAYMENT_CASH'             => 'Payment in cash',
@@ -265,8 +268,13 @@ $LANG = array(
 
 'L_COMMANDE_LIBELLE_DEFAUT'         => 'I have read and accept the General Sales Terms and Conditions',
 'L_CONFIG_VALIDATION_COMMANDE'      => 'Validation of the order',
-'CONFIG_LIBELLE_CGV'                => 'Wording of the General Sales T&C . (The URL is required if you are using it)',
-'CONFIG_URL_CGV'                    => 'URL for the T&C.',
+'L_CONFIG_INFO_CGV'                 => 'Field "URL for the T&amp;C." is required if you are using it. (Be carefull! Url Rewrited by PluXml'.(defined('PLX_MYMULTILINGUE')?' and prefix "##/" added on other langs':'').')',
+'L_CONFIG_LIBELLE_CGV'              => 'Wording of the General Sales T&amp;C . (The URL )',
+'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Use plugin default phrases for the T&amp;C.",
+'L_CONFIG_URL_CGV'                  => 'URL for the T&amp;C.',
+
+#boutonPanier.php
+'L_NOTICE_NOADDCART'                => 'En rupture de stock',#a traduire
 
 #panier.js
 'L_TOTAL_BASKET'                    => 'Total',

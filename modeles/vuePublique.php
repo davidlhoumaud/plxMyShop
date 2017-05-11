@@ -4,6 +4,6 @@ Si vous réutilisez ce fichier dans votre thème, nous vous conseillons de noter
 version : 
 */
 // e-mail de la commande
-$_SESSION["plxMyShop"]['msgCommand']="";
+$_SESSION[get_class($d["plxPlugin"])]['msgCommand']="";
 $d["plxPlugin"]->validerCommande();
 $this->vue->affichageVuePublique($d["plxPlugin"]);

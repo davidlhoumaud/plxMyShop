@@ -14,18 +14,21 @@ class plxMyShop extends plxPlugin {
  public $shortcode = "boutonPanier";
  public $shortcodeactif = false;
  public $shipOverload = false;
+ # plxMyMultilingue
+ public $lang = '';
+ public $aLangs = false;
 
  public function __construct($default_lang){
 
-  # récupération de la langue si plugin plxMyMultilingue présent
-  $this->lang="";
-  if(defined('PLX_MYMULTILINGUE')) {
-   $lang = plxMyMultiLingue::_Lang();
+  if(defined('PLX_MYMULTILINGUE')) {# Si plugin plxMyMultilingue présent
+   $lang = plxMyMultiLingue::_Lang();# récupération de la langue en cours
    if(!empty($lang)) {
     if(isset($_SESSION['default_lang']) AND $_SESSION['default_lang']!=$lang) {
      $this->lang = $lang.'/';
     }
    }
+   $lang = plxMyMultiLingue::_Langs();# récupération du tableau des langues activées
+   $this->aLangs = empty($lang) ? array() : explode(',', $lang);
   }
 
   # appel du constructeur de la classe plxPlugin (obligatoire)
@@ -40,24 +43,42 @@ class plxMyShop extends plxPlugin {
    , 5
    , $this->getlang('L_ADMIN_MENU_TOOTIP')
   );
-//hook PluXml
+  
+  //hook PluXml : core/lib/class.plx.motor.php
   $this->addHook('plxMotorPreChauffageBegin', 'plxMotorPreChauffageBegin');
-  $this->addHook('plxShowConstruct', 'plxShowConstruct');
-  $this->addHook('plxShowPageTitle', 'plxShowPageTitle');
-  $this->addHook('plxShowStaticListEnd', 'plxShowStaticListEnd');
-  $this->addHook('SitemapStatics', 'SitemapStatics');
-  $this->addHook('plxMotorParseArticle', 'plxMotorParseArticle');
-  $this->addHook('AdminPrepend', 'AdminPrepend');
-  $this->addHook('AdminTopBottom', 'AdminTopBottom');
-  $this->addHook('plxShowStaticContent', 'plxShowStaticContent');
-  $this->addHook('ThemeEndBody', 'ThemeEndBody');
-  $this->addHook('AdminTopEndHead', 'AdminTopEndHead');
-  $this->addHook('ThemeEndHead', 'ThemeEndHead');
-
+  if(defined('PLX_ADMIN')) {//Déclaration des hooks pour la zone d'administration
+   $this->addHook('AdminPrepend', 'AdminPrepend');
+   $this->addHook('AdminTopBottom', 'AdminTopBottom');
+   $this->addHook('AdminTopEndHead', 'AdminTopEndHead');
+  }
+  else{//Déclaration des hooks pour la partie visiteur
+   //hook PluXml
+   $this->addHook('plxMotorParseArticle', 'plxMotorParseArticle');
+   $this->addHook('plxShowStaticListEnd', 'plxShowStaticListEnd');
+   $this->addHook('plxShowConstruct', 'plxShowConstruct');
+   $this->addHook('plxShowMeta', 'plxShowMeta');
+   $this->addHook('plxShowPageTitle', 'plxShowPageTitle');
+   $this->addHook('plxShowStaticContent', 'plxShowStaticContent');
+   $this->addHook('SitemapStatics', 'SitemapStatics');
+   $this->addHook('ThemeEndBody', 'ThemeEndBody');
+   $this->addHook('ThemeEndHead', 'ThemeEndHead');
+   //hook plxMyShop
+   $this->addHook('plxMyShopShippingMethod', 'plxMyShopShippingMethod');
+   $this->addHook('plxMyShopShowMiniPanier', 'plxMyShopShowMiniPanier');
+   $this->addHook('plxMyShopPanierFin', 'inlineBasketJs');
+   if($this->getParam('localStorage')){//MyshopCookie
+    $this->addHook('plxMyShopPanierCoordsMilieu', 'inlineLocalStorageHtml');
+    $this->addHook('plxMyShopPanierFin', 'inlineLocalStorageJs');
+   }
+   if($this->getParam('cookie')){//MyshopCookie
+    $this->addHook('Index', 'Index');
+    $this->addHook('IndexEnd', 'IndexEnd');
+   }
+  }
   // Ajout de variables non protégé facilement accessible via $(plxShow->)plxMotor->plxPlugins->aPlugins['plxMyShop']->aConf['racine_XXX'] dans les themes ou dans d'autres plugins.
   $this->aConf['racine_products'] = (empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products'));
   $this->aConf['racine_commandes'] = (empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes'));
-  if(defined('PLX_MYMULTILINGUE') && !empty($default_lang))
+  if($this->aLangs && !empty($default_lang))
    $this->aConf['racine_products_lang'] = $this->aConf['racine_products'].$default_lang.'/';
 
   $this->getProducts();
@@ -94,28 +115,64 @@ class plxMyShop extends plxPlugin {
   }
   $this->donneesModeles["tabChoixMethodespaiement"] = $tabChoixMethodespaiement;
   //Mise a jour des variables de sessions du panier
-  if (isset($_SESSION[$this->plug['name']]['prods'])){
-   foreach ($_SESSION[$this->plug['name']]['prods'] as $pId => $nb) { 
-    if (!isset($this->aProds[$pId]) OR $this->aProds[$pId]['active']==0){//si le produit a été désactivé ou supprimé entre temps
+  if (isset($_SESSION[$this->plug['name']]['prods'])){//si on a des produits dans la sessions
+   foreach ($_SESSION[$this->plug['name']]['prods'] as $pId => $nb) {//on boucle dessus
+    if (!isset($this->aProds[$pId]) OR $this->aProds[$pId]['active']==0 OR $this->aProds[$pId]['noaddcart']==1){//Si Produit désactivé/supprimé/indisponible(noAddCartButton) entre temps
+     $_SESSION[$this->plug['name']]['ncart'] -= $nb;//on recalcule le nb de prod
      unset($_SESSION[$this->plug['name']]['prods'][$pId]);//on efface sa variable de session
     }
    }
    //supprimer par mini panier
    if(isset($_POST['remProd']) && !empty($_POST['idP']) && isset($_SESSION[$this->plug['name']]["prods"][$_POST['idP']])){
-    unset($_SESSION[$this->plug['name']]["prods"][$_POST['idP']]);
+    $_SESSION[$this->plug['name']]['ncart'] -= $_SESSION[$this->plug['name']]['prods'][$_POST['idP']];//on recalcule le nb de prod
+    unset($_SESSION[$this->plug['name']]["prods"][$_POST['idP']]);//on efface sa variable de session
    }
   }
-  //hook plxMyShop
-  $this->addHook('plxMyShopShippingMethod', 'plxMyShopShippingMethod');
-  $this->addHook('plxMyShopShowMiniPanier', 'plxMyShopShowMiniPanier');
-  $this->addHook('plxMyShopPanierFin', 'inlineBasketJs');
-  if($this->getParam('localStorage')){//MyshopCookie
-   $this->addHook('plxMyShopPanierCoordsMilieu', 'inlineLocalStorageHtml');
-   $this->addHook('plxMyShopPanierFin', 'inlineLocalStorageJs');
+ }
+
+ /**
+ * hook plxShow->pageTitle($format='',$sep=";")
+ * Méthode qui affiche le titre de la page selon le mode
+ **/
+ public function plxShowPageTitle() {
+  if($this->plxMotor->mode == 'product') {
+   $affiche = "<?php 
+    \$aProd = \$this->plxMotor->plxPlugins->aPlugins['".$this->plug['name']."']->aProds[ '".$this->idProduit."' ];
+    \$title_htmltag =  \$aProd['title_htmltag'];
+    \$title = \$title_htmltag !='' ? \$title_htmltag : \$aProd['name'];
+    \$subtitle = \$this->plxMotor->aConf['title'];
+
+    \$fmt = '';
+    if(preg_match('/'.\$this->plxMotor->mode.'\s*=\s*(.*?)\s*('.\$sep.'|\$)/i',\$format,\$capture)) {
+     \$fmt = trim(\$capture[1]);
+    }
+
+    \$format = \$fmt=='' ? '#title - #subtitle' : \$fmt;
+    \$txt = str_replace('#title', trim(\$title), \$format);
+    \$txt = str_replace('#subtitle', trim(\$subtitle), \$txt);
+    echo plxUtils::strCheck(trim(\$txt, ' - '));
+    return true; ?>";//stop hooked func
+   echo $affiche;
   }
-  if($this->getParam('cookie')){//MyshopCookie
-   $this->addHook('Index', 'Index');
-   $this->addHook('IndexEnd', 'IndexEnd');
+  elseif($this->plxMotor->mode == 'boutique') {//panier
+   echo $this->getLang('L_PUBLIC_BASKET').' - ';
+  }
+ }
+
+ /**
+ * hook plxMotor->meta($meta='')
+ * Méthode qui affiche le meta passé en paramètre
+ **/
+ public function plxShowMeta() {
+  if($this->plxMotor->mode == 'product') {
+   $affiche = "<?php 
+    \$aProd = \$this->plxMotor->plxPlugins->aPlugins['".$this->plug['name']."']->aProds[ '".$this->idProduit."' ];
+    if(!empty(\$aProd['meta_'.\$meta]))
+     echo '<meta name=\"'.\$meta.'\" content=\"'.plxUtils::strCheck(\$aProd['meta_'.\$meta]).'\" />'.PHP_EOL;
+    elseif(!empty(\$this->plxMotor->aConf['meta_'.\$meta]))
+     echo '<meta name=\"'.\$meta.'\" content=\"'.plxUtils::strCheck(\$this->plxMotor->aConf['meta_'.\$meta]).'\" />'.PHP_EOL;
+    return true; ?>";//stop hooked func
+   echo $affiche;
   }
  }
 
@@ -124,12 +181,10 @@ class plxMyShop extends plxPlugin {
  *
  **/
  public function ThemeEndHead() {
-  if(defined('PLX_MYMULTILINGUE')) {
-   $langs = plxMyMultiLingue::_Langs();
-   $langs = empty($langs) ? array() : explode(',', $langs);
+  if($this->aLangs) {
    $affiche = '<?php'.PHP_EOL;
    if($this->plxMotor->get=='boutique/panier' || preg_match("#product([0-9]+)/?([a-z0-9-]+)?#", $this->plxMotor->get)) {
-    foreach($langs as $k=>$v) {
+    foreach($this->aLangs as $k=>$v) {
      $url_lang = ($_SESSION['default_lang']!=$v)?$v.'/':'';
      $affiche .= 'echo "\t<link rel=\"alternate\" hreflang=\"'.$v.'\" href=\"".$plxMotor->urlRewrite("?'.$url_lang.$this->plxMotor->get.'")."\" />\n";';
     }
@@ -149,6 +204,7 @@ class plxMyShop extends plxPlugin {
   if ((basename($_SERVER['SCRIPT_NAME'])=='plugin.php' || basename($_SERVER['SCRIPT_NAME'])=='parametres_plugin.php') && (isset($_GET['p']) && $_GET['p']==$this->plug['name'])) {
    echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plug['name'].'/css/administration.css" />'."\n";
    echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plug['name'].'/css/tabs.css" />'."\n";
+   echo '<noscript><style>.hide{display:inherit !important;}</style></noscript>'."\n";
   }
  }
 
@@ -186,7 +242,7 @@ class plxMyShop extends plxPlugin {
    unset($_SESSION[$this->plug['name']]["msgProdUpDate"]);
 //Les messages de MAJ panier
 ?>
-<div id="msgUpDateCart"><?php ((isset($_SESSION["plxMyShop"]['prods']) && $_SESSION["plxMyShop"]['prods'])?$this->lang('L_PUBLIC_MSG_BASKET_UP'):$this->lang('L_PUBLIC_NOPRODUCT')); ?></div>
+<div id="msgUpDateCart"><?php ((isset($_SESSION[get_class($this)]['prods']) && $_SESSION[get_class($this)]['prods'])?$this->lang('L_PUBLIC_MSG_BASKET_UP'):$this->lang('L_PUBLIC_NOPRODUCT')); ?></div>
 <script type="text/javascript">
  var msgUpDateCart = document.getElementById("msgUpDateCart");
  msgUpDateCart.style.display = "block";
@@ -373,37 +429,27 @@ echo '<?php
 var total=0;
 var totalkg=0;
 var shippingPrice=0;
-var tmpship=0;
+
 var nprod=0;
 var realnprod=0;
 var formCart=document.getElementById('formcart');
 var shoppingCart=document.getElementById('shoppingCart');
 var btnCart=document.getElementById('btnCart');
 var msgCart=document.getElementById('msgCart');
-var labelMsgCart=document.getElementById('labelMsgCart');
 var PRODS=document.getElementById('prodsCart');
 
 var idSuite=document.getElementById('idsuite');
 var numCart=document.getElementById('numcart');
 
 var mailCart=document.getElementById('email');
-var labelMailCart=document.getElementById('labelMailCart');
 var firstnameCart=document.getElementById('firstname');
-var labelFirstnameCart=document.getElementById('labelFirstnameCart');
 var lastnameCart=document.getElementById('lastname');
-var labelLastnameCart=document.getElementById('labelLastnameCart');
-
 var adressCart=document.getElementById('adress');
-var labelAddrCart=document.getElementById('labelAddrCart');
 var postcodeCart=document.getElementById('postcode');
-var labelPostcodeCart=document.getElementById('labelPostcodeCart');
 var cityCart=document.getElementById('city');
-var labelCityCart=document.getElementById('labelCityCart');
 var countryCart=document.getElementById('country');
-var labelCountryCart=document.getElementById('labelCountryCart');
-
 var telCart=document.getElementById('tel');
-var labelTelCart=document.getElementById('labelTelCart');
+var msgCart=document.getElementById('msgCart');
 
 var totalCart=document.getElementById('totalCart');
 var totalcommand=document.getElementById('totalcommand');
@@ -415,88 +461,22 @@ if (error) {
  PRODS.value=shoppingCart.innerHTML;
 
  formcart.style.display='inline-block';
-
- btnCart.style.display='inline-block';
- msgCart.style.display='inline-block';
- labelMsgCart.style.display='inline-block';
-
- mailCart.style.display='inline-block';
  mailCart.value="<?php echo (isset($_POST['email'])?$_POST['email']:''); ?>";
- labelMailCart.style.display='inline-block';
-
- firstnameCart.style.display='inline-block';
  firstnameCart.value="<?php echo (isset($_POST['firstname'])?preg_replace('/\"/','\\\"',$_POST['firstname']):''); ?>";
- labelFirstnameCart.style.display='inline-block';
-
- lastnameCart.style.display='inline-block';
  lastnameCart.value="<?php echo (isset($_POST['lastname'])?preg_replace('/\"/','\\\"',$_POST['lastname']):''); ?>";
- labelLastnameCart.style.display='inline-block';
- 
- adressCart.style.display='inline-block';
  adressCart.value="<?php echo (isset($_POST['adress'])?preg_replace('/\"/','\\\"',$_POST['adress']):''); ?>";
- labelAddrCart.style.display='inline-block';
-
- postcodeCart.style.display='inline-block';
  postcodeCart.value="<?php echo (isset($_POST['postcode'])?preg_replace('/\"/','\\\"',$_POST['postcode']):''); ?>";
- labelPostcodeCart.style.display='inline-block';
-
- cityCart.style.display='inline-block';
  cityCart.value="<?php echo (isset($_POST['city'])?preg_replace('/\"/','\\\"',$_POST['city']):''); ?>";
- labelCityCart.style.display='inline-block';
-
- countryCart.style.display='inline-block';
  countryCart.value="<?php echo (isset($_POST['country'])?preg_replace('/\"/','\\\"',$_POST['country']):''); ?>";
- labelCountryCart.style.display='inline-block';
-
- telCart.style.display='inline-block';
  telCart.value="<?php echo (isset($_POST['tel'])?preg_replace('/\"/','\\\"',$_POST['tel']):''); ?>";
- labelTelCart.style.display='inline-block';
+ msgCart.value="<?php echo (isset($_POST['msg'])?preg_replace('/\"/','\\\"',$_POST['msg']):''); ?>";
 
- idSuite.value="<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?$_SESSION["plxMyShop"]["ncart"]:""); ?>";
- numCart.value="<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?$_SESSION["plxMyShop"]["ncart"]:""); ?>";
- nprod=<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?(int)$_SESSION["plxMyShop"]["ncart"]:0); ?>;
- realnprod=<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?(int)$_SESSION["plxMyShop"]["ncart"]:0); ?>;
- tmpship=<?php echo '<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>'; ?>;
- total=<?php echo '<?php echo (isset($totalpricettc)?$totalpricettc:0.00); ?>'; ?>;
- if (total >0) displayTotal=(total+<?php echo '<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>'; ?>);
- else displayTotal=0;
+ idSuite.value="<?php echo (isset($_SESSION[get_class($this)]["ncart"])?$_SESSION[get_class($this)]["ncart"]:""); ?>";
+ numCart.value="<?php echo (isset($_SESSION[get_class($this)]["ncart"])?$_SESSION[get_class($this)]["ncart"]:""); ?>";
+ nprod=<?php echo (isset($_SESSION[get_class($this)]["ncart"])?(int)$_SESSION[get_class($this)]["ncart"]:0); ?>;
+ realnprod=<?php echo (isset($_SESSION[get_class($this)]["ncart"])?(int)$_SESSION[get_class($this)]["ncart"]:0); ?>;
 
- pos_devise= "<?php echo $this->getParam("position_devise");?>";
- devise= "<?php echo $this->getParam("devise");?>";
-
- if (pos_devise == "before") { price= devise+displayTotal.toFixed(2);}
- else { price= displayTotal.toFixed(2)+devise;}
-
- //totalCart.innerHTML="<?php $this->lang('L_TOTAL_BASKET'); ?>&nbsp;: "+price;
-<?php if ($this->getParam("shipping_colissimo")):?>
- if (pos_devise == "before") { price= devise+"<?php echo '<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>'; ?>";}
- else { price= "<?php echo '<?php echo (isset($totalpoidgshipping)?$totalpoidgshipping:0.00); ?>'; ?>&nbsp;"+devise;}
- spanshipping.innerHTML="<p class='spanshippingp'><?php $this->lang('L_EMAIL_DELIVERY_COST'); ?>&nbsp;: " + price + " <?php echo ($this->getParam('shipping_by_price')) ? '' : $this->getLang('L_FOR').' <?php echo $totalpoidg; ?>&nbsp;kg'; ?></p>";
-<?php endif; ?>
- totalcommand.value=total;
-}
-
-function changePaymentMethod(method) {
- if (method=="cheque")formCart.action="#panier";
- else if (method=="cash") formCart.action="#panier";
- else if (method=="paypal") formCart.action="#panier";
-}
-
-function shippingMethod(kg, op){
- if (op==1)totalkg=(parseFloat(totalkg.toFixed(3))+parseFloat(kg));
- if (op==0)totalkg=(parseFloat(totalkg.toFixed(3))-parseFloat(kg));
- accurecept=<?php echo (float)$this->getParam('acurecept'); ?>;
- if (totalkg.toFixed(3)<=0.000) {
-  shippingPrice=accurecept;
- }<?php #beau js
-for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
-  $num=str_pad($i, 2, "0", STR_PAD_LEFT);
-  ?>else if (totalkg.toFixed(3)<=<?php echo (float)$this->getParam('p'.$num); ?>){
-  shippingPrice=<?php echo (float)$this->getParam('pv'.$num); ?>+accurecept;
- }<?php
-}#en php ?>
-
- return shippingPrice;
+ totalcommand.value = "<?php echo '<?php echo $this->pos_devise($totalpricettc+$totalpoidgshipping); ?>'; ?>";//total
 }
 </script>
 <?php
@@ -504,6 +484,11 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
 
  public function productNumber(){
   return $this->idProduit;
+ }
+
+ # Change (') simple quote &#39; to Right single quotation mark &#146; &rsquo; ::: http://ascii-code.com/
+ static function apostrophe($str){
+  return str_replace(chr(39),'’',$str);#tips iso = chr(146)
  }
 
  /**
@@ -517,7 +502,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
    $string  = "if(\$this->plxMotor->mode=='product'){";
    $string .= " \$array = array();";
    $string .= " \$array[\$this->plxMotor->cible] = array(
-    'name'  => '" . self::nomProtege($this->aProds[$this->productNumber()]["name"]) . "',
+    'name'  => '" . $this->aProds[$this->productNumber()]["name"] . "',
     'menu'  => '',
     'url'  => '/../template/affichageProduitPublic',
     'readable' => 1,
@@ -567,7 +552,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
   echo "<?php";
 ?>
   if(get_class($this)=='plxMotor'){//only 4 public page!
-   $plxPlugin = $this->plxPlugins->aPlugins['plxMyShop'];
+   $plxPlugin = $this->plxPlugins->aPlugins['<?php echo get_class($this); ?>'];
    if(!empty($art['chapo']))
     $art['chapo'] = $plxPlugin->traitementPageStatique($art['chapo']);
    $art['content'] = $plxPlugin->traitementPageStatique($art['content']);
@@ -580,14 +565,14 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
  public function plxShowStaticContent(){
   echo "<?php";
 ?>
-   $plxPlugin = $this->plxMotor->plxPlugins->aPlugins['plxMyShop'];
+   $plxPlugin = $this->plxMotor->plxPlugins->aPlugins['<?php echo get_class($this); ?>'];
    $output = $plxPlugin->traitementPageStatique($output);
    unset($plxPlugin);
   ?>
 <?php
  }
 
- public function traitementPageStatique($output){
+ public function traitementPageStatique($output){// 4 shortcode in static [boutonPanier ###]
   preg_match_all("!\\[{$this->shortcode} (.*)\\]!U", $output, $resultat);
   if (0 < count($resultat[1])){
    $this->shortcodeactif = true;
@@ -668,43 +653,40 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
   }
 
   // pages des produits et des catégories
-  elseif (preg_match("#product([0-9]+)/?([a-z0-9-]+)?#", $this->plxMotor->get, $resultat)){
-   $this->idProduit = str_pad($resultat[1], 3, "0", STR_PAD_LEFT);
-   if(isset($this->aProds[$this->productNumber()])){
-    $template = $this->aProds[$this->productNumber()]["template"] === ""
-      ? $this->getParam('template')
-      : $this->aProds[$this->productNumber()]["template"];
-
-    $this->plxMotor->mode = "product";
-    $this->plxMotor->aConf["racine_statiques"] = "";
-    $this->plxMotor->cible = "{$this->plxMotor->aConf["racine_plugins"]}$nomPlugin/form";#maybe in old pluxml add slash "/$nomPlugin/form" ?
-    $this->plxMotor->template = $template;
-    echo "<?php return TRUE;?>";
-   }else{
+  elseif ($this->plxMotor->get AND preg_match("~^".str_replace('/','\\/',$this->lang)."product([0-9]+)\/?([a-z0-9-]+)?~", $this->plxMotor->get, $capture)){
+   $this->idProduit = str_pad($capture[1], 3, "0", STR_PAD_LEFT);
+   if(!isset($this->aProds[$this->productNumber()]) OR !$this->aProds[$this->productNumber()]['active']){
     $this->plxMotor->error404(L_ERR_PAGE_NOT_FOUND);
+   }else{
+    if(isset($capture[2]) AND $this->aProds[$this->productNumber()]['url']==$capture[2]){
+     $template = $this->aProds[$this->productNumber()]["template"] === ""
+       ? $this->getParam('template')
+       : $this->aProds[$this->productNumber()]["template"];
+
+     $this->plxMotor->mode = "product";
+     $this->plxMotor->aConf["racine_statiques"] = "";
+     $this->plxMotor->cible = "{$this->plxMotor->aConf["racine_plugins"]}$nomPlugin/form";#maybe in old pluxml add slash "/$nomPlugin/form" ?
+     $this->plxMotor->template = $template;
+     echo "<?php return TRUE;?>";
+    }else{
+     $this->redir301($this->plxMotor->urlRewrite('?product'.intval($this->idProduit).'/'.$this->aProds[$this->productNumber()]['url']));
+    }
    }
   }
  }
 
  /**
-  * Méthode qui renseigne le titre de la page dans la balise html <title>
-  * @return stdio
+  * Méthode qui fait une redirection de type 301
+  * Venant de PluXml 5.6 (garde compat 5.4 & 5.5)
+  * @return null
   * @author Stephane F
   **/
- public function plxShowPageTitle(){
-  if (isset($this->aProds[$this->productNumber()]['name'])){
-   echo '<?php
-    if($this->plxMotor->mode == "product"){
-     echo plxUtils::strCheck($this->plxMotor->aConf["title"]  . \' - '
-      . self::nomProtege($this->aProds[$this->productNumber()]["name"]) .'\');
-     return true;
-    }
-   ?>';
-  }
- }
-
- public static function nomProtege($nomProduit){
-  return str_replace("\\\"", "\"", addslashes($nomProduit));
+ public function redir301($url) {
+  if(method_exists($this->plxMotor,'redir301'))//PluXml 5.6+
+   $this->plxMotor->redir301($url);
+  header('Status: 301 Moved Permanently', false, 301);
+  header('Location: '.$url);
+  exit();
  }
 
  /**
@@ -806,7 +788,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
     $this->aProds[$number]['template']=isset($attributes['template'])?$attributes['template']:$this->getParam('template');
 
     # On verifie que le produit existe bien
-    if(defined('PLX_MYMULTILINGUE'))
+    if($this->aLangs)
      $file = PLX_ROOT.$this->aConf['racine_products_lang'].$number.'.'.$attributes['url'].'.php';
     else
      $file = PLX_ROOT.$this->aConf['racine_products'].$number.'.'.$attributes['url'].'.php';
@@ -830,11 +812,8 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
   if(!empty($content['selection']) AND $content['selection']=='delete' AND isset($content['idProduct'])){
    foreach($content['idProduct'] as $product_id){
 
-    if(defined('PLX_MYMULTILINGUE')){
-     $langs = plxMyMultiLingue::_Langs();
-     $multiLangs = empty($langs) ? array() : explode(',', $langs);
-     $aLangs = $multiLangs;
-     foreach ($aLangs as $lang){
+    if($this->aLangs){
+     foreach ($this->aLangs as $lang){
       $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
       if(is_file($filename)) unlink($filename);
      }
@@ -860,11 +839,8 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
      # On vérifie si on a besoin de renommer le fichier du produit
      if(isset($this->aProds[$product_id]) AND $this->aProds[$product_id]['url']!=$stat_url){
 
-      if(defined('PLX_MYMULTILINGUE')){
-       $langs = plxMyMultiLingue::_Langs();
-       $multiLangs = empty($langs) ? array() : explode(',', $langs);
-       $aLangs = $multiLangs;
-       foreach ($aLangs as $lang){
+      if($this->aLangs){
+       foreach ($this->aLangs as $lang){
         $oldfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
         $newfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$stat_url.'.php';
         if(is_file($oldfilename)) rename($oldfilename, $newfilename);
@@ -877,7 +853,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
      $this->aProds[$product_id]['pcat'] = trim($content[$product_id.'_pcat']);
      $this->aProds[$product_id]['menu'] = trim($content[$product_id.'_menu']);
      $this->aProds[$product_id]['group'] = (isset($this->aProds[$product_id]['group'])?$this->aProds[$product_id]['group']:'');
-     $this->aProds[$product_id]['name'] = $stat_name;
+     $this->aProds[$product_id]['name'] = self::apostrophe($stat_name);
      $this->aProds[$product_id]['url'] = plxUtils::checkSite($url)?$url:$stat_url;
      $this->aProds[$product_id]['active'] = $content[$product_id.'_active'];
      $this->aProds[$product_id]['ordre'] = intval($content[$product_id.'_ordre']);
@@ -927,7 +903,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
      $xml .= "<name><![CDATA[".plxUtils::cdataCheck($product['name'])."]]></name>";
      $xml .= "<image><![CDATA[".plxUtils::cdataCheck($product['image'])."]]></image>";
      $xml .= "<noaddcart><![CDATA[".plxUtils::cdataCheck($product['noaddcart'])."]]></noaddcart>";
-     $xml .= "<notice_noaddcart><![CDATA[".plxUtils::cdataCheck($product['notice_noaddcart'])."]]></notice_noaddcart>";
+     $xml .= "<notice_noaddcart><![CDATA[".plxUtils::cdataCheck(($product['noaddcart']&&empty($product['notice_noaddcart']))?$this->getLang('L_NOTICE_NOADDCART'):$product['notice_noaddcart'])."]]></notice_noaddcart>";
      $xml .= "<pricettc><![CDATA[".plxUtils::cdataCheck($product['pricettc'])."]]></pricettc>";
      $xml .= "<poidg><![CDATA[".plxUtils::cdataCheck(($product['poidg']==0?"0.0":$product['poidg']))."]]></poidg>";
      $xml .= "<meta_description><![CDATA[".plxUtils::cdataCheck($product['meta_description'])."]]></meta_description>";
@@ -956,7 +932,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
   * @author Stephane F.
   **/
  public function getFileProduct($num,$langue){
-  if (!empty($langue) && defined('PLX_MYMULTILINGUE'))
+  if (!empty($langue) && $this->aLangs)
    $langue .= '/';
   else
    $langue = '';
@@ -972,7 +948,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
     return $content;
    }
   }
-  if (defined('PLX_MYMULTILINGUE') && empty(trim($content))){ # si contenu vide en multilingue on essaye de recuperer sans la langue.
+  if ($this->aLangs && empty(trim($content))){ # si contenu vide en multilingue on essaye de recuperer sans la langue.
    $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$num.'.'.$this->aProds[ $num ]['url'].'.php';
    if(is_file($filename) AND filesize($filename) > 0){
     if($f = fopen($filename, 'r')){
@@ -1021,32 +997,34 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
     mkdir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')), 0755, true);
    }
    $aLangs = array($this->plxMotor->aConf['default_lang']);
-   if(defined('PLX_MYMULTILINGUE')) {
-    $langs = plxMyMultiLingue::_Langs();
-    $multiLangs = empty($langs) ? array() : explode(',', $langs);
-    $aLangs = $multiLangs;
-    foreach ($aLangs as $lang){
+   if($this->aLangs){
+    $aLangs = $this->aLangs;
+    foreach ($this->aLangs as $lang){
      if (!is_dir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/')){
       mkdir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/', 0755, true);
-     } 
+     }
     }
    }
-   $infos = null;
+   $infos = $err = null;
    foreach ($aLangs as $lang){
     $url_save = '';
-    if(defined('PLX_MYMULTILINGUE')) { $url_save = $lang.'/'; }
+    if($this->aLangs){$url_save = $lang.'/';}
      # Génération du nom du fichier de la page statique
      $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_save.$content['id'].'.'.$this->aProds[ $content['id'] ]['url'].'.php';
-
      # On écrit le fichier
      if ($lang == $this->plxMotor->aConf['default_lang'])
       $content['content_'.$lang] = $content['content'];
-
      if(!plxUtils::write($content['content_'.$lang],$filename))
-      $infos .= plxMsg::Error(L_SAVE_ERR.' '.$filename);
+      $err .= L_SAVE_ERR.' '.$filename.'<br />';
      else
-      $infos .= plxMsg::Info(L_SAVE_SUCCESSFUL.' '.$filename);
+      $infos .= $lang.', ';
    }
+   $infos = ' ('.trim($infos,', ').')';
+   $filename = ' '.str_replace($lang.'/','',$filename).' ';# on enleve la langue pour l'affichage du message
+   if(!empty($err))
+    $infos = plxMsg::Error($err.L_SAVE_SUCCESSFUL.$filename.$infos);
+   else
+    $infos = plxMsg::Info(L_SAVE_SUCCESSFUL.$filename.$infos);
    return $infos;
   }
  }
@@ -1092,15 +1070,9 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
   * @author David.L
   **/
  public function productTitle(){
-  echo plxUtils::strCheck(
-   preg_replace(
-    "/'/"
-    , '&apos;'
-    , $this->aProds[$this->productNumber()]['name']
-   )
-  );
+  echo plxUtils::strCheck($this->aProds[$this->productNumber()]['name']);
  }
- 
+
  /**
   * Méthode qui affiche l'image du produit
   * @return stdout
@@ -1218,7 +1190,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
   if($this->aProds[ $this->productNumber() ]['readable'] == 1){
 
    $url_read = '';
-   if(defined('PLX_MYMULTILINGUE') && isset($_SESSION['lang'])){
+   if($this->aLangs && isset($_SESSION['lang'])){
     $url_read = $_SESSION['lang'].'/';
    }
 
@@ -1253,7 +1225,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
   # Hook Plugins
   //if(eval($this->plxMotor->plxPlugins->callHook('plxShowProductInclude'))) return ;
   $url_read = '';
-  if(defined('PLX_MYMULTILINGUE') && isset($_SESSION['lang'])){
+  if($this->aLangs && isset($_SESSION['lang'])){
    $url_read = $_SESSION['lang'].'/';
   }
 
@@ -1305,11 +1277,9 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
    require_once "classes/vues/panier.php";
    $vuePanier = new panier();
    $vuePanier->plxPlugin = $this;
-   $titreProtege = plxMyShop::nomProtege($vuePanier->titre());
-
-   // Afficher la page panier dans le menu ?
-   if ($this->getParam("affichePanierMenu")!="non") {
-    $submenuPanier = "<li><a class=\"static $classeCss\" href=\"$lienPanier\" title=\"' . htmlspecialchars('$titreProtege') . '\">$titreProtege</a></li>";
+   
+   if ($this->getParam("affichePanierMenu")!="non") {// Afficher la page panier dans le menu ?
+    $submenuPanier = '<li><a class="static '.$classeCss.'" href="'.$lienPanier.'" title="' . plxUtils::strCheck($vuePanier->titre()) . '">'.$vuePanier->titre().'</a></li>';
     if (!$submenu){
      echo "<?php array_splice(\$menus, $positionMenu, 0, '$submenuPanier'); ?>";
     }
@@ -1329,7 +1299,6 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
   ){
    foreach(array_reverse($this->aProds) as $k=>$v){
     if ($v['menu']!='non' && $v['menu']!=''){
-     $nomProtege = self::nomProtege($v['name']);
      $k = intval($k);
      $categorieSelectionnee = (
        ("product" === $this->plxMotor->mode)
@@ -1338,7 +1307,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
 
      $classeCss = $categorieSelectionnee ? "active" : "noactive";
      $lien = $this->plxMotor->urlRewrite('?'.$this->lang."product$k/{$v["url"]}");
-     $submenuTemp = "<li><a class=\"static $classeCss\" href=\"$lien\" title=\"' . htmlspecialchars('$nomProtege') . '\">$nomProtege</a></li>";
+     $submenuTemp = '   <li><a class="static '.$classeCss.'" href="'.$lien.'" title="'.plxUtils::strCheck($v['name']).'">'.plxUtils::strCheck($v['name']).'</a></li>'.PHP_EOL;
      $submenuCategories .= $submenuTemp;
      if (!$submenu){
       echo "<?php array_splice(\$menus, $positionMenu, 0, '$submenuTemp'); ?>";
@@ -1347,7 +1316,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
    }
    if ($submenu){
     echo "<?php array_splice(\$menus, $positionMenu, 0,";
-    echo " '<li><span class=\"static group $active\">".$this->getParam('submenu')."</span><ul>$submenuCategories$submenuPanier</ul></li>' ";
+    echo "' <li><span class=\"static group $active\">".$this->getParam('submenu')."</span>".PHP_EOL."  <ul>".PHP_EOL."$submenuCategories   $submenuPanier".PHP_EOL."  </ul>".PHP_EOL." </li>'".PHP_EOL;
     echo " ) ?>";
    }
   } // FIN if ajout du menu pour accèder aux rubriques
@@ -1368,7 +1337,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
   $this->donneesModeles["pileModeles"][] = $modele;
   // fichier du modèle dans le thème
   $racineTheme = PLX_ROOT . $this->plxMotor->aConf["racine_themes"] . $this->plxMotor->style;
-  $fichier = "$racineTheme/modeles/plxMyShop/$modele.php";
+  $fichier = "$racineTheme/modeles/".get_class($this)."/$modele.php";
   // si le fichier du modèle est inexistant pas dans le thème
   if (!is_file($fichier)){
    $fichier = "modeles/$modele.php";// on choisit le fichier par défaut dans le répertoire de l'extension
@@ -1429,7 +1398,7 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
   $this->getlang('L_EMAIL_TEL').
   plxUtils::cdataCheck($_POST['tel'])
   ."<br/><br/>".
-  $this->getlang('L_PAIEMENT').": ".($_POST['methodpayment']=="paypal"?$this->getlang('L_PAYMENT_PAYPAL'):$this->getlang('L_PAYMENT_CHEQUE'));
+  $this->getlang('L_PAIEMENT').": ".$this->getlang('L_PAYMENT_'.strtoupper($_POST['methodpayment']));
 
   $messCommon = "<br/><br/>" . (!isset($_POST["choixCadeau"])
    ? $this->getlang('L_EMAIL_NOGIFT')
@@ -1531,8 +1500,8 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
 
      if ($_POST['methodpayment'] === "paypal"){
       $plxPlugin = $this;
-      //require PLX_PLUGINS . 'plxMyShop/classes/paypal_api/SetExpressCheckout.php';
-      require PLX_PLUGINS . 'plxMyShop/classes/paypal_api/boutonPaypalSimple.php';
+      //require PLX_PLUGINS . get_class($this) . '/classes/paypal_api/SetExpressCheckout.php';
+      require PLX_PLUGINS . get_class($this) . '/classes/paypal_api/boutonPaypalSimple.php';
      }
 
      $nf=PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')).date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
@@ -1540,13 +1509,13 @@ for($i=1;$i<=$this->getParam('shipping_nb_lines');$i++){
      $commandeContent="<!DOCTYPE html>
 <html>
 <head>
-<title>".$this->getlang('L_FILE_ORDER').date("d m Y")."</title>
+<title>".$this->getlang('L_FILE_ORDER').date($this->getLang('DATEFORMAT'))."</title>
 <meta charset=\"UTF-8\">
 <meta name=\"description\" content=\"Commande\">
 <meta name=\"author\" content=\"plxMyShop\">
 </head>
 <body>
-<sup>".date($this->getLang('DATEFORMAT'))."</sup><hr/>
+<hr/>
 $message
 <hr/>
 <a href=\"mailto:$destinataire\">$destinataire</a>
@@ -1622,6 +1591,11 @@ $message
    return (float) $shippingPrice;
   }
   $accurecept = (float) $this->getParam('acurecept');
+  if($this->getParam("shipping_by_price")){
+   $kg=$prx;//Transform to total price
+   //$op=0;//lock display free shipping (in hook)
+   //$this->setParam("shipping_colissimo","0");//lock display shipping (kg)(in hook)
+  }
   #hook plugin
   if(eval($this->plxMotor->plxPlugins->callHook('plxMyShopShippingMethod'))) return;
   if ($kg<=0){
@@ -1634,11 +1608,15 @@ $message
      break;
     }
    }
-   if($kg > 0 && ($this->getParam('p'.$num) * $this->getParam('pv'.$num)) > 0){
-    if($kg > $this->getParam('p'.$num)){
-     $this->shipOverload = true;
-     $this->lang('L_SHIPMAXWEIGHT');
-     return (float) (($kg / $this->getParam('p'.$num)) * $this->getParam('pv'.$num)) + $accurecept;
+   //Prevenir si erreur de réglage des frais de port
+   $wOrP = $this->getParam("shipping_by_price")?'p':'w';//price Or Weight
+   if(!empty($this->getParam("freeship".$wOrP)) && $kg<$this->getParam("freeship".$wOrP)){
+    if($kg > 0 && ($this->getParam('p'.$num) * $this->getParam('pv'.$num)) > 0){
+     if($kg > $this->getParam('p'.$num)){
+      $this->shipOverload = true;
+      $this->lang('L_SHIPMAXWEIGHT');
+      return (float) (($kg / $this->getParam('p'.$num)) * $this->getParam('pv'.$num)) + $accurecept;
+     }
     }
    }
   }
@@ -1651,11 +1629,6 @@ $message
  **/
  public function plxMyShopShippingMethod() {
   echo '<?php
-  if($this->getParam("shipping_by_price")){
-   $kg=$prx;//Transform to total price
-   //$op=0;//lock display free shipping
-   //$this->setParam("shipping_colissimo","0");//lock display shipping (kg)
-  }
   if($op){
    if(
     (!empty($this->getParam("freeshipw")) && $kg>=$this->getParam("freeshipw"))
@@ -1688,19 +1661,19 @@ $message
   $listeOnglets = [
    "produits" => [
     "titre" => $this->getLang("L_MENU_PRODUCTS"),
-    "urlHtml" => "plugin.php?p=plxMyShop",
+    "urlHtml" => "plugin.php?p=".get_class($this),
    ],
    "categories" => [
     "titre" => $this->getLang("L_MENU_CATS"),
-    "urlHtml" => "plugin.php?p=plxMyShop&amp;mod=cat",
+    "urlHtml" => "plugin.php?p=".get_class($this)."&amp;mod=cat",
    ],
    "commandes" => [
     "titre" => $this->getLang("L_MENU_ORDERS"),
-    "urlHtml" => "plugin.php?p=plxMyShop&amp;mod=cmd",
+    "urlHtml" => "plugin.php?p=".get_class($this)."&amp;mod=cmd",
    ],
    "configuration" => [
     "titre" => $this->getLang("L_MENU_CONFIG"),
-    "urlHtml" => "parametres_plugin.php?p=plxMyShop",
+    "urlHtml" => "parametres_plugin.php?p=".get_class($this),
    ],
   ];
   foreach ($listeOnglets as $codeOnglet => $o){

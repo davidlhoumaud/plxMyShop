@@ -1,19 +1,20 @@
 ## PlxMyShop Change Log (incompatible 5.2 (inexistance du dossier 'media' a l'époque c'était 'images')
 
-##si vous utilisez Multilingue, faite en sorte qu'il soit avant MyShop (sinon il a un temps de retards, il traduit le plug la page d'après ;)
+##si vous utilisez Multilingue, faite en sorte qu'il soit avant MyShop (en 1er) (sinon il a un temps de retards, il traduit le plug la page d'après ;)
 
 ##notes, todo & suggests 4 the future##
 * Pourquoi s'affiche "Cette page est actuellement en cours de rédaction" coté public dans une catégorie? Solution: Éditer au moins une fois la catégorie de produit. Et/ou ajouter le texte et/ou l'image pour égayer ;)
+* Un Noscript avertit l'internaute au panier (et bouton produit?).
+? Admin : Faire en sorte que l'onglet de la langue en cours soit activé lors de l'édition (option)?
 ? Bizarre que cela soit le même shortcode pour les prods et les catégorie ::: prod002: [boutonPanier 002], cat001: [boutonPanier 001] [pour les categories cela affiche une vignette produit et permet même de l'ajouter au panier, qui se fait avoir, le produit "catégorie"]
 * $d = $this->donneesModeles; ($d == données modele)
 * tester paypal
-* Faire évoluer les formulaires de commande (panier coté public) (compatible PluCss)
 * Vérifier comment il fonctionne sur pluxml <=5.4? (classes css pour la sidebar?) ::: v0.13 (tout semble ok)
-* Verifier la récriture d'url (activé et ou avec MyBetterUrls)
+* Récriture d'url Verifié (activé et avec MyBetterUrls.1.5.5)
 * intégrer datatable.js pour la liste des produits et/ou des catégories de produits? (+comlexe)
 * Une boutique par utilisateur?
-cfait, Mais quant? ::: Ajout de noscript pour avertir l'internaute (panier! et bouton produit) par ex: Afin de poursuivre et validé la commande, veuillez s'il vous plaît activer le javascript de votre navigateur.
 * Peaufiner l'aide
+* kw, meta & title en MyMultilingue
 
 ****
 * Si jamais configuré : petit BUG Config PAYPAL et frais de port (JavaScript), le panneau est caché. Se régle en jouant avec le l'interupteur ou après la premiere config enregistrée tout rentre dans l'ordre ;)
@@ -29,23 +30,37 @@ cfait, Mais quant? ::: Ajout de noscript pour avertir l'internaute (panier! et b
 * Sur chrom(e)ium, s'il y a un souci de grosseur de characteres (gros boutons), en trifouillant les réglages du zoom de chrome tout est rentré dans l'ordre ;) (font size: medium, zoom: 100%) ::: [Huge font in Chrome 37](https://productforums.google.com/forum/?_escaped_fragment_=topic/chrome/17kfuau1ApM#!topic/chrome/17kfuau1ApM)
 
 BUG les drapeaux le multilingue disparaissent au panier, mais sont présent dans catégories & produits ;)
-#1 BUG l'option "afficher le bouton ajouter au panier" ne fonctionne pas, si à non, l'affiche quant même ::: la changer pour le lien panier. Est-ce important?
-Bug "J'ai lu et j'accepte les conditions générales de vente." reste en français ainsi que le selecteur du mode de paiement (alors que tout le panier est en anglais), il prend la phrase de la config ;)
-
 le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont un admin.php (vu avec plx5.4 & maybe after)
-#1 (option afficher bouton ajout) Ajout d'une option générale au produit, ce produit est indiponible et en cours de réaprovisionement
 
-Admin : Faire en sorte que l'onglet de la langue en cours soit activé lors de l'édition (option)
 
-##v0.13.1r3 ##/04/2017##
-* [+] Avertir dans les courriels de commandes (admin et client) qu'il est détecté que "Le montant des frais de port peut être réévalué."
-* Fix Panier : Warning division / 0 si ligne de frais de ports non configuré
-* Fix erreur responsive en mode mobile pour le lien voir, (2 clics pour afficher la lightbox featherlight) ::: Featherlight: no content filter found  (no target specified)
+##v0.13.1r3 11/05/2017##
+* [+] Appel des hook selon l'espace en cours (public ou admin)
+* [+] hard coded plxMyShop vers get_class() pour simplifier le changement de nom
+* [+] Fonction nomProtege($nomProduit) remplacé par plxUtils::strCheck()
+* Fix le titre (prod/cat) optionnel n'est pas affiché (réécriture du hook plxShowPageTitle + Ajout de "Votre panier" a la balise du titre)
+* Fix manque les metas prod & cat (keyWords & desc) : Ajout du hook plxShowMeta dans plxShow->meta($meta='')
+* [+] Avertir dans les courriels de commandes (admin et client) qu'il est détecté que "Le montant des frais de port (sont) peut être (à) réévalué."
+* [+] Config & Édition : meilleure adaptibilité sur petits et grands écrans (table -> grid pour les interrupteurs oui/non, l'attribut size supprimé aux inputs text, tabs: 1px border-bottom & image prod/cat responsive)
+* [+] Édition : Lien "Visualiser le prod/cat sur le site" dans l'action bar & Message retour de sauvegarde amélioré.
+* [+] Option config : Utiliser le libellé des C.G.V. (nom du lien) fournit par My Shop (si traduit dans la langue et plxMyMultilingue actif) ::: Fix "J'ai lu et j'accepte les conditions générales de vente." reste en français ainsi que le selecteur du mode de paiement (alors que tout le panier est en anglais), il prend la phrase de la config ;)
+* [+] Option config : L'url des C.G.V. est réécrite par le moteur de PluXml pour une prise en compte du changement de langue (si plxMyMultilingue actif)
+* [+] Nouveau formulaire de commandes client (html, js & css simplifié) ::: Faire évoluer les formulaires de commande (panier coté public) (compatible PluCss)
+* Fix Panier : minimum de produit limité a 0
+* Fix Panier : Si erreur d'envoi des courriels, commentaires & conteneurNomCadeau non gardé et réaffiché
+* Fix Courriel de commande : La methode de paiement "cash" est transformé en "chèque"
+* [+] Nouvelle icône du plugin et du mini panier. Info: Pour retrouver l'iĉône originale, renommé icon.origin.png en icon.png ;) 
+* [+] Admin : Ajout d'une icône a l'option Produit Indisponible (nouvelle "cacher le bouton ajout au panier") pour voir son état d'un coup d'oeil (liste et produit)
+* Fix Public : Si bouton "ajouter au panier" est caché, faire en sorte de sortir le produit du panier (si dans la session existante (cookie) le produit est présent)
+* [+] Fixé & Amélioré option "cacher le bouton ajouter au panier" + L_NOTICE_NOADDCART ::: #1 l'option "cacher le bouton ajouter au panier" ne fonctionne pas, si à oui, l'affiche quant même ::: la changer pour le lien panier. Est-ce important? #1 idée de texte: ce produit est indiponible et en cours de réaprovisionement
+* [+] Ajout de la redirection 301 de PluXml 5.6 en son seing pour gardé la compat 5.4+
+* Fix Mauvaise redirection product2/index.php & product3/index.php
+* Fix Panier : Warning division / 0 si ligne de frais de ports non configuré & Prevenir si erreur de réglage des frais de port (client & admin)
+* Fix Érreur responsive en mode mobile pour le lien voir, (2 clics pour afficher la lightbox featherlight) ::: Featherlight: no content filter found  (no target specified)
 * Fix Lignes max : Config Frais de port (impossible au dela de 99 lignes)
 * Fix Bad id's : Admin edit thumbnail image
 
 ##v0.13.1r2 28/04/2017##
-* [+] Option Config : nombre de ligne de configurations des Frais de portd
+* [+] Option Config : nombre de ligne de configurations des Frais de port
 * [+] Option Config : [Frais de port suivant le montant de la commande](http://forum.pluxml.org/viewtopic.php?pid=53688#p53688)
 * [+] Admin : Ordre des commandes, les dernières en premières + big locals updates js/css + adaptative au petits écrans ::: intégrer en interne? et/ou harmoniser jquery.dataTables & cdn
 * [+] Admin : Voir les commandes dans une lightbox iframe [featherlight](http://noelboss.github.io/featherlight/) ::: "voir" une commande en mode smoothframe (avec jquery?)

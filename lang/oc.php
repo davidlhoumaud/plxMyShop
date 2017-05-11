@@ -17,9 +17,11 @@ $LANG = array(
 'L_PAIEMENT'                        => 'Mejan de pagament',
 'L_MONTANT'                         => 'Montant',
 'L_ACTIONS'                         => 'Accions',
+'L_BY_DEFAULT'                      => 'Par défaut',# a traduire
 'L_AND'                             => 'et',# a traduire
 'L_OR'                              => 'ou',# a traduire
 'L_A'                               => 'à',# a traduire
+'L_OPTIONEL'                        => 'opcionel',# a verifier
 
 'L_EMAIL'                           => 'Destinatari(s) del corrièl *',
 'L_EMAIL_CC'                        => 'Destinatari(s) en copia del corrièl ',
@@ -54,9 +56,9 @@ $LANG = array(
 'L_ERR_PRODUCT_ALREADY_EXISTS'      => 'Títol del produit ja utilizat',
 'L_PRODUCTS_IMAGE'                  => 'Imatge de presentacion',
 'L_PRODUCTS_IMAGE_CHOICE'           => 'Causir un imatge',
-'L_PRODUCTS_SHORTCODE'              => 'Acorchi utilisable dins una pagina estatica',
-'L_PRODUCTS_BASKET_BUTTON'          => 'Afichar lo boton "Ajutar al panièr"',
-'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Afichar un messatge se lo boton "Ajutar al panièr" es pas afichat',
+'L_PRODUCTS_SHORTCODE'              => 'Acorchi utilisable dins un article e una pagina estatica',
+'L_PRODUCTS_BASKET_BUTTON'          => 'Produit indisponible (boton "Ajutar al panièr" cachat)',#a verifier
+'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Messatge del replacement del boton "Ajutar al panièr"',#a verifier
 'L_PRODUCTS_CATEGORIES'             => 'Categorias d\'aqueste produit',
 'L_PRODUCTS_PRICE'                  => 'Prètz T.T.C.',
 'L_PRODUCTS_WEIGHT'                 => 'Pes (kg)',
@@ -66,7 +68,7 @@ $LANG = array(
 'PAYPAL_IMG'                        => 'fr_FR/FR',# a trouver
 
 # product.php
-
+'L_MAIN'                            => 'Général',# a traduire
 'L_PRODUCT_BACK_TO_PAGE'            => 'Tornar a la lista dels produits',
 'L_CAT_BACK_TO_PAGE'                => 'Tornar a la lista de las categorias',
 'L_PRODUCT_UNKNOWN_PAGE'            => 'Aqueste produit existís pas o existís pas mai !',
@@ -79,11 +81,11 @@ $LANG = array(
 'L_PRODUCT_ON_SITE'                 => 'sul site',
 'L_PRODUCT_UPDATE'                  => 'Enregistrar aqueste produit',
 'L_CAT_UPDATE'                      => 'Enregistrar aquesta categoria',
-'L_PRODUCT_TITLE_HTMLTAG'           => 'Contengut de la balisa "title" (opcion)',
-'L_PRODUCT_META_DESCRIPTION'        => 'Contengut de la balisa meta "description" per aqueste produit (opcion)',
-'L_CAT_META_DESCRIPTION'            => 'Contengut de la balisa meta "description" per aquesta categoria (opcion)',
-'L_PRODUCT_META_KEYWORDS'           => 'Contengut de la balisa meta "keywords" per aqueste produit (opcion)',
-'L_CAT_META_KEYWORDS'               => 'Contengut de la balisa meta "keywords" per aquesta categoria (opcion)',
+'L_PRODUCT_TITLE_HTMLTAG'           => 'Contengut de la balisa "title"',
+'L_PRODUCT_META_DESCRIPTION'        => 'Contengut de la balisa meta "description" per aqueste produit',
+'L_CAT_META_DESCRIPTION'            => 'Contengut de la balisa meta "description" per aquesta categoria',
+'L_PRODUCT_META_KEYWORDS'           => 'Contengut de la balisa meta "keywords" per aqueste produit',
+'L_CAT_META_KEYWORDS'               => 'Contengut de la balisa meta "keywords" per aquesta categoria',
 #create product/cat
 'CREATE_PRODUCTS'                   => 'Creacion e modificacion dels produits',
 'CREATE_CATS'                       => 'Creacion e modificacion de las categorias',
@@ -128,16 +130,17 @@ $LANG = array(
 
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuracion dels mejans de liurason e pagament',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Liurason per "SoColissimo Recommandé"',
-'L_CONFIG_DELIVERY_BY_PRICE'        => 'Basé sur le prix total (ttc)',# atraduire
+'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Basé sur le prix total (ttc)">Basé sur le total du panier</b>',# atraduire
 'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Les montants des frais de ports sont peut être a réévaluer ou a reconfigurer.</b>',# atraduire
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',# atraduire
 'L_CONFIG_FREE'                     => 'Gratuité',# atraduire
-'L_CONFIG_FREESHIPP'                => '(optionel) À partir de',# atraduire
+'L_CONFIG_FREESHIPP'                => 'à partir de',# atraduire
 'L_FREESHIP'                        => 'Frais de ports offert',# atraduire
 'L_CONFIG_DELIVERY_CONFIG'          => 'Configuracion "SoColissimo Recommandé"',
 'L_CONFIG_DELIVERY_RECORDED'        => 'Acusat de recepcion',
 'L_CONFIG_DELIVERY_WEIGHT'          => 'Pes en kg',
 'L_CONFIG_DELIVERY_PRICE'           => 'Pres en ',# atraduire 'Prix en '
+'L_CONFIG_NB_LINES'                 => '<b title="Nombre de ligne de configuration du tableau des frais de port. Sauvegarder pour rendre effectif le nombre de lignes, puis en suite modifier et re-sauvegarder">Nombre de ligne</b>',
 
 'L_CONFIG_PAYMENT_CHEQUE'           => 'Pagament per chèc',
 'L_CONFIG_PAYMENT_CASH'             => 'Pagament en argent comptant',
@@ -258,15 +261,20 @@ $LANG = array(
 'L_PUBLIC_ADD_BASKET'               => 'Ajustar al panièr',
 'L_PUBLIC_MOD_BASKET'               => 'Modifiar al panièr',#a verifier
 'L_PUBLIC_DEL_BASKET'               => 'Retirar da panièr',#a verifier
-'L_PUBLIC_BASKET_MINI_TITLE'        => "Passar al commanda",#a verifier
-'L_PUBLIC_BASKET_MINI'              => "Commandar !",#a verifier
-'L_PUBLIC_NOJS'                     => 'Veuillez activer le JavaScript de votre navigateur pour accéder au formulaire de commande.',
-'L_PUBLIC_TAX'                      => 'T.T.C.',
+'L_PUBLIC_BASKET_MINI_TITLE'        => 'Passar al commanda',#a verifier
+'L_PUBLIC_BASKET_MINI'              => 'Commandar !',#a verifier
+'L_PUBLIC_NOJS'                     => 'Veuillez activer le JavaScript de votre navigateur pour accéder au formulaire de commande.',#a traduire
+'L_PUBLIC_TAX'                      => 'T.T.C.',#a traduire
 
-"L_COMMANDE_LIBELLE_DEFAUT"         => "Ai legit e accepti las condicions generalas de venta.",
-"L_CONFIG_VALIDATION_COMMANDE"      => "Validation de la commande",
-"CONFIG_LIBELLE_CGV"                => "Libellé de la demande de validation des C.G.V. (l'URL doit être indiqué pour être utilisé)",
-"CONFIG_URL_CGV"                    => "URL des C.G.V.",
+'L_COMMANDE_LIBELLE_DEFAUT'         => "Ai legit e accepti las condicions generalas de venta.",
+'L_CONFIG_VALIDATION_COMMANDE'      => "Validation de la commande",#a traduire
+'L_CONFIG_INFO_CGV'                 => 'Le champ "URL des C.G.V." ci-dessous doit être indiqué pour être actif. (Attention! Url Réécrite par PluXml'.(defined('PLX_MYMULTILINGUE')?' ainsi que le préfixe "##/" est ajouté aux autres langues':'').')',#a traduire
+'L_CONFIG_LIBELLE_CGV'              => "Libellé de la demande de validation des C.G.V. (l'URL doit être indiqué pour être utilisé)",
+'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Utiliser les phrases par defaut des C.G.V. du plugin",#a traduire
+'L_CONFIG_URL_CGV'                  => "URL des C.G.V.",#a traduire
+
+#boutonPanier.php
+'L_NOTICE_NOADDCART'                => 'En rupture de stock',#a traduire
 
 #panier.js
 'L_TOTAL_BASKET'                    => 'Total',

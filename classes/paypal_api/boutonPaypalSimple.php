@@ -8,7 +8,7 @@ $adresseEmailPaypal = $plxPlugin->getParam("payment_paypal_user");;
 $nomClient = "{$_POST["firstname"]} {$_POST["lastname"]}";
 ob_start();
 ?>
- <p><img src="<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/images/paypal_logo.gif" alt=""/></p>
+ <p><img src="<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS . get_class($plxPlugin);?>/images/paypal_logo.gif" alt=""/></p>
  <form id="paypal_form" action="https://www.paypal.com/cgi-bin/webscr" method="post">
   <input type="hidden" name="amount" value="<?php echo htmlspecialchars($montant);?>"/>
   <input type="hidden" name="currency_code" value="<?php echo htmlspecialchars($devise);?>"/>
@@ -31,7 +31,7 @@ ob_start();
    src="https://www.paypalobjects.com/<?php $plxPlugin->lang('PAYPAL_IMG'); ?>/i/btn/btn_buynow_LG.gif"
   />
  </form>
- <p><img src="<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/images/icon_load.gif" alt=""/></p>
+ <p><img src="<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS . get_class($plxPlugin);?>/images/icon_load.gif" alt=""/></p>
  <script type="text/JavaScript">
   function postFormPayPal() {
    var paypal_form = document.getElementById("paypal_form");
