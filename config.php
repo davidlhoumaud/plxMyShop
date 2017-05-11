@@ -7,10 +7,8 @@ $aLangs = array($plxAdmin->aConf['default_lang']);
 
 # Si le plugin plxMyMultiLingue est installé on filtre sur les langues utilisées
 # On garde par défaut le fr si aucune langue sélectionnée dans plxMyMultiLingue
-if(defined('PLX_MYMULTILINGUE')) {// 0.8.1 see https://github.com/Pluxopolis/plxMyContact/commit/3e8224afd4a1e9435884219201908ffb056eb7f7
- $langs = plxMyMultiLingue::_Langs();
- $multiLangs = empty($langs) ? array() : explode(',', $langs);
- $aLangs = $multiLangs;
+if($plxPlugin->aLangs) {
+ $aLangs = $plxPlugin->aLangs;
 }
 $tabAffPanier = array(
  "basPage" => $plxPlugin->getlang('L_PANIER_POS_BOTTOM') ,
@@ -95,9 +93,9 @@ if(!empty($_POST)){
 
  $plxPlugin->setParam('racine_commandes', (empty(trim($_POST['racine_commandes']))?'data/commandes/':trim($_POST['racine_commandes'])), 'string');;
  $plxPlugin->setParam('racine_products', (empty(trim($_POST['racine_products']))?'data/products/':trim($_POST['racine_products'])), 'string');
- 
+
  $plxPlugin->saveParams();
- header('Location: parametres_plugin.php?p=plxMyShop');
+ header('Location: parametres_plugin.php?p='.get_class($plxPlugin));
  exit;
 }
 # initialisation des variables communes à chaque langue
@@ -160,7 +158,7 @@ $var['affichePanierMenu'] = $plxPlugin->getParam('affichePanierMenu');
 $var['localStorage'] = $plxPlugin->getParam('localStorage')!='' ? $plxPlugin->getParam('localStorage') : '1';
 $var['cookie'] = $plxPlugin->getParam('cookie')!='' ? $plxPlugin->getParam('cookie') : '1';
 $var["position_devise"] = ("" === $plxPlugin->getParam("position_devise")) ? current(array_keys($tabPosDevise)) : $plxPlugin->getParam("position_devise");
-$var['useLangCGVDefault'] = defined('PLX_MYMULTILINGUE') ? $plxPlugin->getParam('useLangCGVDefault') : '0';
+$var['useLangCGVDefault'] = $plxPlugin->aLangs ? $plxPlugin->getParam('useLangCGVDefault') : '0';
 $var["libelleCGV"] = ("" === $plxPlugin->getParam("libelleCGV")) ? $plxPlugin->getLang("L_COMMANDE_LIBELLE_DEFAUT") : $plxPlugin->getParam("libelleCGV");
 $var["urlCGV"] = ("" === $plxPlugin->getParam("urlCGV")) ? "" : $plxPlugin->getParam("urlCGV");
 
@@ -179,13 +177,13 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 <h3 id="pmsTitle" class="in-action-bar page-title hide"><?php echo $plxPlugin->lang('L_MENU_CONFIG').' '.$plxPlugin->getInfo('title');?></h3>
 <script type="text/javascript">//surcharge du titre dans l'admin
  var title = document.getElementById('pmsTitle').innerHTML;
- document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title;
+ document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = '<?php echo get_class($plxPlugin); ?> - '+title;
 </script>
 
-<form id="config_plxmyshop" action="parametres_plugin.php?p=plxMyShop" method="post">
+<form id="config_plxmyshop" action="parametres_plugin.php?p=<?php echo get_class($plxPlugin); ?>" method="post">
 <?php echo plxToken::getTokenPostMethod() ?>
  <fieldset class="config">
-  <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
+  <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo $plxPlugin->aLangs?' multilingue':'';?>">
    <input type="submit" name="submit" value="<?php $plxPlugin->lang('L_CONFIG_SUBMIT') ?>" />
   </p>
   <h2><?php $plxPlugin->lang('L_CONFIG_SHOP_INFO') ?></h2>
@@ -453,7 +451,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
   </div>
 
   <h2><?php $plxPlugin->lang('L_CONFIG_VALIDATION_COMMANDE') ?></h2>
-<?php if(defined('PLX_MYMULTILINGUE')){ //var_dump($var["useLangCGVDefault"]); ?>
+<?php if($plxPlugin->aLangs){ ?>
   <div class="grid">
    <div class="col sml-9 label-centered">
     <label for="id_useLangCGVDefault"><?php $plxPlugin->lang('L_CONFIG_LANGUE_CGV_SYSTEME');?>&nbsp;:</label>
@@ -607,6 +605,6 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
  </fieldset>
 </form>
 
-<p class="in-action-bar save-button plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
+<p class="in-action-bar save-button plx<?php echo str_replace('.','-',@PLX_VERSION); echo $plxPlugin->aLangs?' multilingue':'';?>">
  <?php $plxPlugin->menuAdmin("configuration");?>
 </p>

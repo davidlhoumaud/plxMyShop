@@ -242,7 +242,7 @@ class plxMyShop extends plxPlugin {
    unset($_SESSION[$this->plug['name']]["msgProdUpDate"]);
 //Les messages de MAJ panier
 ?>
-<div id="msgUpDateCart"><?php ((isset($_SESSION["plxMyShop"]['prods']) && $_SESSION["plxMyShop"]['prods'])?$this->lang('L_PUBLIC_MSG_BASKET_UP'):$this->lang('L_PUBLIC_NOPRODUCT')); ?></div>
+<div id="msgUpDateCart"><?php ((isset($_SESSION[get_class($this)]['prods']) && $_SESSION[get_class($this)]['prods'])?$this->lang('L_PUBLIC_MSG_BASKET_UP'):$this->lang('L_PUBLIC_NOPRODUCT')); ?></div>
 <script type="text/javascript">
  var msgUpDateCart = document.getElementById("msgUpDateCart");
  msgUpDateCart.style.display = "block";
@@ -471,10 +471,10 @@ if (error) {
  telCart.value="<?php echo (isset($_POST['tel'])?preg_replace('/\"/','\\\"',$_POST['tel']):''); ?>";
  msgCart.value="<?php echo (isset($_POST['msg'])?preg_replace('/\"/','\\\"',$_POST['msg']):''); ?>";
 
- idSuite.value="<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?$_SESSION["plxMyShop"]["ncart"]:""); ?>";
- numCart.value="<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?$_SESSION["plxMyShop"]["ncart"]:""); ?>";
- nprod=<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?(int)$_SESSION["plxMyShop"]["ncart"]:0); ?>;
- realnprod=<?php echo (isset($_SESSION["plxMyShop"]["ncart"])?(int)$_SESSION["plxMyShop"]["ncart"]:0); ?>;
+ idSuite.value="<?php echo (isset($_SESSION[get_class($this)]["ncart"])?$_SESSION[get_class($this)]["ncart"]:""); ?>";
+ numCart.value="<?php echo (isset($_SESSION[get_class($this)]["ncart"])?$_SESSION[get_class($this)]["ncart"]:""); ?>";
+ nprod=<?php echo (isset($_SESSION[get_class($this)]["ncart"])?(int)$_SESSION[get_class($this)]["ncart"]:0); ?>;
+ realnprod=<?php echo (isset($_SESSION[get_class($this)]["ncart"])?(int)$_SESSION[get_class($this)]["ncart"]:0); ?>;
 
  totalcommand.value = "<?php echo '<?php echo $this->pos_devise($totalpricettc+$totalpoidgshipping); ?>'; ?>";//total
 }
@@ -552,7 +552,7 @@ if (error) {
   echo "<?php";
 ?>
   if(get_class($this)=='plxMotor'){//only 4 public page!
-   $plxPlugin = $this->plxPlugins->aPlugins['plxMyShop'];
+   $plxPlugin = $this->plxPlugins->aPlugins['<?php echo get_class($this); ?>'];
    if(!empty($art['chapo']))
     $art['chapo'] = $plxPlugin->traitementPageStatique($art['chapo']);
    $art['content'] = $plxPlugin->traitementPageStatique($art['content']);
@@ -565,7 +565,7 @@ if (error) {
  public function plxShowStaticContent(){
   echo "<?php";
 ?>
-   $plxPlugin = $this->plxMotor->plxPlugins->aPlugins['plxMyShop'];
+   $plxPlugin = $this->plxMotor->plxPlugins->aPlugins['<?php echo get_class($this); ?>'];
    $output = $plxPlugin->traitementPageStatique($output);
    unset($plxPlugin);
   ?>
@@ -1337,7 +1337,7 @@ if (error) {
   $this->donneesModeles["pileModeles"][] = $modele;
   // fichier du modèle dans le thème
   $racineTheme = PLX_ROOT . $this->plxMotor->aConf["racine_themes"] . $this->plxMotor->style;
-  $fichier = "$racineTheme/modeles/plxMyShop/$modele.php";
+  $fichier = "$racineTheme/modeles/".get_class($this)."/$modele.php";
   // si le fichier du modèle est inexistant pas dans le thème
   if (!is_file($fichier)){
    $fichier = "modeles/$modele.php";// on choisit le fichier par défaut dans le répertoire de l'extension
@@ -1500,8 +1500,8 @@ if (error) {
 
      if ($_POST['methodpayment'] === "paypal"){
       $plxPlugin = $this;
-      //require PLX_PLUGINS . 'plxMyShop/classes/paypal_api/SetExpressCheckout.php';
-      require PLX_PLUGINS . 'plxMyShop/classes/paypal_api/boutonPaypalSimple.php';
+      //require PLX_PLUGINS . get_class($this) . '/classes/paypal_api/SetExpressCheckout.php';
+      require PLX_PLUGINS . get_class($this) . '/classes/paypal_api/boutonPaypalSimple.php';
      }
 
      $nf=PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')).date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
@@ -1661,19 +1661,19 @@ $message
   $listeOnglets = [
    "produits" => [
     "titre" => $this->getLang("L_MENU_PRODUCTS"),
-    "urlHtml" => "plugin.php?p=plxMyShop",
+    "urlHtml" => "plugin.php?p=".get_class($this),
    ],
    "categories" => [
     "titre" => $this->getLang("L_MENU_CATS"),
-    "urlHtml" => "plugin.php?p=plxMyShop&amp;mod=cat",
+    "urlHtml" => "plugin.php?p=".get_class($this)."&amp;mod=cat",
    ],
    "commandes" => [
     "titre" => $this->getLang("L_MENU_ORDERS"),
-    "urlHtml" => "plugin.php?p=plxMyShop&amp;mod=cmd",
+    "urlHtml" => "plugin.php?p=".get_class($this)."&amp;mod=cmd",
    ],
    "configuration" => [
     "titre" => $this->getLang("L_MENU_CONFIG"),
-    "urlHtml" => "parametres_plugin.php?p=plxMyShop",
+    "urlHtml" => "parametres_plugin.php?p=".get_class($this),
    ],
   ];
   foreach ($listeOnglets as $codeOnglet => $o){

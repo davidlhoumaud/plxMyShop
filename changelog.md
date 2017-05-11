@@ -14,6 +14,7 @@
 * intégrer datatable.js pour la liste des produits et/ou des catégories de produits? (+comlexe)
 * Une boutique par utilisateur?
 * Peaufiner l'aide
+* kw, meta & title en MyMultilingue
 
 ****
 * Si jamais configuré : petit BUG Config PAYPAL et frais de port (JavaScript), le panneau est caché. Se régle en jouant avec le l'interupteur ou après la premiere config enregistrée tout rentre dans l'ordre ;)
@@ -35,6 +36,7 @@ le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont u
 
 ##v0.13.1r3 ##/05/2017##
 * [+] Appel des hook selon l'espace en cours (public ou admin)
+* [+] hard coded plxMyShop vers get_class() pour simplifier le changement de nom
 * [+] Fonction nomProtege($nomProduit) remplacé par plxUtils::strCheck()
 * Fix le titre (prod/cat) optionnel n'est pas affiché (réécriture du hook plxShowPageTitle + Ajout de "Votre panier" a la balise du titre)
 * Fix manque les metas prod & cat (keyWords & desc) : Ajout du hook plxShowMeta dans plxShow->meta($meta='')

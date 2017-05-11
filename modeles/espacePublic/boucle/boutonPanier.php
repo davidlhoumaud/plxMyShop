@@ -11,13 +11,13 @@ $prodsPnr = 1;
 $txtPnrBtn = htmlspecialchars($plxPlugin->getLang('L_PUBLIC_ADD_BASKET'));
 $classPnrBtn = "blue";
 
-if (isset($_SESSION["plxMyShop"]["prods"][$d["k"]])){
- if ($_SESSION["plxMyShop"]["prods"][$d["k"]]<1) {
-  $_SESSION["plxMyShop"]["ncart"] -= $_SESSION["plxMyShop"]["prods"][$d["k"]];
-  unset($_SESSION["plxMyShop"]["prods"][$d["k"]]);
+if (isset($_SESSION[get_class($plxPlugin)]["prods"][$d["k"]])){
+ if ($_SESSION[get_class($plxPlugin)]["prods"][$d["k"]]<1) {
+  $_SESSION[get_class($plxPlugin)]["ncart"] -= $_SESSION[get_class($plxPlugin)]["prods"][$d["k"]];
+  unset($_SESSION[get_class($plxPlugin)]["prods"][$d["k"]]);
  }else{
   $minPnr = 0;
-  $prodsPnr = $_SESSION["plxMyShop"]["prods"][$d["k"]];
+  $prodsPnr = $_SESSION[get_class($plxPlugin)]["prods"][$d["k"]];
   $txtPnrBtn = htmlspecialchars($plxPlugin->getLang('L_PUBLIC_DEL_BASKET'));
   $classPnrBtn = "red";
  }

@@ -6,28 +6,26 @@
  * @package PLX
  * @author David L
  **/
- 
+
 # Liste des langues disponibles et prises en charge par le plugin
 $aLangs = array($plxAdmin->aConf['default_lang']);
 
 # Si le plugin plxMyMultiLingue est installé on filtre sur les langues utilisées
 # On garde par défaut le fr si aucune langue sélectionnée dans plxMyMultiLingue
-if(defined('PLX_MYMULTILINGUE')) {
- $langs = plxMyMultiLingue::_Langs();
- $multiLangs = empty($langs) ? array() : explode(',', $langs);
- $aLangs = $multiLangs;
+if($plxPlugin->aLangs) {
+ $aLangs = $plxPlugin->aLangs;
 }
 
 # On édite le produit
 if(!empty($_POST) AND isset($plxPlugin->aProds[$_POST['id']])) {
  $plxPlugin->editProduct($_POST);
- header('Location: plugin.php?p=plxMyShop&amp;prod='.$_POST['id']);
+ header('Location: plugin.php?p='.get_class($plxPlugin).'&amp;prod='.$_POST['id']);
  exit;
 } elseif(!empty($_GET['prod'])) { # On affiche le contenu de la page
  $id = plxUtils::strCheck(plxUtils::nullbyteRemove($_GET['prod']));
  if(!isset($plxPlugin->aProds[ $id ])) {
   plxMsg::Error(L_PRODUCT_UNKNOWN_PAGE);
-  header('Location: plugin.php?p=plxMyShop');
+  header('Location: plugin.php?p='.get_class($plxPlugin));
   exit;
  }
  # On récupère le contenu
@@ -63,12 +61,12 @@ $modProduit = ("1" !== $pcat);
 if (!isset($_SESSION)) {// inutile?
  session_start();
 }
-$_SESSION["plxMyShop"]["cheminImages"] = realpath(PLX_ROOT . $plxPlugin->cheminImages);
-$_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminImages);
+$_SESSION[get_class($plxPlugin)]["cheminImages"] = realpath(PLX_ROOT . $plxPlugin->cheminImages);
+$_SESSION[get_class($plxPlugin)]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminImages);
 
 ?>
-<p class="in-action-bar return-link plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
- <a href="plugin.php?p=plxMyShop<?php echo ($modProduit ? '' : '&mod=cat');?>"><?php
+<p class="in-action-bar return-link plx<?php echo str_replace('.','-',@PLX_VERSION); echo $plxPlugin->aLangs?' multilingue':'';?>">
+ <a href="plugin.php?p=<?php echo get_class($plxPlugin).($modProduit ? '' : '&mod=cat');?>"><?php
   echo $plxPlugin->lang($modProduit ? 'L_PRODUCT_BACK_TO_PAGE' : 'L_CAT_BACK_TO_PAGE');
 ?></a>
 </p>
@@ -80,7 +78,7 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
 <script type="text/javascript">//surcharge du titre dans l'action bar
  var title = document.getElementById('pmsTitle');
  title.className += " hide";
- document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = 'plxMyShop - '+title.innerHTML;
+ document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = '<?php echo get_class($plxPlugin); ?> - '+title.innerHTML;
 </script>
 
 <div class="grid">
@@ -91,7 +89,7 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
 </div>
 
 <?php eval($plxAdmin->plxPlugins->callHook('AdminProductTop')); // hook plugin ?>
-<form action="plugin.php?p=plxMyShop" method="post" id="form_article">
+<form action="plugin.php?p=<?php echo get_class($plxPlugin); ?>" method="post" id="form_article">
  <div class="grid" id="tabContainer">
   <fieldset class="col sml-12">
    <?php plxUtils::printInput('prod', $_GET['prod'], 'hidden');?>
@@ -239,7 +237,7 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
      <div class="col sml-12">
       <label for="id_content_<?php echo $lang ?>"><?php echo L_CONTENT_FIELD ?>&nbsp;:</label>
        <?php
-        if(!defined('PLX_MYMULTILINGUE') || $lang==$plxAdmin->aConf['default_lang'])
+        if(!$plxPlugin->aLangs || $lang==$plxAdmin->aConf['default_lang'])
          plxUtils::printArea('content',plxUtils::strCheck($content[$lang]),140,30);
         else
          plxUtils::printArea('content_'.$lang,plxUtils::strCheck($content[$lang]),140,30);
@@ -251,7 +249,7 @@ $_SESSION["plxMyShop"]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminIm
 <!-- Fin du content en multilingue -->
   </div><!-- fi tabpage id:tabscontent -->
 
-  <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>">
+  <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo $plxPlugin->aLangs?' multilingue':'';?>">
    <?php echo plxToken::getTokenPostMethod() ?>
    <input type="submit" value="<?php $plxPlugin->lang($modProduit?'L_PRODUCT_UPDATE':'L_CAT_UPDATE');?>"/>
 <?php

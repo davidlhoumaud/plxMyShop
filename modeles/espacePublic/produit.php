@@ -26,7 +26,7 @@ if (is_array($plxPlugin->productGroupTitle())) {
   <div class="basket_link_image">
    <a href="<?php echo htmlspecialchars($d["lienPanier"]);?>" id="notiShoppingCart">
     <span id="notiNumShoppingCart"></span>
-    <img src="<?php echo PLX_PLUGINS; ?>plxMyShop/icon.png">&nbsp;<?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?></a>
+    <img src="<?php echo PLX_PLUGINS.get_class($plxPlugin); ?>/icon.png">&nbsp;<?php $plxPlugin->lang('L_PUBLIC_BASKET'); ?></a>
   </div>
 <?php } ?>
   <div class="image_product">
