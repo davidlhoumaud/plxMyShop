@@ -224,6 +224,8 @@ $LANG = array(
 'L_EMAIL_ERROR1'                    => 'Une erreur s\'est produite lors de l\'envoi de votre courriel récapitulatif.',
 'L_EMAIL_ERROR2'                    => 'Une erreur s\'est produite lors de l\'envoi de la commande par courriel.',
 
+'L_EMAIL_DELIVERYDATE'              => 'Date de livraison: ', # /ppmt nouvelle fonction
+
 'L_FILE_ORDER'                      => 'Commande du ',
 
 'L_FOR'                             => 'pour',
@@ -286,5 +288,7 @@ $LANG = array(
 'L_PRODUCT'                         => 'Produit',
 'L_UNIT_PRICE'                      => 'Prix unitaire',
 'L_NUMBER'                          => 'Nombre',
-'L_TOTAL_PRICE'                     => 'Prix total'
+'L_TOTAL_PRICE'                     => 'Prix total',
+'L_PUBLIC_DELIVERYDATE'             => 'Selectionnez votre date de livraison'  # /ppmt nouvelle option
+
 );

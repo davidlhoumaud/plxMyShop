@@ -336,6 +336,8 @@ class plxMyShop extends plxPlugin {
     postcode:document.getElementById("postcode").value,
     city:document.getElementById("city").value,
     country:document.getElementById("country").value,
+    deliverydate:document.getElementById("deliverydate").value,
+
     };
     localStorage.setItem("Shop_Deliver_Adress", JSON.stringify(temp));
     document.getElementById("alerte_sauvegarder").innerHTML = "<?php echo $this->lang('L_ADDRESS_SAVED'); ?><br /><?php echo $this->lang('L_DO_NOT_SHARED'); ?>";
@@ -1420,6 +1422,9 @@ if (error) {
   $messCommon .= "<br/><br/>";
   $messCommon .= $this->getlang('L_EMAIL_COMMENT')." : ";
   $messCommon .= "<br/>";
+  $messCommon .= $this->getlang('L_EMAIL_DELIVERYDATE');
+  $messCommon .= plxUtils::cdataCheck($_POST['deliverydate'])."<br/>";
+
   $messCommon .= $_POST['msg'];
 
   #Mail de nouvelle commande pour le commerçant.

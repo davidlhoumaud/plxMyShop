@@ -116,6 +116,9 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
     <p class="twenty fl tal"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span>&nbsp;:<br />
     <input type="text" name="country" id="country" value="" required="required" /></p><br class="clear" />
 
+    <p class="forty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYDATE'); ?><span class='star'>*</span>&nbsp;:<br />
+    <input type="text" name="deliverydate" id="datepicker" required="required" /></p><br class="clear" />
+
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsMilieu')) # Hook Plugins ?>
 
     <p>
@@ -161,4 +164,38 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
  </div>
 </div>
 <script type='text/javascript' src='<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS.$plxPlugin->plugName;?>/js/panier.js?v0131'></script>
+<script type='text/javascript' src='<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/moment.min.js'></script>
+<script type='text/javascript' src='<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/pikaday.js'></script>
+
+<script type='text/javascript'>
+function includeCSSfile(href) {
+    var head_node = document.getElementsByTagName('head')[0];
+    var link_tag = document.createElement('link');
+    link_tag.setAttribute('rel', 'stylesheet');
+    link_tag.setAttribute('type', 'text/css');
+    link_tag.setAttribute('href', href);
+    head_node.appendChild(link_tag);
+}
+includeCSSfile("<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/css/pikaday.css")
+   
+var today = new Date();
+var nextdelivery = new Date();
+nextdelivery.setDate(today.getDate()+2);
+
+var picker_date = new Pikaday(
+    {
+        field: document.getElementById('datepicker'),
+        format: 'dddd Do MMMM YYYY',
+        firstDay: 1,
+        minDate: nextdelivery,
+        maxDate: new Date(2020, 12, 31),
+        yearRange: [2017,2020],
+        onSelect: function() {
+            var date = document.createTextNode(this.getMoment() + ' ');
+            document.getElementById('selected').appendChild(date);
+        }
+    }
+);
+</script>
+
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFin')) # Hook Plugins ?>

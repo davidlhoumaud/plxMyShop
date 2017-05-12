@@ -223,6 +223,9 @@ $LANG = array(
 'L_EMAIL_ERROR1'                    => 'An error occured during the sending of your summary email.',
 'L_EMAIL_ERROR2'                    => 'An error occured during the sending of your order email.',
 
+'L_EMAIL_DELIVERYDATE'              => 'Delivery date: ', # /ppmt nouvelle fonction
+
+
 'L_FILE_ORDER'                      => 'Order of',
 
 'L_FOR'                             => 'for',
@@ -285,5 +288,7 @@ $LANG = array(
 'L_PRODUCT'                         => 'Product',
 'L_UNIT_PRICE'                      => 'Unit_price',
 'L_NUMBER'                          => 'Number',
-'L_TOTAL_PRICE'                     => 'Total price'
+'L_TOTAL_PRICE'                     => 'Total price',
+'L_PUBLIC_DELIVERYDATE'             => 'Select your delivery date'  # /ppmt nouvelle option
+
 );
