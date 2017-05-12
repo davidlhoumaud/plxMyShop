@@ -32,6 +32,10 @@
 BUG les drapeaux le multilingue disparaissent au panier, mais sont présent dans catégories & produits ;)
 le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont un admin.php (vu avec plx5.4 & maybe after)
 
+Effet de bord : si on ajoute un shortCode [boutonPanier 004] a un prod/cat et que le panier est sur toutes les pages (il s'affiche 2 fois (av et aprés le form de commande)?????
+
+##v0.13.1r4 ##/05/2017##
+[+] get_class() et plug['name'] remplacé par plugName
 
 ##v0.13.1r3 11/05/2017##
 * [+] Appel des hook selon l'espace en cours (public ou admin)

@@ -6,12 +6,12 @@ version :
 $plxPlugin = $d["plxPlugin"];
 $plxPlugin->traitementPanier();
 $afficheMessage = FALSE;
-if ( isset($_SESSION[get_class($plxPlugin)]['msgCommand'])
- && !empty($_SESSION[get_class($plxPlugin)]['msgCommand'])
+if ( isset($_SESSION[$plxPlugin->plugName]['msgCommand'])
+ && !empty($_SESSION[$plxPlugin->plugName]['msgCommand'])
 ){
  $afficheMessage = TRUE;
- $message = $_SESSION[get_class($plxPlugin)]['msgCommand'];
- unset($_SESSION[get_class($plxPlugin)]['msgCommand']);
+ $message = $_SESSION[$plxPlugin->plugName]['msgCommand'];
+ unset($_SESSION[$plxPlugin->plugName]['msgCommand']);
 }
 # Hook Plugins
 eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
@@ -33,18 +33,18 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
      $totalpoidg=0;
      $totalpoidgshipping = 0;
      $nprod=0;
-     if (isset($_SESSION[get_class($plxPlugin)]['prods']) && $_SESSION[get_class($plxPlugin)]['prods']) {
+     if (isset($_SESSION[$plxPlugin->plugName]['prods']) && $_SESSION[$plxPlugin->plugName]['prods']) {
 ?>
        <form method="POST">
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFormProdsDebut')); # Hook Plugins ?>
         <table class="tableauProduitsPanier">
          <tr>
-          <th><?php $plxPlugin->lang('L_PRODUCT'.(count($_SESSION[get_class($plxPlugin)]['prods'])>=2?'S':'')); ?></th>
+          <th><?php $plxPlugin->lang('L_PRODUCT'.(count($_SESSION[$plxPlugin->plugName]['prods'])>=2?'S':'')); ?></th>
           <th class="nombre"><?php $plxPlugin->lang('L_UNIT_PRICE'); ?></th>
           <th><?php $plxPlugin->lang('L_NUMBER'); ?></th>
           <th colspan="2" class="nombre"><?php $plxPlugin->lang('L_TOTAL_PRICE'); ?></th>
          </tr>
-<?php   foreach ($_SESSION[get_class($plxPlugin)]['prods'] as $pId => $nb) {
+<?php   foreach ($_SESSION[$plxPlugin->plugName]['prods'] as $pId => $nb) {
            $prixUnitaire = (float) $plxPlugin->aProds[$pId]['pricettc'];
            $prixttc = $prixUnitaire * $nb;
            $poidg = (float) $plxPlugin->aProds[$pId]['poidg'] * $nb;
@@ -59,7 +59,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
           <td class="nombre"><input type="submit" class="red" name="retirerProduit[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_DEL'));?>" /></td>
           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixttc);?></td>
          </tr>
-<?php   } // FIN foreach ($_SESSION[get_class($plxPlugin)]['prods'] as $pId => $nb) ?>
+<?php   } // FIN foreach ($_SESSION[$plxPlugin->plugName]['prods'] as $pId => $nb) ?>
          <tr>
           <td class="nombre" colspan="3"><input type="submit" name="recalculer" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_PANIER_RECALCULER'));?>" /></td>
           <td class="nombre"><?php $plxPlugin->lang('L_TOTAL_BASKET');?>&nbsp;:</td>
@@ -86,7 +86,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
         <noscript><p class="red"><?php $plxPlugin->lang('L_PUBLIC_NOJS'); ?></p></noscript>
        </form>
 <?php
-     } //fin isset($_SESSION[get_class($plxPlugin)]['prods']) && $_SESSION[get_class($plxPlugin)]['prods']
+     } //fin isset($_SESSION[$plxPlugin->plugName]['prods']) && $_SESSION[$plxPlugin->plugName]['prods']
     if (0 === $nprod && !$afficheMessage) {?>
      <em><?php $plxPlugin->lang('L_PUBLIC_NOPRODUCT'); ?></em>
 <?php } ?>
@@ -139,7 +139,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
     <?php $plxPlugin->lang('L_EMAIL_CUST_PAYMENT'); ?>&nbsp;:&nbsp;&nbsp;
     <select name="methodpayment" id="methodpayment">
 <?php
-      $methodpayment = !isset($_SESSION[get_class($plxPlugin)]["methodpayment"]) ? "" : $_SESSION[get_class($plxPlugin)]["methodpayment"];
+      $methodpayment = !isset($_SESSION[$plxPlugin->plugName]["methodpayment"]) ? "" : $_SESSION[$plxPlugin->plugName]["methodpayment"];
       foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) {?>
       <option value="<?php echo htmlspecialchars($codeM);?>"<?php
        echo ($codeM !== $methodpayment) ? "" : ' selected="selected"';
@@ -160,5 +160,5 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
   </section>
  </div>
 </div>
-<script type='text/javascript' src='<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS.get_class($plxPlugin);?>/js/panier.js?v0131'></script>
+<script type='text/javascript' src='<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS.$plxPlugin->plugName;?>/js/panier.js?v0131'></script>
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFin')) # Hook Plugins ?>

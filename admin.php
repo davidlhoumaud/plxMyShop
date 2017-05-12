@@ -22,14 +22,14 @@ if(!empty($_POST)){
   $plxPlugin->editProducts($_POST);
   $fakeget=(isset($_GET['mod']) && !empty($_GET['mod'])?'&mod='.$_GET['mod']:'');
  }
- header('Location: plugin.php?p='.get_class($plxPlugin).$fakeget);
+ header('Location: plugin.php?p='.$plxPlugin->plugName.$fakeget);
  exit;
 }
 
 $dir = PLX_ROOT.(empty($plxPlugin->getParam('racine_commandes'))?'data/commandes/':$plxPlugin->getParam('racine_commandes'));
 if (isset($_GET['kill']) && !empty($_GET['kill']) && is_file($dir.$_GET['kill'])){
  unlink($dir.$_GET['kill']);
- header('Location: plugin.php?p='.get_class($plxPlugin).'&mod=cmd');
+ header('Location: plugin.php?p='.$plxPlugin->plugName.'&mod=cmd');
 }
 
 if ((isset($_GET['prod']) && !empty($_GET['prod'])) || (isset($_POST['prod']) && !empty($_POST['prod'])))
@@ -60,11 +60,11 @@ function checkBox(obj){
 <script type="text/javascript">//surcharge du titre dans l'admin
  var title = document.getElementById('pmsTitle');
  title.className += " hide";
- document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = '<?php echo get_class($plxPlugin);?> - '+title.innerHTML;
+ document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = '<?php echo $plxPlugin->plugName;?> - '+title.innerHTML;
 </script>
 <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo defined('PLX_MYMULTILINGUE')?' multilingue':'';?>"><?php $plxPlugin->menuAdmin($onglet);?></p>
 
-<form action="plugin.php?p=<?php echo get_class($plxPlugin).(isset($_GET['mod']) && $_GET['mod']=='cat'?"&amp;mod=cat":""); ?>" method="post" id="form_products">
+<form action="plugin.php?p=<?php echo $plxPlugin->plugName.(isset($_GET['mod']) && $_GET['mod']=='cat'?"&amp;mod=cat":""); ?>" method="post" id="form_products">
  <?php if (!isset($_GET['mod']) || (isset($_GET['mod']) && $_GET['mod']!='cmd')): ?>
   <p>
    <?php echo plxToken::getTokenPostMethod() ?>
@@ -118,19 +118,19 @@ function checkBox(obj){
    $ordre = ++$num;
    $selected = $v['pcat']==1 ? ' checked="checked"' : '';
    $valued = $v['pcat']==1 ? '1' : '0';
-   $noaddcartImg = ($v['pcat']!=1 ? '<img class="noaddcartImg" src="'.PLX_PLUGINS.get_class($plxPlugin).'/images/'.(empty($v['noaddcart'])?'full':'empty').'.png" />' : '');
+   $noaddcartImg = ($v['pcat']!=1 ? '<img class="noaddcartImg" src="'.PLX_PLUGINS.$plxPlugin->plugName.'/images/'.(empty($v['noaddcart'])?'full':'empty').'.png" />' : '');
    $noaddcartTit = (empty($v['noaddcart'])?'':PHP_EOL.htmlspecialchars($plxPlugin->getLang('L_PRODUCTS_BASKET_BUTTON')));
    echo '
    <tr class="line-'.($num%2).'">
     <td><input type="checkbox" name="idProduct[]" value="'.$k.'" /><input type="hidden" name="productNum[]" value="'.$k.'" /></td>
-    <td><a href="plugin.php?p='.get_class($plxPlugin).'&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').$noaddcartTit.'">'.$k.$noaddcartImg.'</a>
+    <td><a href="plugin.php?p='.$plxPlugin->plugName.'&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').$noaddcartTit.'">'.$k.$noaddcartImg.'</a>
     <input type="hidden" name="'.$k.'_pcat" value="'.$valued.'"'.$selected.' onclick="checkBox(this);" />
    </td>'.PHP_EOL;
 ?>
    <td>
 <?php
    $image = $v["image"];
-   echo '<a href="plugin.php?p='.get_class($plxPlugin).'&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').$noaddcartTit.'"><img class="product_image" src="'.($image!=""?PLX_ROOT.$plxPlugin->cheminImages.$image:PLX_PLUGINS.get_class($plxPlugin).'/images/none.png').'" /></a>';
+   echo '<a href="plugin.php?p='.$plxPlugin->plugName.'&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').$noaddcartTit.'"><img class="product_image" src="'.($image!=""?PLX_ROOT.$plxPlugin->cheminImages.$image:PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png').'" /></a>';
 ?>
    </td>
 <?php
@@ -163,7 +163,7 @@ function checkBox(obj){
 
    if(!plxUtils::checkSite($v['url'])){
     echo '<td>';
-    echo '<a href="plugin.php?p='.get_class($plxPlugin).'&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').$noaddcartTit.'">'.$plxPlugin->getLang('L_PRODUCTS_SRC').'</a>';
+    echo '<a href="plugin.php?p='.$plxPlugin->plugName.'&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').$noaddcartTit.'">'.$plxPlugin->getLang('L_PRODUCTS_SRC').'</a>';
     if($v['active']){
      echo '&nbsp;-&nbsp;<a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.sprintf($plxPlugin->getLang('L_VIEW_ONLINE'), plxUtils::strCheck($v['name'])).'">'.L_VIEW.'</a>';
     }
@@ -222,7 +222,7 @@ function checkBox(obj){
    '   <td id="dateTime">'.$date.' - '.str_replace('-',':',$namearray[1]).'</td>'.PHP_EOL.
    '   <td>'.$namearray[2].'</td>'.PHP_EOL.
    '   <td class="nombre">'.$plxPlugin->pos_devise((float)$namearray[3]+(float)preg_replace('/.html/','',$namearray[4])).'</td>'.PHP_EOL.
-   '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p='.get_class($plxPlugin).'&amp;mod=cmd&amp;kill='.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a target="_blank" href="'.$dir.$val.'" data-featherlight-target="'.$dir.$val.'" data-featherlight="iframe" data-featherlight-iframe-allowfullscreen="true">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.PHP_EOL.
+   '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p='.$plxPlugin->plugName.'&amp;mod=cmd&amp;kill='.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a target="_blank" href="'.$dir.$val.'" data-featherlight-target="'.$dir.$val.'" data-featherlight="iframe" data-featherlight-iframe-allowfullscreen="true">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.PHP_EOL.
    '</tr>';
  };
 

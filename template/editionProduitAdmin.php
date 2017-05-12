@@ -19,13 +19,13 @@ if($plxPlugin->aLangs) {
 # On édite le produit
 if(!empty($_POST) AND isset($plxPlugin->aProds[$_POST['id']])) {
  $plxPlugin->editProduct($_POST);
- header('Location: plugin.php?p='.get_class($plxPlugin).'&amp;prod='.$_POST['id']);
+ header('Location: plugin.php?p='.$plxPlugin->plugName.'&amp;prod='.$_POST['id']);
  exit;
 } elseif(!empty($_GET['prod'])) { # On affiche le contenu de la page
  $id = plxUtils::strCheck(plxUtils::nullbyteRemove($_GET['prod']));
  if(!isset($plxPlugin->aProds[ $id ])) {
   plxMsg::Error(L_PRODUCT_UNKNOWN_PAGE);
-  header('Location: plugin.php?p='.get_class($plxPlugin));
+  header('Location: plugin.php?p='.$plxPlugin->plugName);
   exit;
  }
  # On récupère le contenu
@@ -61,12 +61,12 @@ $modProduit = ("1" !== $pcat);
 if (!isset($_SESSION)) {// inutile?
  session_start();
 }
-$_SESSION[get_class($plxPlugin)]["cheminImages"] = realpath(PLX_ROOT . $plxPlugin->cheminImages);
-$_SESSION[get_class($plxPlugin)]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminImages);
+$_SESSION[$plxPlugin->plugName]["cheminImages"] = realpath(PLX_ROOT . $plxPlugin->cheminImages);
+$_SESSION[$plxPlugin->plugName]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminImages);
 
 ?>
 <p class="in-action-bar return-link plx<?php echo str_replace('.','-',@PLX_VERSION); echo $plxPlugin->aLangs?' multilingue':'';?>">
- <a href="plugin.php?p=<?php echo get_class($plxPlugin).($modProduit ? '' : '&mod=cat');?>"><?php
+ <a href="plugin.php?p=<?php echo $plxPlugin->plugName.($modProduit ? '' : '&mod=cat');?>"><?php
   echo $plxPlugin->lang($modProduit ? 'L_PRODUCT_BACK_TO_PAGE' : 'L_CAT_BACK_TO_PAGE');
 ?></a>
 </p>
@@ -78,7 +78,7 @@ $_SESSION[get_class($plxPlugin)]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin
 <script type="text/javascript">//surcharge du titre dans l'action bar
  var title = document.getElementById('pmsTitle');
  title.className += " hide";
- document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = '<?php echo get_class($plxPlugin); ?> - '+title.innerHTML;
+ document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = '<?php echo $plxPlugin->plugName; ?> - '+title.innerHTML;
 </script>
 
 <div class="grid">
@@ -89,7 +89,7 @@ $_SESSION[get_class($plxPlugin)]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin
 </div>
 
 <?php eval($plxAdmin->plxPlugins->callHook('AdminProductTop')); // hook plugin ?>
-<form action="plugin.php?p=<?php echo get_class($plxPlugin); ?>" method="post" id="form_article">
+<form action="plugin.php?p=<?php echo $plxPlugin->plugName; ?>" method="post" id="form_article">
  <div class="grid" id="tabContainer">
   <fieldset class="col sml-12">
    <?php plxUtils::printInput('prod', $_GET['prod'], 'hidden');?>
@@ -101,7 +101,7 @@ $_SESSION[get_class($plxPlugin)]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin
      foreach($aLangs as $lang){
       echo '     <li id="tabHeader_'.$lang.'"><span class="myhide">'.L_CONTENT_FIELD.'</span> <sup>'.strtoupper($lang).'</sup></li>'.PHP_EOL;
      }
-     $imgNoUrl = PLX_PLUGINS.get_class($plxPlugin).'/images/none.png';
+     $imgNoUrl = PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png';
 ?>
     </ul>
    </div>
@@ -154,10 +154,10 @@ $_SESSION[get_class($plxPlugin)]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin
      </div>
      <div class="grid">
       <div class="col sml-12 med-5 label-centered">
-       <label for="id_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_BUTTON') ;?>&nbsp;:<?php echo '<img id="cartImg" class="noaddcartImg" src="'.PLX_PLUGINS.get_class($plxPlugin).'/images/'.(empty($noaddcart)?'full':'empty').'.png" />'; ?></label>
+       <label for="id_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_BUTTON') ;?>&nbsp;:<?php echo '<img id="cartImg" class="noaddcartImg" src="'.PLX_PLUGINS.$plxPlugin->plugName.'/images/'.(empty($noaddcart)?'full':'empty').'.png" />'; ?></label>
       </div>
       <div class="col sml-12 med-7">
-       <script type="text/javascript">function toggleNoaddcart(a){var b = document.getElementById('id_notice_noaddcart');var c = document.getElementById('config_notice_noaddcart');var d = document.getElementById('cartImg');if(a==1){b.setAttribute("placeholder","<?php echo $plxPlugin->getLang('L_NOTICE_NOADDCART').' ('.$plxPlugin->getLang('L_BY_DEFAULT').')';?>");c.classList.remove("hide");d.src = "<?php echo PLX_PLUGINS.get_class($plxPlugin).'/images/empty.png'; ?>";}else{b.removeAttribute("placeholder");c.classList.add("hide");d.src = "<?php echo PLX_PLUGINS.get_class($plxPlugin).'/images/full.png'; ?>";}}</script>
+       <script type="text/javascript">function toggleNoaddcart(a){var b = document.getElementById('id_notice_noaddcart');var c = document.getElementById('config_notice_noaddcart');var d = document.getElementById('cartImg');if(a==1){b.setAttribute("placeholder","<?php echo $plxPlugin->getLang('L_NOTICE_NOADDCART').' ('.$plxPlugin->getLang('L_BY_DEFAULT').')';?>");c.classList.remove("hide");d.src = "<?php echo PLX_PLUGINS.$plxPlugin->plugName.'/images/empty.png'; ?>";}else{b.removeAttribute("placeholder");c.classList.add("hide");d.src = "<?php echo PLX_PLUGINS.$plxPlugin->plugName.'/images/full.png'; ?>";}}</script>
        <?php plxUtils::printSelect('noaddcart', array('1'=>L_YES,'0'=>L_NO), plxUtils::strCheck($noaddcart), false,'" onChange="toggleNoaddcart(this.options[this.selectedIndex].value);'); ?>
       </div>
      </div>
@@ -264,4 +264,4 @@ $_SESSION[get_class($plxPlugin)]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin
   </fieldset>
  </div><!-- fi tabContainer -->
 </form>
-<script type="text/javascript" src="<?php echo PLX_PLUGINS.get_class($plxPlugin)."/js/tabs.js" ?>"></script>
+<script type="text/javascript" src="<?php echo PLX_PLUGINS.$plxPlugin->plugName."/js/tabs.js" ?>"></script>

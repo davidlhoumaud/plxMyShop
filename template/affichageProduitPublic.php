@@ -3,7 +3,7 @@ $plxShow = plxShow::getInstance();
 $plxPlugin = $plxShow->plxMotor->plxPlugins->aPlugins['plxMyShop'];
 $plxPlugin->donneesModeles["plxPlugin"] = $plxPlugin;
 // e-mail de la commande
-$_SESSION[get_class($plxPlugin)]['msgCommand']="";
+$_SESSION[$plxPlugin->plugName]['msgCommand']="";
 $plxPlugin->validerCommande();
 if ("1" === $plxPlugin->aProds[$plxPlugin->productNumber()]['pcat']) {
  $plxPlugin->modele("espacePublic/categorie");

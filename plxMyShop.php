@@ -5,13 +5,13 @@
  * @author David L
  **/
 class plxMyShop extends plxPlugin {
-
+ public $plugName;
  public $aProds = array(); # Tableau de tous les produits
  public $donneesModeles = array();
  public $plxMotor;
  public $cheminImages;
  public $idProduit;
- public $shortcode = "boutonPanier";
+ public $shortcode = 'boutonPanier';
  public $shortcodeactif = false;
  public $shipOverload = false;
  # plxMyMultilingue
@@ -33,6 +33,7 @@ class plxMyShop extends plxPlugin {
 
   # appel du constructeur de la classe plxPlugin (obligatoire)
   parent::__construct($default_lang);
+  $this->plugName = $this->plug['name'];# or get_class($this);
   # Accès au menu admin réservé au profil administrateur et gestionnaire
   $this->setAdminProfil(PROFIL_ADMIN, PROFIL_MANAGER);
   # droits pour accèder à la page config.php du plugin
@@ -115,17 +116,17 @@ class plxMyShop extends plxPlugin {
   }
   $this->donneesModeles["tabChoixMethodespaiement"] = $tabChoixMethodespaiement;
   //Mise a jour des variables de sessions du panier
-  if (isset($_SESSION[$this->plug['name']]['prods'])){//si on a des produits dans la sessions
-   foreach ($_SESSION[$this->plug['name']]['prods'] as $pId => $nb) {//on boucle dessus
+  if (isset($_SESSION[$this->plugName]['prods'])){//si on a des produits dans la sessions
+   foreach ($_SESSION[$this->plugName]['prods'] as $pId => $nb) {//on boucle dessus
     if (!isset($this->aProds[$pId]) OR $this->aProds[$pId]['active']==0 OR $this->aProds[$pId]['noaddcart']==1){//Si Produit désactivé/supprimé/indisponible(noAddCartButton) entre temps
-     $_SESSION[$this->plug['name']]['ncart'] -= $nb;//on recalcule le nb de prod
-     unset($_SESSION[$this->plug['name']]['prods'][$pId]);//on efface sa variable de session
+     $_SESSION[$this->plugName]['ncart'] -= $nb;//on recalcule le nb de prod
+     unset($_SESSION[$this->plugName]['prods'][$pId]);//on efface sa variable de session
     }
    }
    //supprimer par mini panier
-   if(isset($_POST['remProd']) && !empty($_POST['idP']) && isset($_SESSION[$this->plug['name']]["prods"][$_POST['idP']])){
-    $_SESSION[$this->plug['name']]['ncart'] -= $_SESSION[$this->plug['name']]['prods'][$_POST['idP']];//on recalcule le nb de prod
-    unset($_SESSION[$this->plug['name']]["prods"][$_POST['idP']]);//on efface sa variable de session
+   if(isset($_POST['remProd']) && !empty($_POST['idP']) && isset($_SESSION[$this->plugName]["prods"][$_POST['idP']])){
+    $_SESSION[$this->plugName]['ncart'] -= $_SESSION[$this->plugName]['prods'][$_POST['idP']];//on recalcule le nb de prod
+    unset($_SESSION[$this->plugName]["prods"][$_POST['idP']]);//on efface sa variable de session
    }
   }
  }
@@ -137,7 +138,7 @@ class plxMyShop extends plxPlugin {
  public function plxShowPageTitle() {
   if($this->plxMotor->mode == 'product') {
    $affiche = "<?php 
-    \$aProd = \$this->plxMotor->plxPlugins->aPlugins['".$this->plug['name']."']->aProds[ '".$this->idProduit."' ];
+    \$aProd = \$this->plxMotor->plxPlugins->aPlugins['".$this->plugName."']->aProds[ '".$this->idProduit."' ];
     \$title_htmltag =  \$aProd['title_htmltag'];
     \$title = \$title_htmltag !='' ? \$title_htmltag : \$aProd['name'];
     \$subtitle = \$this->plxMotor->aConf['title'];
@@ -166,7 +167,7 @@ class plxMyShop extends plxPlugin {
  public function plxShowMeta() {
   if($this->plxMotor->mode == 'product') {
    $affiche = "<?php 
-    \$aProd = \$this->plxMotor->plxPlugins->aPlugins['".$this->plug['name']."']->aProds[ '".$this->idProduit."' ];
+    \$aProd = \$this->plxMotor->plxPlugins->aPlugins['".$this->plugName."']->aProds[ '".$this->idProduit."' ];
     if(!empty(\$aProd['meta_'.\$meta]))
      echo '<meta name=\"'.\$meta.'\" content=\"'.plxUtils::strCheck(\$aProd['meta_'.\$meta]).'\" />'.PHP_EOL;
     elseif(!empty(\$this->plxMotor->aConf['meta_'.\$meta]))
@@ -201,9 +202,9 @@ class plxMyShop extends plxPlugin {
  * @author	Stephane F
  **/
  public function AdminTopEndHead() {
-  if ((basename($_SERVER['SCRIPT_NAME'])=='plugin.php' || basename($_SERVER['SCRIPT_NAME'])=='parametres_plugin.php') && (isset($_GET['p']) && $_GET['p']==$this->plug['name'])) {
-   echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plug['name'].'/css/administration.css" />'."\n";
-   echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plug['name'].'/css/tabs.css" />'."\n";
+  if ((basename($_SERVER['SCRIPT_NAME'])=='plugin.php' || basename($_SERVER['SCRIPT_NAME'])=='parametres_plugin.php') && (isset($_GET['p']) && $_GET['p']==$this->plugName)) {
+   echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plugName.'/css/administration.css" />'."\n";
+   echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plugName.'/css/tabs.css" />'."\n";
    echo '<noscript><style>.hide{display:inherit !important;}</style></noscript>'."\n";
   }
  }
@@ -212,11 +213,11 @@ class plxMyShop extends plxPlugin {
   $class = $this->plxMotor->get=='boutique/panier'?'active':'noactive';
 ?>
   <h3<?php if ($class=="active") echo' class="red"'; ?>>
-   <span><img src="<?php echo PLX_PLUGINS.$this->plug['name']; ?>/icon.png" style="float:left;"></span>&nbsp;<?php $this->lang('L_PUBLIC_BASKET'); ?></h3>
+   <span><img src="<?php echo PLX_PLUGINS.$this->plugName; ?>/icon.png" style="float:left;"></span>&nbsp;<?php $this->lang('L_PUBLIC_BASKET'); ?></h3>
 <?php
-  if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['name']]["ncart"]>0 && !empty($_SESSION[$this->plug['name']]["prods"])){
+  if (isset($_SESSION[$this->plugName]["ncart"]) && $_SESSION[$this->plugName]["ncart"]>0 && !empty($_SESSION[$this->plugName]["prods"])){
    echo '<ul class="cat-list unstyled-list">'.PHP_EOL;
-   foreach($_SESSION[$this->plug['name']]["prods"] as $k => $v){
+   foreach($_SESSION[$this->plugName]["prods"] as $k => $v){
     echo '<li>
            <form method="POST" id="FormRemProd'.$k.'" class="formRemProd">
             <input type="hidden" name="idP" value="'.htmlspecialchars($k).'" />
@@ -232,17 +233,17 @@ class plxMyShop extends plxPlugin {
  }
 
  public function ThemeEndBody(){
-  echo '<?php if($plxMotor->mode == "product" || strstr($plxMotor->template,"boutique") || $plxMotor->plxPlugins->aPlugins["'.$this->plug['name'].'"]->shortcodeactif ){ ?>';
+  echo '<?php if($plxMotor->mode == "product" || strstr($plxMotor->template,"boutique") || $plxMotor->plxPlugins->aPlugins["'.$this->plugName.'"]->shortcodeactif ){ ?>';
 //javascript de bascule des boutons produits
 ?>
 <script type="text/javascript">function chngNbProd(e,t){var a=document.getElementById("addProd"+e),d=document.getElementById("nbProd"+e);"<?php echo $this->getLang('L_PUBLIC_ADD_BASKET'); ?>"!=a.value&&(d.value==d.getAttribute("data-o")||0==d.value?(t&&(d.value="0"),a.value="<?php echo $this->getLang('L_PUBLIC_DEL_BASKET'); ?>",a.setAttribute("class","red")):(a.value="<?php echo $this->getLang('L_PUBLIC_MOD_BASKET'); ?>",a.setAttribute("class","orange")))}</script>
 <?php
   echo '<?php } ?>'; // fi if mode product || strstr template boutique || shrotcode
-  if (isset($_SESSION[$this->plug['name']]["msgProdUpDate"]) && $_SESSION[$this->plug['name']]["msgProdUpDate"]){
-   unset($_SESSION[$this->plug['name']]["msgProdUpDate"]);
+  if (isset($_SESSION[$this->plugName]["msgProdUpDate"]) && $_SESSION[$this->plugName]["msgProdUpDate"]){
+   unset($_SESSION[$this->plugName]["msgProdUpDate"]);
 //Les messages de MAJ panier
 ?>
-<div id="msgUpDateCart"><?php ((isset($_SESSION[get_class($this)]['prods']) && $_SESSION[get_class($this)]['prods'])?$this->lang('L_PUBLIC_MSG_BASKET_UP'):$this->lang('L_PUBLIC_NOPRODUCT')); ?></div>
+<div id="msgUpDateCart"><?php ((isset($_SESSION[$this->plugName]['prods']) && $_SESSION[$this->plugName]['prods'])?$this->lang('L_PUBLIC_MSG_BASKET_UP'):$this->lang('L_PUBLIC_NOPRODUCT')); ?></div>
 <script type="text/javascript">
  var msgUpDateCart = document.getElementById("msgUpDateCart");
  msgUpDateCart.style.display = "block";
@@ -256,7 +257,7 @@ class plxMyShop extends plxPlugin {
 
   $string = '
   // MyShopCookie';
-  if(isset($_SESSION[$this->plug['name']]["prods"])){
+  if(isset($_SESSION[$this->plugName]["prods"])){
 
    // localhost pour test ou véritable domaine ?
    $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
@@ -265,21 +266,21 @@ class plxMyShop extends plxPlugin {
    $temps_du_cookie = 0;
 
    // Durée de vie du cookie = 2 mois si au moins un produit dans le panier
-   if (isset($_SESSION[$this->plug['name']]["ncart"]) && $_SESSION[$this->plug['name']]["ncart"]>0)
+   if (isset($_SESSION[$this->plugName]["ncart"]) && $_SESSION[$this->plugName]["ncart"]>0)
     $temps_du_cookie = time() + 3600 * 24 * 30 * 2;
 
    $string .= '
-   if(isset($_SESSION["'.$this->plug['name'].'"])){
+   if(isset($_SESSION["'.$this->plugName.'"])){
    $cookie_path = "/";
    $cookie_domain = "'.$domain.'";
    $cookie_secure = 0;
    $cookie_expire = '.$temps_du_cookie.';
-   $cookie_value["prods"]=preg_replace("/[^0-9]/","",$_SESSION["'.$this->plug['name'].'"]["prods"]);
-   $cookie_value["ncart"]=intval($_SESSION["'.$this->plug['name'].'"]["ncart"]);
+   $cookie_value["prods"]=preg_replace("/[^0-9]/","",$_SESSION["'.$this->plugName.'"]["prods"]);
+   $cookie_value["ncart"]=intval($_SESSION["'.$this->plugName.'"]["ncart"]);
    if (version_compare(PHP_VERSION, "5.2.0", ">="))
-    setcookie("'.$this->plug['name'].'", json_encode($cookie_value), $cookie_expire, $cookie_path, $cookie_domain, $cookie_secure, true);
+    setcookie("'.$this->plugName.'", json_encode($cookie_value), $cookie_expire, $cookie_path, $cookie_domain, $cookie_secure, true);
    else
-    setcookie("'.$this->plug['name'].'", serialize($cookie_value), $cookie_expire, $cookie_path."; HttpOnly", $cookie_domain, $cookie_secure);
+    setcookie("'.$this->plugName.'", serialize($cookie_value), $cookie_expire, $cookie_path."; HttpOnly", $cookie_domain, $cookie_secure);
    }';
   }
   echo "<?php ".$string." ?>";
@@ -287,13 +288,13 @@ class plxMyShop extends plxPlugin {
  public function Index(){//MyshopCookie
   $string = '
   // MyShopCookie
-  if(!empty($_COOKIE["'.$this->plug['name'].'"]) && !isset($_SESSION["IS_NOT_NEW"])) {
+  if(!empty($_COOKIE["'.$this->plugName.'"]) && !isset($_SESSION["IS_NOT_NEW"])) {
    if (version_compare(PHP_VERSION, "5.2.0", ">="))
-    $cookie_value = json_decode($_COOKIE["'.$this->plug['name'].'"],true);
+    $cookie_value = json_decode($_COOKIE["'.$this->plugName.'"],true);
    else
-    $cookie_value = unserialize($_COOKIE["'.$this->plug['name'].'"]);    
-   $_SESSION["'.$this->plug['name'].'"]["prods"] = preg_replace("/[^0-9]/","",$cookie_value["prods"]);
-   $_SESSION["'.$this->plug['name'].'"]["ncart"] = intval($cookie_value["ncart"]);
+    $cookie_value = unserialize($_COOKIE["'.$this->plugName.'"]);    
+   $_SESSION["'.$this->plugName.'"]["prods"] = preg_replace("/[^0-9]/","",$cookie_value["prods"]);
+   $_SESSION["'.$this->plugName.'"]["ncart"] = intval($cookie_value["ncart"]);
   }
   $_SESSION["IS_NOT_NEW"]=true;';
   echo "<?php ".$string." ?>";
@@ -471,10 +472,10 @@ if (error) {
  telCart.value="<?php echo (isset($_POST['tel'])?preg_replace('/\"/','\\\"',$_POST['tel']):''); ?>";
  msgCart.value="<?php echo (isset($_POST['msg'])?preg_replace('/\"/','\\\"',$_POST['msg']):''); ?>";
 
- idSuite.value="<?php echo (isset($_SESSION[get_class($this)]["ncart"])?$_SESSION[get_class($this)]["ncart"]:""); ?>";
- numCart.value="<?php echo (isset($_SESSION[get_class($this)]["ncart"])?$_SESSION[get_class($this)]["ncart"]:""); ?>";
- nprod=<?php echo (isset($_SESSION[get_class($this)]["ncart"])?(int)$_SESSION[get_class($this)]["ncart"]:0); ?>;
- realnprod=<?php echo (isset($_SESSION[get_class($this)]["ncart"])?(int)$_SESSION[get_class($this)]["ncart"]:0); ?>;
+ idSuite.value="<?php echo (isset($_SESSION[$this->plugName]["ncart"])?$_SESSION[$this->plugName]["ncart"]:""); ?>";
+ numCart.value="<?php echo (isset($_SESSION[$this->plugName]["ncart"])?$_SESSION[$this->plugName]["ncart"]:""); ?>";
+ nprod=<?php echo (isset($_SESSION[$this->plugName]["ncart"])?(int)$_SESSION[$this->plugName]["ncart"]:0); ?>;
+ realnprod=<?php echo (isset($_SESSION[$this->plugName]["ncart"])?(int)$_SESSION[$this->plugName]["ncart"]:0); ?>;
 
  totalcommand.value = "<?php echo '<?php echo $this->pos_devise($totalpricettc+$totalpoidgshipping); ?>'; ?>";//total
 }
@@ -534,7 +535,7 @@ if (error) {
   **/
  public function AdminTopBottom() {
   echo '<?php
-  if($plxAdmin->plxPlugins->aPlugins["'.$this->plug['name'].'"]->getParam("email")=="") {
+  if($plxAdmin->plxPlugins->aPlugins["'.$this->plugName.'"]->getParam("email")=="") {
    echo "<p class=\"warning\">Plugin MyShop<br />'.$this->getLang("L_ERR_EMAIL").'</p>";
    plxMsg::Display();
   }
@@ -544,7 +545,7 @@ if (error) {
    echo "<p class=\"warning\">Plugin MyShop<br />".sprintf("'.$this->getLang('L_LANG_UNAVAILABLE').'", $file)."</p>";
    plxMsg::Display();
   }
-  if(strstr($plxAdmin->get,"'.$this->plug['name'].'")) echo \'<noscript><p class="warning">Oups! No JS</p></noscript>\';
+  if(strstr($plxAdmin->get,"'.$this->plugName.'")) echo \'<noscript><p class="warning">Oups! No JS</p></noscript>\';
   ?>';
  }
 
@@ -552,7 +553,7 @@ if (error) {
   echo "<?php";
 ?>
   if(get_class($this)=='plxMotor'){//only 4 public page!
-   $plxPlugin = $this->plxPlugins->aPlugins['<?php echo get_class($this); ?>'];
+   $plxPlugin = $this->plxPlugins->aPlugins['<?php echo $this->plugName; ?>'];
    if(!empty($art['chapo']))
     $art['chapo'] = $plxPlugin->traitementPageStatique($art['chapo']);
    $art['content'] = $plxPlugin->traitementPageStatique($art['content']);
@@ -565,7 +566,7 @@ if (error) {
  public function plxShowStaticContent(){
   echo "<?php";
 ?>
-   $plxPlugin = $this->plxMotor->plxPlugins->aPlugins['<?php echo get_class($this); ?>'];
+   $plxPlugin = $this->plxMotor->plxPlugins->aPlugins['<?php echo $this->plugName; ?>'];
    $output = $plxPlugin->traitementPageStatique($output);
    unset($plxPlugin);
   ?>
@@ -597,7 +598,7 @@ if (error) {
      , array("basPage", "partout")
     )
    ){
-    $_SESSION[$this->plug['name']]['msgCommand']="";
+    $_SESSION[$this->plugName]['msgCommand']="";
     $this->validerCommande();
     $this->modele("espacePublic/panier");
    }
@@ -1337,7 +1338,7 @@ if (error) {
   $this->donneesModeles["pileModeles"][] = $modele;
   // fichier du modèle dans le thème
   $racineTheme = PLX_ROOT . $this->plxMotor->aConf["racine_themes"] . $this->plxMotor->style;
-  $fichier = "$racineTheme/modeles/".get_class($this)."/$modele.php";
+  $fichier = "$racineTheme/modeles/".$this->plugName."/$modele.php";
   // si le fichier du modèle est inexistant pas dans le thème
   if (!is_file($fichier)){
    $fichier = "modeles/$modele.php";// on choisit le fichier par défaut dans le répertoire de l'extension
@@ -1371,14 +1372,14 @@ if (error) {
   $totalpoidgshipping = 0;
   $productscart = array();
 
-  if( !isset($_SESSION[$this->plug['name']]['prods'])
-   || (0 === count($_SESSION[$this->plug['name']]['prods']))
+  if( !isset($_SESSION[$this->plugName]['prods'])
+   || (0 === count($_SESSION[$this->plugName]['prods']))
    || !isset($_POST["validerCommande"])
   ){
    return;
   }
 
-  foreach ($_SESSION[$this->plug['name']]['prods'] as $idP => $nb){
+  foreach ($_SESSION[$this->plugName]['prods'] as $idP => $nb){
    $productscart[$idP] = array(
     'name' => $this->aProds[$idP]['name'],
     'pricettc' => $this->aProds[$idP]['pricettc'] * $nb,
@@ -1500,8 +1501,8 @@ if (error) {
 
      if ($_POST['methodpayment'] === "paypal"){
       $plxPlugin = $this;
-      //require PLX_PLUGINS . get_class($this) . '/classes/paypal_api/SetExpressCheckout.php';
-      require PLX_PLUGINS . get_class($this) . '/classes/paypal_api/boutonPaypalSimple.php';
+      //require PLX_PLUGINS . $this->plugName . '/classes/paypal_api/SetExpressCheckout.php';
+      require PLX_PLUGINS . $this->plugName . '/classes/paypal_api/boutonPaypalSimple.php';
      }
 
      $nf=PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')).date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
@@ -1524,8 +1525,8 @@ $message
      fputs($monfichier, $commandeContent);
      fclose($monfichier);
      chmod($nf, 0644);
-     unset($_SESSION[$this->plug['name']]['prods']);
-     unset($_SESSION[$this->plug['name']]['ncart']);
+     unset($_SESSION[$this->plugName]['prods']);
+     unset($_SESSION[$this->plugName]['ncart']);
     }else{
      $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_EMAIL_ERROR1') ."</h5>";
     }
@@ -1564,8 +1565,8 @@ $message
    echo "<script type='text/javascript'>error=true;</script>";
   }
 
-  $_SESSION[$this->plug['name']]['msgCommand'] = $msgCommand;
-  $_SESSION[$this->plug['name']]['methodpayment'] = $_POST["methodpayment"];
+  $_SESSION[$this->plugName]['msgCommand'] = $msgCommand;
+  $_SESSION[$this->plugName]['methodpayment'] = $_POST["methodpayment"];
 
  } // FIN public function validerCommande(){
 
@@ -1661,19 +1662,19 @@ $message
   $listeOnglets = [
    "produits" => [
     "titre" => $this->getLang("L_MENU_PRODUCTS"),
-    "urlHtml" => "plugin.php?p=".get_class($this),
+    "urlHtml" => "plugin.php?p=".$this->plugName,
    ],
    "categories" => [
     "titre" => $this->getLang("L_MENU_CATS"),
-    "urlHtml" => "plugin.php?p=".get_class($this)."&amp;mod=cat",
+    "urlHtml" => "plugin.php?p=".$this->plugName."&amp;mod=cat",
    ],
    "commandes" => [
     "titre" => $this->getLang("L_MENU_ORDERS"),
-    "urlHtml" => "plugin.php?p=".get_class($this)."&amp;mod=cmd",
+    "urlHtml" => "plugin.php?p=".$this->plugName."&amp;mod=cmd",
    ],
    "configuration" => [
     "titre" => $this->getLang("L_MENU_CONFIG"),
-    "urlHtml" => "parametres_plugin.php?p=".get_class($this),
+    "urlHtml" => "parametres_plugin.php?p=".$this->plugName,
    ],
   ];
   foreach ($listeOnglets as $codeOnglet => $o){
@@ -1686,27 +1687,27 @@ $message
  public function traitementAjoutPanier(){
   if (!isset($_POST["ajouterProduit"])) return;
   if (!isset($_SESSION)) session_start();
-  if (!isset($_SESSION[$this->plug['name']]['prods'])) $_SESSION[$this->plug['name']]['prods']= array();
-  if (!isset($_SESSION[$this->plug['name']]['ncart'])) $_SESSION[$this->plug['name']]['ncart']= 0;
+  if (!isset($_SESSION[$this->plugName]['prods'])) $_SESSION[$this->plugName]['prods']= array();
+  if (!isset($_SESSION[$this->plugName]['ncart'])) $_SESSION[$this->plugName]['ncart']= 0;
   $nombre = $_POST["nb"];
-  $_SESSION[$this->plug['name']]['ncart'] += $nombre;
-  $_SESSION[$this->plug['name']]['prods'][$_POST['idP']] = $nombre;
-  $_SESSION[$this->plug['name']]["msgProdUpDate"] = TRUE;
+  $_SESSION[$this->plugName]['ncart'] += $nombre;
+  $_SESSION[$this->plugName]['prods'][$_POST['idP']] = $nombre;
+  $_SESSION[$this->plugName]["msgProdUpDate"] = TRUE;
   header("Location: {$_SERVER["REQUEST_URI"]}");
   exit();
  }
 
  public function traitementPanier(){
   if (!isset($_SESSION)) session_start();
-  if (!isset($_SESSION[$this->plug['name']]['prods'])) $_SESSION[$this->plug['name']]['prods'] = array();
-  if (!isset($_SESSION[$this->plug['name']]['ncart'])) $_SESSION[$this->plug['name']]['ncart'] = 0;
+  if (!isset($_SESSION[$this->plugName]['prods'])) $_SESSION[$this->plugName]['prods'] = array();
+  if (!isset($_SESSION[$this->plugName]['ncart'])) $_SESSION[$this->plugName]['ncart'] = 0;
   if (isset($_POST["retirerProduit"])){
    $cles = array_keys($_POST["retirerProduit"]);
    $idP = array_pop($cles);
-   if (isset($_SESSION[$this->plug['name']]['prods'][$idP])){
-    $_SESSION[$this->plug['name']]['ncart'] -= $_SESSION[$this->plug['name']]['prods'][$idP];
-    unset($_SESSION[$this->plug['name']]['prods'][$idP]);
-    $_SESSION[$this->plug['name']]["msgProdUpDate"] = TRUE;
+   if (isset($_SESSION[$this->plugName]['prods'][$idP])){
+    $_SESSION[$this->plugName]['ncart'] -= $_SESSION[$this->plugName]['prods'][$idP];
+    unset($_SESSION[$this->plugName]['prods'][$idP]);
+    $_SESSION[$this->plugName]["msgProdUpDate"] = TRUE;
    }
    header("Location: {$_SERVER["REQUEST_URI"]}");
    exit();
@@ -1715,15 +1716,15 @@ $message
    foreach ($_POST["nb"] as $idP => $nb){
     $nb = floor($nb);
     $nb = max(0, $nb);
-    if (isset($_SESSION[$this->plug['name']]['prods'][$idP])){
-     $_SESSION[$this->plug['name']]['ncart'] -= $_SESSION[$this->plug['name']]['prods'][$idP];
+    if (isset($_SESSION[$this->plugName]['prods'][$idP])){
+     $_SESSION[$this->plugName]['ncart'] -= $_SESSION[$this->plugName]['prods'][$idP];
      if (0 === $nb){
-      unset($_SESSION[$this->plug['name']]['prods'][$idP]);
+      unset($_SESSION[$this->plugName]['prods'][$idP]);
      } else {
-      $_SESSION[$this->plug['name']]['ncart'] += $nb;
-      $_SESSION[$this->plug['name']]['prods'][$idP] = $nb;
+      $_SESSION[$this->plugName]['ncart'] += $nb;
+      $_SESSION[$this->plugName]['prods'][$idP] = $nb;
      }
-     $_SESSION[$this->plug['name']]["msgProdUpDate"] = TRUE;
+     $_SESSION[$this->plugName]["msgProdUpDate"] = TRUE;
     }
    }
    header("Location: {$_SERVER["REQUEST_URI"]}");

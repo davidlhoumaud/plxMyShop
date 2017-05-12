@@ -95,7 +95,7 @@ if(!empty($_POST)){
  $plxPlugin->setParam('racine_products', (empty(trim($_POST['racine_products']))?'data/products/':trim($_POST['racine_products'])), 'string');
 
  $plxPlugin->saveParams();
- header('Location: parametres_plugin.php?p='.get_class($plxPlugin));
+ header('Location: parametres_plugin.php?p='.$plxPlugin->plugName);
  exit;
 }
 # initialisation des variables communes à chaque langue
@@ -177,10 +177,10 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 <h3 id="pmsTitle" class="in-action-bar page-title hide"><?php echo $plxPlugin->lang('L_MENU_CONFIG').' '.$plxPlugin->getInfo('title');?></h3>
 <script type="text/javascript">//surcharge du titre dans l'admin
  var title = document.getElementById('pmsTitle').innerHTML;
- document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = '<?php echo get_class($plxPlugin); ?> - '+title;
+ document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = '<?php echo $plxPlugin->plugName; ?> - '+title;
 </script>
 
-<form id="config_plxmyshop" action="parametres_plugin.php?p=<?php echo get_class($plxPlugin); ?>" method="post">
+<form id="config_plxmyshop" action="parametres_plugin.php?p=<?php echo $plxPlugin->plugName; ?>" method="post">
 <?php echo plxToken::getTokenPostMethod() ?>
  <fieldset class="config">
   <p class="in-action-bar plx<?php echo str_replace('.','-',@PLX_VERSION); echo $plxPlugin->aLangs?' multilingue':'';?>">
