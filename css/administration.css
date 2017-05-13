@@ -28,6 +28,17 @@
  max-width: 480px;
 }
 #blocksocoreco input[type="text"],#blocksocoreco  input[type="number"] {width: 100%;}
+
+
+#blockdelidate{ /* Configuration des frais de port */
+ text-align: center;
+ border: 1px solid #333;
+ padding-bottom: 0.2em;
+ margin-bottom: 1em;
+ max-width: 480px;
+}
+#blockdelidate input[type="text"],#blocksocoreco  input[type="number"] {width: 100%;}
+
 /*
 .return-link, .back {
  left: 72%;
