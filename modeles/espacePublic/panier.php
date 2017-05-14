@@ -116,8 +116,10 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
     <p class="twenty fl tal"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span>&nbsp;:<br />
     <input type="text" name="country" id="country" value="" required="required" /></p><br class="clear" />
 
+    <?php    if($plxPlugin->getParam("delivery_date")){ ?>
     <p class="forty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYDATE'); ?><span class='star'>*</span>&nbsp;:<br />
     <input type="text" name="deliverydate" id="datepicker" required="required" /></p><br class="clear" />
+    <?php } ?>
 
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsMilieu')) # Hook Plugins ?>
 
@@ -177,10 +179,11 @@ function includeCSSfile(href) {
     head_node.appendChild(link_tag);
 }
 includeCSSfile("<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/css/pikaday.css")
-   
+
+var mindays= <?php echo $plxPlugin->getParam("delivery_nb_days"); ?>;
 var today = new Date();
 var nextdelivery = new Date();
-nextdelivery.setDate(today.getDate()+2);
+nextdelivery.setDate(today.getDate() + mindays);
 
 var picker_date = new Pikaday(
     {

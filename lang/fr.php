@@ -132,6 +132,9 @@ $LANG = array(
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration des moyens de livraison et paiement',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Ajout de frais de port',
 'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Basé sur le prix total (ttc)">Basé sur le total du panier</b>',
+'L_CONFIG_DELIVERY_DATE'            => 'Affiche la selection de la date de livraison dans le panier', # /ppmt nouvelle option
+'L_CONFIG_DELIVERY_MINDAYS'         => 'Nombre minimum de jour avant la livraison', # /ppmt nouvelle option
+'L_CONFIG_NB_DAYS'                  => 'Nombre de jour', # /ppmt nouvelle option
 'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Les montants des frais de ports sont peut être a réévaluer ou a reconfigurer.</b>',
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',
 'L_CONFIG_FREE'                     => 'Gratuité',

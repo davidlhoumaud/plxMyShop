@@ -28,6 +28,7 @@ if(!empty($_POST)){
  $plxPlugin->setParam('shipping_nb_lines', isset($_POST['shipping_nb_lines'])?($_POST['shipping_nb_lines']>='99'?'99':$_POST['shipping_nb_lines']):'11', 'numeric');
  $plxPlugin->setParam('shipping_colissimo', isset($_POST['shipping_colissimo'])?'1':'0', 'numeric');
  $plxPlugin->setParam('delivery_date', isset($_POST['delivery_date'])?'1':'0', 'numeric');
+ $plxPlugin->setParam('delivery_nb_days', isset($_POST['delivery_nb_days'])?($_POST['delivery_nb_days']>='99'?'99':$_POST['delivery_nb_days']):'11', 'numeric');
  $plxPlugin->setParam('freeshipw', $_POST['freeshipw'], 'string');//free shipping weight
  $plxPlugin->setParam('freeshipp', $_POST['freeshipp'], 'string');//free shipping price
  $plxPlugin->setParam('acurecept', $_POST['acurecept'], 'string');
@@ -131,6 +132,7 @@ $var['shipping_by_price'] = $plxPlugin->getParam('shipping_by_price')=='' ? '0' 
 $var['shipping_nb_lines'] = $plxPlugin->getParam('shipping_nb_lines')=='' ? '11' : $plxPlugin->getParam('shipping_nb_lines');
 $var['shipping_colissimo'] = $plxPlugin->getParam('shipping_colissimo')=='' ? '' : $plxPlugin->getParam('shipping_colissimo');
 $var['delivery_date'] = $plxPlugin->getParam('delivery_date')=='' ? '' : $plxPlugin->getParam('delivery_date');
+$var['delivery_nb_days'] = $plxPlugin->getParam('delivery_nb_days')=='' ? '11' : $plxPlugin->getParam('delivery_nb_days');
 $var['freeshipw'] = $plxPlugin->getParam('freeshipw')=='' ? '' : $plxPlugin->getParam('freeshipw');
 $var['freeshipp'] = $plxPlugin->getParam('freeshipp')=='' ? '' : $plxPlugin->getParam('freeshipp');
 $var['acurecept'] = $plxPlugin->getParam('acurecept')=='' ? '' : $plxPlugin->getParam('acurecept');
@@ -254,11 +256,21 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 
     <div class="col sml-3">
     <label class="switch switch-left-right">
-     <input class="switch-input" id="id_delivery_date" name="delivery_date" type="checkbox"<?php echo ("0" === $var["delivery_date"]) ? "" : " checked=\"checked\"";?> />
+     <input class="switch-input" id="id_delivery_date" name="delivery_date" type="checkbox"<?php echo (("0" === $var["delivery_date"]) ? "" : " checked=\"checked\"").' onchange="if (this.checked) { document.getElementById(\'blockdelidate\').style.display=\'block\';}else{document.getElementById(\'blockdelidate\').style.display=\'none\';}"';?> />
      <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
      <span class="switch-handle"></span>
     </label>
     </div>
+
+  <fieldset id="blockdelidate" style="display:<?php echo ($var['delivery_date']==1?"block":"none"); ?>;">
+   <legend><?php $plxPlugin->lang('L_CONFIG_DELIVERY_MINDAYS') ?></legend>
+    <table class="full-width">
+     <tr>
+      <td colspan="3" class="text-right"><?php $plxPlugin->lang('L_CONFIG_NB_DAYS') ?>&nbsp;:</td>
+      <td colspan="2"><?php plxUtils::printInput('delivery_nb_days',$var['delivery_nb_days'],'number','2-2',false,'',' min="1" max="99"') ?></td>
+     </tr>
+    </table>
+  </fieldset>
 
    <div class="col sml-9 label-centered">
     <label for="id_shipping_colissimo"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_SHIPPING');?>&nbsp;:</label>

@@ -131,6 +131,9 @@ $LANG = array(
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration of delivery and payment methods',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Add Delivery fee',
 'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Based on the price of the order">Price Based</b>',
+'L_CONFIG_DELIVERY_DATE'            => 'Display a box to choose a delivery date', # /ppmt nouvelle option
+'L_CONFIG_DELIVERY_MINDAYS'         => 'Minimum of days before delivery', # /ppmt nouvelle option
+'L_CONFIG_NB_DAYS'                  => 'Number of days', # /ppmt nouvelle option
 'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Les montants des frais de ports sont peut être a réévaluer ou a reconfigurer.</b>',# atraduire
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',# atraduire
 'L_CONFIG_FREE'                     => 'Free',
