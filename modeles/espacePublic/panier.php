@@ -116,12 +116,43 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
     <p class="twenty fl tal"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span>&nbsp;:<br />
     <input type="text" name="country" id="country" value="" required="required" /></p><br class="clear" />
 
-    <?php    if($plxPlugin->getParam("delivery_date")){ ?>
-    <p class="forty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYDATE'); ?><span class='star'>*</span>&nbsp;:<br />
-    <input type="text" name="deliverydate" id="datepicker" required="required" /></p><br class="clear" />
-    <?php } ?>
 
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsMilieu')) # Hook Plugins ?>
+
+    <?php    if($plxPlugin->getParam("delivery_date")){ ?>
+    <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYDATE'); ?><span class='star'>*</span>&nbsp;:<br />
+    <input type="text" name="deliverydate" id="datepicker" required="required" /></p>
+    <?php } ?>
+
+<?php
+
+#Creation of the time intervals based on the configuration
+$firstTime = strtotime($this->getParam("delivery_start_time"));
+$lastTime = strtotime($this->getParam("delivery_end_time"));
+$interval = $this->getParam("delivery_nb_timeslot")." hours";
+$time=$firstTime;
+#$intervals['']="Choose a timeslot for delivery";
+$intervals['']="";
+while ($time < $lastTime) {
+        $from = date('H:i', $time) . " - ";
+        #$time = strtotime('+1 hours', $time);
+        $time = strtotime($interval, $time);
+        if ($time > $lastTime) {
+            $to = date('H:i', $lastTime) . "<br>"; }
+        else {
+            $to =  date('H:i', $time) . "<br>";}
+        $intervals[$from.$to]=$from.$to;
+}
+?>
+
+<p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYTIME'); ?><span class='star'>*</span>&nbsp;:<br />
+<select name="delivery_interval" id="delivery_interval" required="required">
+    <?php foreach ($intervals as $interval) { ?>
+    <option value="<?php echo $interval; ?>"><?php echo $interval; ?></option>
+    <?php } ?>
+</select>
+<?php #plxUtils::printSelect('delivery_interval',$intervals, 2) ?>
+</p> <br class="clear" /><br class="clear" />
 
     <p>
      <label for="choixCadeau">

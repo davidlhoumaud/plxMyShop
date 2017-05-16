@@ -21,6 +21,35 @@ $tabPosDevise = array(
  "before" => $plxPlugin->getlang('L_BEFORE') ,
 );
 
+$timeselection = array(
+    "00:00" => "00:00",
+    "01:00" => "01:00",
+    "02:00" => "02:00",
+    "03:00" => "03:00",
+    "04:00" => "04:00",
+    "05:00" => "05:00",
+    "06:00" => "06:00",
+    "07:00" => "07:00",
+    "08:00" => "08:00",
+    "09:00" => "09:00",
+    "10:00" => "10:00",
+    "11:00" => "11:00",
+    "12:00" => "12:00",
+    "13:00" => "13:00",
+    "14:00" => "14:00",
+    "15:00" => "15:00",
+    "16:00" => "16:00",
+    "17:00" => "17:00",
+    "18:00" => "18:00",
+    "19:00" => "19:00",
+    "20:00" => "20:00",
+    "21:00" => "21:00",
+    "22:00" => "22:00",
+    "23:00" => "23:00",
+    "24:00" => "24:00",
+);
+
+
 $var = array();
 if(!empty($_POST)){
  //socolissimo reco
@@ -29,6 +58,9 @@ if(!empty($_POST)){
  $plxPlugin->setParam('shipping_colissimo', isset($_POST['shipping_colissimo'])?'1':'0', 'numeric');
  $plxPlugin->setParam('delivery_date', isset($_POST['delivery_date'])?'1':'0', 'numeric');
  $plxPlugin->setParam('delivery_nb_days', isset($_POST['delivery_nb_days'])?($_POST['delivery_nb_days']>='99'?'99':$_POST['delivery_nb_days']):'11', 'numeric');
+ $plxPlugin->setParam('delivery_start_time', $_POST['delivery_start_time'], 'string');
+ $plxPlugin->setParam('delivery_end_time', $_POST['delivery_end_time'], 'string');
+ $plxPlugin->setParam('delivery_nb_timeslot', isset($_POST['delivery_nb_timeslot'])?($_POST['delivery_nb_timeslot']>='24'?'24':$_POST['delivery_nb_timeslot']):'2', 'numeric');
  $plxPlugin->setParam('freeshipw', $_POST['freeshipw'], 'string');//free shipping weight
  $plxPlugin->setParam('freeshipp', $_POST['freeshipp'], 'string');//free shipping price
  $plxPlugin->setParam('acurecept', $_POST['acurecept'], 'string');
@@ -133,6 +165,9 @@ $var['shipping_nb_lines'] = $plxPlugin->getParam('shipping_nb_lines')=='' ? '11'
 $var['shipping_colissimo'] = $plxPlugin->getParam('shipping_colissimo')=='' ? '' : $plxPlugin->getParam('shipping_colissimo');
 $var['delivery_date'] = $plxPlugin->getParam('delivery_date')=='' ? '' : $plxPlugin->getParam('delivery_date');
 $var['delivery_nb_days'] = $plxPlugin->getParam('delivery_nb_days')=='' ? '11' : $plxPlugin->getParam('delivery_nb_days');
+$var["delivery_start_time"] = ("" === $plxPlugin->getParam("delivery_start_time")) ? current(array_keys($timeselection)) : $plxPlugin->getParam("delivery_start_time");
+$var["delivery_end_time"] = ("" === $plxPlugin->getParam("delivery_end_time")) ? current(array_keys($timeselection)) : $plxPlugin->getParam("delivery_end_time");
+$var['delivery_nb_timeslot'] = $plxPlugin->getParam('delivery_nb_timeslot')=='' ? '2' : $plxPlugin->getParam('delivery_nb_timeslot');
 $var['freeshipw'] = $plxPlugin->getParam('freeshipw')=='' ? '' : $plxPlugin->getParam('freeshipw');
 $var['freeshipp'] = $plxPlugin->getParam('freeshipp')=='' ? '' : $plxPlugin->getParam('freeshipp');
 $var['acurecept'] = $plxPlugin->getParam('acurecept')=='' ? '' : $plxPlugin->getParam('acurecept');
@@ -268,6 +303,18 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
      <tr>
       <td colspan="3" class="text-right"><?php $plxPlugin->lang('L_CONFIG_NB_DAYS') ?>&nbsp;:</td>
       <td colspan="2"><?php plxUtils::printInput('delivery_nb_days',$var['delivery_nb_days'],'number','2-2',false,'',' min="1" max="99"') ?></td>
+     </tr>
+     <tr>
+      <td colspan="3" class="text-right"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_STARTTIME') ?>&nbsp;:</td>
+      <td colspan="2"><?php plxUtils::printSelect('delivery_start_time',$timeselection, $var["delivery_start_time"]) ?></td>
+     </tr>
+     <tr>
+      <td colspan="3" class="text-right"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_ENDTIME') ?>&nbsp;:</td>
+      <td colspan="2"><?php plxUtils::printSelect('delivery_end_time',$timeselection, $var["delivery_end_time"]) ?></td>
+     </tr>
+     <tr>
+      <td colspan="3" class="text-right"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_TIMESLOT') ?>&nbsp;:</td>
+      <td colspan="2"><?php plxUtils::printInput('delivery_nb_timeslot',$var['delivery_nb_timeslot'],'number','2-2',false,'',' min="1" max="24"') ?></td>
      </tr>
     </table>
   </fieldset>

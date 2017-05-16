@@ -337,6 +337,7 @@ class plxMyShop extends plxPlugin {
     city:document.getElementById("city").value,
     country:document.getElementById("country").value,
     deliverydate:document.getElementById("deliverydate").value,
+    delivery_interval:document.getElementById("delivery_interval").value,
 
     };
     localStorage.setItem("Shop_Deliver_Adress", JSON.stringify(temp));
@@ -1422,8 +1423,11 @@ if (error) {
   $messCommon .= "<br/><br/>";
   $messCommon .= $this->getlang('L_EMAIL_COMMENT')." : ";
   $messCommon .= "<br/>";
+  $messCommon .= "<br/>";
   $messCommon .= $this->getlang('L_EMAIL_DELIVERYDATE');
   $messCommon .= plxUtils::cdataCheck($_POST['deliverydate'])."<br/>";
+  $messCommon .= $this->getlang('L_EMAIL_DELIVERYTIME');
+  $messCommon .= plxUtils::cdataCheck($_POST['delivery_interval'])."<br/>";
 
   $messCommon .= $_POST['msg'];
 
