@@ -299,6 +299,7 @@ $LANG = array(
 'L_UNIT_PRICE'                      => 'Prix unitaire',
 'L_NUMBER'                          => 'Nombre',
 'L_TOTAL_PRICE'                     => 'Prix total',
-'L_PUBLIC_DELIVERYDATE'             => 'Selectionnez votre date de livraison'  # /ppmt nouvelle option
-
+'L_PUBLIC_DELIVERYDATE'             => 'Selectionnez votre date de livraison',  # /ppmt nouvelle option
+'L_PUBLIC_DELIVERYTIME'             => 'Sélectionnez votre créneau de livraison',  # /ppmt nouvelle option
+'L_CHOICE_DELIVERYTIME'             => 'Choisissez une plage horaire'  # /ppmt nouvelle option
 );
