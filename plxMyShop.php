@@ -367,10 +367,11 @@ class plxMyShop extends plxPlugin {
     document.getElementById("country").value = "";
    }
    function detail(event){
-    if (event.target.type == "text" || event.target.type == "email"){
-     document.getElementById("bouton_effacer").style.display = "none";
-     document.getElementById("bouton_sauvegarder").style.display = "";
-    }
+    if (event.target.id != 'datepicker' && event.target.id != 'nomCadeau')//not #datepicker & #nomCadeau
+     if (event.target.type == "text" || event.target.type == "email"){
+      document.getElementById("bouton_effacer").style.display = "none";
+      document.getElementById("bouton_sauvegarder").style.display = "";
+     }
    }
    var gm = JSON.parse(localStorage.getItem("Shop_Deliver_Adress"));
    if (gm != null){
