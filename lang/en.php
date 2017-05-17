@@ -131,7 +131,7 @@ $LANG = array(
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration of delivery and payment methods',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Add Delivery fee',
 'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Based on the price of the order">Price Based</b>',
-'L_CONFIG_DELIVERY_DATE'            => 'Display a box to choose a delivery date', # /ppmt nouvelle option
+'L_CONFIG_DELIVERY_DATE'            => 'Activate selection of Delivery date and time', # /ppmt nouvelle option
 'L_CONFIG_DELIVERY_MINDAYS'         => 'Delivery day and timeslot', # /ppmt nouvelle option
 'L_CONFIG_NB_DAYS'                  => 'Number of days', # /ppmt nouvelle option
 'L_CONFIG_DELIVERY_STARTTIME'       => 'First delivery hour', # /ppmt nouvelle option

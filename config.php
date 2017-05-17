@@ -482,8 +482,6 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
    </div>
   </fieldset>
 
-  <h2>Activate selection of Delivery date and time</h2>
-
 
   <h2><?php $plxPlugin->lang('L_CONFIG_EMAIL_ORDER_TITLE') ?></h2>
   <div class="grid">
