@@ -122,7 +122,6 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
     <?php    if($plxPlugin->getParam("delivery_date")){ ?>
     <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYDATE'); ?><span class='star'>*</span>&nbsp;:<br />
     <input type="text" name="deliverydate" id="datepicker" required="required" /></p>
-    <?php } ?>
 
 <?php
 
@@ -153,6 +152,8 @@ while ($time < $lastTime) {
 </select>
 <?php #plxUtils::printSelect('delivery_interval',$intervals, 2) ?>
 </p> <br class="clear" /><br class="clear" />
+
+    <?php } ?>
 
     <p>
      <label for="choixCadeau">
