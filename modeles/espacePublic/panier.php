@@ -226,7 +226,6 @@ var picker_date = new Pikaday(
         yearRange: [2017,2020],
         onSelect: function() {
             var date = document.createTextNode(this.getMoment() + ' ');
-            document.getElementById('selected').appendChild(date);
         }
     }
 );
