@@ -168,7 +168,8 @@ while ($time < $lastTime) {
      <label for="nomCadeau"><?php $plxPlugin->lang('L_PUBLIC_GIFTNAME'); ?>&nbsp;:</label>
       <input type="text" name="nomCadeau" id="nomCadeau" value="<?php echo (!isset($_POST["nomCadeau"])) ? '' : htmlspecialchars($_POST['nomCadeau']);?>" />
     </p>
-    <p><?php $plxPlugin->lang('L_PUBLIC_COMMENT'); ?></p><textarea name="msg" id="msgCart" rows="3"></textarea>
+    <p class="ninety fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_COMMENT'); ?><br />
+    <textarea name="msg" id="msgCart" rows="3"></textarea></p><br class="clear" />
     <textarea name="prods" id="prodsCart" rows="3"></textarea>
     <input type="hidden" name="total" id="totalcommand" value="0" />
     <input type="hidden" name="shipping" id="shipping" value="0" />
