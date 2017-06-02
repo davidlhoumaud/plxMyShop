@@ -84,6 +84,7 @@ if(!empty($_POST)){
  $plxPlugin->setParam('payment_paypal_test_pwd', $_POST['payment_paypal_test_pwd'], 'string');
  $plxPlugin->setParam('payment_paypal_test_signature', $_POST['payment_paypal_test_signature'], 'string');
  //prod
+ $plxPlugin->setParam('payment_paypal_amount', $_POST['payment_paypal_amount'], 'string');
  $plxPlugin->setParam('payment_paypal_user', $_POST['payment_paypal_user'], 'string');
  $plxPlugin->setParam('payment_paypal_pwd', $_POST['payment_paypal_pwd'], 'string');
  $plxPlugin->setParam('payment_paypal_signature', $_POST['payment_paypal_signature'], 'string');
@@ -147,6 +148,7 @@ $var['payment_paypal_test_user'] = $plxPlugin->getParam('payment_paypal_test_use
 $var['payment_paypal_test_pwd'] = $plxPlugin->getParam('payment_paypal_test_pwd')=='' ? '' : $plxPlugin->getParam('payment_paypal_test_pwd');
 $var['payment_paypal_test_signature'] = $plxPlugin->getParam('payment_paypal_test_signature')=='' ? '' : $plxPlugin->getParam('payment_paypal_test_signature');
  //prod
+$var['payment_paypal_amount'] = $plxPlugin->getParam('payment_paypal_amount')=='' ? '' : $plxPlugin->getParam('payment_paypal_amount');
 $var['payment_paypal_user'] = $plxPlugin->getParam('payment_paypal_user')=='' ? '' : $plxPlugin->getParam('payment_paypal_user');
 $var['payment_paypal_pwd'] = $plxPlugin->getParam('payment_paypal_pwd')=='' ? '' : $plxPlugin->getParam('payment_paypal_pwd');
 $var['payment_paypal_signature'] = $plxPlugin->getParam('payment_paypal_signature')=='' ? '' : $plxPlugin->getParam('payment_paypal_signature');
@@ -448,6 +450,15 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
    <input type="hidden" name="payment_paypal_payflowcolor" value="<?php echo $var["payment_paypal_payflowcolor"];?>"/>
    <input type="hidden" name="payment_paypal_cartbordercolor" value="<?php echo $var["payment_paypal_cartbordercolor"];?>"/>
 
+
+   <div class="grid">
+    <div class="col sml-12 med-5 label-centered">
+     <label for="payment_paypal_amount"><?php $plxPlugin->lang('L_CONFIG_AMOUNT_PAYPAL') ?>&nbsp;:</label>
+    </div>
+    <div class="col sml-12 med-7">
+     <input name='payment_paypal_amount' value="<?php echo $var['payment_paypal_amount'];?>" type='text' >
+    </div>
+   </div>
    <div class="grid">
     <div class="col sml-12 med-5 label-centered">
      <label for="payment_paypal_user"><?php $plxPlugin->lang('L_CONFIG_EMAIL_PAYPAL') ?>&nbsp;:</label>
