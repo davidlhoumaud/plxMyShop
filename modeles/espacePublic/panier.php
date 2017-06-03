@@ -5,6 +5,9 @@ version :
 */
 $plxPlugin = $d["plxPlugin"];
 $plxPlugin->traitementPanier();
+
+$paypal_amount= $plxPlugin->getParam('payment_paypal_amount');
+
 $afficheMessage = FALSE;
 if ( isset($_SESSION[$plxPlugin->plugName]['msgCommand'])
  && !empty($_SESSION[$plxPlugin->plugName]['msgCommand'])
@@ -180,7 +183,11 @@ while ($time < $lastTime) {
     <select name="methodpayment" id="methodpayment">
 <?php
       $methodpayment = !isset($_SESSION[$plxPlugin->plugName]["methodpayment"]) ? "" : $_SESSION[$plxPlugin->plugName]["methodpayment"];
-      foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) {?>
+      #if amount of order is below paypal amount then remove from payment options
+	  if ($totalpricettc <= $paypal_amount) {
+		  	unset($d["tabChoixMethodespaiement"][paypal]);
+		 }
+      foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) { ?>
       <option value="<?php echo htmlspecialchars($codeM);?>"<?php
        echo ($codeM !== $methodpayment) ? "" : ' selected="selected"';
       ?>><?php echo htmlspecialchars($m["libelle"]);?></option>
