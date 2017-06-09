@@ -5,6 +5,9 @@ version :
 */
 $plxPlugin = $d["plxPlugin"];
 $plxPlugin->traitementPanier();
+
+$paypal_amount= $plxPlugin->getParam('payment_paypal_amount');
+
 $afficheMessage = FALSE;
 if ( isset($_SESSION[$plxPlugin->plugName]['msgCommand'])
  && !empty($_SESSION[$plxPlugin->plugName]['msgCommand'])
@@ -121,8 +124,8 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
 
     <?php    if($plxPlugin->getParam("delivery_date")){ ?>
     <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYDATE'); ?><span class='star'>*</span>&nbsp;:<br />
-    <input type="text" name="deliverydate" id="datepicker" required="required" /></p>
-    <?php } ?>
+    <!-- <input type="text" name="deliverydate" id="datepicker" required="required" /></p> -->
+    <?php plxUtils::printInput('deliverydate',$var['deliverydate'], 'text','',false,'classOrNot" required="required') ?></p>
 
 <?php
 
@@ -131,7 +134,6 @@ $firstTime = strtotime($this->getParam("delivery_start_time"));
 $lastTime = strtotime($this->getParam("delivery_end_time"));
 $interval = $this->getParam("delivery_nb_timeslot")." hours";
 $time=$firstTime;
-#$intervals['']="Choose a timeslot for delivery";
 $intervals['']="";
 while ($time < $lastTime) {
         $from = date('H:i', $time) . " - ";
@@ -146,13 +148,17 @@ while ($time < $lastTime) {
 ?>
 
 <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYTIME'); ?><span class='star'>*</span>&nbsp;:<br />
+<!-- 
 <select name="delivery_interval" id="delivery_interval" required="required">
     <?php foreach ($intervals as $interval) { ?>
     <option value="<?php echo $interval; ?>"><?php echo $interval; ?></option>
     <?php } ?>
 </select>
-<?php #plxUtils::printSelect('delivery_interval',$intervals, 2) ?>
+-->
+<?php plxUtils::printSelect('delivery_interval',$intervals, 2,false,'classOrNot" required="required') ?>
 </p> <br class="clear" /><br class="clear" />
+
+    <?php } ?>
 
     <p>
      <label for="choixCadeau">
@@ -165,7 +171,8 @@ while ($time < $lastTime) {
      <label for="nomCadeau"><?php $plxPlugin->lang('L_PUBLIC_GIFTNAME'); ?>&nbsp;:</label>
       <input type="text" name="nomCadeau" id="nomCadeau" value="<?php echo (!isset($_POST["nomCadeau"])) ? '' : htmlspecialchars($_POST['nomCadeau']);?>" />
     </p>
-    <p><?php $plxPlugin->lang('L_PUBLIC_COMMENT'); ?></p><textarea name="msg" id="msgCart" rows="3"></textarea>
+    <p class="ninety fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_COMMENT'); ?><br />
+    <textarea name="msg" id="msgCart" rows="3"></textarea></p><br class="clear" />
     <textarea name="prods" id="prodsCart" rows="3"></textarea>
     <input type="hidden" name="total" id="totalcommand" value="0" />
     <input type="hidden" name="shipping" id="shipping" value="0" />
@@ -176,7 +183,11 @@ while ($time < $lastTime) {
     <select name="methodpayment" id="methodpayment">
 <?php
       $methodpayment = !isset($_SESSION[$plxPlugin->plugName]["methodpayment"]) ? "" : $_SESSION[$plxPlugin->plugName]["methodpayment"];
-      foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) {?>
+      #if amount of order is below paypal amount then remove from payment options
+	  if ($totalpricettc <= $paypal_amount) {
+		  	unset($d["tabChoixMethodespaiement"][paypal]);
+		 }
+      foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) { ?>
       <option value="<?php echo htmlspecialchars($codeM);?>"<?php
        echo ($codeM !== $methodpayment) ? "" : ' selected="selected"';
       ?>><?php echo htmlspecialchars($m["libelle"]);?></option>
@@ -218,7 +229,7 @@ nextdelivery.setDate(today.getDate() + mindays);
 <?php echo $def_lng!='en' ? "moment.locale('".$def_lng."');" : ''; ?>
 var picker_date = new Pikaday(
     {
-        field: document.getElementById('datepicker'),
+        field: document.getElementById('id_deliverydate'),
         format: '<?php $plxPlugin->lang("L_FORMAT_PIKADAY"); ?>',
 <?php if($def_lng!='en')$plxPlugin->lang("L_I18N_PIKADAY"); ?>
         firstDay: 1,
