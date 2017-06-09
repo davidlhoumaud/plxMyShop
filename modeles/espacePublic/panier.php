@@ -196,10 +196,10 @@ while ($time < $lastTime) {
   </section>
  </div>
 </div>
+<?php $def_lng = $plxPlugin->plxMotor->aConf['default_lang']; ?>
 <script type='text/javascript' src='<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS.$plxPlugin->plugName;?>/js/panier.js?v0131'></script>
-<script type='text/javascript' src='<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/moment.min.js'></script>
+<script type='text/javascript' src='<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/moment-<?php echo $def_lng!='en' ? 'with-locales' : ''; ?>.min.js'></script>
 <script type='text/javascript' src='<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/pikaday.js'></script>
-
 <script type='text/javascript'>
 function includeCSSfile(href) {
     var head_node = document.getElementsByTagName('head')[0];
@@ -215,15 +215,16 @@ var mindays= <?php echo $plxPlugin->getParam("delivery_nb_days"); ?>;
 var today = new Date();
 var nextdelivery = new Date();
 nextdelivery.setDate(today.getDate() + mindays);
-
+<?php echo $def_lng!='en' ? "moment.locale('".$def_lng."');" : ''; ?>
 var picker_date = new Pikaday(
     {
         field: document.getElementById('datepicker'),
-        format: 'dddd Do MMMM YYYY',
+        format: '<?php $plxPlugin->lang("L_FORMAT_PIKADAY"); ?>',
+<?php if($def_lng!='en')$plxPlugin->lang("L_I18N_PIKADAY"); ?>
         firstDay: 1,
         minDate: nextdelivery,
-        maxDate: new Date(2020, 12, 31),
-        yearRange: [2017,2020],
+        maxDate: new Date(<?php echo (date('Y')+3) ?>, 12, 31),
+        yearRange: [<?php echo date('Y') ?>,<?php echo (date('Y')+3) ?>],
         onSelect: function() {
             var date = document.createTextNode(this.getMoment() + ' ');
         }

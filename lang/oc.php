@@ -285,5 +285,18 @@ $LANG = array(
 'L_PRODUCT'                         => 'Produit',
 'L_UNIT_PRICE'                      => 'Prètz unitar',
 'L_NUMBER'                          => 'Nombre',
-'L_TOTAL_PRICE'                     => 'Prètz total'
+'L_TOTAL_PRICE'                     => 'Prètz total',
+'L_PUBLIC_DELIVERYDATE'             => 'Selectionnez votre date de livraison',  # a traduire /ppmt nouvelle option
+'L_PUBLIC_DELIVERYTIME'             => 'Sélectionnez votre créneau de livraison',  # a traduire /ppmt nouvelle option
+'L_CHOICE_DELIVERYTIME'             => 'Choisissez une plage horaire',  # a traduire /ppmt nouvelle option
+'L_FORMAT_PIKADAY'                  => 'dddd Do MMMM YYYY',
+'L_I18N_PIKADAY'                    => "
+        i18n: {
+            previousMonth : 'Mois précédent',
+            nextMonth     : 'Mois suivant',
+            months        : ['Janvier','Février','Mars','Avri','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+            weekdays      : ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+            weekdaysShort : ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
+        },
+"
 );

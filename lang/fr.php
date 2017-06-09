@@ -301,5 +301,15 @@ $LANG = array(
 'L_TOTAL_PRICE'                     => 'Prix total',
 'L_PUBLIC_DELIVERYDATE'             => 'Selectionnez votre date de livraison',  # /ppmt nouvelle option
 'L_PUBLIC_DELIVERYTIME'             => 'Sélectionnez votre créneau de livraison',  # /ppmt nouvelle option
-'L_CHOICE_DELIVERYTIME'             => 'Choisissez une plage horaire'  # /ppmt nouvelle option
+'L_CHOICE_DELIVERYTIME'             => 'Choisissez une plage horaire',  # /ppmt nouvelle option
+'L_FORMAT_PIKADAY'                  => 'dddd Do MMMM YYYY',
+'L_I18N_PIKADAY'                    => "
+        i18n: {
+            previousMonth : 'Mois précédent',
+            nextMonth     : 'Mois suivant',
+            months        : ['Janvier','Février','Mars','Avri','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+            weekdays      : ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+            weekdaysShort : ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
+        },
+"
 );

@@ -298,6 +298,7 @@ $LANG = array(
 'L_TOTAL_PRICE'                     => 'Total price',
 'L_PUBLIC_DELIVERYDATE'             => 'Select your delivery date',  # /ppmt nouvelle option
 'L_PUBLIC_DELIVERYTIME'             => 'Select your delivery timeslot',  # /ppmt nouvelle option
-'L_CHOICE_DELIVERYTIME'             => 'Choose one timeslot'  # /ppmt nouvelle option
-
+'L_CHOICE_DELIVERYTIME'             => 'Choose one timeslot',  # /ppmt nouvelle option
+'L_FORMAT_PIKADAY'                  => 'dddd Do MMMM YYYY',
+'L_I18N_PIKADAY'                    => ''# unused pikaday it's in english
 );
