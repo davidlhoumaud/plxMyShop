@@ -272,7 +272,7 @@ $LANG = array(
 'L_CONFIG_LIBELLE_CGV'              => "Libellé de la demande de validation des C.G.V. (l'URL doit être indiqué pour être utilisé)",
 'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Utiliser les phrases par defaut des C.G.V. du plugin",#a traduire
 'L_CONFIG_URL_CGV'                  => "URL des C.G.V.",#a traduire
-
+'L_CONFIG_AMOUNT_PAYPAL'            => "Montant minimum pour l'activer",#a traduire
 #boutonPanier.php
 'L_NOTICE_NOADDCART'                => 'En rupture de stock',#a traduire
 

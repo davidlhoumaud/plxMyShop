@@ -282,7 +282,7 @@ $LANG = array(
 'L_CONFIG_LIBELLE_CGV'              => 'Wording of the General Sales T&amp;C . (The URL )',
 'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Use plugin default phrases for the T&amp;C.",
 'L_CONFIG_URL_CGV'                  => 'URL for the T&amp;C.',
-
+'L_CONFIG_AMOUNT_PAYPAL'            => "Minimum amount to activate",#a traduire
 #boutonPanier.php
 'L_NOTICE_NOADDCART'                => 'En rupture de stock',#a traduire
 
