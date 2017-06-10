@@ -118,30 +118,30 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
 
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsMilieu')) # Hook Plugins ?>
 
-    <?php    if($plxPlugin->getParam("delivery_date")){ ?>
+<?php if($plxPlugin->getParam("delivery_date")){ ?>
     <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYDATE'); ?><span class='star'>*</span>&nbsp;:<br />
     <?php plxUtils::printInput('deliverydate',@$_POST['deliverydate'], 'text','',false,'" required="required" autocomplete="off') ?></p>
 <?php
-#Creation of the time intervals based on the configuration
-$firstTime = strtotime($this->getParam("delivery_start_time"));
-$lastTime = strtotime($this->getParam("delivery_end_time"));
-$interval = $this->getParam("delivery_nb_timeslot")." hours";
-$time=$firstTime;
-$intervals['']="";
-while ($time < $lastTime) {
- $from = date('H:i', $time) . " - ";
- $time = strtotime($interval, $time);
- if ($time > $lastTime)
-  $to = date('H:i', $lastTime);
- else
-  $to = date('H:i', $time);
- $intervals[$from.$to]=$from.$to;
-}
+ #Creation of the time intervals based on the configuration
+ $firstTime = strtotime($this->getParam("delivery_start_time"));
+ $lastTime = strtotime($this->getParam("delivery_end_time"));
+ $interval = $this->getParam("delivery_nb_timeslot")." hours";
+ $time=$firstTime;
+ $intervals['']="";
+ while ($time < $lastTime) {
+  $from = date('H:i', $time) . " - ";
+  $time = strtotime($interval, $time);
+  if ($time > $lastTime)
+   $to = date('H:i', $lastTime);
+  else
+   $to = date('H:i', $time);
+  $intervals[$from.$to]=$from.$to;
+ }
 ?>
-<p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYTIME'); ?><span class='star'>*</span>&nbsp;:<br />
-<?php plxUtils::printSelect('delivery_interval',$intervals,@$_POST['delivery_interval'],false,'" required="required') ?>
-</p> <br class="clear" /><br class="clear" />
-    <?php } ?>
+    <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYTIME'); ?><span class='star'>*</span>&nbsp;:<br />
+    <?php plxUtils::printSelect('delivery_interval',$intervals,@$_POST['delivery_interval'],false,'" required="required') ?>
+    </p><br class="clear" /><br class="clear" />
+<?php }//fi delivery_date ?>
     <p>
      <label for="choixCadeau">
       <input type="checkbox" id="choixCadeau" name="choixCadeau"<?php echo (!isset($_POST["choixCadeau"])) ? '' : ' checked="checked"';?> />
@@ -188,40 +188,6 @@ while ($time < $lastTime) {
   </section>
  </div>
 </div>
-<?php $def_lng = $plxPlugin->plxMotor->aConf['default_lang']; ?>
 <script type='text/javascript' src='<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS.$plxPlugin->plugName;?>/js/panier.js?v0131'></script>
-<script type='text/javascript' src='<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/moment-<?php echo $def_lng!='en' ? 'with-locales' : ''; ?>.min.js'></script>
-<script type='text/javascript' src='<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/pikaday.js'></script>
-<script type='text/javascript'>
-function includeCSSfile(href) {
-    var head_node = document.getElementsByTagName('head')[0];
-    var link_tag = document.createElement('link');
-    link_tag.setAttribute('rel', 'stylesheet');
-    link_tag.setAttribute('type', 'text/css');
-    link_tag.setAttribute('href', href);
-    head_node.appendChild(link_tag);
-}
-includeCSSfile("<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/css/pikaday.css")
-
-var mindays= <?php echo $plxPlugin->getParam("delivery_nb_days"); ?>;
-var today = new Date();
-var nextdelivery = new Date();
-nextdelivery.setDate(today.getDate() + mindays);
-<?php echo $def_lng!='en' ? "moment.locale('".$def_lng."');" : ''; ?>
-var picker_date = new Pikaday(
-    {
-        field: document.getElementById('id_deliverydate'),
-        format: '<?php $plxPlugin->lang("L_FORMAT_PIKADAY"); ?>',
-<?php if($def_lng!='en')$plxPlugin->lang("L_I18N_PIKADAY"); ?>
-        firstDay: 1,
-        minDate: nextdelivery,
-        maxDate: new Date(<?php echo (date('Y')+3) ?>, 12, 31),
-        yearRange: [<?php echo date('Y') ?>,<?php echo (date('Y')+3) ?>],
-        onSelect: function() {
-            var date = document.createTextNode(this.getMoment() + ' ');
-        }
-    }
-);
-</script>
 
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFin')) # Hook Plugins ?>

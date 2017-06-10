@@ -67,6 +67,10 @@ class plxMyShop extends plxPlugin {
    $this->addHook('plxMyShopShippingMethod', 'plxMyShopShippingMethod');
    $this->addHook('plxMyShopShowMiniPanier', 'plxMyShopShowMiniPanier');
    $this->addHook('plxMyShopPanierFin', 'inlineBasketJs');
+   if($this->getParam('delivery_date')){
+    $this->addHook('plxMyShopPanierFin', 'inlineDeliverydateJs');
+    $this->addHook('ThemeEndHead', 'themeEndHeadDeliverydateJs');
+   }
    if($this->getParam('localStorage')){//MyshopCookie
     $this->addHook('plxMyShopPanierCoordsMilieu', 'inlineLocalStorageHtml');
     $this->addHook('plxMyShopPanierFin', 'inlineLocalStorageJs');
@@ -367,7 +371,7 @@ class plxMyShop extends plxPlugin {
     document.getElementById("country").value = "";
    }
    function detail(event){
-    if (event.target.id != 'datepicker' && event.target.id != 'nomCadeau')//not #datepicker & #nomCadeau
+    if (event.target.id != 'id_deliverydate' && event.target.id != 'nomCadeau')//not #datepicker & #nomCadeau
      if (event.target.type == "text" || event.target.type == "email"){
       document.getElementById("bouton_effacer").style.display = "none";
       document.getElementById("bouton_sauvegarder").style.display = "";
@@ -484,6 +488,39 @@ if (error) {
  totalcommand.value = "<?php echo '<?php echo $this->pos_devise($totalpricettc+$totalpoidgshipping); ?>'; ?>";//total
 }
 </script>
+<?php
+ }
+
+ // hook js du Panier
+ public function inlineDeliverydateJs(){ ?>
+<script type='text/javascript'>
+var mindays= <?php echo $this->getParam("delivery_nb_days"); ?>;
+var today = new Date();
+var nextdelivery = new Date();
+nextdelivery.setDate(today.getDate() + mindays);
+<?php echo $this->plxMotor->aConf['default_lang']!='en' ? "moment.locale('".$this->plxMotor->aConf['default_lang']."');" : ''; ?>
+var picker_date = new Pikaday(
+    {
+        field: document.getElementById('id_deliverydate'),
+        format: '<?php $this->lang("L_FORMAT_PIKADAY"); ?>',
+<?php if($this->plxMotor->aConf['default_lang']!='en')$this->lang("L_I18N_PIKADAY"); ?>
+        firstDay: 1,
+        minDate: nextdelivery,
+        maxDate: new Date(<?php echo (date('Y')+3) ?>, 12, 31),
+        yearRange: [<?php echo date('Y') ?>,<?php echo (date('Y')+3) ?>],
+        onSelect: function() {
+            var date = document.createTextNode(this.getMoment() + ' ');
+        }
+    }
+);
+</script>
+<?php
+ }
+ // hook js du Panier
+ public function themeEndHeadDeliverydateJs(){ ?>
+  <link rel="stylesheet" href="<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/css/pikaday.css" media="screen"/>
+  <script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/moment-<?php echo $this->plxMotor->aConf['default_lang']!='en' ? 'with-locales' : ''; ?>.min.js'></script>
+  <script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/pikaday.js'></script>
 <?php
  }
 
