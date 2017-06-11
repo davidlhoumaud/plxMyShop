@@ -131,6 +131,12 @@ $LANG = array(
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration of delivery and payment methods',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Add Delivery fee',
 'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Based on the price of the order">Price Based</b>',
+'L_CONFIG_DELIVERY_DATE'            => 'Activate selection of Delivery date and time', # /ppmt nouvelle option
+'L_CONFIG_DELIVERY_MINDAYS'         => 'Delivery day and timeslot', # /ppmt nouvelle option
+'L_CONFIG_NB_DAYS'                  => 'Number of days', # /ppmt nouvelle option
+'L_CONFIG_DELIVERY_STARTTIME'       => 'First delivery hour', # /ppmt nouvelle option
+'L_CONFIG_DELIVERY_ENDTIME'         => 'Last delivery hour', # /ppmt nouvelle option
+'L_CONFIG_DELIVERY_TIMESLOT'        => 'Lenght (in hour) of delivery timeslot', # /ppmt nouvelle option
 'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Les montants des frais de ports sont peut être a réévaluer ou a reconfigurer.</b>',# atraduire
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',# atraduire
 'L_CONFIG_FREE'                     => 'Free',
@@ -223,6 +229,10 @@ $LANG = array(
 'L_EMAIL_ERROR1'                    => 'An error occured during the sending of your summary email.',
 'L_EMAIL_ERROR2'                    => 'An error occured during the sending of your order email.',
 
+'L_EMAIL_DELIVERYDATE'              => 'Delivery date: ', # /ppmt nouvelle fonction
+'L_EMAIL_DELIVERYTIME'              => 'Delivery timeslot: ', # /ppmt nouvelle fonction
+
+
 'L_FILE_ORDER'                      => 'Order of',
 
 'L_FOR'                             => 'for',
@@ -272,7 +282,7 @@ $LANG = array(
 'L_CONFIG_LIBELLE_CGV'              => 'Wording of the General Sales T&amp;C . (The URL )',
 'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Use plugin default phrases for the T&amp;C.",
 'L_CONFIG_URL_CGV'                  => 'URL for the T&amp;C.',
-
+'L_CONFIG_AMOUNT_PAYPAL'            => "Minimum amount to activate",#a traduire
 #boutonPanier.php
 'L_NOTICE_NOADDCART'                => 'En rupture de stock',#a traduire
 
@@ -285,5 +295,10 @@ $LANG = array(
 'L_PRODUCT'                         => 'Product',
 'L_UNIT_PRICE'                      => 'Unit_price',
 'L_NUMBER'                          => 'Number',
-'L_TOTAL_PRICE'                     => 'Total price'
+'L_TOTAL_PRICE'                     => 'Total price',
+'L_PUBLIC_DELIVERYDATE'             => 'Select your delivery date',  # /ppmt nouvelle option
+'L_PUBLIC_DELIVERYTIME'             => 'Select your delivery timeslot',  # /ppmt nouvelle option
+'L_CHOICE_DELIVERYTIME'             => 'Choose one timeslot',  # /ppmt nouvelle option
+'L_FORMAT_PIKADAY'                  => 'dddd Do MMMM YYYY',
+'L_I18N_PIKADAY'                    => ''# unused pikaday it's in english
 );

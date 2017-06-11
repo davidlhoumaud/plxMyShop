@@ -132,6 +132,14 @@ $LANG = array(
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration des moyens de livraison et paiement',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Ajout de frais de port',
 'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Basé sur le prix total (ttc)">Basé sur le total du panier</b>',
+
+'L_CONFIG_DELIVERY_DATE'            => 'Affiche la selection de la date de livraison dans le panier', # /ppmt nouvelle option
+'L_CONFIG_DELIVERY_MINDAYS'         => 'Jour et heure de la livraison', # /ppmt nouvelle option
+'L_CONFIG_NB_DAYS'                  => 'Nombre de jour', # /ppmt nouvelle option
+'L_CONFIG_DELIVERY_STARTTIME'       => 'Première heure de livraison', # /ppmt nouvelle option
+'L_CONFIG_DELIVERY_ENDTIME'         => 'Dernière heure de livraison', # /ppmt nouvelle option
+'L_CONFIG_DELIVERY_TIMESLOT'        => 'Durée (en heure) des intervaux de livraison', # /ppmt nouvelle option
+
 'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Les montants des frais de ports sont peut être a réévaluer ou a reconfigurer.</b>',
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',
 'L_CONFIG_FREE'                     => 'Gratuité',
@@ -224,6 +232,10 @@ $LANG = array(
 'L_EMAIL_ERROR1'                    => 'Une erreur s\'est produite lors de l\'envoi de votre courriel récapitulatif.',
 'L_EMAIL_ERROR2'                    => 'Une erreur s\'est produite lors de l\'envoi de la commande par courriel.',
 
+'L_EMAIL_DELIVERYDATE'              => 'Date de livraison: ', # /ppmt nouvelle fonction
+'L_EMAIL_DELIVERYTIME'              => 'Heure de livraisont: ', # /ppmt nouvelle fonction
+
+
 'L_FILE_ORDER'                      => 'Commande du ',
 
 'L_FOR'                             => 'pour',
@@ -273,7 +285,7 @@ $LANG = array(
 'L_CONFIG_LIBELLE_CGV'              => "Libellé de la demande de validation des C.G.V.",
 'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Utiliser les phrases par defaut des C.G.V. du plugin",
 'L_CONFIG_URL_CGV'                  => "URL des C.G.V.",
-
+'L_CONFIG_AMOUNT_PAYPAL'            => "Montant minimum pour l'activer",
 #boutonPanier.php
 'L_NOTICE_NOADDCART'                => 'En rupture de stock',
 
@@ -286,5 +298,18 @@ $LANG = array(
 'L_PRODUCT'                         => 'Produit',
 'L_UNIT_PRICE'                      => 'Prix unitaire',
 'L_NUMBER'                          => 'Nombre',
-'L_TOTAL_PRICE'                     => 'Prix total'
+'L_TOTAL_PRICE'                     => 'Prix total',
+'L_PUBLIC_DELIVERYDATE'             => 'Selectionnez votre date de livraison',  # /ppmt nouvelle option
+'L_PUBLIC_DELIVERYTIME'             => 'Sélectionnez votre créneau de livraison',  # /ppmt nouvelle option
+'L_CHOICE_DELIVERYTIME'             => 'Choisissez une plage horaire',  # /ppmt nouvelle option
+'L_FORMAT_PIKADAY'                  => 'dddd Do MMMM YYYY',
+'L_I18N_PIKADAY'                    => "
+        i18n: {
+            previousMonth : 'Mois précédent',
+            nextMonth     : 'Mois suivant',
+            months        : ['Janvier','Février','Mars','Avri','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+            weekdays      : ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+            weekdaysShort : ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
+        },
+"
 );

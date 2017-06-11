@@ -118,6 +118,30 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
 
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsMilieu')) # Hook Plugins ?>
 
+<?php if($plxPlugin->getParam("delivery_date")){ ?>
+    <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYDATE'); ?><span class='star'>*</span>&nbsp;:<br />
+    <?php plxUtils::printInput('deliverydate',@$_POST['deliverydate'], 'text','',false,'" required="required" autocomplete="off') ?></p>
+<?php
+ #Creation of the time intervals based on the configuration
+ $firstTime = strtotime($this->getParam("delivery_start_time"));
+ $lastTime = strtotime($this->getParam("delivery_end_time"));
+ $interval = $this->getParam("delivery_nb_timeslot")." hours";
+ $time=$firstTime;
+ $intervals['']="";
+ while ($time < $lastTime) {
+  $from = date('H:i', $time) . " - ";
+  $time = strtotime($interval, $time);
+  if ($time > $lastTime)
+   $to = date('H:i', $lastTime);
+  else
+   $to = date('H:i', $time);
+  $intervals[$from.$to]=$from.$to;
+ }
+?>
+    <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYTIME'); ?><span class='star'>*</span>&nbsp;:<br />
+    <?php plxUtils::printSelect('delivery_interval',$intervals,@$_POST['delivery_interval'],false,'" required="required') ?>
+    </p><br class="clear" /><br class="clear" />
+<?php }//fi delivery_date ?>
     <p>
      <label for="choixCadeau">
       <input type="checkbox" id="choixCadeau" name="choixCadeau"<?php echo (!isset($_POST["choixCadeau"])) ? '' : ' checked="checked"';?> />
@@ -129,7 +153,8 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
      <label for="nomCadeau"><?php $plxPlugin->lang('L_PUBLIC_GIFTNAME'); ?>&nbsp;:</label>
       <input type="text" name="nomCadeau" id="nomCadeau" value="<?php echo (!isset($_POST["nomCadeau"])) ? '' : htmlspecialchars($_POST['nomCadeau']);?>" />
     </p>
-    <p><?php $plxPlugin->lang('L_PUBLIC_COMMENT'); ?></p><textarea name="msg" id="msgCart" rows="3"></textarea>
+    <p class="ninety fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_COMMENT'); ?><br />
+    <textarea name="msg" id="msgCart" rows="3"></textarea></p><br class="clear" />
     <textarea name="prods" id="prodsCart" rows="3"></textarea>
     <input type="hidden" name="total" id="totalcommand" value="0" />
     <input type="hidden" name="shipping" id="shipping" value="0" />
@@ -140,7 +165,10 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
     <select name="methodpayment" id="methodpayment">
 <?php
       $methodpayment = !isset($_SESSION[$plxPlugin->plugName]["methodpayment"]) ? "" : $_SESSION[$plxPlugin->plugName]["methodpayment"];
-      foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) {?>
+      if ($totalpricettc < $plxPlugin->getParam('payment_paypal_amount')) {#if amount of order is below paypal amount then remove from payment options
+       unset($d["tabChoixMethodespaiement"][paypal]);
+      }
+      foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) { ?>
       <option value="<?php echo htmlspecialchars($codeM);?>"<?php
        echo ($codeM !== $methodpayment) ? "" : ' selected="selected"';
       ?>><?php echo htmlspecialchars($m["libelle"]);?></option>
@@ -161,4 +189,5 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
  </div>
 </div>
 <script type='text/javascript' src='<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS.$plxPlugin->plugName;?>/js/panier.js?v0131'></script>
+
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFin')) # Hook Plugins ?>
