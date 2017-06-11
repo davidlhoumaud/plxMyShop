@@ -131,11 +131,17 @@ $LANG = array(
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuracion dels mejans de liurason e pagament',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Liurason per "SoColissimo Recommandé"',
 'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Basé sur le prix total (ttc)">Basé sur le total du panier</b>',# atraduire
+'L_CONFIG_DELIVERY_DATE'            => 'Affiche la selection de la date de livraison dans le panier', # a traduire /ppmt nouvelle option
+'L_CONFIG_DELIVERY_MINDAYS'         => 'Jour et heure de la livraison', # a traduire /ppmt nouvelle option
+'L_CONFIG_NB_DAYS'                  => 'Nombre de jour', # a traduire /ppmt nouvelle option
+'L_CONFIG_DELIVERY_STARTTIME'       => 'Première heure de livraison', # a traduire /ppmt nouvelle option
+'L_CONFIG_DELIVERY_ENDTIME'         => 'Dernière heure de livraison', # a traduire /ppmt nouvelle option
+'L_CONFIG_DELIVERY_TIMESLOT'        => 'Durée (en heure) des intervaux de livraison', # a traduire /ppmt nouvelle option
 'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Les montants des frais de ports sont peut être a réévaluer ou a reconfigurer.</b>',# atraduire
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',# atraduire
 'L_CONFIG_FREE'                     => 'Gratuité',# atraduire
-'L_CONFIG_FREESHIPP'                => 'à partir de',# atraduire
-'L_FREESHIP'                        => 'Frais de ports offert',# atraduire
+'L_CONFIG_FREESHIPP'                => 'à partir de',# a traduire
+'L_FREESHIP'                        => 'Frais de ports offert',# a traduire
 'L_CONFIG_DELIVERY_CONFIG'          => 'Configuracion "SoColissimo Recommandé"',
 'L_CONFIG_DELIVERY_RECORDED'        => 'Acusat de recepcion',
 'L_CONFIG_DELIVERY_WEIGHT'          => 'Pes en kg',
@@ -222,6 +228,9 @@ $LANG = array(
 
 'L_EMAIL_ERROR1'                    => 'Una error s\'es produsida al moment de mandar vòstre corrièl de resumit.',
 'L_EMAIL_ERROR2'                    => 'Una error s\'es produsida al moment de mandar la comanda per corrièl.',
+
+'L_EMAIL_DELIVERYDATE'              => 'Date de livraison', # a traduire /ppmt nouvelle fonction
+'L_EMAIL_DELIVERYTIME'              => 'Heure de livraisont', # a traduire /ppmt nouvelle fonction
 
 'L_FILE_ORDER'                      => 'Comanda del ',
 

@@ -1462,9 +1462,9 @@ var picker_date = new Pikaday(
   $messCommon .= $this->getlang('L_EMAIL_COMMENT')." : ";
   $messCommon .= "<br/>";
   $messCommon .= "<br/>";
-  $messCommon .= $this->getlang('L_EMAIL_DELIVERYDATE');
+  $messCommon .= $this->getlang('L_EMAIL_DELIVERYDATE')." : ";
   $messCommon .= plxUtils::cdataCheck($_POST['deliverydate'])."<br/>";
-  $messCommon .= $this->getlang('L_EMAIL_DELIVERYTIME');
+  $messCommon .= $this->getlang('L_EMAIL_DELIVERYTIME')." : ";
   $messCommon .= plxUtils::cdataCheck($_POST['delivery_interval'])."<br/>";
 
   $messCommon .= $_POST['msg'];
