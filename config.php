@@ -148,7 +148,7 @@ $var['payment_paypal_test_user'] = $plxPlugin->getParam('payment_paypal_test_use
 $var['payment_paypal_test_pwd'] = $plxPlugin->getParam('payment_paypal_test_pwd')=='' ? '' : $plxPlugin->getParam('payment_paypal_test_pwd');
 $var['payment_paypal_test_signature'] = $plxPlugin->getParam('payment_paypal_test_signature')=='' ? '' : $plxPlugin->getParam('payment_paypal_test_signature');
  //prod
-$var['payment_paypal_amount'] = $plxPlugin->getParam('payment_paypal_amount')=='' ? '' : $plxPlugin->getParam('payment_paypal_amount');
+$var['payment_paypal_amount'] = $plxPlugin->getParam('payment_paypal_amount')=='' ? '0' : $plxPlugin->getParam('payment_paypal_amount');
 $var['payment_paypal_user'] = $plxPlugin->getParam('payment_paypal_user')=='' ? '' : $plxPlugin->getParam('payment_paypal_user');
 $var['payment_paypal_pwd'] = $plxPlugin->getParam('payment_paypal_pwd')=='' ? '' : $plxPlugin->getParam('payment_paypal_pwd');
 $var['payment_paypal_signature'] = $plxPlugin->getParam('payment_paypal_signature')=='' ? '' : $plxPlugin->getParam('payment_paypal_signature');
@@ -373,10 +373,10 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
          var elems = document.getElementsByTagName('td'), i;
          for (i in elems) {
           if((' ' + elems[i].className + ' ').indexOf(' confdelivery ') > -1) {
-           elems[i].innerHTML = content + '&nbsp:';
+           elems[i].innerHTML = content + '&nbsp;:';
           }
          }
-        }    
+        }
         </script>
        </label>
       </td>
@@ -449,7 +449,6 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
    <input type="hidden" name="payment_paypal_logoimg" value="<?php echo $var["payment_paypal_logoimg"];?>"/>
    <input type="hidden" name="payment_paypal_payflowcolor" value="<?php echo $var["payment_paypal_payflowcolor"];?>"/>
    <input type="hidden" name="payment_paypal_cartbordercolor" value="<?php echo $var["payment_paypal_cartbordercolor"];?>"/>
-
 
    <div class="grid">
     <div class="col sml-12 med-5 label-centered">

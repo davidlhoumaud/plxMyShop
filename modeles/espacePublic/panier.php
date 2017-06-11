@@ -168,7 +168,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
       if ($totalpricettc < $plxPlugin->getParam('payment_paypal_amount')) {#if amount of order is below paypal amount then remove from payment options
        unset($d["tabChoixMethodespaiement"][paypal]);
       }
-      foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) { ?>
+      foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) {?>
       <option value="<?php echo htmlspecialchars($codeM);?>"<?php
        echo ($codeM !== $methodpayment) ? "" : ' selected="selected"';
       ?>><?php echo htmlspecialchars($m["libelle"]);?></option>
@@ -189,5 +189,4 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
  </div>
 </div>
 <script type='text/javascript' src='<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS.$plxPlugin->plugName;?>/js/panier.js?v0131'></script>
-
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFin')) # Hook Plugins ?>
