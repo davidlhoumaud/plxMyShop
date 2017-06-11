@@ -5,9 +5,6 @@ version :
 */
 $plxPlugin = $d["plxPlugin"];
 $plxPlugin->traitementPanier();
-
-$paypal_amount= $plxPlugin->getParam('payment_paypal_amount');
-
 $afficheMessage = FALSE;
 if ( isset($_SESSION[$plxPlugin->plugName]['msgCommand'])
  && !empty($_SESSION[$plxPlugin->plugName]['msgCommand'])
@@ -119,47 +116,32 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
     <p class="twenty fl tal"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span>&nbsp;:<br />
     <input type="text" name="country" id="country" value="" required="required" /></p><br class="clear" />
 
-
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierCoordsMilieu')) # Hook Plugins ?>
 
-    <?php    if($plxPlugin->getParam("delivery_date")){ ?>
+<?php if($plxPlugin->getParam("delivery_date")){ ?>
     <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYDATE'); ?><span class='star'>*</span>&nbsp;:<br />
-    <!-- <input type="text" name="deliverydate" id="datepicker" required="required" /></p> -->
-    <?php plxUtils::printInput('deliverydate',$var['deliverydate'], 'text','',false,'classOrNot" required="required') ?></p>
-
+    <?php plxUtils::printInput('deliverydate',@$_POST['deliverydate'], 'text','',false,'" required="required" autocomplete="off') ?></p>
 <?php
-
-#Creation of the time intervals based on the configuration
-$firstTime = strtotime($this->getParam("delivery_start_time"));
-$lastTime = strtotime($this->getParam("delivery_end_time"));
-$interval = $this->getParam("delivery_nb_timeslot")." hours";
-$time=$firstTime;
-$intervals['']="";
-while ($time < $lastTime) {
-        $from = date('H:i', $time) . " - ";
-        #$time = strtotime('+1 hours', $time);
-        $time = strtotime($interval, $time);
-        if ($time > $lastTime) {
-            $to = date('H:i', $lastTime) . "<br>"; }
-        else {
-            $to =  date('H:i', $time) . "<br>";}
-        $intervals[$from.$to]=$from.$to;
-}
+ #Creation of the time intervals based on the configuration
+ $firstTime = strtotime($this->getParam("delivery_start_time"));
+ $lastTime = strtotime($this->getParam("delivery_end_time"));
+ $interval = $this->getParam("delivery_nb_timeslot")." hours";
+ $time=$firstTime;
+ $intervals['']="";
+ while ($time < $lastTime) {
+  $from = date('H:i', $time) . " - ";
+  $time = strtotime($interval, $time);
+  if ($time > $lastTime)
+   $to = date('H:i', $lastTime);
+  else
+   $to = date('H:i', $time);
+  $intervals[$from.$to]=$from.$to;
+ }
 ?>
-
-<p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYTIME'); ?><span class='star'>*</span>&nbsp;:<br />
-<!-- 
-<select name="delivery_interval" id="delivery_interval" required="required">
-    <?php foreach ($intervals as $interval) { ?>
-    <option value="<?php echo $interval; ?>"><?php echo $interval; ?></option>
-    <?php } ?>
-</select>
--->
-<?php plxUtils::printSelect('delivery_interval',$intervals, 2,false,'classOrNot" required="required') ?>
-</p> <br class="clear" /><br class="clear" />
-
-    <?php } ?>
-
+    <p class="fifty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_DELIVERYTIME'); ?><span class='star'>*</span>&nbsp;:<br />
+    <?php plxUtils::printSelect('delivery_interval',$intervals,@$_POST['delivery_interval'],false,'" required="required') ?>
+    </p><br class="clear" /><br class="clear" />
+<?php }//fi delivery_date ?>
     <p>
      <label for="choixCadeau">
       <input type="checkbox" id="choixCadeau" name="choixCadeau"<?php echo (!isset($_POST["choixCadeau"])) ? '' : ' checked="checked"';?> />
@@ -183,10 +165,9 @@ while ($time < $lastTime) {
     <select name="methodpayment" id="methodpayment">
 <?php
       $methodpayment = !isset($_SESSION[$plxPlugin->plugName]["methodpayment"]) ? "" : $_SESSION[$plxPlugin->plugName]["methodpayment"];
-      #if amount of order is below paypal amount then remove from payment options
-	  if ($totalpricettc <= $paypal_amount) {
-		  	unset($d["tabChoixMethodespaiement"][paypal]);
-		 }
+      if ($totalpricettc < $plxPlugin->getParam('payment_paypal_amount')) {#if amount of order is below paypal amount then remove from payment options
+       unset($d["tabChoixMethodespaiement"][paypal]);
+      }
       foreach ($d["tabChoixMethodespaiement"] as $codeM => $m) { ?>
       <option value="<?php echo htmlspecialchars($codeM);?>"<?php
        echo ($codeM !== $methodpayment) ? "" : ' selected="selected"';
@@ -208,38 +189,5 @@ while ($time < $lastTime) {
  </div>
 </div>
 <script type='text/javascript' src='<?php echo $plxPlugin->plxMotor->racine . PLX_PLUGINS.$plxPlugin->plugName;?>/js/panier.js?v0131'></script>
-<script type='text/javascript' src='<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/moment.min.js'></script>
-<script type='text/javascript' src='<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/pikaday.js'></script>
-
-<script type='text/javascript'>
-function includeCSSfile(href) {
-    var head_node = document.getElementsByTagName('head')[0];
-    var link_tag = document.createElement('link');
-    link_tag.setAttribute('rel', 'stylesheet');
-    link_tag.setAttribute('type', 'text/css');
-    link_tag.setAttribute('href', href);
-    head_node.appendChild(link_tag);
-}
-includeCSSfile("<?php echo $d["plxPlugin"]->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/css/pikaday.css")
-
-var mindays= <?php echo $plxPlugin->getParam("delivery_nb_days"); ?>;
-var today = new Date();
-var nextdelivery = new Date();
-nextdelivery.setDate(today.getDate() + mindays);
-
-var picker_date = new Pikaday(
-    {
-        field: document.getElementById('id_deliverydate'),
-        format: 'dddd Do MMMM YYYY',
-        firstDay: 1,
-        minDate: nextdelivery,
-        maxDate: new Date(2020, 12, 31),
-        yearRange: [2017,2020],
-        onSelect: function() {
-            var date = document.createTextNode(this.getMoment() + ' ');
-        }
-    }
-);
-</script>
 
 <?php eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierFin')) # Hook Plugins ?>

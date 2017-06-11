@@ -453,7 +453,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
 
    <div class="grid">
     <div class="col sml-12 med-5 label-centered">
-     <label for="payment_paypal_amount"><?php $plxPlugin->lang('L_CONFIG_AMOUNT_PAYPAL') ?>&nbsp;:</label>
+     <label for="payment_paypal_amount"><?php $plxPlugin->lang('L_CONFIG_AMOUNT_PAYPAL') ?>&nbsp;(<?php echo $var['devise']; ?>)&nbsp;:</label>
     </div>
     <div class="col sml-12 med-7">
      <input name='payment_paypal_amount' value="<?php echo $var['payment_paypal_amount'];?>" type='text' >

@@ -285,7 +285,7 @@ $LANG = array(
 'L_CONFIG_LIBELLE_CGV'              => "Libellé de la demande de validation des C.G.V.",
 'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Utiliser les phrases par defaut des C.G.V. du plugin",
 'L_CONFIG_URL_CGV'                  => "URL des C.G.V.",
-
+'L_CONFIG_AMOUNT_PAYPAL'            => "Montant minimum pour l'activer",
 #boutonPanier.php
 'L_NOTICE_NOADDCART'                => 'En rupture de stock',
 
@@ -301,5 +301,15 @@ $LANG = array(
 'L_TOTAL_PRICE'                     => 'Prix total',
 'L_PUBLIC_DELIVERYDATE'             => 'Selectionnez votre date de livraison',  # /ppmt nouvelle option
 'L_PUBLIC_DELIVERYTIME'             => 'Sélectionnez votre créneau de livraison',  # /ppmt nouvelle option
-'L_CHOICE_DELIVERYTIME'             => 'Choisissez une plage horaire'  # /ppmt nouvelle option
+'L_CHOICE_DELIVERYTIME'             => 'Choisissez une plage horaire',  # /ppmt nouvelle option
+'L_FORMAT_PIKADAY'                  => 'dddd Do MMMM YYYY',
+'L_I18N_PIKADAY'                    => "
+        i18n: {
+            previousMonth : 'Mois précédent',
+            nextMonth     : 'Mois suivant',
+            months        : ['Janvier','Février','Mars','Avri','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+            weekdays      : ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+            weekdaysShort : ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
+        },
+"
 );
