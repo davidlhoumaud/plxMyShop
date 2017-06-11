@@ -1439,14 +1439,21 @@ var picker_date = new Pikaday(
   plxUtils::cdataCheck($_POST['country'])."<br/>".
   $this->getlang('L_EMAIL_TEL').
   plxUtils::cdataCheck($_POST['tel'])
-  ."<br/><br/>".
-  $this->getlang('L_PAIEMENT').": ".$this->getlang('L_PAYMENT_'.strtoupper($_POST['methodpayment']));
+  ."<br/><br/><strong>".
+  $this->getlang('L_PAIEMENT')." :</strong> ".$this->getlang('L_PAYMENT_'.strtoupper($_POST['methodpayment']));
 
   $messCommon = "<br/><br/>" . (!isset($_POST["choixCadeau"])
    ? $this->getlang('L_EMAIL_NOGIFT')
-   : $this->getlang('L_EMAIL_GIFT_FOR')." <strong>".htmlspecialchars($_POST["nomCadeau"]) . "</strong>."
+   : "<strong>".$this->getlang('L_EMAIL_GIFT_FOR')." :</strong> ".htmlspecialchars($_POST["nomCadeau"])
   );
-  $messCommon .= "<br/>".$this->getlang('L_EMAIL_PRODUCTLIST')." :<br/><ul>";
+  if($this->getparam('delivery_date')){
+   $messCommon .= "<br/><br/>";
+   $messCommon .= "<strong>".$this->getlang('L_EMAIL_DELIVERYDATE')." :</strong> ";
+   $messCommon .= plxUtils::cdataCheck($_POST['deliverydate'])."<br/>";
+   $messCommon .= "<strong>".$this->getlang('L_EMAIL_DELIVERYTIME')." :</strong> ";
+   $messCommon .= plxUtils::cdataCheck($_POST['delivery_interval'])."<br/>";
+  }
+  $messCommon .= "<br/><br/><strong>".$this->getlang('L_EMAIL_PRODUCTLIST')." :</strong><br/><ul>";
   foreach ($productscart as $k => $v){
    $messCommon.="<li>{$v['nombre']} × ".$v['name']."&nbsp;: ".$this->pos_devise($v['pricettc']). ((float)$v['poidg']>0?" ". $this->getlang('L_FOR')." " .$v['poidg']."&nbsp;kg":"")."</li>";
   }
@@ -1460,12 +1467,6 @@ var picker_date = new Pikaday(
   $messCommon .= "<strong>" . $this->getlang('L_TOTAL_BASKET')." ".$this->pos_devise(($totalpricettc+$totalpoidgshipping)). "</strong>";
   $messCommon .= "<br/><br/>";
   $messCommon .= $this->getlang('L_EMAIL_COMMENT')." : ";
-  $messCommon .= "<br/>";
-  $messCommon .= "<br/>";
-  $messCommon .= $this->getlang('L_EMAIL_DELIVERYDATE');
-  $messCommon .= plxUtils::cdataCheck($_POST['deliverydate'])."<br/>";
-  $messCommon .= $this->getlang('L_EMAIL_DELIVERYTIME');
-  $messCommon .= plxUtils::cdataCheck($_POST['delivery_interval'])."<br/>";
 
   $messCommon .= $_POST['msg'];
 
@@ -1533,7 +1534,7 @@ var picker_date = new Pikaday(
     plxUtils::cdataCheck($_POST['postcode'])." ".plxUtils::cdataCheck($_POST['city'])."<br/>".
     plxUtils::cdataCheck($_POST['country'])."<br/>".
     "<strong>Tel : </strong>".plxUtils::cdataCheck($_POST['tel']) .
-    "<br/><br/><strong>" . $this->getlang('L_EMAIL_CUST_PAYMENT') . ": </strong>". $method;
+    "<br/><br/><strong>" . $this->getlang('L_EMAIL_CUST_PAYMENT') . " : </strong>". $method;
 
     $sujet = $this->getlang('L_EMAIL_CUST_SUBJECT') . $SHOPNAME;
     $destinataire = $_POST['email'];
@@ -1557,10 +1558,10 @@ var picker_date = new Pikaday(
      $commandeContent="<!DOCTYPE html>
 <html>
 <head>
-<title>".$this->getlang('L_FILE_ORDER').date($this->getLang('DATEFORMAT'))."</title>
-<meta charset=\"UTF-8\">
-<meta name=\"description\" content=\"Commande\">
-<meta name=\"author\" content=\"plxMyShop\">
+<title>".$this->getlang('L_FILE_ORDER').' '.date($this->getLang('DATEFORMAT')).'</title>
+<meta charset="UTF-8">
+<meta name="description" content="'.$this->getLang('L_DEFAULT_OBJECT').'">
+<meta name="author" content="'.$this->plugName."\">
 </head>
 <body>
 <hr/>
@@ -1585,13 +1586,13 @@ $message
    if ( (!isset($_POST['email']) || empty($_POST['email']) || $_POST['email']=="") ){
     $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_EMAIL') ."</h5>";
    }
-   if (  (!isset($_POST['firstname']) ||  plxUtils::cdataCheck($_POST['firstname'])=="") ){
+   if ( (!isset($_POST['firstname']) ||  plxUtils::cdataCheck($_POST['firstname'])=="") ){
     $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_FIRSTNAME') ."</h5>";
    }
-   if ( (!isset($_POST['lastname']) ||  plxUtils::cdataCheck($_POST['lastname'])=="")  ){
+   if ( (!isset($_POST['lastname']) ||  plxUtils::cdataCheck($_POST['lastname'])=="") ){
     $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_LASTNAME')  ."</h5>";
    }
-   if ( (!isset($_POST['adress']) ||  plxUtils::cdataCheck($_POST['adress'])=="")  ){
+   if ( (!isset($_POST['adress']) ||  plxUtils::cdataCheck($_POST['adress'])=="") ){
     $msgCommand.= "<h5 class='msgerror'>". $this->getlang('L_MISSING_ADDRESS') ."</h5>";
    }
    if ( (!isset($_POST['postcode']) ||  plxUtils::cdataCheck($_POST['postcode'])=="") ){

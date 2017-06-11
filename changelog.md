@@ -29,12 +29,15 @@
 **** (theme default 5.6)
 * Sur chrom(e)ium, s'il y a un souci de grosseur de characteres (gros boutons), en trifouillant les réglages du zoom de chrome tout est rentré dans l'ordre ;) (font size: medium, zoom: 100%) ::: [Huge font in Chrome 37](https://productforums.google.com/forum/?_escaped_fragment_=topic/chrome/17kfuau1ApM#!topic/chrome/17kfuau1ApM)
 
-BUG les drapeaux le multilingue disparaissent au panier, mais sont présent dans catégories & produits ;)
-le plugin spxplugdowloader provoque la perte de l'action bar au plugin qui ont un admin.php (vu avec plx5.4 & maybe after)
+BUG les drapeaux le multilingue disparaissent au panier, mais sont présent dans catégories & produits, ben non, c'était dans la sidebar (en full-width elle n'y est pas) ;-)
+le plugin spxplugindowloader.2.5 provoque la perte de l'action bar aux plugins qui ont un admin.php (vu avec plx5.4 & maybe after)
 
-Effet de bord : si on ajoute un shortCode [boutonPanier 004] a un prod/cat et que le panier est sur toutes les pages (il s'affiche 2 fois (av et aprés le form de commande)?????
+Effet de bord : si on ajoute un shortCode [boutonPanier ###] a un prod/cat et que le panier est sur toutes les pages (il s'affiche 2 fois (av et aprés le form de commande)?????
 
-##v0.13.1r4 ##/05/2017##
+##v0.13.1r4 11/06/2017##
+[+] Fins de lignes unifiées par dos2unix (merci Bazooka)
+[+] Config & panier : Montant minimum pour afficher le choix du paiement par Paypal (contrib ppmy)
+[+] Config & panier : choix de date et heure de livraison (contrib ppmy)
 [+] get_class() et plug['name'] remplacé par plugName
 
 ##v0.13.1r3 11/05/2017##
