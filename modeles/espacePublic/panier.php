@@ -45,15 +45,15 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
           <th colspan="2" class="nombre"><?php $plxPlugin->lang('L_TOTAL_PRICE'); ?></th>
          </tr>
 <?php   foreach ($_SESSION[$plxPlugin->plugName]['prods'] as $pId => $nb) {
-           $prixUnitaire = (float) $plxPlugin->aProds[$pId]['pricettc'];
+           $prixUnitaire = (float) $plxPlugin->aProds[$plxPlugin->default_lang][$pId]['pricettc'];
            $prixttc = $prixUnitaire * $nb;
-           $poidg = (float) $plxPlugin->aProds[$pId]['poidg'] * $nb;
+           $poidg = (float) $plxPlugin->aProds[$plxPlugin->default_lang][$pId]['poidg'] * $nb;
            $totalpricettc += $prixttc;
            $totalpoidg += $poidg;
            $nprod++;
 ?>
          <tr>
-          <td><a href="<?php echo $plxPlugin->productRUrl($pId); ?>"><?php echo plxUtils::strCheck($plxPlugin->aProds[$pId]['name']); ?></a></td>
+          <td><a href="<?php echo $plxPlugin->productRUrl($pId); ?>"><?php echo plxUtils::strCheck($plxPlugin->aProds[$plxPlugin->default_lang][$pId]['name']); ?></a></td>
           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixUnitaire);?></td>
           <td width="10%"><input type="number" name="nb[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($nb);?>" min="0" /></td>
           <td class="nombre"><input type="submit" class="red" name="retirerProduit[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_DEL'));?>" /></td>

@@ -4,7 +4,7 @@ Si vous réutilisez ce fichier dans votre thème, nous vous conseillons de noter
 version : 
 */
 $plxPlugin = $d["plxPlugin"];
-$produit = $plxPlugin->aProds[$plxPlugin->productNumber()];
+$produit = $plxPlugin->aProds[$plxPlugin->default_lang][$plxPlugin->productNumber()];
 if (is_array($plxPlugin->productGroupTitle())) {
  echo '<div id="prod'.intval($plxPlugin->productNumber()).'"></div>';
  $i=0;
@@ -31,7 +31,7 @@ if (is_array($plxPlugin->productGroupTitle())) {
 <?php } ?>
   <div class="image_product">
 <?php 
-  echo ($plxPlugin->aProds[$plxPlugin->productNumber()]["image"]!="") ? '<img class="product_image" src="'.$plxPlugin->productImage().'">' : '';
+  echo ($plxPlugin->aProds[$plxPlugin->default_lang][$plxPlugin->productNumber()]["image"]!="") ? '<img class="product_image" src="'.$plxPlugin->productImage().'">' : '';
   $plxPlugin->donneesModeles["k"] = $plxPlugin->productNumber();
   $plxPlugin->modele("espacePublic/boucle/boutonPanier");
 ?>

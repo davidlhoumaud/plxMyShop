@@ -17,7 +17,7 @@
     $plxMyShop = $plxShow->plxMotor->plxPlugins->aPlugins['plxMyShop'];
     $plxMyShop->donneesModeles["plxPlugin"] = $plxMyShop;
 
-    if (isset($plxMyShop->aProds) && is_array($plxMyShop->aProds)) {
+    if (isset($plxMyShop->aProds[$plxShow->default_lang]) && is_array($plxMyShop->aProds[$plxShow->default_lang])) {
 ?>
       <script type='text/javascript' src='<?php echo $plxMyShop->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/panier.js?v0131'></script>
       <script type='text/javascript'>
@@ -30,7 +30,7 @@
       var L_TOTAL = '<?php echo $plxMyShop->getlang('L_TOTAL_BASKET'); ?>';
       </script>
 <?php
-     foreach ($plxMyShop->aProds as $kRubrique => $vRubrique) {
+     foreach ($plxMyShop->aProds[$plxShow->default_lang] as $kRubrique => $vRubrique) {
       if ( $vRubrique['menu'] === 'non'
        || $vRubrique['menu'] === ''
        || (1 !== $vRubrique["active"])
@@ -48,7 +48,7 @@
          </div>
         </header>
 <?php
-         foreach($plxMyShop->aProds as $k => $v) {
+         foreach($plxMyShop->aProds[$plxShow->default_lang] as $k => $v) {
           if (  strstr($v['group'],$kRubrique) 
            && $v['active']==1 
            && $v['readable']==1

@@ -2,7 +2,7 @@ window.onload=function() {
  // get tab container
  var container = document.getElementById("tabContainer");
  // set current tab
- var navitem = container.querySelector(".tabs ul li");
+ var navitem = container.querySelector(".tabs ul li.active");
  //store which tab we are on
  var ident = navitem.id.split("_")[1];
  navitem.parentNode.setAttribute("data-current",ident);
@@ -12,6 +12,7 @@ window.onload=function() {
  //hide two tab contents we don't need
  var pages = container.querySelectorAll(".tabpage");
  for (var i = 1; i < pages.length; i++) {
+  if(pages[i].className != 'tabpage active')
    pages[i].style.display="none";
  }
 

@@ -14,15 +14,15 @@ $plxPlugin = $d["plxPlugin"];
   </div>
 <?php } ?>
   <div class="cat_image">
-   <?php echo ($plxPlugin->aProds[$plxPlugin->productNumber()]["image"]!="") ? '<img class="product_image_cat" src="'.$plxPlugin->productImage().'">' : '';?>
+   <?php echo ($plxPlugin->aProds[$plxPlugin->default_lang][$plxPlugin->productNumber()]["image"]!="") ? '<img class="product_image_cat" src="'.$plxPlugin->productImage().'">' : '';?>
   </div>
  </header>
  <article>
   <?php $plxPlugin->plxShowProductContent(); ?>
  </article>
  <?php
-  if (isset($plxPlugin->aProds)) {
-   foreach($plxPlugin->aProds as $k => $v) {
+  if (isset($plxPlugin->aProds[$plxPlugin->default_lang])) {
+   foreach($plxPlugin->aProds[$plxPlugin->default_lang] as $k => $v) {
     if ( preg_match('~'.$plxPlugin->productNumber().'~', $v['group']) 
      && $v['active']==1 
      && $v['readable']==1

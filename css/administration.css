@@ -57,10 +57,10 @@
 .informationsShortcodeProduit .code {
  background-color: #EEF;
 }
-#id_image_img{
+.image_img{
  max-width: 320px;
 }
-#id_image_img img {
+.image_img img {
  width: 100%;
 }
 /* cases à cocher */
@@ -211,11 +211,6 @@ table.dataTable {
 /* surcharge plx 5.6 */
 .button{
  padding: 0.3rem 0.7rem;
-}
-
-#id_thumbnail_img img{
- width: 30%;
- height: auto;
 }
 
 @media (max-width: 767px) {

@@ -5,7 +5,7 @@ $plxPlugin->donneesModeles["plxPlugin"] = $plxPlugin;
 // e-mail de la commande
 $_SESSION[$plxPlugin->plugName]['msgCommand']="";
 $plxPlugin->validerCommande();
-if ("1" === $plxPlugin->aProds[$plxPlugin->productNumber()]['pcat']) {
+if ("1" === $plxPlugin->aProds[$plxPlugin->default_lang][$plxPlugin->productNumber()]['pcat']) {
  $plxPlugin->modele("espacePublic/categorie");
 } else {
  $plxPlugin->modele("espacePublic/produit");
