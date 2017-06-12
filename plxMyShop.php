@@ -697,7 +697,6 @@ var picker_date = new Pikaday(
   // pages des produits et des catégories
   elseif ($this->plxMotor->get AND preg_match("~^".str_replace('/','\\/',$this->lang)."product([0-9]+)\/?([a-z0-9-]+)?~", $this->plxMotor->get, $capture)){
    $this->idProduit = str_pad($capture[1], 3, "0", STR_PAD_LEFT);
-//var_dump($_SESSION['lang'],$_SESSION['default_lang'],$this->aProds[$this->default_lang][$this->productNumber()],$this->productNumber(),$this->idProduit,$this->aProds[$this->default_lang]);
    if(!isset($this->aProds[$this->default_lang][$this->productNumber()]) OR !$this->aProds[$this->default_lang][$this->productNumber()]['active']){
     $this->plxMotor->error404(L_ERR_PAGE_NOT_FOUND);
    }else{
@@ -768,9 +767,8 @@ var picker_date = new Pikaday(
   foreach($aLangs as $lang) {
    $lgf=($this->aLangs)?$lang.'/':'';//folders
    $lng=($this->aLangs)?'_'.$lang:'';//post vars
-   //var_dump('getProducts',$filename,$lang,$lgf,$lng,$this->aLangs);//exit;
    $filename = $filenameOrigin=='' ? PLX_ROOT.PLX_CONFIG_PATH.$lgf.'products.xml' : $filename;
-   $this->aProds[$lang]=false;//var_dump('getProducts found filename is file',$filename,is_file($filename));//init
+   $this->aProds[$lang]=false;
    if(!is_file($filename)){ 
     touch($filename);//create it
     continue;
@@ -864,7 +862,7 @@ var picker_date = new Pikaday(
   $retour = $reterr = '';
   $dfltLng = '_'.$this->default_lang;
   $aLangs = ($this->aLangs)?$this->aLangs:array($this->default_lang);
-  foreach($aLangs as $lang) {//var_dump('editProducts begin',$lang,$content, $action,$this->aProds[$lang]);exit;
+  foreach($aLangs as $lang) {
    $save = $this->aProds[$lang];
    $lgf=($this->aLangs)?$lang.'/':'';//folders
    $lng=($this->aLangs)?'_'.$lang:'';//post vars
@@ -879,7 +877,7 @@ var picker_date = new Pikaday(
     }
    }
    # mise à jour de la liste des produits
-   elseif(!empty($content['update'])){//var_dump('editProducts update',$lang,$content, $action,$this->aProds[$lang]);exit;
+   elseif(!empty($content['update'])){
     foreach($content['productNum'] as $product_id){
      $stat_name = isset($content[$product_id.'_name'.$lng])?$content[$product_id.'_name'.$lng]:$content[$product_id.'_name'.$dfltLng];
      if($stat_name!=''){
@@ -912,12 +910,10 @@ var picker_date = new Pikaday(
      }
     }
     # On va trier les clés selon l'ordre choisi
-    //var_dump('editProducts update BEFOR SORT',$action,$this->aProds[$lang]);//exit;
     if(sizeof($this->aProds[$lang])>0) uasort($this->aProds[$lang], create_function('$a, $b', 'return $a["ordre"]>$b["ordre"];'));
-    //var_dump('editProducts update END',$content,$this->aProds[$lang]);//exit;
    }
    # sauvegarde
-   if($action){//var_dump('editProducts action',$action,$content,$this->aProds[$lang]);//exit;
+   if($action){
     $products_name = array();
     $products_url = array();
     # On génére le fichier XML
@@ -978,14 +974,13 @@ var picker_date = new Pikaday(
   * @return string contenu de la page
   * @author Stephane F.
   **/
- public function getFileProduct($num,$lang){//var_dump('getFileProduct',$num,$lang);
-
-   $lgf=(!empty($lang) && $this->aLangs)?$lang.'/':'';//folders
-   $lng=(!empty($lang) && $this->aLangs)?$lang:$this->default_lang;//Product lang or not
+ public function getFileProduct($num,$lang){
+  $lgf=(!empty($lang) && $this->aLangs)?$lang.'/':'';//folders
+  $lng=(!empty($lang) && $this->aLangs)?$lang:$this->default_lang;//Product lang or not
   $content = '';
   # Emplacement de la page
   $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lgf.$num.'.'.$this->aProds[$lng][$num]['url'].'.php';
-//var_dump('getFileProduct filename',$filename);
+
   if(is_file($filename) AND filesize($filename) > 0){
    if($f = fopen($filename, 'r')){
     $content = fread($f, filesize($filename));
@@ -1014,10 +1009,10 @@ var picker_date = new Pikaday(
   * @return string
   * @author David.L
   **/
- public function editProduct($content){//var_dump('editProduct',$content,$this->aProds);
+ public function editProduct($content){
   # Mise à jour du fichier product.xml
   $aLangs = ($this->aLangs)?$this->aLangs:array($this->default_lang);
-  foreach($aLangs as $lang) {//var_dump('editProducts begin',$lang,$content,$this->aProds[$lang]);
+  foreach($aLangs as $lang) {
    $lgf=($this->aLangs)?$lang.'/':'';//folders
    $lng=($this->aLangs)?'_'.$lang:'';//post vars
    if (isset($content['listeCategories'.$lng])){
@@ -1041,7 +1036,7 @@ var picker_date = new Pikaday(
    $this->aProds[$lang][$content['id']]['meta_keywords'] = trim($content['meta_keywords'.$lng]);
    # Hook plugins
    //eval($this->plxPlugins->callHook('plxAdminEditProduct'));
-  }//var_dump('editProducts middle',$this->aProds);exit;
+  }
   if($this->editProducts(null,true)){
    if (!is_dir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')))){//créer les dossiers de sauvegarde selon la config
     mkdir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')), 0755, true);
@@ -1056,9 +1051,9 @@ var picker_date = new Pikaday(
     }
    }
    $infos = $err = null;
-   foreach($aLangs as $lang) {//var_dump('editProducts begin',$lang,$content,$this->aProds[$lang]);
+   foreach($aLangs as $lang) {
     $lgf=($this->aLangs)?$lang.'/':'';//folders
-    $lng=($this->aLangs)?'_'.$lang:'';//post vars    $url_save = '';
+    $lng=($this->aLangs)?'_'.$lang:'';//post vars 
     # Génération du nom du fichier de la page statique
     $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lgf.$content['id'].'.'.$this->aProds[$lang][ $content['id'] ]['url'].'.php';
     # On écrit le fichier
@@ -1748,15 +1743,15 @@ $message
   $nombre = $_POST["nb"];
   $_SESSION[$this->plugName]['ncart'] += $nombre;
   $_SESSION[$this->plugName]['prods'][$_POST['idP']] = $nombre;
-  $_SESSION[$this->plugName]["msgProdUpDate"] = TRUE;//var_dump('traitementAjoutPanier',$_SESSION);exit;
+  $_SESSION[$this->plugName]["msgProdUpDate"] = TRUE;
   header("Location: {$_SERVER["REQUEST_URI"]}");
   exit();
  }
 
- public function traitementPanier(){//var_dump('traitementPanier',$_SESSION);//exit;
+ public function traitementPanier(){
   if (!isset($_SESSION)) session_start();
   if (!isset($_SESSION[$this->plugName]['prods'])) $_SESSION[$this->plugName]['prods'] = array();
-  if (!isset($_SESSION[$this->plugName]['ncart'])) $_SESSION[$this->plugName]['ncart'] = 0;//var_dump('traitementPanier1111',$_SESSION);exit;
+  if (!isset($_SESSION[$this->plugName]['ncart'])) $_SESSION[$this->plugName]['ncart'] = 0;
   if (isset($_POST["retirerProduit"])){
    $cles = array_keys($_POST["retirerProduit"]);
    $idP = array_pop($cles);
@@ -1764,7 +1759,7 @@ $message
     $_SESSION[$this->plugName]['ncart'] -= $_SESSION[$this->plugName]['prods'][$idP];
     unset($_SESSION[$this->plugName]['prods'][$idP]);
     $_SESSION[$this->plugName]["msgProdUpDate"] = TRUE;
-   }//var_dump('traitementPanier2222',$_SESSION);exit;
+   }
    header("Location: {$_SERVER["REQUEST_URI"]}");
    exit();
   }
@@ -1782,7 +1777,7 @@ $message
      }
      $_SESSION[$this->plugName]["msgProdUpDate"] = TRUE;
     }
-   }//var_dump('traitementPanier333',$_SESSION);exit;
+   }
    header("Location: {$_SERVER["REQUEST_URI"]}");
    exit();
   }

@@ -10,7 +10,6 @@ $minPnr = 1;
 $prodsPnr = 1;
 $txtPnrBtn = htmlspecialchars($plxPlugin->getLang('L_PUBLIC_ADD_BASKET'));
 $classPnrBtn = "blue";
-//var_dump('bouton panier',$_SESSION[$plxPlugin->plugName]);exit;
 if (isset($_SESSION[$plxPlugin->plugName]["prods"][$d["k"]])){
  if ($_SESSION[$plxPlugin->plugName]["prods"][$d["k"]]<1) {
   $_SESSION[$plxPlugin->plugName]["ncart"] -= $_SESSION[$plxPlugin->plugName]["prods"][$d["k"]];

@@ -4,7 +4,7 @@ Si vous réutilisez ce fichier dans votre thème, nous vous conseillons de noter
 version : 
 */
 if(isset($this->aProds[$this->default_lang][$d["k"]])){//si le produit existe 
- $v = $this->aProds[$this->default_lang][$d["k"]];//var_dump('produitRubrique',$d["k"],$d,$this->aProds,$this);
+ $v = $this->aProds[$this->default_lang][$d["k"]];
 ?>
 <div id="prod<?php echo intval($d["k"]); ?>" class="lproduct_content" align="center">
  <header>

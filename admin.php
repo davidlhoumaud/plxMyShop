@@ -95,7 +95,7 @@ foreach($aLangs as $lang){
 
 <!-- Content en multilingue -->
 <?php
-foreach($aLangs as $lang) {//var_dump('admin for all langs',$lang);
+foreach($aLangs as $lang) {
  $lgf=($plxPlugin->aLangs)?$lang.'/':'';//folders
  $lng=($plxPlugin->aLangs)?'_'.$lang:'';//post vars
 ?>
@@ -134,10 +134,10 @@ foreach($aLangs as $lang) {//var_dump('admin for all langs',$lang);
    <tbody>
 <?php
     # Initialisation de l'ordre
-    $num = 0;//var_dump('admin aprod',$plxPlugin->aProds,$plxPlugin->aLangs,$plxPlugin->aConf,$plxPlugin->plxMotor->aConf['default_lang'],$_SESSION['default_lang'],$_SESSION['admin_lang']);
+    $num = 0;
 
      # Si on a des produits
- if($plxPlugin->aProds[$lang]){//var_dump('admin if aprod '.$lang,$plxPlugin->aProds[$lang]);
+ if($plxPlugin->aProds[$lang]){
   foreach($plxPlugin->aProds[$lang] as $k=>$v){ # Pour chaque produit
     $url=$v['url'];
     if ((isset($_GET['mod']) && $_GET['mod']=='cat' && $v['pcat']!=1)||(isset($_GET['mod']) && $_GET['mod']=='cmd'))continue;

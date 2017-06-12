@@ -29,7 +29,7 @@ if(!empty($_POST) AND isset($plxPlugin->aProds[$plxPlugin->default_lang][$_POST[
   exit;
  }
  # On récupère le contenu
- foreach ($aLangs as $lang) {//var_dump('edition produit admin',$lang,$plxPlugin->aProds);//exit;
+ foreach ($aLangs as $lang) {
   $title_htmltag[$lang] = $plxPlugin->aProds[$lang][$id]['title_htmltag'];
   $meta_description[$lang] = $plxPlugin->aProds[$lang][$id]['meta_description'];
   $meta_keywords[$lang] = $plxPlugin->aProds[$lang][$id]['meta_keywords'];
@@ -59,9 +59,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
  foreach($array as $k=>$v)
   $aTemplates[$v] = $v;
 }
-//var_dump('pcat+session+plugin',$pcat,$_SESSION,$plxPlugin);
 $modProduit = ("1" !== $pcat[ $plxPlugin->default_lang ] );
-//var_dump(PLX_MYMULTILINGUE,$plxPlugin->plxMotor->plxPlugins->aPlugins['plxMyMultiLingue']->getParam('lang_medias_folder'),$plxPlugin);exit;
 if (!isset($_SESSION)) {// inutile?
  session_start();
 }
@@ -143,7 +141,7 @@ $imgNoUrl = PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png';
 
 <!-- Content en multilingue -->
 <?php 
-foreach($aLangs as $lang) {//var_dump($plxAdmin->aConf);exit;
+foreach($aLangs as $lang) {
  $lng=($plxPlugin->aLangs)?'_'.$lang:'';
 ?>
    <div class="tabpage<?php echo($lang==$plxAdmin->aConf['default_lang'])?' active':'" style="display:none;"'; ?>" id="tabpage<?php echo $lng ?>">
@@ -199,7 +197,7 @@ foreach($aLangs as $lang) {//var_dump($plxAdmin->aConf);exit;
      <hr/>
      <?php $plxPlugin->lang('L_PRODUCTS_CATEGORIES');?>&nbsp;:<br/>
 <?php
- $listeCategories = explode(",", $plxPlugin->aProds[$lang][$id]["group"]);//var_dump('edit prod admin',$plxPlugin->aProds);
+ $listeCategories = explode(",", $plxPlugin->aProds[$lang][$id]["group"]);
  foreach ($plxPlugin->aProds[$lang] as $idCategorie => $p) {
   if ("1" !== $p["pcat"]) {
    continue;
