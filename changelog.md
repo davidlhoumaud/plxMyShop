@@ -34,8 +34,8 @@ le plugin spxplugindowloader.2.5 provoque la perte de l'action bar aux plugins q
 
 Effet de bord : si on ajoute un shortCode [boutonPanier ###] a un prod/cat et que le panier est sur toutes les pages (il s'affiche 2 fois (av et aprés le form de commande)?????
 
-##v0.13.1r4M 13/06/2017##
-[+] Full Multilingue
+##v0.13.1r4FM 13/06/2017##
+[+] #MetaMML : Full Multilingue
 
 ##v0.13.1r4 11/06/2017##
 [+] Fins de lignes unifiées par dos2unix (merci Bazooka)

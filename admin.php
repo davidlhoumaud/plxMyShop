@@ -100,7 +100,7 @@ foreach($aLangs as $lang) {
  $lng=($plxPlugin->aLangs)?'_'.$lang:'';//post vars
 ?>
  <div class="tabpage" id="tabpage<?php echo $lng ?>">
-  <div class="scrollable-table">
+  <div class="scrollable-table"><p class="lang_helper">Admin:<?php echo $plxAdmin->aConf['default_lang'].' - Tab:'.$lang ?></p>
    <table id="myShop-table<?php echo $lng ?>" class="table full-width listeCategoriesProduitsAdmin liste<?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?"Categories":"Produits");?>Admin display responsive no-wrap" width="100%">
     <thead>
      <tr>

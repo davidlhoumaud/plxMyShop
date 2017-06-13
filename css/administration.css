@@ -9,7 +9,11 @@
  min-width: 16px;
 }
 .page-title {}
-
+.lang_helper{
+ position:fixed;
+ bottom:0;
+ right:1em;
+}
 .save-button {
  margin-left: 16.18rem; /* approximatif, pousse les autres boutons lors de la config */
 }

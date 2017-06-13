@@ -146,7 +146,7 @@ foreach($aLangs as $lang) {
 ?>
    <div class="tabpage<?php echo($lang==$plxAdmin->aConf['default_lang'])?' active':'" style="display:none;"'; ?>" id="tabpage<?php echo $lng ?>">
     <div class="grid gridthumb">
-     <div class="col sml-12 med-5 label-centered"><p><?php echo $plxAdmin->aConf['default_lang'].$lang.$lng ?></p>
+     <div class="col sml-12 med-5 label-centered"><p class="lang_helper">Admin:<?php echo $plxAdmin->aConf['default_lang'].' - Tab:'.$lang ?></p>
       <label for="id_image<?php echo $lng ?>"><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail<?php echo $lng ?>" href="javascript:void(0)" onclick="mediasManager.openPopup('id_image<?php echo $lng ?>', true, 'id_image<?php echo $lng ?>')" style="outline:none; text-decoration: none"> +</a></label>
       <?php plxUtils::printInput('image'.$lng,plxUtils::strCheck($image[$lang]),'text','255-255',false,'full-width','','onKeyUp="refreshImg(\'id_image_img'.$lng.'\')"'); ?>
      </div>
