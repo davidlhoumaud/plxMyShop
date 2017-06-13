@@ -84,7 +84,7 @@ $imgNoUrl = PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png';
 </script>
 <!-- Utilisation du selecteur d'image natif à PluXml -->
 <script type="text/javascript">
- function refreshImg(id_img) {alert(id_img);
+ function refreshImg(id_img) {console.log(id_img);
   var dta = document.getElementById(id_img).value;
   if(dta.trim()==='') {
    document.getElementById(id_img).innerHTML = '<img src="<?php echo $imgNoUrl ?>" alt="" />';
