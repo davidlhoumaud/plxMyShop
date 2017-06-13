@@ -96,7 +96,7 @@ $_SESSION[$plxPlugin->plugName]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin-
    <?php plxUtils::printInput('id', $id, 'hidden');?>
    <div class="tabs">
     <ul class="col sml-12">
-     <li id="tabHeader_main"><?php $plxPlugin->lang('L_MAIN') ?></li>
+     <li id="tabHeader_main" class="active"><?php $plxPlugin->lang('L_MAIN') ?></li>
 <?php
      foreach($aLangs as $lang){
       echo '     <li id="tabHeader_'.$lang.'"><span class="myhide">'.L_CONTENT_FIELD.'</span> <sup>'.strtoupper($lang).'</sup></li>'.PHP_EOL;
