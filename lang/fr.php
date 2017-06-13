@@ -21,7 +21,7 @@ $LANG = array(
 'L_AND'                             => 'et',
 'L_OR'                              => 'ou',
 'L_A'                               => 'à',
-'L_OPTIONEL'                        => 'optionel',
+'L_OPTIONEL'                        => 'optionnel',
 
 'L_EMAIL'                           => 'Destinataire(s) du courriel *',
 'L_EMAIL_CC'                        => 'Destinataire(s) en copie du courriel ',
@@ -163,7 +163,7 @@ $LANG = array(
 
 'L_CONFIG_MENU_TITLE'               => 'Configuration menu et tactique du cookie client',
 'L_CONFIG_MENU_POSITION'            => 'Position dans le menu des catégories et pages fixes (panier)',
-'L_CONFIG_SUBMENU'                  => 'Nom du sous-menu principal de la boutique (optionel)',# groupe les catégories et le panier
+'L_CONFIG_SUBMENU'                  => 'Nom du sous-menu principal de la boutique (optionnel)',# groupe les catégories et le panier
 
 'L_CONFIG_PAGE'                     => 'Configuration des pages',
 
