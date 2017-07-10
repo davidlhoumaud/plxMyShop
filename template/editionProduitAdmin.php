@@ -40,6 +40,7 @@ if(!empty($_POST) AND isset($plxPlugin->aProds[$_POST['id']])) {
  $url = $plxPlugin->aProds[$id]['url'];
  $active = $plxPlugin->aProds[$id]['active'];
  $noaddcart = $plxPlugin->aProds[$id]['noaddcart'];
+ $iteminstock = $plxPlugin->aProds[$id]['iteminstock'];
  $notice_noaddcart = $plxPlugin->aProds[$id]['notice_noaddcart'];
  $title_htmltag = $plxPlugin->aProds[$id]['title_htmltag'];
  $meta_description = $plxPlugin->aProds[$id]['meta_description'];
@@ -151,13 +152,19 @@ $_SESSION[$plxPlugin->plugName]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin-
       <div class="col sml-12 med-7">
        <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'text','0-255'); ?>
       </div>
+      <div class="col sml-12 med-5 label-centered">
+       <label for="id_iteminstock"><?php $plxPlugin->lang('L_PRODUCTS_ITEM_INSTOCK') ;?>&nbsp;:</label>
+      </div>
+      <div class="col sml-12 med-7">
+        <?php plxUtils::printInput('iteminstock',plxUtils::strCheck($iteminstock),'text','0-255'); ?>
+      </div>
      </div>
      <div class="grid">
       <div class="col sml-12 med-5 label-centered">
        <label for="id_noaddcart"><?php $plxPlugin->lang('L_PRODUCTS_BASKET_BUTTON') ;?>&nbsp;:<?php echo '<img id="cartImg" class="noaddcartImg" src="'.PLX_PLUGINS.$plxPlugin->plugName.'/images/'.(empty($noaddcart)?'full':'empty').'.png" />'; ?></label>
       </div>
       <div class="col sml-12 med-7">
-       <script type="text/javascript">function toggleNoaddcart(a){var b = document.getElementById('id_notice_noaddcart');var c = document.getElementById('config_notice_noaddcart');var d = document.getElementById('cartImg');if(a==1){b.setAttribute("placeholder","<?php echo $plxPlugin->getLang('L_NOTICE_NOADDCART').' ('.$plxPlugin->getLang('L_BY_DEFAULT').')';?>");c.classList.remove("hide");d.src = "<?php echo PLX_PLUGINS.$plxPlugin->plugName.'/images/empty.png'; ?>";}else{b.removeAttribute("placeholder");c.classList.add("hide");d.src = "<?php echo PLX_PLUGINS.$plxPlugin->plugName.'/images/full.png'; ?>";}}</script>
+       <script type="text/javascript">function toggleNoaddcart(a){var b = document.getElementById('id_notice_noaddcart');var c = document.getElementById('config_notice_noaddcart');var d = document.getElementById('cartImg');if(a==1){b.setAttribute("placeholder","<?php echo $plxPlugin->getLang('L_NOTICE_NOADDCART').' ('.$plxPlugin->getLang('L_BY_DEFAULT').')';?>");c.classList.remove("hide");d.src = "";}else{b.removeAttribute("placeholder");c.classList.add("hide");d.src = "<?php echo PLX_PLUGINS.$plxPlugin->plugName.'/images/full.png'; ?>";}}</script>
        <?php plxUtils::printSelect('noaddcart', array('1'=>L_YES,'0'=>L_NO), plxUtils::strCheck($noaddcart), false,'" onChange="toggleNoaddcart(this.options[this.selectedIndex].value);'); ?>
       </div>
      </div>
@@ -194,6 +201,7 @@ $_SESSION[$plxPlugin->plugName]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin-
      <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'hidden','0-255');?>
      <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'hidden','50-255');?>
      <?php plxUtils::printInput('noaddcart', plxUtils::strCheck($noaddcart),'hidden','0-255');?>
+     <?php plxUtils::printInput('iteminstock',plxUtils::strCheck($iteminstock),'hidden','50-255');?>
      <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'hidden','50-255');?>
 <?php } ?>
     <div class="grid">
