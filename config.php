@@ -670,13 +670,13 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
   </div>
 
   <h2><?php $plxPlugin->lang('L_CONFIG_FOLDERS') ?></h2>
-<?php $placeholder = (defined('PLX_VERSION') && PLX_VERSION > '5.5')?' placeholder="data/commandes/"':'data/commandes'; ?>
+<?php $placeholder = (defined('PLX_VERSION') && PLX_VERSION > '5.5')?' placeholder="data/%s/"':'data/%s/'; ?>
   <div class="grid">
    <div class="col sml-12 med-5 label-centered">
     <label for="id_racine_commandes"><?php $plxPlugin->lang('L_CONFIG_ORDERS_FOLDER') ?>&nbsp;:</label>
    </div>
    <div class="col sml-12 med-7">
-    <?php plxUtils::printInput('racine_commandes',$var['racine_commandes'],'text','0-120', false, '', $placeholder) ?>
+    <?php plxUtils::printInput('racine_commandes',$var['racine_commandes'],'text','0-120', false, '', sprintf($placeholder,'commandes')) ?>
    </div>
   </div>
   <div class="grid">
@@ -684,7 +684,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
     <label for="id_racine_products"><?php $plxPlugin->lang('L_CONFIG_PRODUCTS_FOLDER') ?>&nbsp;:</label>
    </div>
    <div class="col sml-12 med-7">
-    <?php plxUtils::printInput('racine_products',$var['racine_products'],'text','0-120', false, '', $placeholder) ?>
+    <?php plxUtils::printInput('racine_products',$var['racine_products'],'text','0-120', false, '', sprintf($placeholder,'products')) ?>
    </div>
   </div>
  </fieldset>
