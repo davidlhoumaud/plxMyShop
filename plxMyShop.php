@@ -81,8 +81,8 @@ class plxMyShop extends plxPlugin {
    }
   }
   // Ajout de variables non protégé facilement accessible via $(plxShow->)plxMotor->plxPlugins->aPlugins['plxMyShop']->aConf['racine_XXX'] dans les themes ou dans d'autres plugins.
-  $this->aConf['racine_products'] = (empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products'));
-  $this->aConf['racine_commandes'] = (empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes'));
+  $this->aConf['racine_products'] = (!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products'));
+  $this->aConf['racine_commandes'] = (!$this->getParam('racine_commandes')?'data/commandes/':$this->getParam('racine_commandes'));
   if($this->aLangs && !empty($default_lang))
    $this->aConf['racine_products_lang'] = $this->aConf['racine_products'].$default_lang.'/';
 
@@ -853,12 +853,12 @@ var picker_date = new Pikaday(
 
     if($this->aLangs){
      foreach ($this->aLangs as $lang){
-      $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
+      $filename = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
       if(is_file($filename)) unlink($filename);
      }
     }
     else{
-     $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
+     $filename = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
      if(is_file($filename)) unlink($filename);
     }
 
@@ -880,13 +880,13 @@ var picker_date = new Pikaday(
 
       if($this->aLangs){
        foreach ($this->aLangs as $lang){
-        $oldfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
-        $newfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$stat_url.'.php';
+        $oldfilename = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
+        $newfilename = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$lang.'/'.$product_id.'.'.$stat_url.'.php';
         if(is_file($oldfilename)) rename($oldfilename, $newfilename);
        }
       }
-      $oldfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
-      $newfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$stat_url.'.php';
+      $oldfilename = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$this->aProds[$product_id]['url'].'.php';
+      $newfilename = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$product_id.'.'.$stat_url.'.php';
       if(is_file($oldfilename)) rename($oldfilename, $newfilename);
      }
      $this->aProds[$product_id]['pcat'] = trim($content[$product_id.'_pcat']);
@@ -978,7 +978,7 @@ var picker_date = new Pikaday(
 
   $content = '';
   # Emplacement de la page
-  $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$langue.$num.'.'.$this->aProds[ $num ]['url'].'.php';
+  $filename = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$langue.$num.'.'.$this->aProds[ $num ]['url'].'.php';
   if(is_file($filename) AND filesize($filename) > 0){
    if($f = fopen($filename, 'r')){
     $content = fread($f, filesize($filename));
@@ -988,7 +988,7 @@ var picker_date = new Pikaday(
    }
   }
   if ($this->aLangs && empty(trim($content))){ # si contenu vide en multilingue on essaye de recuperer sans la langue.
-   $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$num.'.'.$this->aProds[ $num ]['url'].'.php';
+   $filename = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$num.'.'.$this->aProds[ $num ]['url'].'.php';
    if(is_file($filename) AND filesize($filename) > 0){
     if($f = fopen($filename, 'r')){
      $content = fread($f, filesize($filename));
@@ -1032,15 +1032,15 @@ var picker_date = new Pikaday(
   //eval($this->plxPlugins->callHook('plxAdminEditProduct'));
 
   if($this->editProducts(null,true)){
-   if (!is_dir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')))){
-    mkdir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')), 0755, true);
+   if (!is_dir(PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')))){
+    mkdir(PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')), 0755, true);
    }
    $aLangs = array($this->plxMotor->aConf['default_lang']);
    if($this->aLangs){
     $aLangs = $this->aLangs;
     foreach ($this->aLangs as $lang){
-     if (!is_dir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/')){
-      mkdir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/', 0755, true);
+     if (!is_dir(PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$lang.'/')){
+      mkdir(PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$lang.'/', 0755, true);
      }
     }
    }
@@ -1049,7 +1049,7 @@ var picker_date = new Pikaday(
     $url_save = '';
     if($this->aLangs){$url_save = $lang.'/';}
      # Génération du nom du fichier de la page statique
-     $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_save.$content['id'].'.'.$this->aProds[ $content['id'] ]['url'].'.php';
+     $filename = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$url_save.$content['id'].'.'.$this->aProds[ $content['id'] ]['url'].'.php';
      # On écrit le fichier
      if ($lang == $this->plxMotor->aConf['default_lang'])
       $content['content_'.$lang] = $content['content'];
@@ -1209,7 +1209,7 @@ var picker_date = new Pikaday(
  public function productDate($format='#day #num_day #month #num_year(4)'){
 
   # On genere le nom du fichier dont on veux récupérer la date
-  $file = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$this->productNumber();
+  $file = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$this->productNumber();
   $file .= '.'.$this->aProds[$this->productNumber() ]['url'].'.php';
   # Test de l'existence du fichier
   if(!is_file($file)) return;
@@ -1234,12 +1234,12 @@ var picker_date = new Pikaday(
    }
 
    # On genere le nom du fichier a inclure
-   $file = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_read.$this->productNumber();
+   $file = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$url_read.$this->productNumber();
    $file .= '.'.$this->aProds[ $this->productNumber() ]['url'].'.php';
 
    if(!is_file($file)){
     # On tente de recuperer le contenu du fichier sans langue.
-    $file = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$this->productNumber();
+    $file = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$this->productNumber();
     $file .= '.'.$this->aProds[ $this->productNumber() ]['url'].'.php';
    }
    # Inclusion du fichier
@@ -1269,15 +1269,15 @@ var picker_date = new Pikaday(
   }
 
   # On génère un nouvel objet plxGlob
-  $plxGlob_stats = plxGlob::getInstance(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_read);
+  $plxGlob_stats = plxGlob::getInstance(PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$url_read);
   if($files = $plxGlob_stats->query('/^'.str_pad($id,3,'0',STR_PAD_LEFT).'.[a-z0-9-]+.php$/')){
-   include(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_read.$files[0]);
+   include(PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$url_read.$files[0]);
   }
   else{
    # on tente sans la langue.
-   $plxGlob_stats = plxGlob::getInstance(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')));
+   $plxGlob_stats = plxGlob::getInstance(PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')));
    if($files = $plxGlob_stats->query('/^'.str_pad($id,3,'0',STR_PAD_LEFT).'.[a-z0-9-]+.php$/')){
-    include(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$files[0]);
+    include(PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$files[0]);
    }
   }
  }
@@ -1550,7 +1550,7 @@ var picker_date = new Pikaday(
       require PLX_PLUGINS . $this->plugName . '/classes/paypal_api/boutonPaypalSimple.php';
      }
 
-     $nf=PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')).date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
+     $nf=PLX_ROOT.(!$this->getParam('racine_commandes')?'data/commandes/':$this->getParam('racine_commandes')).date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
      $monfichier = fopen($nf, 'w+');
      $commandeContent="<!DOCTYPE html>
 <html>
