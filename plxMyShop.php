@@ -83,10 +83,13 @@ class plxMyShop extends plxPlugin {
   // Ajout de variables non protégé facilement accessible via $(plxShow->)plxMotor->plxPlugins->aPlugins['plxMyShop']->aConf['racine_XXX'] dans les themes ou dans d'autres plugins.
   $this->aConf['racine_products'] = (empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products'));
   $this->aConf['racine_commandes'] = (empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes'));
-  if($this->aLangs && !empty($default_lang))
+  if($this->aLangs && !empty($default_lang)){
    $this->aConf['racine_products_lang'] = $this->aConf['racine_products'].$default_lang.'/';
-
+   $this->aConf['racine_commandes_lang'] = $this->aConf['racine_commandes'].$default_lang.'/';
+  }
   $this->getProducts();
+
+
 
   if (!is_dir(PLX_ROOT.$this->aConf['racine_commandes'])){
    mkdir(PLX_ROOT.$this->aConf['racine_commandes'], 0755, true);
@@ -94,6 +97,17 @@ class plxMyShop extends plxPlugin {
   if (!is_file(PLX_ROOT.$this->aConf['racine_commandes'].'index.html')){
    $mescommandeindex = fopen(PLX_ROOT.$this->aConf['racine_commandes'].'index.html', 'w+');
    fclose($mescommandeindex);
+  }
+  if($this->aLangs){//créer les dossiers de sauvegarde si MyMultilingue
+   foreach ($this->aLangs as $lang){
+    if (!is_dir(PLX_ROOT.$this->aConf['racine_commandes'].$lang.'/')){
+     mkdir(PLX_ROOT.$this->aConf['racine_commandes'].$lang.'/', 0755, true);
+    }
+    if (!is_file(PLX_ROOT.$this->aConf['racine_commandes'].$lang.'/index.html')){
+     $mescommandeindex = fopen(PLX_ROOT.$this->aConf['racine_commandes'].$lang.'/index.html', 'w+');
+     fclose($mescommandeindex);
+    }
+   }
   }
 
   // méthodes de paiement
@@ -133,6 +147,7 @@ class plxMyShop extends plxPlugin {
     unset($_SESSION[$this->plugName]["prods"][$_POST['idP']]);//on efface sa variable de session
    }
   }
+  //var_dump($this->lang,$this->aLangs,$this->default_lang);
  }
 
  /**
@@ -208,7 +223,8 @@ class plxMyShop extends plxPlugin {
  public function AdminTopEndHead() {
   if (((basename($_SERVER['SCRIPT_NAME'])=='plugin.php' || basename($_SERVER['SCRIPT_NAME'])=='parametres_plugin.php')) && (isset($_GET['p']) && $_GET['p']==$this->plugName)) {
    echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plugName.'/css/administration.css" />'."\n";
-   echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plugName.'/css/tabs.css" />'."\n";
+   if($this->aLangs)
+    echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plugName.'/css/tabs.css" />'."\n";
    echo '<noscript><style>.hide{display:inherit !important;}</style></noscript>'."\n";
   }
  }
@@ -1038,15 +1054,15 @@ var picker_date = new Pikaday(
    //eval($this->plxPlugins->callHook('plxAdminEditProduct'));
   }
   if($this->editProducts(null,true)){
-   if (!is_dir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')))){//créer les dossiers de sauvegarde selon la config
-    mkdir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')), 0755, true);
+   if (!is_dir(PLX_ROOT.$this->aConf['racine_products'])){//créer les dossiers de sauvegarde selon la config
+    mkdir(PLX_ROOT.$this->aConf['racine_products'], 0755, true);
    }
    $aLangs = array($this->default_lang);
    if($this->aLangs){//créer les dossiers de sauvegarde si MyMultilingue
     $aLangs = $this->aLangs;
     foreach ($this->aLangs as $lang){
-     if (!is_dir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/')){
-      mkdir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lang.'/', 0755, true);
+     if (!is_dir(PLX_ROOT.$this->aConf['racine_products'].$lang.'/')){
+      mkdir(PLX_ROOT.$this->aConf['racine_products'].$lang.'/', 0755, true);
      }
     }
    }
@@ -1055,7 +1071,7 @@ var picker_date = new Pikaday(
     $lgf=($this->aLangs)?$lang.'/':'';//folders
     $lng=($this->aLangs)?'_'.$lang:'';//post vars 
     # Génération du nom du fichier de la page statique
-    $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lgf.$content['id'].'.'.$this->aProds[$lang][ $content['id'] ]['url'].'.php';
+    $filename = PLX_ROOT.$this->aConf['racine_products'].$lgf.$content['id'].'.'.$this->aProds[$lang][ $content['id'] ]['url'].'.php';
     # On écrit le fichier
     //~ if ($lang == $this->default_lang)
      //~ $content['content_'.$lang] = $content['content'];
@@ -1555,8 +1571,8 @@ var picker_date = new Pikaday(
       //require PLX_PLUGINS . $this->plugName . '/classes/paypal_api/SetExpressCheckout.php';
       require PLX_PLUGINS . $this->plugName . '/classes/paypal_api/boutonPaypalSimple.php';
      }
-
-     $nf=PLX_ROOT.(empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes')).date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
+     $lgf=($this->aLangs)?$this->default_lang.'/':'';//folders if multilingue
+     $nf=PLX_ROOT.$this->aConf['racine_commandes'].$lgf.date("Y-m-d_H-i-s_").$_POST['methodpayment'].'_'.$totalpricettc.'_'.$totalpoidgshipping.'.html';
      $monfichier = fopen($nf, 'w+');
      $commandeContent="<!DOCTYPE html>
 <html>

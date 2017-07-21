@@ -15,6 +15,11 @@
  "<link rel='stylesheet' href='//cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css' type='text/css' media='screen' />"+
  "<link rel='stylesheet' href='//cdn.rawgit.com/noelboss/featherlight/1.7.2/release/featherlight.min.css' type='text/css' />"
 */
+$lngs = '';//var_export($aLangs,false);
+foreach($aLangs as $lang)
+ $lngs.=($plxPlugin->aLangs)?"'_$lang',":'';//table tabs vars
+$lngs = trim($lngs,',');
+
 ?>
 <script type="text/javascript" class="init">
 $(document).ready(function(){
@@ -25,26 +30,28 @@ $(document).ready(function(){
  "<link rel='stylesheet' href='../../plugins/plxMyShop/css/jquery.dataTables-1.10.15.min.css' type='text/css' media='screen' />"+
  "<link rel='stylesheet' href='../../plugins/plxMyShop/css/responsive.dataTables-2.1.1.min.css' type='text/css' media='screen' />"+
  "<link rel='stylesheet' href='../../plugins/plxMyShop/css/featherlight-1.7.2.min.css' type='text/css' />");
- var table = $('#myShop-table').DataTable({// DataTable
-  "order": [[ 0, "desc" ]],
-  "responsive": true,
-  "language":{
-   "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/<?php $plxPlugin->lang('L_DATABLEJS'); ?>.json"
-  }
- });
-
- table.columns().every(function(){// Apply the search
- //console.log('table.columns.every',this.value);
-  if($(this).text()!=''){
-   var that = this;
-   $('input',this.footer()).on('keyup change',function(){
-    if(that.search() !== this.value){
-     that
-      .search(this.value)
-      .draw();
-    }
-   });
-  }
+ var langs = [<?php echo !empty($lngs)?$lngs:"''"; ?>];
+ langs.forEach(function(item, index, array) {
+  this['table'+item] = $('#myShop-table' + item).DataTable({// DataTable dynamic lang var
+   "order": [[ 0, "desc" ]],
+   "responsive": true,
+   "language":{
+    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/<?php $plxPlugin->lang('L_DATABLEJS'); ?>.json"
+   }
+  });
+  this['table'+item].columns().every(function(){// Apply the search
+  //console.log('table.columns.every',this.value);
+   if($(this).text()!=''){
+    var that = this;
+    $('input',this.footer()).on('keyup change',function(){
+     if(that.search() !== this.value){
+      that
+       .search(this.value)
+       .draw();
+     }
+    });
+   }
+  });
  });
 });
 </script>

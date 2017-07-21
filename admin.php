@@ -26,7 +26,7 @@ if(!empty($_POST)){
  exit;
 }
 
-$dir = PLX_ROOT.(empty($plxPlugin->getParam('racine_commandes'))?'data/commandes/':$plxPlugin->getParam('racine_commandes'));
+$dir = PLX_ROOT.$plxPlugin->aConf['racine_commandes'];
 if (isset($_GET['kill']) && !empty($_GET['kill']) && is_file($dir.$_GET['kill'])){
  unlink($dir.$_GET['kill']);
  header('Location: plugin.php?p='.$plxPlugin->plugName.'&mod=cmd');
@@ -35,8 +35,7 @@ if (isset($_GET['kill']) && !empty($_GET['kill']) && is_file($dir.$_GET['kill'])
 if ((isset($_GET['prod']) && !empty($_GET['prod'])) || (isset($_POST['prod']) && !empty($_POST['prod'])))
  include(dirname(__FILE__).'/template/editionProduitAdmin.php');
 else {
-# On inclut le header
-//include(dirname(__FILE__).'/top.php');
+ $aLangs = ($plxPlugin->aLangs)?$plxPlugin->aLangs:array($plxPlugin->default_lang);#multilingue or not
 ?>
 <script type="text/javaScript">
 function checkBox(obj){
@@ -75,19 +74,20 @@ function checkBox(obj){
  <?php endif; ?>
  <div class="grid" id="tabContainer">
   <fieldset class="col sml-12">
+<?php if($plxPlugin->aLangs){#ml ?>
    <div class="tabs">
     <ul class="col sml-12">
 <!--
      <li id="tabHeader_main"><?php $plxPlugin->lang('L_MAIN') ?></li>
 -->
 <?php
-$aLangs = ($plxPlugin->aLangs)?$plxPlugin->aLangs:array($plxPlugin->default_lang);
-foreach($aLangs as $lang){
- echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').'><span class="myhide">'.L_CONTENT_FIELD.'</span> <sup>'.strtoupper($lang).'</sup></li>'.PHP_EOL;
-}
+    foreach($aLangs as $lang){
+     echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').'>'.strtoupper($lang).'</li>'.PHP_EOL;
+    }
 ?>
     </ul>
    </div>
+<?php }#fi ml ?>
    <div class="grid tabscontent">
 <!--
     <div class="tabpage" id="tabpage_main"></div>
@@ -99,7 +99,7 @@ foreach($aLangs as $lang) {
  $lgf=($plxPlugin->aLangs)?$lang.'/':'';//folders
  $lng=($plxPlugin->aLangs)?'_'.$lang:'';//post vars
 ?>
- <div class="tabpage" id="tabpage<?php echo $lng ?>">
+ <div class="tabpage<?php echo ($lang==$plxAdmin->aConf['default_lang']?' active':''); ?>" id="tabpage<?php echo $lng ?>">
   <div class="scrollable-table"><p class="lang_helper">Admin:<?php echo $plxAdmin->aConf['default_lang'].' - Tab:'.$lang ?></p>
    <table id="myShop-table<?php echo $lng ?>" class="table full-width listeCategoriesProduitsAdmin liste<?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?"Categories":"Produits");?>Admin display responsive no-wrap" width="100%">
     <thead>
@@ -234,28 +234,13 @@ foreach($aLangs as $lang) {
     }
  echo'</tr>';
  }
-?>
-    </tbody>
-   </table>
-  </div><!-- fi scrolable table -->
-  </div><!-- fi tabpage -->
-<?php
-}//fo foreach aLangs
 
- ?>
-<!-- Fin du content en multilingue -->
-  </div><!-- tabscontent -->
-
-  </fieldset>
- </div><!-- fi tabContainer -->
-<script type="text/javascript" src="<?php echo PLX_PLUGINS.$plxPlugin->plugName."/js/tabs.js" ?>"></script>
-<?php 
  if(isset($_GET['mod']) && $_GET['mod']=='cmd'){
 
-  $dh  = opendir($dir);
-  $filescommande= array();
+  $dh = opendir($dir.$lgf);
+  $filescommande = array();
   while (false !== ($filename = readdir($dh))){
-   if (is_file($dir.$filename) && $filename!='.' && $filename!='..' && $filename!='index.html'){
+   if (is_file($dir.$lgf.$filename) && $filename!='.' && $filename!='..' && $filename!='index.html'){
     $filescommande[] = $filename;
    }
   }
@@ -267,15 +252,27 @@ foreach($aLangs as $lang) {
     '   <td id="dateTime">'.$date.' - '.str_replace('-',':',$namearray[1]).'</td>'.PHP_EOL.
     '   <td>'.$namearray[2].'</td>'.PHP_EOL.
     '   <td class="nombre">'.$plxPlugin->pos_devise((float)$namearray[3]+(float)preg_replace('/.html/','',$namearray[4])).'</td>'.PHP_EOL.
-    '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p='.$plxPlugin->plugName.'&amp;mod=cmd&amp;kill='.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a target="_blank" href="'.$dir.$val.'" data-featherlight-target="'.$dir.$val.'" data-featherlight="iframe" data-featherlight-iframe-allowfullscreen="true">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.PHP_EOL.
+    '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p='.$plxPlugin->plugName.'&amp;mod=cmd&amp;kill='.$lgf.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a target="_blank" href="'.$dir.$lgf.$val.'" data-featherlight-target="'.$dir.$lgf.$val.'" data-featherlight="iframe" data-featherlight-iframe-allowfullscreen="true">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.PHP_EOL.
     '</tr>';
   }
-  echo'
+ }//fi command
+?>
     </tbody>
    </table>
-  </div>'.PHP_EOL;
- }
-?>
+  </div><!-- fi scrolable table -->
+  </div><!-- fi tabpage -->
+<?php
+}//fi foreach aLangs
+
+ ?>
+<!-- Fin du content en multilingue -->
+  </div><!-- tabscontent -->
+
+  </fieldset>
+ </div><!-- fi tabContainer -->
+<?php if($plxPlugin->aLangs){#ml ?>
+ <script type="text/javascript" src="<?php echo PLX_PLUGINS.$plxPlugin->plugName."/js/tabs.js" ?>"></script>
+<?php }#fi ml ?>
 </form>
 <?php }
 if($onglet=='commandes')

@@ -9,7 +9,25 @@
 
 # Liste des langues disponibles et prises en charge par le plugin
 $aLangs = array($plxPlugin->default_lang);
-
+$arts_shop_fields = array(
+ 'title_htmltag',
+ 'meta_description',
+ 'meta_keywords',
+ 'template',
+ 'image',
+ 'pricettc',
+ 'pcat',
+ 'poidg',
+ 'name',
+ 'url',
+ 'active',
+ 'noaddcart',
+ 'notice_noaddcart',
+ 'title_htmltag',
+ 'meta_description',
+ 'meta_keywords',
+ 'template'
+);
 # Si le plugin plxMyMultiLingue est installé on filtre sur les langues utilisées
 # On garde par défaut le fr si aucune langue sélectionnée dans plxMyMultiLingue
 if($plxPlugin->aLangs) {
@@ -30,23 +48,9 @@ if(!empty($_POST) AND isset($plxPlugin->aProds[$plxPlugin->default_lang][$_POST[
  }
  # On récupère le contenu
  foreach ($aLangs as $lang) {
-  $title_htmltag[$lang] = $plxPlugin->aProds[$lang][$id]['title_htmltag'];
-  $meta_description[$lang] = $plxPlugin->aProds[$lang][$id]['meta_description'];
-  $meta_keywords[$lang] = $plxPlugin->aProds[$lang][$id]['meta_keywords'];
-  $template[$lang] = $plxPlugin->aProds[$lang][$id]['template'];
-  $image[$lang] = $plxPlugin->aProds[$lang][$id]['image'];
-  $pricettc[$lang] = $plxPlugin->aProds[$lang][$id]['pricettc'];
-  $pcat[$lang] = $plxPlugin->aProds[$lang][$id]['pcat'];
-  $poidg[$lang] = $plxPlugin->aProds[$lang][$id]['poidg'];
-  $title[$lang] = $plxPlugin->aProds[$lang][$id]['name'];
-  $url[$lang] = $plxPlugin->aProds[$lang][$id]['url'];
-  $active[$lang] = $plxPlugin->aProds[$lang][$id]['active'];
-  $noaddcart[$lang] = $plxPlugin->aProds[$lang][$id]['noaddcart'];
-  $notice_noaddcart[$lang] = $plxPlugin->aProds[$lang][$id]['notice_noaddcart'];
-  $title_htmltag[$lang] = $plxPlugin->aProds[$lang][$id]['title_htmltag'];
-  $meta_description[$lang] = $plxPlugin->aProds[$lang][$id]['meta_description'];
-  $meta_keywords[$lang] = $plxPlugin->aProds[$lang][$id]['meta_keywords'];
-  $template[$lang] = $plxPlugin->aProds[$lang][$id]['template'];
+  foreach ($arts_shop_fields as $shop_field){
+   ${$shop_field}[$lang] = isset($plxPlugin->aProds[$lang][$id][$shop_field])?$plxPlugin->aProds[$lang][$id][$shop_field]:'';
+  }
   $content[$lang] = trim($plxPlugin->getFileProduct($id,$lang));
  }
 } else { # Sinon, on redirige
@@ -75,7 +79,7 @@ $imgNoUrl = PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png';
 
 <h3 id="pmsTitle" class="page-title">
  <?php $plxPlugin->lang($modProduit ? 'L_PRODUCT_TITLE' : 'L_CAT_TITLE');?>
- &laquo;<?php echo plxUtils::strCheck($title[$lang]);?>&raquo;
+ &laquo;<?php echo $name[$plxPlugin->default_lang];?>&raquo;
 </h3>
 <script type="text/javascript">//surcharge du titre dans l'action bar
  var title = document.getElementById('pmsTitle');
@@ -121,6 +125,7 @@ $imgNoUrl = PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png';
   <fieldset class="col sml-12">
    <?php plxUtils::printInput('prod', $_GET['prod'], 'hidden');?>
    <?php plxUtils::printInput('id', $id, 'hidden');?>
+<?php if($plxPlugin->aLangs){#ml ?>
    <div class="tabs">
     <ul class="col sml-12">
 <!--
@@ -128,11 +133,12 @@ $imgNoUrl = PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png';
 -->
 <?php
      foreach($aLangs as $lang){
-      echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').'><span class="myhide">'.L_CONTENT_FIELD.'</span> <sup>'.strtoupper($lang).'</sup></li>'.PHP_EOL;
+      echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').'>'.strtoupper($lang).'</li>'.PHP_EOL;
      }
 ?>
     </ul>
    </div>
+<?php }#fi ml ?>
    <div class="grid tabscontent">
 <!--
     <div class="tabpage" id="tabpage_main">
@@ -263,10 +269,10 @@ foreach($aLangs as $lang) {
    <?php echo plxToken::getTokenPostMethod() ?>
    <input type="submit" value="<?php $plxPlugin->lang($modProduit?'L_PRODUCT_UPDATE':'L_CAT_UPDATE');?>"/>
 <?php
-    if($active){ 
+    if($active){
      $link = $plxAdmin->urlRewrite('index.php?product'.intval($id).'/'.$url[$lang]);
      $codeTexte = $modProduit ? 'L_PRODUCT_VIEW_PAGE_ON_SITE' : 'L_CAT_VIEW_PAGE_ON_SITE';
-     $texte = sprintf($plxPlugin->getLang($codeTexte), '<i class="myhide">'.plxUtils::strCheck($title[$lang]).'</i>');
+     $texte = sprintf($plxPlugin->getLang($codeTexte), '<i class="myhide">'.plxUtils::strCheck($name[$lang]).'</i>');
 ?>
     <br class="med-hide" /><a href="<?php echo $link;?>"><?php echo $texte;?></a>
 <?php } ?>

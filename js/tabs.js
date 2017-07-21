@@ -11,7 +11,7 @@ window.onload=function() {
 
  //hide two tab contents we don't need
  var pages = container.querySelectorAll(".tabpage");
- for (var i = 1; i < pages.length; i++) {
+ for (var i = 0; i < pages.length; i++) {
   if(pages[i].className != 'tabpage active')
    pages[i].style.display="none";
  }
