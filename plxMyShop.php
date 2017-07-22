@@ -1725,24 +1725,24 @@ $message
  }
 
  public function menuAdmin($ongletEnCours){
-  $listeOnglets = [
-   "produits" => [
+  $listeOnglets = array(
+   "produits" => array(
     "titre" => $this->getLang("L_MENU_PRODUCTS"),
     "urlHtml" => "plugin.php?p=".$this->plugName,
-   ],
-   "categories" => [
+   ),
+   "categories" => array(
     "titre" => $this->getLang("L_MENU_CATS"),
     "urlHtml" => "plugin.php?p=".$this->plugName."&amp;mod=cat",
-   ],
-   "commandes" => [
+   ),
+   "commandes" => array(
     "titre" => $this->getLang("L_MENU_ORDERS"),
     "urlHtml" => "plugin.php?p=".$this->plugName."&amp;mod=cmd",
-   ],
-   "configuration" => [
+   ),
+   "configuration" => array(
     "titre" => $this->getLang("L_MENU_CONFIG"),
     "urlHtml" => "parametres_plugin.php?p=".$this->plugName,
-   ],
-  ];
+   ),
+  );
   foreach ($listeOnglets as $codeOnglet => $o){
 ?>
    <a href="<?php echo $o["urlHtml"];?>"><button<?php echo ($codeOnglet !== $ongletEnCours) ? "" : ' disabled="disabled" class="myhide"';?>><?php echo plxUtils::strCheck($o["titre"]);?></button></a>
