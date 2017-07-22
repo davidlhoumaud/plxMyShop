@@ -987,7 +987,8 @@ var picker_date = new Pikaday(
     return $content;
    }
   }
-  if ($this->aLangs && empty(trim($content))){ # si contenu vide en multilingue on essaye de recuperer sans la langue.
+  $content = trim($content);//in php < 5.5: Can't use function return value in write context with this: empty(trim($content)
+  if ($this->aLangs && empty($content)){ # si contenu vide en multilingue on essaye de recuperer sans la langue.
    $filename = PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')).$num.'.'.$this->aProds[ $num ]['url'].'.php';
    if(is_file($filename) AND filesize($filename) > 0){
     if($f = fopen($filename, 'r')){
@@ -1656,7 +1657,7 @@ $message
    }
    //Prevenir si erreur de réglage des frais de port
    $wOrP = $this->getParam("shipping_by_price")?'p':'w';//price Or Weight
-   if(!empty($this->getParam("freeship".$wOrP)) && $kg<$this->getParam("freeship".$wOrP)){
+   if($this->getParam("freeship".$wOrP) != '' && $kg<$this->getParam("freeship".$wOrP)){
     if($kg > 0 && ($this->getParam('p'.$num) * $this->getParam('pv'.$num)) > 0){
      if($kg > $this->getParam('p'.$num)){
       $this->shipOverload = true;
