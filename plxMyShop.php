@@ -81,15 +81,13 @@ class plxMyShop extends plxPlugin {
    }
   }
   // Ajout de variables non protégé facilement accessible via $(plxShow->)plxMotor->plxPlugins->aPlugins['plxMyShop']->aConf['racine_XXX'] dans les themes ou dans d'autres plugins.
-  $this->aConf['racine_products'] = (empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products'));
-  $this->aConf['racine_commandes'] = (empty($this->getParam('racine_commandes'))?'data/commandes/':$this->getParam('racine_commandes'));
+  $this->aConf['racine_products'] = (!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products'));
+  $this->aConf['racine_commandes'] = (!$this->getParam('racine_commandes')?'data/commandes/':$this->getParam('racine_commandes'));
   if($this->aLangs && !empty($default_lang)){
    $this->aConf['racine_products_lang'] = $this->aConf['racine_products'].$default_lang.'/';
    $this->aConf['racine_commandes_lang'] = $this->aConf['racine_commandes'].$default_lang.'/';
   }
   $this->getProducts();
-
-
 
   if (!is_dir(PLX_ROOT.$this->aConf['racine_commandes'])){
    mkdir(PLX_ROOT.$this->aConf['racine_commandes'], 0755, true);
@@ -885,7 +883,7 @@ var picker_date = new Pikaday(
    # suppression
    if(!empty($content['selection']) AND $content['selection']=='delete' AND isset($content['idProduct'])){
     foreach($content['idProduct'] as $product_id){
-     $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lgf.$product_id.'.'.$this->aProds[$lang][$product_id]['url'].'.php';
+     $filename = PLX_ROOT.$this->aConf['racine_products'].$lgf.$product_id.'.'.$this->aProds[$lang][$product_id]['url'].'.php';
      if(is_file($filename)) unlink($filename);
      # si le produit supprimée est en page d'accueil on met à jour le parametre
      unset($this->aProds[$lang][$product_id]);
@@ -902,8 +900,8 @@ var picker_date = new Pikaday(
       if($stat_url=='') $stat_url = L_DEFAULT_NEW_PRODUCT_URL;
       # On vérifie si on a besoin de renommer le fichier du produit
       if(isset($this->aProds[$lang][$product_id]) AND $this->aProds[$lang][$product_id]['url']!=$stat_url){
-       $oldfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lgf.$product_id.'.'.$this->aProds[$lang][$product_id]['url'].'.php';
-       $newfilename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lgf.$product_id.'.'.$stat_url.'.php';
+       $oldfilename = PLX_ROOT.$this->aConf['racine_products'].$lgf.$product_id.'.'.$this->aProds[$lang][$product_id]['url'].'.php';
+       $newfilename = PLX_ROOT.$this->aConf['racine_products'].$lgf.$product_id.'.'.$stat_url.'.php';
        if(is_file($oldfilename)) rename($oldfilename, $newfilename);
       }
       $this->aProds[$lang][$product_id]['pcat'] = trim(isset($content[$product_id.'_pcat'.$lng])?$content[$product_id.'_pcat'.$lng]:$content[$product_id.'_pcat'.$dfltLng]);
@@ -995,7 +993,7 @@ var picker_date = new Pikaday(
   $lng=(!empty($lang) && $this->aLangs)?$lang:$this->default_lang;//Product lang or not
   $content = '';
   # Emplacement de la page
-  $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$lgf.$num.'.'.$this->aProds[$lng][$num]['url'].'.php';
+  $filename = PLX_ROOT.$this->aConf['racine_products'].$lgf.$num.'.'.$this->aProds[$lng][$num]['url'].'.php';
 
   if(is_file($filename) AND filesize($filename) > 0){
    if($f = fopen($filename, 'r')){
@@ -1005,8 +1003,9 @@ var picker_date = new Pikaday(
     return $content;
    }
   }
-  if ($this->aLangs && empty(trim($content))){ # si contenu vide en multilingue on essaye de recuperer sans la langue.
-   $filename = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$num.'.'.$this->aProds[$lng][$num]['url'].'.php';
+  $content = trim($content);//in php < 5.5: Can't use function return value in write context with this: empty(trim($content)
+  if ($this->aLangs && empty($content)){ # si contenu vide en multilingue on essaye de recuperer sans la langue.
+   $filename = PLX_ROOT.$this->aConf['racine_products'].$num.'.'.$this->aProds[$lng][$num]['url'].'.php';
    if(is_file($filename) AND filesize($filename) > 0){
     if($f = fopen($filename, 'r')){
      $content = fread($f, filesize($filename));
@@ -1231,7 +1230,7 @@ var picker_date = new Pikaday(
  public function productDate($format='#day #num_day #month #num_year(4)'){
 
   # On genere le nom du fichier dont on veux récupérer la date
-  $file = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$this->productNumber();
+  $file = PLX_ROOT.$this->aConf['racine_products'].$this->productNumber();
   $file .= '.'.$this->aProds[$this->default_lang][$this->productNumber() ]['url'].'.php';
   # Test de l'existence du fichier
   if(!is_file($file)) return;
@@ -1256,12 +1255,12 @@ var picker_date = new Pikaday(
    }
 
    # On genere le nom du fichier a inclure
-   $file = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_read.$this->productNumber();
+   $file = PLX_ROOT.$this->aConf['racine_products'].$url_read.$this->productNumber();
    $file .= '.'.$this->aProds[$this->default_lang][ $this->productNumber() ]['url'].'.php';
 
    if(!is_file($file)){
     # On tente de recuperer le contenu du fichier sans langue.
-    $file = PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$this->productNumber();
+    $file = PLX_ROOT.$this->aConf['racine_products'].$this->productNumber();
     $file .= '.'.$this->aProds[$this->default_lang][ $this->productNumber() ]['url'].'.php';
    }
    # Inclusion du fichier
@@ -1291,15 +1290,15 @@ var picker_date = new Pikaday(
   }
 
   # On génère un nouvel objet plxGlob
-  $plxGlob_stats = plxGlob::getInstance(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_read);
+  $plxGlob_stats = plxGlob::getInstance(PLX_ROOT.$this->aConf['racine_products'].$url_read);
   if($files = $plxGlob_stats->query('/^'.str_pad($id,3,'0',STR_PAD_LEFT).'.[a-z0-9-]+.php$/')){
-   include(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$url_read.$files[0]);
+   include(PLX_ROOT.$this->aConf['racine_products'].$url_read.$files[0]);
   }
   else{
    # on tente sans la langue.
-   $plxGlob_stats = plxGlob::getInstance(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')));
+   $plxGlob_stats = plxGlob::getInstance(PLX_ROOT.$this->aConf['racine_products']);
    if($files = $plxGlob_stats->query('/^'.str_pad($id,3,'0',STR_PAD_LEFT).'.[a-z0-9-]+.php$/')){
-    include(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')).$files[0]);
+    include(PLX_ROOT.$this->aConf['racine_products'].$files[0]);
    }
   }
  }
@@ -1678,7 +1677,7 @@ $message
    }
    //Prevenir si erreur de réglage des frais de port
    $wOrP = $this->getParam("shipping_by_price")?'p':'w';//price Or Weight
-   if(!empty($this->getParam("freeship".$wOrP)) && $kg<$this->getParam("freeship".$wOrP)){
+   if($this->getParam("freeship".$wOrP) != '' && $kg<$this->getParam("freeship".$wOrP)){
     if($kg > 0 && ($this->getParam('p'.$num) * $this->getParam('pv'.$num)) > 0){
      if($kg > $this->getParam('p'.$num)){
       $this->shipOverload = true;
