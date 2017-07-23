@@ -179,7 +179,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
      <label for="valideCGV">
       <input type="checkbox" name="valideCGV" id="valideCGV"<?php echo (!isset($_POST["valideCGV"])) ? "" : " checked=\"checked\"";?>  required="required" />
       <span class='star'>*</span>
-      <a href="<?php echo $plxPlugin->plxMotor->urlRewrite($plxPlugin->getParam("urlCGV"));?>"><?php echo htmlspecialchars((empty($plxPlugin->getParam('useLangCGVDefault')))?$plxPlugin->getParam('libelleCGV'):$plxPlugin->getLang('L_COMMANDE_LIBELLE_DEFAUT'));?></a>
+      <a href="<?php echo $plxPlugin->plxMotor->urlRewrite($plxPlugin->getParam("urlCGV"));?>"><?php echo htmlspecialchars((!($plxPlugin->getParam('useLangCGVDefault')))?$plxPlugin->getParam('libelleCGV'):$plxPlugin->getLang('L_COMMANDE_LIBELLE_DEFAUT'));?></a>
      </label>
 <?php } ?>
     <input type="submit" class="green" name="validerCommande" id="btnCart" value="<?php $plxPlugin->lang('L_PUBLIC_VALIDATE_ORDER'); ?>" /><br />

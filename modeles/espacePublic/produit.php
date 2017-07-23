@@ -30,7 +30,7 @@ if (is_array($plxPlugin->productGroupTitle())) {
   </div>
 <?php } ?>
   <div class="image_product">
-<?php 
+<?php
   echo ($plxPlugin->aProds[$plxPlugin->default_lang][$plxPlugin->productNumber()]["image"]!="") ? '<img class="product_image" src="'.$plxPlugin->productImage().'">' : '';
   $plxPlugin->donneesModeles["k"] = $plxPlugin->productNumber();
   $plxPlugin->modele("espacePublic/boucle/boutonPanier");

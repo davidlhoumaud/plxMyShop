@@ -141,12 +141,11 @@ $imgNoUrl = PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png';
 <?php }#fi ml ?>
    <div class="grid tabscontent">
 <!--
-    <div class="tabpage" id="tabpage_main">
-   </div>fi tabpage_main 
+    <div class="tabpage" id="tabpage_main"></div>
 -->
 
 <!-- Content en multilingue -->
-<?php 
+<?php
 foreach($aLangs as $lang) {
  $lng=($plxPlugin->aLangs)?'_'.$lang:'';
 ?>

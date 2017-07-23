@@ -154,7 +154,7 @@ class plxMyShop extends plxPlugin {
  **/
  public function plxShowPageTitle() {
   if($this->plxMotor->mode == 'product') {
-   $affiche = "<?php 
+   $affiche = "<?php
     \$aProd = \$this->plxMotor->plxPlugins->aPlugins['".$this->plugName."']->aProds[ '".$this->default_lang."' ][ '".$this->idProduit."' ];//langue de session (a ajouté & ailleurs i think)
     \$title_htmltag =  \$aProd['title_htmltag'];
     \$title = \$title_htmltag !='' ? \$title_htmltag : \$aProd['name'];
@@ -183,7 +183,7 @@ class plxMyShop extends plxPlugin {
  **/
  public function plxShowMeta() {
   if($this->plxMotor->mode == 'product') {
-   $affiche = "<?php 
+   $affiche = "<?php
     \$aProd = \$this->plxMotor->plxPlugins->aPlugins['".$this->plugName."']->aProds[ '".$this->default_lang."' ][ '".$this->idProduit."' ];
     if(!empty(\$aProd['meta_'.\$meta]))
      echo '<meta name=\"'.\$meta.'\" content=\"'.plxUtils::strCheck(\$aProd['meta_'.\$meta]).'\" />'.PHP_EOL;
@@ -354,9 +354,6 @@ class plxMyShop extends plxPlugin {
     postcode:document.getElementById("postcode").value,
     city:document.getElementById("city").value,
     country:document.getElementById("country").value,
-    deliverydate:document.getElementById("deliverydate").value,
-    delivery_interval:document.getElementById("delivery_interval").value,
-
     };
     localStorage.setItem("Shop_Deliver_Adress", JSON.stringify(temp));
     document.getElementById("alerte_sauvegarder").innerHTML = "<?php echo $this->lang('L_ADDRESS_SAVED'); ?><br /><?php echo $this->lang('L_DO_NOT_SHARED'); ?>";
@@ -556,11 +553,12 @@ var picker_date = new Pikaday(
   if (isset($this->aProds[$this->default_lang][$this->productNumber()]['name'])){
    # infos sur la page statique
    $string  = "if(\$this->plxMotor->mode=='product'){";
+   $string .= " \$this->plxMotor->cible = rtrim(\$this->plxMotor->cible,'form');";//remove "form" in static filename ;)
    $string .= " \$array = array();";
    $string .= " \$array[\$this->plxMotor->cible] = array(
     'name'  => '" . $this->aProds[$this->default_lang][$this->productNumber()]["name"] . "',
     'menu'  => '',
-    'url'  => '/../template/affichageProduitPublic',
+    'url'  => '/template/affichageProduitPublic',
     'readable' => 1,
     'active' => 1,
     'group'  => ''
@@ -570,7 +568,6 @@ var picker_date = new Pikaday(
    echo "<?php ".$string." ?>";
   }
  }
-
  public function AdminPrepend(){
   $this->plxMotor = plxAdmin::getInstance();
 
@@ -693,13 +690,12 @@ var picker_date = new Pikaday(
    $this->vue->traitement();
 
    $this->plxMotor->mode = "boutique";
-   $this->plxMotor->cible = $nomPlugin;
+   $this->plxMotor->cible = $nomPlugin.'/';
    $this->plxMotor->template = $this->getParam("template");
-
-   $this->plxMotor->aConf["racine_statiques"] = "";
+   $this->plxMotor->aConf["racine_statiques"] = $this->plxMotor->aConf['racine_plugins'];
    $this->plxMotor->aStats[$this->plxMotor->cible] = array(
     "name" => $this->vue->titre(),
-    "url" => "/../{$this->plxMotor->aConf["racine_plugins"]}$nomPlugin/template/vue",#maybe in old pluxml add slash "$nomPlugin/template/vue" ?
+    "url" => "/template/vue",#maybe in old pluxml add slash "$nomPlugin/template/vue" ?
     "active" => 1,
     "menu" => "non",
     "readable" => 1,
@@ -994,7 +990,6 @@ var picker_date = new Pikaday(
   $content = '';
   # Emplacement de la page
   $filename = PLX_ROOT.$this->aConf['racine_products'].$lgf.$num.'.'.$this->aProds[$lng][$num]['url'].'.php';
-
   if(is_file($filename) AND filesize($filename) > 0){
    if($f = fopen($filename, 'r')){
     $content = fread($f, filesize($filename));
@@ -1004,7 +999,7 @@ var picker_date = new Pikaday(
    }
   }
   $content = trim($content);//in php < 5.5: Can't use function return value in write context with this: empty(trim($content)
-  if ($this->aLangs && empty($content)){ # si contenu vide en multilingue on essaye de recuperer sans la langue.
+  if ($this->aLangs && empty($content)){// si contenu vide en multilingue on essaye de recuperer sans la langue.
    $filename = PLX_ROOT.$this->aConf['racine_products'].$num.'.'.$this->aProds[$lng][$num]['url'].'.php';
    if(is_file($filename) AND filesize($filename) > 0){
     if($f = fopen($filename, 'r')){
@@ -1698,26 +1693,26 @@ $message
   echo '<?php
   if($op){
    if(
-    (!empty($this->getParam("freeshipw")) && $kg>=$this->getParam("freeshipw"))
+    (!!($this->getParam("freeshipw")) && $kg>=$this->getParam("freeshipw"))
     OR
-    (!empty($this->getParam("freeshipp")) && $prx>=$this->getParam("freeshipp"))
+    (!!($this->getParam("freeshipp")) && $prx>=$this->getParam("freeshipp"))
    ){
     echo "<p class=\'msgyeah\'><b>".$this->getLang("L_FREESHIP")."</b></p>";
     return true; //4 stop shippingmethod return true ;)
    }
    $freeShipM = "";
-   if(!empty($this->getParam("freeshipw")) OR !empty($this->getParam("freeshipp"))){
+   if(!!($this->getParam("freeshipw")) OR !!($this->getParam("freeshipp"))){
     $freeShipM .= "<b class=\'msgyeah2\'>".$this->getLang("L_FREESHIP")."</b>";
    }
-   if(!empty($this->getParam("freeshipw"))){
+   if(!!($this->getParam("freeshipw"))){
     $freeShipM .= "&nbsp;".$this->getLang("L_A")."&nbsp;<b class=\'msgyeah2\'>".$this->getParam("freeshipw")."&nbsp;kg</b>";
    }
-   if(!empty($this->getParam("freeshipp"))){
-    if(!empty($this->getParam("freeshipw")))
+   if(!!($this->getParam("freeshipp"))){
+    if(!!($this->getParam("freeshipw")))
      $freeShipM .= "&nbsp;".$this->getLang("L_AND");
     $freeShipM .= "&nbsp;".$this->getLang("L_A")."&nbsp;<b class=\'msgyeah2\'>".$this->pos_devise($this->getParam("freeshipp"))."</b>";
    }
-   if(!empty($freeShipM))
+   if(!!($freeShipM))
     echo "<p>".$freeShipM."</p>";
    unset($freeShipM);
   }
