@@ -676,13 +676,12 @@ var picker_date = new Pikaday(
    $this->vue->traitement();
 
    $this->plxMotor->mode = "boutique";
-   $this->plxMotor->cible = $nomPlugin;
+   $this->plxMotor->cible = $nomPlugin.'/';
    $this->plxMotor->template = $this->getParam("template");
-
-   $this->plxMotor->aConf["racine_statiques"] = "";
+   $this->plxMotor->aConf["racine_statiques"] = $this->plxMotor->aConf['racine_plugins'];
    $this->plxMotor->aStats[$this->plxMotor->cible] = array(
     "name" => $this->vue->titre(),
-    "url" => "/../{$this->plxMotor->aConf["racine_plugins"]}$nomPlugin/template/vue",#maybe in old pluxml add slash "$nomPlugin/template/vue" ?
+    "url" => "/template/vue",#maybe in old pluxml add slash "$nomPlugin/template/vue" ?
     "active" => 1,
     "menu" => "non",
     "readable" => 1,
@@ -1678,26 +1677,26 @@ $message
   echo '<?php
   if($op){
    if(
-    (!empty($this->getParam("freeshipw")) && $kg>=$this->getParam("freeshipw"))
+    (!!($this->getParam("freeshipw")) && $kg>=$this->getParam("freeshipw"))
     OR
-    (!empty($this->getParam("freeshipp")) && $prx>=$this->getParam("freeshipp"))
+    (!!($this->getParam("freeshipp")) && $prx>=$this->getParam("freeshipp"))
    ){
     echo "<p class=\'msgyeah\'><b>".$this->getLang("L_FREESHIP")."</b></p>";
     return true; //4 stop shippingmethod return true ;)
    }
    $freeShipM = "";
-   if(!empty($this->getParam("freeshipw")) OR !empty($this->getParam("freeshipp"))){
+   if(!!($this->getParam("freeshipw")) OR !!($this->getParam("freeshipp"))){
     $freeShipM .= "<b class=\'msgyeah2\'>".$this->getLang("L_FREESHIP")."</b>";
    }
-   if(!empty($this->getParam("freeshipw"))){
+   if(!!($this->getParam("freeshipw"))){
     $freeShipM .= "&nbsp;".$this->getLang("L_A")."&nbsp;<b class=\'msgyeah2\'>".$this->getParam("freeshipw")."&nbsp;kg</b>";
    }
-   if(!empty($this->getParam("freeshipp"))){
-    if(!empty($this->getParam("freeshipw")))
+   if(!!($this->getParam("freeshipp"))){
+    if(!!($this->getParam("freeshipw")))
      $freeShipM .= "&nbsp;".$this->getLang("L_AND");
     $freeShipM .= "&nbsp;".$this->getLang("L_A")."&nbsp;<b class=\'msgyeah2\'>".$this->pos_devise($this->getParam("freeshipp"))."</b>";
    }
-   if(!empty($freeShipM))
+   if(!!($freeShipM))
     echo "<p>".$freeShipM."</p>";
    unset($freeShipM);
   }
