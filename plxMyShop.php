@@ -961,7 +961,8 @@ var picker_date = new Pikaday(
    $xml .= "</document>";
    # On écrit le fichier si une action valide a été faite
    if(plxUtils::write($xml,PLX_ROOT.PLX_CONFIG_PATH.'products.xml')){
-    return plxMsg::Info(L_SAVE_SUCCESSFUL);
+    #return plxMsg::Info(L_SAVE_SUCCESSFUL);
+    return ;
    } else {
     $this->aProds = $save;
     return plxMsg::Error(L_SAVE_ERR.' '.PLX_ROOT.PLX_CONFIG_PATH.'products.xml');
@@ -1087,7 +1088,10 @@ var picker_date = new Pikaday(
             $item['id'] = $pId;
             $item['image'] = $this->aProds[$pId]['image'];
             $item['noaddcart'] = $this->aProds[$pId]['noaddcart'];
-            $item['iteminstock'] = intval($this->aProds[$pId]['iteminstock']) - intval($nb);
+            if (intval($this->aProds[$pId]['iteminstock']) >= intval($nb)){
+                $item['iteminstock'] = intval($this->aProds[$pId]['iteminstock']) - intval($nb);}
+            else {
+                $item['iteminstock'] = 0; }
             $item['notice_noaddcart'] = $this->aProds[$pId]['notice_noaddcart'];
             $item['pricettc'] = $this->aProds[$pId]['pricettc'];
             $item['poidg'] = $this->aProds[$pId]['poidg'];
@@ -1097,7 +1101,7 @@ var picker_date = new Pikaday(
             $item['meta_keywords'] = trim($this->aProds[$pId]['meta_keywords']);
             $this->editProduct($item);
      }
-     #return $item;
+     return $item;
  }
 
  
@@ -1604,25 +1608,9 @@ $message
      fputs($monfichier, $commandeContent);
      fclose($monfichier);
      chmod($nf, 0644);
-     echo "BOOO";
-     #$this->editItemProduct($_SESSION[$this->plugName]['prods']);
-     foreach ($_SESSION[$this->plugName]['prods'] as $pId => $nb){
-            $item=array();
-            $item['id'] = $pId;
-            $item['image'] = $this->aProds[$pId]['image'];
-            $item['noaddcart'] = $this->aProds[$pId]['noaddcart'];
-            $item['iteminstock'] = intval($this->aProds[$pId]['iteminstock']) - intval($nb);
-            $item['notice_noaddcart'] = $this->aProds[$pId]['notice_noaddcart'];
-            $item['pricettc'] = $this->aProds[$pId]['pricettc'];
-            $item['poidg'] = $this->aProds[$pId]['poidg'];
-            $item['template'] = $this->aProds[$pId]['template'];
-            $item['title_htmltag'] = trim($this->aProds[$pId]['title_htmltag']);
-            $item['meta_description'] = trim($this->aProds[$pId]['meta_description']);
-            $item['meta_keywords'] = trim($this->aProds[$pId]['meta_keywords']);
-            $this->editProduct($item);
-     }
-     
-     echo "BAAA";
+     #MAJ du nombre d'article en stock pour chaque produit commander
+     $this->editItemProduct($_SESSION[$this->plugName]['prods']);
+     #$this->editProduct($item);
      unset($_SESSION[$this->plugName]['prods']);
      unset($_SESSION[$this->plugName]['ncart']);
     }else{
