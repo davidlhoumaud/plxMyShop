@@ -539,11 +539,12 @@ var picker_date = new Pikaday(
   if (isset($this->aProds[$this->productNumber()]['name'])){
    # infos sur la page statique
    $string  = "if(\$this->plxMotor->mode=='product'){";
+   $string .= " \$this->plxMotor->cible = rtrim(\$this->plxMotor->cible,'form');";//remove "form" in static filename ;)
    $string .= " \$array = array();";
    $string .= " \$array[\$this->plxMotor->cible] = array(
     'name'  => '" . $this->aProds[$this->productNumber()]["name"] . "',
     'menu'  => '',
-    'url'  => '/../template/affichageProduitPublic',
+    'url'  => '/template/affichageProduitPublic',
     'readable' => 1,
     'active' => 1,
     'group'  => ''
@@ -553,7 +554,6 @@ var picker_date = new Pikaday(
    echo "<?php ".$string." ?>";
   }
  }
-
  public function AdminPrepend(){
   $this->plxMotor = plxAdmin::getInstance();
 
