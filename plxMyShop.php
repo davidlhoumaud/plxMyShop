@@ -788,6 +788,9 @@ var picker_date = new Pikaday(
     $this->aProds[$number]['noaddcart']=plxUtils::getValue($values[$noaddcart]['value']);
     $notice_noaddcart = plxUtils::getValue($iTags['notice_noaddcart'][$i]);
     $this->aProds[$number]['notice_noaddcart']=plxUtils::getValue($values[$notice_noaddcart]['value']);
+    # Recuperation nombre en stock
+    $iteminstock = plxUtils::getValue($iTags['iteminstock'][$i]);
+    $this->aProds[$number]['iteminstock']=plxUtils::getValue($values[$iteminstock]['value']);
 
     # Recuperation poid
     $poidg = plxUtils::getValue($iTags['poidg'][$i]);
@@ -900,6 +903,7 @@ var picker_date = new Pikaday(
      $this->aProds[$product_id]['title_htmltag'] = (isset($this->aProds[$product_id]['title_htmltag'])?$this->aProds[$product_id]['title_htmltag']:'');
      $this->aProds[$product_id]['image'] = (isset($this->aProds[$product_id]['image'])?$this->aProds[$product_id]['image']:'');
      $this->aProds[$product_id]['noaddcart'] = (isset($this->aProds[$product_id]['noaddcart'])?$this->aProds[$product_id]['noaddcart']:'');
+     $this->aProds[$product_id]['iteminstock'] = (isset($this->aProds[$product_id]['iteminstock'])?$this->aProds[$product_id]['iteminstock']:'');
      $this->aProds[$product_id]['notice_noaddcart'] = (isset($this->aProds[$product_id]['notice_noaddcart'])?$this->aProds[$product_id]['notice_noaddcart']:'');
      $this->aProds[$product_id]['pricettc'] = (isset($this->aProds[$product_id]['pricettc'])?$this->aProds[$product_id]['pricettc']:'');
      $this->aProds[$product_id]['poidg'] = (isset($this->aProds[$product_id]['poidg'])?$this->aProds[$product_id]['poidg']:'');
@@ -942,6 +946,7 @@ var picker_date = new Pikaday(
      $xml .= "<name><![CDATA[".plxUtils::cdataCheck($product['name'])."]]></name>";
      $xml .= "<image><![CDATA[".plxUtils::cdataCheck($product['image'])."]]></image>";
      $xml .= "<noaddcart><![CDATA[".plxUtils::cdataCheck($product['noaddcart'])."]]></noaddcart>";
+     $xml .= "<iteminstock><![CDATA[".plxUtils::cdataCheck($product['iteminstock'])."]]></iteminstock>";
      $xml .= "<notice_noaddcart><![CDATA[".plxUtils::cdataCheck(($product['noaddcart']&&empty($product['notice_noaddcart']))?$this->getLang('L_NOTICE_NOADDCART'):$product['notice_noaddcart'])."]]></notice_noaddcart>";
      $xml .= "<pricettc><![CDATA[".plxUtils::cdataCheck($product['pricettc'])."]]></pricettc>";
      $xml .= "<poidg><![CDATA[".plxUtils::cdataCheck(($product['poidg']==0?"0.0":$product['poidg']))."]]></poidg>";
@@ -956,7 +961,8 @@ var picker_date = new Pikaday(
    $xml .= "</document>";
    # On écrit le fichier si une action valide a été faite
    if(plxUtils::write($xml,PLX_ROOT.PLX_CONFIG_PATH.'products.xml')){
-    return plxMsg::Info(L_SAVE_SUCCESSFUL);
+    #return plxMsg::Info(L_SAVE_SUCCESSFUL);
+    return ;
    } else {
     $this->aProds = $save;
     return plxMsg::Error(L_SAVE_ERR.' '.PLX_ROOT.PLX_CONFIG_PATH.'products.xml');
@@ -1021,6 +1027,7 @@ var picker_date = new Pikaday(
   // données du produit
   $this->aProds[$content['id']]['image'] = $content['image'];
   $this->aProds[$content['id']]['noaddcart'] = $content['noaddcart'];
+  $this->aProds[$content['id']]['iteminstock'] = $content['iteminstock'];
   $this->aProds[$content['id']]['notice_noaddcart'] = $content['notice_noaddcart'];
   $this->aProds[$content['id']]['pricettc'] = $content['pricettc'];
   $this->aProds[$content['id']]['poidg'] = $content['poidg'];
@@ -1068,6 +1075,37 @@ var picker_date = new Pikaday(
   }
  }
 
+ 
+ /**
+  * Méthode qui sauvegarde le contenu d'un produit
+  * @param content données à sauvegarder
+  * @return string
+  * @author Philippe.LT
+  **/
+ public function editItemProduct($content){
+     foreach ($content as $pId => $nb){
+            $item=array();
+            $item['id'] = $pId;
+            $item['image'] = $this->aProds[$pId]['image'];
+            $item['noaddcart'] = $this->aProds[$pId]['noaddcart'];
+            if (intval($this->aProds[$pId]['iteminstock']) >= intval($nb)){
+                $item['iteminstock'] = intval($this->aProds[$pId]['iteminstock']) - intval($nb);}
+            else {
+                $item['iteminstock'] = 0; }
+            $item['notice_noaddcart'] = $this->aProds[$pId]['notice_noaddcart'];
+            $item['pricettc'] = $this->aProds[$pId]['pricettc'];
+            $item['poidg'] = $this->aProds[$pId]['poidg'];
+            $item['template'] = $this->aProds[$pId]['template'];
+            $item['title_htmltag'] = trim($this->aProds[$pId]['title_htmltag']);
+            $item['meta_description'] = trim($this->aProds[$pId]['meta_description']);
+            $item['meta_keywords'] = trim($this->aProds[$pId]['meta_keywords']);
+            $this->editProduct($item);
+     }
+     return $item;
+ }
+
+ 
+ 
  /**
   * Méthode qui retourne l'id du produit active
   * @return int
@@ -1570,6 +1608,9 @@ $message
      fputs($monfichier, $commandeContent);
      fclose($monfichier);
      chmod($nf, 0644);
+     #MAJ du nombre d'article en stock pour chaque produit commander
+     $this->editItemProduct($_SESSION[$this->plugName]['prods']);
+     #$this->editProduct($item);
      unset($_SESSION[$this->plugName]['prods']);
      unset($_SESSION[$this->plugName]['ncart']);
     }else{
