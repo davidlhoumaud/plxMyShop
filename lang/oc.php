@@ -58,7 +58,7 @@ $LANG = array(
 'L_PRODUCTS_IMAGE_CHOICE'           => 'Causir un imatge',
 'L_PRODUCTS_SHORTCODE'              => 'Acorchi utilisable dins un article e una pagina estatica',
 'L_PRODUCTS_BASKET_BUTTON'          => 'Produit indisponible (boton "Ajutar al panièr" cachat)',#a verifier
-'L_PRODUCTS_ITEM_INSTOCK'           => 'Nombre de produits  disponible en stock (optionel)',# a traduire
+'L_PRODUCTS_ITEM_INSTOCK'           => 'Nombre de produits disponible en stock (<b title="Le dernier commandé du stock rend le produit indisponible!'.PHP_EOL.'Le bouton d\'Ajout au panier est automatiquement caché ;-)'.PHP_EOL.'Désactiver son masquage si le stock a été vidé puis remplis.'.PHP_EOL.'(Si laissé vide, le systeme de stock du produit est inactif)">optionel</b>)',# a traduire
 'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Messatge del replacement del boton "Ajutar al panièr"',#a verifier
 'L_PRODUCTS_CATEGORIES'             => 'Categorias d\'aqueste produit',
 'L_PRODUCTS_PRICE'                  => 'Prètz T.T.C.',
