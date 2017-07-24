@@ -64,6 +64,7 @@ class plxMyShop extends plxPlugin {
    $this->addHook('ThemeEndBody', 'ThemeEndBody');
    $this->addHook('ThemeEndHead', 'ThemeEndHead');
    //hook plxMyShop
+   $this->addHook('plxMyShopEditProductBegin', 'changeStock');
    $this->addHook('plxMyShopShippingMethod', 'plxMyShopShippingMethod');
    $this->addHook('plxMyShopShowMiniPanier', 'plxMyShopShowMiniPanier');
    $this->addHook('plxMyShopPanierFin', 'inlineBasketJs');
@@ -961,11 +962,10 @@ var picker_date = new Pikaday(
    $xml .= "</document>";
    # On écrit le fichier si une action valide a été faite
    if(plxUtils::write($xml,PLX_ROOT.PLX_CONFIG_PATH.'products.xml')){
-    #return plxMsg::Info(L_SAVE_SUCCESSFUL);
-    return ;
+    if($action===true) return plxMsg::Info(L_SAVE_SUCCESSFUL);
    } else {
     $this->aProds = $save;
-    return plxMsg::Error(L_SAVE_ERR.' '.PLX_ROOT.PLX_CONFIG_PATH.'products.xml');
+    if($action===true) return plxMsg::Error(L_SAVE_ERR.' '.PLX_ROOT.PLX_CONFIG_PATH.'products.xml');
    }
   }
  }
@@ -1014,6 +1014,8 @@ var picker_date = new Pikaday(
   * @author David.L
   **/
  public function editProduct($content){
+  # Hook plugins
+  if(eval($this->plxMotor->plxPlugins->callHook('plxMyShopEditProductBegin'))) return;
   # Mise à jour du fichier product.xml
   if (isset($content["listeCategories"])){
    $this->aProds[$content['id']]['group'] = implode(",", $content["listeCategories"]);
@@ -1036,7 +1038,7 @@ var picker_date = new Pikaday(
   $this->aProds[$content['id']]['meta_description'] = trim($content['meta_description']);
   $this->aProds[$content['id']]['meta_keywords'] = trim($content['meta_keywords']);
   # Hook plugins
-  //eval($this->plxPlugins->callHook('plxAdminEditProduct'));
+  eval($this->plxMotor->plxPlugins->callHook('plxMyShopEditProduct'));
 
   if($this->editProducts(null,true)){
    if (!is_dir(PLX_ROOT.(empty($this->getParam('racine_products'))?'data/products/':$this->getParam('racine_products')))){
@@ -1075,37 +1077,39 @@ var picker_date = new Pikaday(
   }
  }
 
- 
  /**
-  * Méthode qui sauvegarde le contenu d'un produit
-  * @param content données à sauvegarder
-  * @return string
-  * @author Philippe.LT
+  * Méthode qui change les stocks des produits commandés par un client
+  * @param content : données à changer $_SESSION[$this->plugName]['prods']
+  * @author Philippe.LT, Thomas I
   **/
- public function editItemProduct($content){
-     foreach ($content as $pId => $nb){
-            $item=array();
-            $item['id'] = $pId;
-            $item['image'] = $this->aProds[$pId]['image'];
-            $item['noaddcart'] = $this->aProds[$pId]['noaddcart'];
-            if (intval($this->aProds[$pId]['iteminstock']) >= intval($nb)){
-                $item['iteminstock'] = intval($this->aProds[$pId]['iteminstock']) - intval($nb);}
-            else {
-                $item['iteminstock'] = 0; }
-            $item['notice_noaddcart'] = $this->aProds[$pId]['notice_noaddcart'];
-            $item['pricettc'] = $this->aProds[$pId]['pricettc'];
-            $item['poidg'] = $this->aProds[$pId]['poidg'];
-            $item['template'] = $this->aProds[$pId]['template'];
-            $item['title_htmltag'] = trim($this->aProds[$pId]['title_htmltag']);
-            $item['meta_description'] = trim($this->aProds[$pId]['meta_description']);
-            $item['meta_keywords'] = trim($this->aProds[$pId]['meta_keywords']);
-            $this->editProduct($item);
-     }
-     return $item;
+ public function editStocks($content){
+  foreach ($content as $pId => $nb){
+   if ($this->aProds[$pId]['iteminstock'] != '' OR $this->aProds[$pId]['iteminstock'] > 0){
+    $item=array();
+    $item['changeStock'] = true;//4 activate hook plxMyShopEditProductBegin (4 changeStock only)
+    if (intval($this->aProds[$pId]['iteminstock']) >= intval($nb))
+     $this->aProds[$pId]['iteminstock'] -= intval($nb);//decrease stock 
+    if(empty($this->aProds[$pId]['iteminstock']))//if stock == 0
+     $this->aProds[$pId]['noaddcart']=1;//auto hide basket button
+    $this->editProduct($item);
+   }
+  }
  }
 
- 
- 
+ /**
+  * Méthode qui sauvegarde le nouveau stock du produit commandé (hook plxMyShopEditProductBegin)
+  * @author Thomas I
+  **/
+ public function changeStock(){
+  echo '<?php
+';?>
+  if(isset($content['changeStock'])){
+   $this->editProducts(null,'public');//public (or other str) fix 4 uncall class plxMsg::####() at the end of editProducts() (only 4 admin)
+   return true;//break editProduct() (only change stock & basket button)
+  }
+?><?php
+ }
+
  /**
   * Méthode qui retourne l'id du produit active
   * @return int
@@ -1608,8 +1612,8 @@ $message
      fputs($monfichier, $commandeContent);
      fclose($monfichier);
      chmod($nf, 0644);
-     #MAJ du nombre d'article en stock pour chaque produit commander
-     $this->editItemProduct($_SESSION[$this->plugName]['prods']);
+     #MAJ du nombre d'article en stock pour chaques produits commandés
+     $this->editStocks($_SESSION[$this->plugName]['prods']);
      #$this->editProduct($item);
      unset($_SESSION[$this->plugName]['prods']);
      unset($_SESSION[$this->plugName]['ncart']);

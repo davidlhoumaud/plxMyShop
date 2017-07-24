@@ -58,6 +58,7 @@ $LANG = array(
 'L_PRODUCTS_IMAGE_CHOICE'           => 'Causir un imatge',
 'L_PRODUCTS_SHORTCODE'              => 'Acorchi utilisable dins un article e una pagina estatica',
 'L_PRODUCTS_BASKET_BUTTON'          => 'Produit indisponible (boton "Ajutar al panièr" cachat)',#a verifier
+'L_PRODUCTS_ITEM_INSTOCK'           => 'Nombre de produits  disponible en stock (optionel)',# a traduire
 'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Messatge del replacement del boton "Ajutar al panièr"',#a verifier
 'L_PRODUCTS_CATEGORIES'             => 'Categorias d\'aqueste produit',
 'L_PRODUCTS_PRICE'                  => 'Prètz T.T.C.',

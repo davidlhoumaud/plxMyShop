@@ -34,6 +34,11 @@ le plugin spxplugindowloader.2.5 provoque la perte de l'action bar aux plugins q
 
 Effet de bord : si on ajoute un shortCode [boutonPanier ###] a un prod/cat et que le panier est sur toutes les pages (il s'affiche 2 fois (av et aprés le form de commande)?????
 
+##v0.13.1r4s 24/07/2017##
+[+] Ajout d'un systeme de stock (basé sur une idée de ppmt) :utilise le nouveau hook plxMyShopEditProductBegin:: si le nombre de produits en stock est présent et que le client commande la totalité, automatiquement le produit se rend indisponible et le bouton "ajouter au panier" est remplacé par votre texte paramétré avec "produit indisponible" sur oui (d'origine "En rupture de stock").
+[+] Ajout du hook plxMyShopEditProductBegin
+[+] Ajout du hook plxMyShopEditProduct
+
 ##v0.13.1r4 11/06/2017##
 [+] Fins de lignes unifiées par dos2unix (merci Bazooka)
 [+] Config & panier : Montant minimum pour afficher le choix du paiement par Paypal (contrib ppmy)
