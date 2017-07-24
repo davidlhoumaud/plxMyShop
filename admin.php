@@ -210,7 +210,8 @@ foreach($aLangs as $lang) {
  }
 
  $new_productid = str_pad($a['0']+1, 3, "0", STR_PAD_LEFT);
- if ((!isset($_GET['mod']) || (isset($_GET['mod']) && $_GET['mod']!='cmd')) && $lang==$_SESSION['default_lang']){ ?>
+ #new Prod/Cat only appear in selected lang in plxMyMultilingue flags
+ if ((!isset($_GET['mod']) || (isset($_GET['mod']) && $_GET['mod']!='cmd')) && $lang==$plxAdmin->aConf['default_lang']){ ?>
   <tr class="new">
    <td>&nbsp;<?php echo '<input type="hidden" name="productNum[]" value="'.$new_productid.'" />'; ?></td>
    <td><?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getlang('L_NEW_CATEGORY'):$plxPlugin->getlang('L_NEW_PRODUCT')); ?></td>
