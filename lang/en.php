@@ -3,7 +3,7 @@
 $LANG = array(
 
 'L_PAGE_TITLE'                      => 'Manage products',
-'L_ADMIN_MENU_TOOTIP'               => 'Administrate my web shop (products, categories and commands)',#List and modification of a traduire, corriger?
+'L_ADMIN_MENU_TOOTIP'               => 'Administrate my web shop (products, categories and commands)',
 'L_LANG_UNAVAILABLE'                => 'Language not available : %s',
 'L_DEFAULT_NEW_PRODUCT_URL'         => 'new-product',
 'L_CONFIG_PRIX_BASE'                => 'Base price',
@@ -58,7 +58,8 @@ $LANG = array(
 'L_PRODUCTS_IMAGE_CHOICE'           => 'Choose an image',
 'L_PRODUCTS_SHORTCODE'              => 'shortcode to use in article and static page',
 'L_PRODUCTS_BASKET_BUTTON'          => 'Unavailable Product ("Add to the basket" button Hidden)',
-'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Message to replacement "Add to the basket" button',
+'L_PRODUCTS_ITEM_INSTOCK'           => 'Number of item available in stock (<b title="The last item in stock ordered converts it to Out of Stock!'.PHP_EOL.'The Add to Basket button is hidden automatically ;-)'.PHP_EOL.'Deactivate the hidding after refilling the stock.'.PHP_EOL.'(If left empty the stock management is not used)">optional</b>)',
+'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Message to replace "Add to the basket" button',
 'L_PRODUCTS_CATEGORIES'             => 'Categories of this product',
 'L_PRODUCTS_PRICE'                  => 'Price tax included',
 'L_PRODUCTS_WEIGHT'                 => 'Weight (kg)',
@@ -131,17 +132,17 @@ $LANG = array(
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration of delivery and payment methods',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Add Delivery fee',
 'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Based on the price of the order">Price Based</b>',
-'L_CONFIG_DELIVERY_DATE'            => 'Activate selection of Delivery date and time', # /ppmt nouvelle option
-'L_CONFIG_DELIVERY_MINDAYS'         => 'Delivery day and timeslot', # /ppmt nouvelle option
-'L_CONFIG_NB_DAYS'                  => 'Number of days', # /ppmt nouvelle option
-'L_CONFIG_DELIVERY_STARTTIME'       => 'First delivery hour', # /ppmt nouvelle option
-'L_CONFIG_DELIVERY_ENDTIME'         => 'Last delivery hour', # /ppmt nouvelle option
-'L_CONFIG_DELIVERY_TIMESLOT'        => 'Lenght (in hour) of delivery timeslot', # /ppmt nouvelle option
-'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Les montants des frais de ports sont peut être a réévaluer ou a reconfigurer.</b>',# atraduire
-'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',# atraduire
+'L_CONFIG_DELIVERY_DATE'            => 'Activate selection of Delivery date and time',
+'L_CONFIG_DELIVERY_MINDAYS'         => 'Delivery day and timeslot',
+'L_CONFIG_NB_DAYS'                  => 'Number of days',
+'L_CONFIG_DELIVERY_STARTTIME'       => 'First delivery hour',
+'L_CONFIG_DELIVERY_ENDTIME'         => 'Last delivery hour',
+'L_CONFIG_DELIVERY_TIMESLOT'        => 'Lenght (in hour) of delivery timeslot',
+'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">The delivery fee might need to be recalculated or configured.</b>',# atraduire
+'L_SHIPMAXWEIGHT'                   => '<b class="startw">The delivery fee can be recalculated.</b>',# atraduire
 'L_CONFIG_FREE'                     => 'Free',
 'L_CONFIG_FREESHIPP'                => 'for order over',
-'L_FREESHIP'                        => 'The costs of port offered',# averifier
+'L_FREESHIP'                        => 'The delivery cost is offered',# averifier
 'L_CONFIG_DELIVERY_CONFIG'          => 'Configuration of Delivery fees',
 'L_CONFIG_DELIVERY_RECORDED'        => 'Recorded delivery',
 'L_CONFIG_DELIVERY_WEIGHT'          => 'Weight in kg',
@@ -281,9 +282,9 @@ $LANG = array(
 'L_CONFIG_LIBELLE_CGV'              => 'Wording of the General Sales T&amp;C . (The URL )',
 'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Use plugin default phrases for the T&amp;C.",
 'L_CONFIG_URL_CGV'                  => 'URL for the T&amp;C.',
-'L_CONFIG_AMOUNT_PAYPAL'            => "Minimum amount to activate",#a traduire
+'L_CONFIG_AMOUNT_PAYPAL'            => "Minimum amount to activate",
 #boutonPanier.php
-'L_NOTICE_NOADDCART'                => 'En rupture de stock',#a traduire
+'L_NOTICE_NOADDCART'                => 'Out of stock',#a traduire
 
 #panier.js
 'L_TOTAL_BASKET'                    => 'Total',
@@ -295,9 +296,9 @@ $LANG = array(
 'L_UNIT_PRICE'                      => 'Unit_price',
 'L_NUMBER'                          => 'Number',
 'L_TOTAL_PRICE'                     => 'Total price',
-'L_PUBLIC_DELIVERYDATE'             => 'Select your delivery date',  # /ppmt nouvelle option
-'L_PUBLIC_DELIVERYTIME'             => 'Select your delivery timeslot',  # /ppmt nouvelle option
-'L_CHOICE_DELIVERYTIME'             => 'Choose one timeslot',  # /ppmt nouvelle option
+'L_PUBLIC_DELIVERYDATE'             => 'Select your delivery date',
+'L_PUBLIC_DELIVERYTIME'             => 'Select your delivery timeslot',
+'L_CHOICE_DELIVERYTIME'             => 'Choose one timeslot',
 'L_FORMAT_PIKADAY'                  => 'dddd Do MMMM YYYY',
 'L_I18N_PIKADAY'                    => ''# unused pikaday it's in english
 );

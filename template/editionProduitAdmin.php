@@ -40,6 +40,7 @@ if(!empty($_POST) AND isset($plxPlugin->aProds[$_POST['id']])) {
  $url = $plxPlugin->aProds[$id]['url'];
  $active = $plxPlugin->aProds[$id]['active'];
  $noaddcart = $plxPlugin->aProds[$id]['noaddcart'];
+ $iteminstock = $plxPlugin->aProds[$id]['iteminstock'];
  $notice_noaddcart = $plxPlugin->aProds[$id]['notice_noaddcart'];
  $title_htmltag = $plxPlugin->aProds[$id]['title_htmltag'];
  $meta_description = $plxPlugin->aProds[$id]['meta_description'];
@@ -151,6 +152,12 @@ $_SESSION[$plxPlugin->plugName]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin-
       <div class="col sml-12 med-7">
        <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'text','0-255'); ?>
       </div>
+      <div class="col sml-12 med-5 label-centered">
+       <label for="id_iteminstock"><?php $plxPlugin->lang('L_PRODUCTS_ITEM_INSTOCK') ;?>&nbsp;:</label>
+      </div>
+      <div class="col sml-12 med-7">
+        <?php plxUtils::printInput('iteminstock',plxUtils::strCheck($iteminstock),'text','0-255'); ?>
+      </div>
      </div>
      <div class="grid">
       <div class="col sml-12 med-5 label-centered">
@@ -194,6 +201,7 @@ $_SESSION[$plxPlugin->plugName]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin-
      <?php plxUtils::printInput('pricettc',plxUtils::strCheck($pricettc),'hidden','0-255');?>
      <?php plxUtils::printInput('poidg',plxUtils::strCheck($poidg),'hidden','50-255');?>
      <?php plxUtils::printInput('noaddcart', plxUtils::strCheck($noaddcart),'hidden','0-255');?>
+     <?php plxUtils::printInput('iteminstock',plxUtils::strCheck($iteminstock),'hidden','50-255');?>
      <?php plxUtils::printInput('notice_noaddcart',plxUtils::strCheck($notice_noaddcart),'hidden','50-255');?>
 <?php } ?>
     <div class="grid">

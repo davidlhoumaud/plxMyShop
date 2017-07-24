@@ -64,6 +64,7 @@ class plxMyShop extends plxPlugin {
    $this->addHook('ThemeEndBody', 'ThemeEndBody');
    $this->addHook('ThemeEndHead', 'ThemeEndHead');
    //hook plxMyShop
+   $this->addHook('plxMyShopEditProductBegin', 'changeStock');
    $this->addHook('plxMyShopShippingMethod', 'plxMyShopShippingMethod');
    $this->addHook('plxMyShopShowMiniPanier', 'plxMyShopShowMiniPanier');
    $this->addHook('plxMyShopPanierFin', 'inlineBasketJs');
@@ -787,6 +788,9 @@ var picker_date = new Pikaday(
     $this->aProds[$number]['noaddcart']=plxUtils::getValue($values[$noaddcart]['value']);
     $notice_noaddcart = plxUtils::getValue($iTags['notice_noaddcart'][$i]);
     $this->aProds[$number]['notice_noaddcart']=plxUtils::getValue($values[$notice_noaddcart]['value']);
+    # Recuperation nombre en stock
+    $iteminstock = plxUtils::getValue($iTags['iteminstock'][$i]);
+    $this->aProds[$number]['iteminstock']=plxUtils::getValue($values[$iteminstock]['value']);
 
     # Recuperation poid
     $poidg = plxUtils::getValue($iTags['poidg'][$i]);
@@ -899,6 +903,7 @@ var picker_date = new Pikaday(
      $this->aProds[$product_id]['title_htmltag'] = (isset($this->aProds[$product_id]['title_htmltag'])?$this->aProds[$product_id]['title_htmltag']:'');
      $this->aProds[$product_id]['image'] = (isset($this->aProds[$product_id]['image'])?$this->aProds[$product_id]['image']:'');
      $this->aProds[$product_id]['noaddcart'] = (isset($this->aProds[$product_id]['noaddcart'])?$this->aProds[$product_id]['noaddcart']:'');
+     $this->aProds[$product_id]['iteminstock'] = (isset($this->aProds[$product_id]['iteminstock'])?$this->aProds[$product_id]['iteminstock']:'');
      $this->aProds[$product_id]['notice_noaddcart'] = (isset($this->aProds[$product_id]['notice_noaddcart'])?$this->aProds[$product_id]['notice_noaddcart']:'');
      $this->aProds[$product_id]['pricettc'] = (isset($this->aProds[$product_id]['pricettc'])?$this->aProds[$product_id]['pricettc']:'');
      $this->aProds[$product_id]['poidg'] = (isset($this->aProds[$product_id]['poidg'])?$this->aProds[$product_id]['poidg']:'');
@@ -941,6 +946,7 @@ var picker_date = new Pikaday(
      $xml .= "<name><![CDATA[".plxUtils::cdataCheck($product['name'])."]]></name>";
      $xml .= "<image><![CDATA[".plxUtils::cdataCheck($product['image'])."]]></image>";
      $xml .= "<noaddcart><![CDATA[".plxUtils::cdataCheck($product['noaddcart'])."]]></noaddcart>";
+     $xml .= "<iteminstock><![CDATA[".plxUtils::cdataCheck($product['iteminstock'])."]]></iteminstock>";
      $xml .= "<notice_noaddcart><![CDATA[".plxUtils::cdataCheck(($product['noaddcart']&&empty($product['notice_noaddcart']))?$this->getLang('L_NOTICE_NOADDCART'):$product['notice_noaddcart'])."]]></notice_noaddcart>";
      $xml .= "<pricettc><![CDATA[".plxUtils::cdataCheck($product['pricettc'])."]]></pricettc>";
      $xml .= "<poidg><![CDATA[".plxUtils::cdataCheck(($product['poidg']==0?"0.0":$product['poidg']))."]]></poidg>";
@@ -955,10 +961,10 @@ var picker_date = new Pikaday(
    $xml .= "</document>";
    # On écrit le fichier si une action valide a été faite
    if(plxUtils::write($xml,PLX_ROOT.PLX_CONFIG_PATH.'products.xml')){
-    return plxMsg::Info(L_SAVE_SUCCESSFUL);
+    if($action===true) return plxMsg::Info(L_SAVE_SUCCESSFUL);
    } else {
     $this->aProds = $save;
-    return plxMsg::Error(L_SAVE_ERR.' '.PLX_ROOT.PLX_CONFIG_PATH.'products.xml');
+    if($action===true) return plxMsg::Error(L_SAVE_ERR.' '.PLX_ROOT.PLX_CONFIG_PATH.'products.xml');
    }
   }
  }
@@ -1008,6 +1014,8 @@ var picker_date = new Pikaday(
   * @author David.L
   **/
  public function editProduct($content){
+  # Hook plugins
+  if(eval($this->plxMotor->plxPlugins->callHook('plxMyShopEditProductBegin'))) return;
   # Mise à jour du fichier product.xml
   if (isset($content["listeCategories"])){
    $this->aProds[$content['id']]['group'] = implode(",", $content["listeCategories"]);
@@ -1021,6 +1029,7 @@ var picker_date = new Pikaday(
   // données du produit
   $this->aProds[$content['id']]['image'] = $content['image'];
   $this->aProds[$content['id']]['noaddcart'] = $content['noaddcart'];
+  $this->aProds[$content['id']]['iteminstock'] = $content['iteminstock'];
   $this->aProds[$content['id']]['notice_noaddcart'] = $content['notice_noaddcart'];
   $this->aProds[$content['id']]['pricettc'] = $content['pricettc'];
   $this->aProds[$content['id']]['poidg'] = $content['poidg'];
@@ -1029,7 +1038,7 @@ var picker_date = new Pikaday(
   $this->aProds[$content['id']]['meta_description'] = trim($content['meta_description']);
   $this->aProds[$content['id']]['meta_keywords'] = trim($content['meta_keywords']);
   # Hook plugins
-  //eval($this->plxPlugins->callHook('plxAdminEditProduct'));
+  eval($this->plxMotor->plxPlugins->callHook('plxMyShopEditProduct'));
 
   if($this->editProducts(null,true)){
    if (!is_dir(PLX_ROOT.(!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products')))){
@@ -1066,6 +1075,39 @@ var picker_date = new Pikaday(
     $infos = plxMsg::Info(L_SAVE_SUCCESSFUL.$filename.$infos);
    return $infos;
   }
+ }
+
+ /**
+  * Méthode qui change les stocks des produits commandés par un client
+  * @param content : données à changer $_SESSION[$this->plugName]['prods']
+  * @author Philippe.LT, Thomas I
+  **/
+ public function editStocks($content){
+  foreach ($content as $pId => $nb){
+   if ($this->aProds[$pId]['iteminstock'] != '' OR $this->aProds[$pId]['iteminstock'] > 0){
+    $item=array();
+    $item['changeStock'] = true;//4 activate hook plxMyShopEditProductBegin (4 changeStock only)
+    if (intval($this->aProds[$pId]['iteminstock']) >= intval($nb))
+     $this->aProds[$pId]['iteminstock'] -= intval($nb);//decrease stock 
+    if(empty($this->aProds[$pId]['iteminstock']))//if stock == 0
+     $this->aProds[$pId]['noaddcart']=1;//auto hide basket button
+    $this->editProduct($item);
+   }
+  }
+ }
+
+ /**
+  * Méthode qui sauvegarde le nouveau stock du produit commandé (hook plxMyShopEditProductBegin)
+  * @author Thomas I
+  **/
+ public function changeStock(){
+  echo '<?php
+';?>
+  if(isset($content['changeStock'])){
+   $this->editProducts(null,'public');//public (or other str) fix 4 uncall class plxMsg::####() at the end of editProducts() (only 4 admin)
+   return true;//break editProduct() (only change stock & basket button)
+  }
+?><?php
  }
 
  /**
@@ -1570,6 +1612,9 @@ $message
      fputs($monfichier, $commandeContent);
      fclose($monfichier);
      chmod($nf, 0644);
+     #MAJ du nombre d'article en stock pour chaques produits commandés
+     $this->editStocks($_SESSION[$this->plugName]['prods']);
+     #$this->editProduct($item);
      unset($_SESSION[$this->plugName]['prods']);
      unset($_SESSION[$this->plugName]['ncart']);
     }else{

@@ -51,11 +51,12 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
            $totalpricettc += $prixttc;
            $totalpoidg += $poidg;
            $nprod++;
+           $maxPnr = $plxPlugin->aProds[$pId]['iteminstock'] != '' ? 'max="'.$plxPlugin->aProds[$pId]['iteminstock'].'" ' : '';
 ?>
          <tr>
           <td><a href="<?php echo $plxPlugin->productRUrl($pId); ?>"><?php echo plxUtils::strCheck($plxPlugin->aProds[$pId]['name']); ?></a></td>
           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixUnitaire);?></td>
-          <td width="10%"><input type="number" name="nb[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($nb);?>" min="0" /></td>
+          <td width="10%"><input type="number" name="nb[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($nb);?>" min="0" <?php echo $maxPnr; ?>/></td>
           <td class="nombre"><input type="submit" class="red" name="retirerProduit[<?php echo $pId;?>]" value="<?php echo htmlspecialchars($plxPlugin->getLang('L_DEL'));?>" /></td>
           <td class="nombre"><?php echo $plxPlugin->pos_devise($prixttc);?></td>
          </tr>
