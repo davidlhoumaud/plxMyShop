@@ -19,9 +19,9 @@
     $plxMyShop = $plxShow->plxMotor->plxPlugins->aPlugins['plxMyShop'];
     $plxMyShop->donneesModeles["plxPlugin"] = $plxMyShop;
 
-    if (isset($plxMyShop->aProds) && is_array($plxMyShop->aProds)) {
+    if (isset($plxMyShop->aProds[$plxMyShop->default_lang]) && is_array($plxMyShop->aProds[$plxMyShop->default_lang])) {
      echo "<ul>";
-     foreach ($plxMyShop->aProds as $kRubrique => $vRubrique) {
+     foreach ($plxMyShop->aProds[$plxMyShop->default_lang] as $kRubrique => $vRubrique) {
       if ( $vRubrique['menu'] === 'non' || $vRubrique['menu'] === '' || (1 !== $vRubrique["active"])) {
        continue;
       }
