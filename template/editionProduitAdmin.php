@@ -22,6 +22,7 @@ $arts_shop_fields = array(
  'url',
  'active',
  'noaddcart',
+ 'iteminstock',
  'notice_noaddcart',
  'title_htmltag',
  'meta_description',
@@ -182,6 +183,12 @@ foreach($aLangs as $lang) {
       <div class="col sml-12 med-7">
        <?php plxUtils::printInput('poidg'.$lng,plxUtils::strCheck($poidg[$lang]),'text','0-255'); ?>
       </div>
+      <div class="col sml-12 med-5 label-centered">
+       <label for="id_iteminstock"><?php $plxPlugin->lang('L_PRODUCTS_ITEM_INSTOCK') ;?>&nbsp;:</label>
+      </div>
+      <div class="col sml-12 med-7">
+        <?php plxUtils::printInput('iteminstock',plxUtils::strCheck($iteminstock),'text','0-255'); ?>
+      </div>
      </div>
      <div class="grid">
       <div class="col sml-12 med-5 label-centered">
@@ -223,7 +230,8 @@ foreach($aLangs as $lang) {
 <?php } else { ?>
      <?php plxUtils::printInput('pricettc'.$lng,plxUtils::strCheck($pricettc[$lang]),'hidden','0-255');?>
      <?php plxUtils::printInput('poidg'.$lng,plxUtils::strCheck($poidg[$lang]),'hidden','50-255');?>
-     <?php plxUtils::printInput('noaddcart'.$lng, plxUtils::strCheck($noaddcart[$lang]),'hidden','0-255');?>
+     <?php plxUtils::printInput('noaddcart'.$lng,plxUtils::strCheck($noaddcart[$lang]),'hidden','0-255');?>
+     <?php plxUtils::printInput('iteminstock'.$lng,plxUtils::strCheck($iteminstock[$lang]),'hidden','50-255');?>
      <?php plxUtils::printInput('notice_noaddcart'.$lng,plxUtils::strCheck($notice_noaddcart[$lang]),'hidden','50-255');?>
 <?php } ?>
     <div class="grid">
