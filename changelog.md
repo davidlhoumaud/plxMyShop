@@ -38,9 +38,10 @@ Effet de bord : si on ajoute un shortCode [boutonPanier ###] a un prod/cat et qu
 ##v0.13.1r4FM.51s 25/07/2017##
 [+] #MetaMML : Full Multilingue
 [+] Admin user friendly, noaddcart checkbox Propagation (si noaddcart4all coché: copie du noaddcart default_lang aux autre langues, qui sont inéditable)
+Fix Url érronée de moment.js si la langue par defaut est en anglais (thx [ppmt](http://forum.pluxml.org/viewtopic.php?pid=54780#p54780))
 Fix PluXml media manager & refreshImg() locale (Si multilingue)
 [+] Style de l'onglet (produit) de la lanfue par defaut (propagation 2 stock & poids au atres langues automatique)
-[+] Systeme de stock (basé sur une idée de ppmt) :utilise le nouveau hook plxMyShopEditProductBegin:: si le nombre de produits en stock est présent et que le client commande la totalité, automatiquement le produit se rend indisponible et le bouton "ajouter au panier" est remplacé par votre texte paramétré avec "produit indisponible" sur oui (d'origine "En rupture de stock").
+[+] Systeme de stock (basé sur une idée de ppmt) (utilise le nouveau hook plxMyShopEditProductBegin) CCM: Si le nombre de produits en stock est présent et que le client commande la totalité, automatiquement le produit se rend indisponible et le bouton "ajouter au panier" est remplacé par votre texte paramétré avec "produit indisponible" sur oui (d'origine "En rupture de stock").
 [+] hook plxMyShopEditProductBegin
 [+] hook plxMyShopEditProduct
 

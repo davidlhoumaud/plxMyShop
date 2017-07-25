@@ -531,7 +531,7 @@ var picker_date = new Pikaday(
  // hook js du Panier
  public function themeEndHeadDeliverydateJs(){ ?>
   <link rel="stylesheet" href="<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/css/pikaday.css" media="screen"/>
-  <script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/moment-<?php echo $this->default_lang!='en' ? 'with-locales' : ''; ?>.min.js'></script>
+  <script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/moment<?php echo $this->default_lang!='en' ? '-with-locales' : ''; ?>.min.js'></script>
   <script type='text/javascript' src='<?php echo $this->plxMotor->racine . PLX_PLUGINS;?>plxMyShop/js/pikaday.js'></script>
 <?php
  }
