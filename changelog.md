@@ -35,11 +35,14 @@ le plugin spxplugindowloader.2.5 provoque la perte de l'action bar aux plugins q
 Effet de bord : si on ajoute un shortCode [boutonPanier ###] a un prod/cat et que le panier est sur toutes les pages (il s'affiche 2 fois (av et aprés le form de commande)?????
 
 
-##v0.13.1r4FM.51s 24/07/2017##
+##v0.13.1r4FM.51s 25/07/2017##
 [+] #MetaMML : Full Multilingue
-[+] Ajout d'un systeme de stock (basé sur une idée de ppmt) :utilise le nouveau hook plxMyShopEditProductBegin:: si le nombre de produits en stock est présent et que le client commande la totalité, automatiquement le produit se rend indisponible et le bouton "ajouter au panier" est remplacé par votre texte paramétré avec "produit indisponible" sur oui (d'origine "En rupture de stock").
-[+] Ajout du hook plxMyShopEditProductBegin
-[+] Ajout du hook plxMyShopEditProduct
+[+] Admin user friendly, noaddcart checkbox Propagation (si noaddcart4all coché: copie du noaddcart default_lang aux autre langues, qui sont inéditable)
+Fix PluXml media manager & refreshImg() locale (Si multilingue)
+[+] Style de l'onglet (produit) de la lanfue par defaut (propagation 2 stock & poids au atres langues automatique)
+[+] Systeme de stock (basé sur une idée de ppmt) :utilise le nouveau hook plxMyShopEditProductBegin:: si le nombre de produits en stock est présent et que le client commande la totalité, automatiquement le produit se rend indisponible et le bouton "ajouter au panier" est remplacé par votre texte paramétré avec "produit indisponible" sur oui (d'origine "En rupture de stock").
+[+] hook plxMyShopEditProductBegin
+[+] hook plxMyShopEditProduct
 
 
 ##v0.13.1r4 11/06/2017##
