@@ -1030,7 +1030,13 @@ var picker_date = new Pikaday(
   # Hook plugins
   if(eval($this->plxMotor->plxPlugins->callHook('plxMyShopEditProductBegin'))) return;
   # Mise à jour du fichier product.xml
+  $lngd=($this->aLangs)?'_'.$this->default_lang:'';//default lang 4 stock system
   $aLangs = ($this->aLangs)?$this->aLangs:array($this->default_lang);
+  foreach($aLangs as $lang){//stock 4 all langs
+   $lang=($this->aLangs)?'_'.$lang:'';//post vars
+   $content['iteminstock'.$lang] = $content['iteminstock'.$lngd];//with default lang stock
+   $content['poidg'.$lang] = $content['poidg'.$lngd];//with default lang weight
+  }
   foreach($aLangs as $lang) {
    $lgf=($this->aLangs)?$lang.'/':'';//folders
    $lng=($this->aLangs)?'_'.$lang:'';//post vars
@@ -1099,16 +1105,17 @@ var picker_date = new Pikaday(
   **/
  public function editStocks($content){
   $aLangs = ($this->aLangs)?$this->aLangs:array($this->default_lang);
-  foreach($aLangs as $lang) {
-   foreach ($content as $pId => $nb){
-    if ($this->aProds[$lang][$pId]['iteminstock'] != '' OR $this->aProds[$lang][$pId]['iteminstock'] > 0){
-     $item=array();
-     $item['changeStock'] = true;//4 activate hook plxMyShopEditProductBegin (4 changeStock only)
-     if (intval($this->aProds[$lang][$pId]['iteminstock']) >= intval($nb))
-      $this->aProds[$lang][$pId]['iteminstock'] -= intval($nb);//decrease stock 
-     if(empty($this->aProds[$lang][$pId]['iteminstock']))//if stock == 0
-      $this->aProds[$lang][$pId]['noaddcart']=1;//auto hide basket button
-     $this->editProduct($item);
+  foreach ($content as $pId => $nb){
+   if ($this->aProds[$this->default_lang][$pId]['iteminstock'] != '' OR $this->aProds[$this->default_lang][$pId]['iteminstock'] > 0){
+    if (intval($this->aProds[$this->default_lang][$pId]['iteminstock']) >= intval($nb)){
+     foreach($aLangs as $lang){//4 all langs
+      $item=array();
+      $item['changeStock'] = true;//4 activate hook plxMyShopEditProductBegin (4 changeStock only)
+      $this->aProds[$lang][$pId]['iteminstock'] -= intval($nb);//decrease stock
+      if(empty($this->aProds[$lang][$pId]['iteminstock']))//if stock == 0
+       $this->aProds[$lang][$pId]['noaddcart']=1;//auto hide basket button
+      $this->editProduct($item);
+     }
     }
    }
   }

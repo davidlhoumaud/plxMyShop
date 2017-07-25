@@ -90,7 +90,7 @@ $imgNoUrl = PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png';
 <!-- Utilisation du selecteur d'image natif à PluXml -->
 <script type="text/javascript">
  function refreshImg(id_img) {console.log(id_img);
-  var dta = document.getElementById(id_img).value;
+  var dta = document.getElementById(id_img.replace('_img','')).value;
   if(dta.trim()==='') {
    document.getElementById(id_img).innerHTML = '<img src="<?php echo $imgNoUrl ?>" alt="" />';
   } else {//console.log(document.getElementById('id_image_img').innerHTML);
@@ -134,7 +134,7 @@ $imgNoUrl = PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png';
 -->
 <?php
      foreach($aLangs as $lang){
-      echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').'>'.strtoupper($lang).'</li>'.PHP_EOL;
+      echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').($lang==$plxPlugin->default_lang?' data-default_lang title="'.$plxPlugin->getLang('L_PRODUCTS_WEIGHT').' & Stock"':'').'>'.strtoupper($lang).'</li>'.PHP_EOL;
      }
 ?>
     </ul>
@@ -150,14 +150,14 @@ $imgNoUrl = PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png';
 foreach($aLangs as $lang) {
  $lng=($plxPlugin->aLangs)?'_'.$lang:'';
 ?>
-   <div class="tabpage<?php echo($lang==$plxAdmin->aConf['default_lang'])?' active':'" style="display:none;"'; ?>" id="tabpage<?php echo $lng ?>">
+   <div class="tabpage<?php echo(empty($lng) | $lang==$plxAdmin->aConf['default_lang'])?' active':'" style="display:none;'; ?>" id="tabpage<?php echo $lng ?>">
     <div class="grid gridthumb">
-     <div class="col sml-12 med-5 label-centered"><p class="lang_helper">Admin:<?php echo $plxAdmin->aConf['default_lang'].' - Tab:'.$lang ?></p>
+     <div class="col sml-12 med-5 label-centered"><p class="lang_helper">Admin:<?php echo $plxAdmin->aConf['default_lang'].' - plug:'.$plxPlugin->default_lang.' - Tab:'.$lang ?></p>
       <label for="id_image<?php echo $lng ?>"><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail<?php echo $lng ?>" href="javascript:void(0)" onclick="mediasManager.openPopup('id_image<?php echo $lng ?>', true, 'id_image<?php echo $lng ?>')" style="outline:none; text-decoration: none"> +</a></label>
       <?php plxUtils::printInput('image'.$lng,plxUtils::strCheck($image[$lang]),'text','255-255',false,'full-width','','onKeyUp="refreshImg(\'id_image_img'.$lng.'\')"'); ?>
      </div>
      <div class="col sml-12 med-7">
-      <div class="image_img" id="id_image_img<?php echo $lng ?>">
+      <div class="image_img" id="id_image<?php echo $lng ?>_img">
 <?php
        $imgUrl = PLX_ROOT.$plxPlugin->cheminImages.$image[$lang];
        $imgUrl = is_file($imgUrl)?$imgUrl:$imgNoUrl;
@@ -181,13 +181,13 @@ foreach($aLangs as $lang) {
        <label for="id_poidg<?php echo $lng ?>"><?php $plxPlugin->lang('L_PRODUCTS_WEIGHT') ;?>&nbsp;:</label>
       </div>
       <div class="col sml-12 med-7">
-       <?php plxUtils::printInput('poidg'.$lng,plxUtils::strCheck($poidg[$lang]),'text','0-255'); ?>
+       <?php plxUtils::printInput('poidg'.$lng,plxUtils::strCheck($poidg[$lang]),'text','0-255',($lang!=$plxPlugin->default_lang)); ?>
       </div>
       <div class="col sml-12 med-5 label-centered">
-       <label for="id_iteminstock"><?php $plxPlugin->lang('L_PRODUCTS_ITEM_INSTOCK') ;?>&nbsp;:</label>
+       <label for="id_iteminstock<?php echo $lng ?>"><?php $plxPlugin->lang('L_PRODUCTS_ITEM_INSTOCK') ;?>&nbsp;:</label>
       </div>
       <div class="col sml-12 med-7">
-        <?php plxUtils::printInput('iteminstock',plxUtils::strCheck($iteminstock),'text','0-255'); ?>
+       <?php plxUtils::printInput('iteminstock'.$lng,plxUtils::strCheck($iteminstock[$lang]),'text','0-255',($lang!=$plxPlugin->default_lang)); ?>
       </div>
      </div>
      <div class="grid">
@@ -292,4 +292,6 @@ foreach($aLangs as $lang) {
   </fieldset>
  </div><!-- fi tabContainer -->
 </form>
+<?php if($plxPlugin->aLangs){#ml ?>
 <script type="text/javascript" src="<?php echo PLX_PLUGINS.$plxPlugin->plugName."/js/tabs.js" ?>"></script>
+<?php } ?>

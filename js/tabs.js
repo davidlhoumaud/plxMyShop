@@ -19,7 +19,7 @@ window.onload=function() {
  //this adds click event to tabs
  var tabs = container.querySelectorAll(".tabs ul li");
  for (var i = 0; i < tabs.length; i++) {
-   tabs[i].onclick=displayPage;
+  tabs[i].onclick=displayPage;
  }
 }
 
