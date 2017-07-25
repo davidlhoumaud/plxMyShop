@@ -196,6 +196,7 @@ foreach($aLangs as $lang) {
       </div>
       <div class="col sml-12 med-7">
        <?php plxUtils::printSelect('noaddcart'.$lng, array('1'=>L_YES,'0'=>L_NO), plxUtils::strCheck($noaddcart[$lang]), false,'" onChange="toggleNoaddcart(this.options[this.selectedIndex].value,\''.$lng.'\');'); ?>
+       <?php if($lang==$plxPlugin->default_lang) {plxUtils::printInput('noaddcart4all','','checkbox'); echo '&nbsp;'.L_ALL.'?';} ?>
       </div>
      </div>
      <div class="grid<?php echo $noaddcart[$lang]?'':' hide'; ?>" id="config_notice_noaddcart<?php echo $lng ?>">

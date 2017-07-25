@@ -1032,10 +1032,13 @@ var picker_date = new Pikaday(
   # Mise à jour du fichier product.xml
   $lngd=($this->aLangs)?'_'.$this->default_lang:'';//default lang 4 stock system
   $aLangs = ($this->aLangs)?$this->aLangs:array($this->default_lang);
-  foreach($aLangs as $lang){//stock 4 all langs
+  $noaddcart4all = isset($content['noaddcart4all']);//'noaddcart4all' => string 'on' OR unseted ;)
+  foreach($aLangs as $lang){//stock & weight 4 all langs
    $lang=($this->aLangs)?'_'.$lang:'';//post vars
    $content['iteminstock'.$lang] = $content['iteminstock'.$lngd];//with default lang stock
    $content['poidg'.$lang] = $content['poidg'.$lngd];//with default lang weight
+   if($noaddcart4all)
+    $content['noaddcart'.$lang] = $content['noaddcart'.$lngd];//with default lang noaddcart
   }
   foreach($aLangs as $lang) {
    $lgf=($this->aLangs)?$lang.'/':'';//folders
@@ -1077,7 +1080,7 @@ var picker_date = new Pikaday(
     }
    }
    $infos = $err = null;
-   foreach($aLangs as $lang) {
+   foreach($aLangs as $lang){
     $lgf=($this->aLangs)?$lang.'/':'';//folders
     $lng=($this->aLangs)?'_'.$lang:'';//post vars
     # Génération du nom du fichier de la page statique
