@@ -113,7 +113,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
     <p class="thirty fl tal pl"><?php $plxPlugin->lang('L_PUBLIC_ZIP'); ?><span class='star'>*</span>&nbsp;:<br />
     <input type="text" name="postcode" id="postcode" value="" required="required" /></p>
     <p class="forty fl tal"><?php $plxPlugin->lang('L_PUBLIC_TOWN'); ?><span class='star'>*</span>&nbsp;:<br />
-    <input type="text" name="city" id="city" value=""  required="required"></p>
+    <input type="text" name="city" id="city" value="" required="required"></p>
     <p class="twenty fl tal"><?php $plxPlugin->lang('L_PUBLIC_COUNTRY'); ?><span class='star'>*</span>&nbsp;:<br />
     <input type="text" name="country" id="country" value="" required="required" /></p><br class="clear" />
 
@@ -178,7 +178,7 @@ eval($plxPlugin->plxMotor->plxPlugins->callHook('plxMyShopPanierDebut'));
     <br />
 <?php if ("" !== $plxPlugin->getParam("urlCGV")) {?>
      <label for="valideCGV">
-      <input type="checkbox" name="valideCGV" id="valideCGV"<?php echo (!isset($_POST["valideCGV"])) ? "" : " checked=\"checked\"";?>  required="required" />
+      <input type="checkbox" name="valideCGV" id="valideCGV"<?php echo (!isset($_POST["valideCGV"])) ? "" : " checked=\"checked\"";?> required="required" />
       <span class='star'>*</span>
       <a href="<?php echo $plxPlugin->plxMotor->urlRewrite($plxPlugin->getParam("urlCGV"));?>"><?php echo htmlspecialchars((!($plxPlugin->getParam('useLangCGVDefault')))?$plxPlugin->getParam('libelleCGV'):$plxPlugin->getLang('L_COMMANDE_LIBELLE_DEFAUT'));?></a>
      </label>

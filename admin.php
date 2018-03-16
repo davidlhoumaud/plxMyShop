@@ -35,7 +35,7 @@ if (isset($_GET['kill']) && !empty($_GET['kill']) && is_file($dir.$_GET['kill'])
 if ((isset($_GET['prod']) && !empty($_GET['prod'])) || (isset($_POST['prod']) && !empty($_POST['prod'])))
  include(dirname(__FILE__).'/template/editionProduitAdmin.php');
 else {
- $aLangs = ($plxPlugin->aLangs)?$plxPlugin->aLangs:array($plxPlugin->default_lang);#multilingue or not
+ $aLangs = ($plxPlugin->aLangs)?$plxPlugin->aLangs:array($plxPlugin->dLang);#multilingue or not
 ?>
 <script type="text/javaScript">
 function checkBox(obj){
@@ -68,7 +68,7 @@ function checkBox(obj){
   <p>
    <?php echo plxToken::getTokenPostMethod() ?>
    <?php plxUtils::printSelect('selection', array( '' =>L_FOR_SELECTION, 'delete' =>L_DELETE), '', false, '', 'id_selection') ?>
-   <input class="button submit" type="submit" name="submit" value="<?php echo L_OK ?>" onclick="return confirmAction(this.form, 'id_selection', 'delete', 'idProduct[]', '<?php echo L_CONFIRM_DELETE ?>')" />
+   <input class="button submit" type="submit" name="submit" value="<?php echo L_OK ?>" onclick="return confirmAction(this.form, 'id_selection', 'delete', 'idProduct[]', '<?php $plxPlugin->lang('L_CONFIRM_DELETE') ?>')" />
    <input class="button update" type="submit" name="update" value="<?php $plxPlugin->lang('L_ADMIN_MODIFY') ?> <?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getlang('L_CATEGORIES'):$plxPlugin->getlang('L_PRODUCTS')); ?>" />
   </p>
  <?php endif; ?>
@@ -82,7 +82,18 @@ function checkBox(obj){
 -->
 <?php
     foreach($aLangs as $lang){
-     echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').'>'.strtoupper($lang).'</li>'.PHP_EOL;
+     $datab = $titab = $mixab = '';
+     if($lang==$_SESSION['default_lang']){
+      $titab .= L_CONFIG_BASE_DEFAULT_LANG.' &amp; '.(isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getlang('L_NEW_CATEGORY'):$plxPlugin->getlang('L_NEW_PRODUCT'));
+      $datab .= ' data-default_lang';
+      $mixab .= ' &amp; ';
+     }
+     if($lang==$plxPlugin->dLang?' data-user_lang':''){
+      $titab .= $mixab.L_USER_LANG;
+      $datab .= ' data-user_lang';
+     }
+//   echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').($lang==$plxPlugin->default_lang?' data-default_lang title="'.(isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getlang('L_NEW_CATEGORY'):$plxPlugin->getlang('L_NEW_PRODUCT')).'"':'').'>'.strtoupper($lang).'</li>'.PHP_EOL;
+     echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').' title="'.$titab.'"'.$datab.'>'.strtoupper($lang).'</li>'.PHP_EOL;
     }
 ?>
     </ul>
@@ -100,13 +111,19 @@ foreach($aLangs as $lang) {
  $lng=($plxPlugin->aLangs)?'_'.$lang:'';//post vars
 ?>
  <div class="tabpage<?php echo ($lang==$plxAdmin->aConf['default_lang']?' active':''); ?>" id="tabpage<?php echo $lng ?>">
-  <div class="scrollable-table"><p class="lang_helper">Admin:<?php echo $plxAdmin->aConf['default_lang'].' - Tab:'.$lang ?></p>
+  <div class="scrollable-table">
+<p class="lang_helper"><i title="$plxAdmin->aConf['default_lang']">A.aConf&nbsp;:&nbsp;<?php
+  echo $plxAdmin->aConf['default_lang']
+  .'</i> - <i title="$plxAdmin->aConf[\'default_lang\']">Tab&nbsp;:&nbsp;'.$lang
+  .'</i> - <i title="$plxPlugin->dLang">dLang&nbsp;:&nbsp;'.$plxPlugin->dLang
+  .'</i> - <i title="$_SESSION[\'default_lang\']">S.dLang&nbsp;:&nbsp;'.(isset($_SESSION['default_lang'])?$_SESSION['default_lang']:'Not Set')
+?></i> - <b title="This is an helper 4 found good Lang param, the Progr@mmer!">?</b></p>
    <table id="myShop-table<?php echo $lng ?>" class="table full-width listeCategoriesProduitsAdmin liste<?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?"Categories":"Produits");?>Admin display responsive no-wrap" width="100%">
     <thead>
      <tr>
 <?php if (!isset($_GET['mod']) || (isset($_GET['mod']) && $_GET['mod']!='cmd')): ?>
       <th><input type="checkbox" onclick="checkAll(this.form, 'idProduct[]')" /></th>
-      <th><?php $plxPlugin->lang('L_PRODUCTS_ID') ?></th>
+      <th><?php $plxPlugin->lang('L_PRODUCTS_ID') ?><noscript><?php echo $lng ?></noscript></th>
       <th></th>
       <th><?php $plxPlugin->lang('L_PRODUCTS_TITLE') ?></th>
       <th><?php $plxPlugin->lang('L_PRODUCTS_URL') ?></th>
@@ -119,8 +136,8 @@ foreach($aLangs as $lang) {
  <?php if (isset($_GET['mod']) && $_GET['mod']=='cat'){ ?>
       <th><?php $plxPlugin->lang('L_PRODUCTS_MENU')?></th>
  <?php } else { ?>
-      <th><?php $plxPlugin->lang('L_PRODUCTS_PRICE')?></th>
       <th><?php $plxPlugin->lang('L_PRODUCTS_WEIGHT')?></th>
+      <th><?php $plxPlugin->lang('L_PRODUCTS_PRICE')?></th>
  <?php } ?>
       <th><?php $plxPlugin->lang('L_PRODUCTS_ACTION') ?></th>
  <?php else: ?>
@@ -133,77 +150,74 @@ foreach($aLangs as $lang) {
     </thead>
    <tbody>
 <?php
-    # Initialisation de l'ordre
-    $num = 0;
+ $num = 0;# Initialisation de l'ordre
+ if($plxPlugin->aProds[$lang]){# Si on a des produits
+  foreach($plxPlugin->aProds[$lang] as $k=>$v){# Pour chaque produit
+   $url=$v['url'];
+   if ((isset($_GET['mod']) && $_GET['mod']=='cat' && $v['pcat']!=1)||(isset($_GET['mod']) && $_GET['mod']=='cmd'))continue;
+   if (!isset($_GET['mod']) && $v['pcat']==1)continue;
 
-     # Si on a des produits
- if($plxPlugin->aProds[$lang]){
-  foreach($plxPlugin->aProds[$lang] as $k=>$v){ # Pour chaque produit
-    $url=$v['url'];
-    if ((isset($_GET['mod']) && $_GET['mod']=='cat' && $v['pcat']!=1)||(isset($_GET['mod']) && $_GET['mod']=='cmd'))continue;
-    if (!isset($_GET['mod']) && $v['pcat']==1)continue;
-
-    $ordre = ++$num;
-    $selected = $v['pcat']==1 ? ' checked="checked"' : '';
-    $valued = $v['pcat']==1 ? '1' : '0';
-    $noaddcartImg = ($v['pcat']!=1 ? '<img class="noaddcartImg" src="'.PLX_PLUGINS.$plxPlugin->plugName.'/images/'.(empty($v['noaddcart'])?'full':'empty').'.png" />' : '');
-    $noaddcartTit = (empty($v['noaddcart'])?'':PHP_EOL.htmlspecialchars($plxPlugin->getLang('L_PRODUCTS_BASKET_BUTTON')));
-    echo '
+   $ordre = ++$num;
+   $selected = $v['pcat']==1 ? ' checked="checked"' : '';
+   $valued = $v['pcat']==1 ? '1' : '0';
+   $noaddcartImg = ($v['pcat']!=1 ? '<img class="noaddcartImg" src="'.PLX_PLUGINS.$plxPlugin->plugName.'/images/'.(empty($v['noaddcart'])?'full':'empty').'.png" />' : '');
+   $noaddcartTit = (empty($v['noaddcart'])?'':PHP_EOL.htmlspecialchars($plxPlugin->getLang('L_PRODUCTS_BASKET_BUTTON')));
+   echo '
     <tr class="line-'.($num%2).'">
      <td><input type="checkbox" name="idProduct[]" value="'.$k.'" /><input type="hidden" name="productNum[]" value="'.$k.'" /></td>
      <td><a href="plugin.php?p='.$plxPlugin->plugName.'&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').$noaddcartTit.'">'.$k.$noaddcartImg.'</a>
      <input type="hidden" name="'.$k.'_pcat'.$lng.'" value="'.$valued.'"'.$selected.' onclick="checkBox(this);" />
     </td>'.PHP_EOL;
- ?>
+?>
     <td>
- <?php
-    $image = $v["image"];
-    echo '<a href="plugin.php?p='.$plxPlugin->plugName.'&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').$noaddcartTit.'"><img class="product_image" src="'.($image!=""?PLX_ROOT.$plxPlugin->cheminImages.$image:PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png').'" /></a>';
- ?>
+<?php
+   $image = $v["image"];
+   echo '<a href="plugin.php?p='.$plxPlugin->plugName.'&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').$noaddcartTit.'"><img class="product_image" src="'.($image!=""?PLX_ROOT.$plxPlugin->cheminImages.$image:PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png').'" /></a>';
+?>
     </td>
- <?php
-    echo '<td>'.PHP_EOL;
-    plxUtils::printInput($k.'_name'.$lng, plxUtils::strCheck($v['name']), 'text', '20-255');
-    echo '</td><td>'.PHP_EOL;
-    plxUtils::printInput($k.'_url'.$lng, $v['url'], 'text', '12-255');
-    echo '</td><td>'.PHP_EOL;
-    plxUtils::printSelect($k.'_active'.$lng, array('1'=>L_YES,'0'=>L_NO), $v['active']);
-    echo '</td><td>'.PHP_EOL;
-    plxUtils::printInput($k.'_ordre'.$lng, $ordre, 'text', '2-3');
+<?php
+   echo '<td>'.PHP_EOL;
+   plxUtils::printInput($k.'_name'.$lng, plxUtils::strCheck($v['name']), 'text', '20-255');
+   echo '</td><td>'.PHP_EOL;
+   plxUtils::printInput($k.'_url'.$lng, $v['url'], 'text', '12-255');
+   echo '</td><td>'.PHP_EOL;
+   plxUtils::printSelect($k.'_active'.$lng, array('1'=>L_YES,'0'=>L_NO), $v['active']);
+   echo '</td><td>'.PHP_EOL;
+   plxUtils::printInput($k.'_ordre'.$lng, $ordre, 'text', '2-3');
+   echo '</td>'.PHP_EOL;
+
+   if ($v['pcat']==1){
+    echo '<td>';
+    plxUtils::printSelect($k.'_menu'.$lng, array('oui'=>L_DISPLAY,'non'=>L_HIDE), $v['menu']);
     echo '</td>'.PHP_EOL;
-
-    if ($v['pcat']==1){
-     echo '<td>';
-     plxUtils::printSelect($k.'_menu'.$lng, array('oui'=>L_DISPLAY,'non'=>L_HIDE), $v['menu']);
-     echo '</td>'.PHP_EOL;
-    } else {
-     echo '<td class="nombre">';
-     if ($v["pricettc"] > 0){
-      echo $plxPlugin->pos_devise($v["pricettc"]);
-     }
-     echo '</td>'.PHP_EOL;
-     echo '<td class="nombre">';
-     if ($v["poidg"] > 0){
-      echo $v["poidg"];
-     }
-     echo '</td>'.PHP_EOL;
+   } else {
+    echo '<td class="nombre">';
+    if ($v["poidg"] > 0){
+     echo $v["poidg"];
     }
-
-    if(!plxUtils::checkSite($v['url'])){
-     echo '<td>';
-     echo '<a href="plugin.php?p='.$plxPlugin->plugName.'&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').$noaddcartTit.'">'.$plxPlugin->getLang('L_PRODUCTS_SRC').'</a>';
-     if(@$v['active']){
-      echo '&nbsp;-&nbsp;<a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.sprintf($plxPlugin->getLang('L_VIEW_ONLINE'), plxUtils::strCheck($v['name'])).'">'.L_VIEW.'</a>';
-     }
-     echo '</td></tr>'.PHP_EOL;
+    echo '</td>'.PHP_EOL;
+    echo '<td class="nombre">';
+    if ($v["pricettc"] > 0){
+     echo $plxPlugin->pos_devise($v["pricettc"]);
     }
-    elseif($url[0]=='?')
-     echo '</td><td>b <a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.plxUtils::strCheck($v['name']).'">'.L_VIEW.'</a></td></tr>'.PHP_EOL;
-    else
-     echo '</td><td>c <a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.plxUtils::strCheck($v['name']).'">'.L_VIEW.'</a></td></tr>'.PHP_EOL;
+    echo '</td>'.PHP_EOL;
    }
-  # On récupère le dernier identifiant
-  $a = array_keys($plxPlugin->aProds[$lang]);
+
+   if(!plxUtils::checkSite($v['url'])){
+    echo '<td>';#a
+    echo '<a href="plugin.php?p='.$plxPlugin->plugName.'&amp;prod='.$k.'" title="'.$plxPlugin->getLang('L_PRODUCTS_SRC_TITLE').$noaddcartTit.'">'.$plxPlugin->getLang('L_PRODUCTS_SRC').'</a>';
+    if(@$v['active']){
+     echo '&nbsp;-&nbsp;<a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.sprintf($plxPlugin->getLang('L_VIEW_ONLINE'), plxUtils::strCheck($v['name'])).'">'.L_VIEW.'</a>';
+    }
+    echo '</td>'.PHP_EOL;
+   }
+   //~ elseif($url[0]=='?')
+    //~ echo '</td><td>b <a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.plxUtils::strCheck($v['name']).'">'.L_VIEW.'</a></td>'.PHP_EOL;
+   else
+    echo '</td><td>c <a href="'.$plxAdmin->urlRewrite('index.php?product'.intval($k).'/'.$url).'" title="'.plxUtils::strCheck($v['name']).'">'.L_VIEW.'</a></td>'.PHP_EOL;
+   echo '</tr>'.PHP_EOL;
+  }
+  $a = array_keys($plxPlugin->aProds[$lang]);# On récupère le dernier identifiant
   rsort($a);
  } else {
   $a['0'] = 0;
@@ -229,7 +243,7 @@ foreach($aLangs as $lang) {
     if (isset($_GET['mod']) && $_GET['mod']=='cat'){
      echo '<td>';
      plxUtils::printSelect($new_productid.'_menu'.$lng, array('oui'=>L_DISPLAY,'non'=>L_HIDE), '0');
-     echo '</td>'.PHP_EOL;
+     echo '</td><td>&nbsp;</td>'.PHP_EOL;
     } else {
      echo '<td colspan="3">&nbsp;</td>'.PHP_EOL;
     }

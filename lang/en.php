@@ -63,6 +63,7 @@ $LANG = array(
 'L_PRODUCTS_CATEGORIES'             => 'Categories of this product',
 'L_PRODUCTS_PRICE'                  => 'Price tax included',
 'L_PRODUCTS_WEIGHT'                 => 'Weight (kg)',
+'L_CONFIRM_DELETE'                  => 'Confirm the deletion?',
 
 'L_COMMAND_OF'                      => 'Command of',
 'PAYPAL_ALT'                        => 'Buy Now With Credit Cards',
@@ -75,7 +76,7 @@ $LANG = array(
 'L_PRODUCT_UNKNOWN_PAGE'            => 'This product doesn\'t exist or is no longer available !',
 'L_PRODUCT_TITLE'                   => 'Edit the source code of this product',
 'L_CAT_TITLE'                       => 'Edit the source code of this category',
-
+'L_THUMBNAIL_SELECTION'             => 'Select image',
 'L_PRODUCT_VIEW_PAGE_ON_SITE'       => 'View the product %s on the site',
 'L_CAT_VIEW_PAGE_ON_SITE'           => 'View the product\'s category %s on the site',
 

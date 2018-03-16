@@ -14,6 +14,13 @@
 * Une boutique par utilisateur?
 * Peaufiner l'aide
 * Titre du menu boutique et symbole monaitaire en MyMultilingue (dans le fichier de langue ou a choisir par l'admin avec des onglets dans la config, ou ...)
+http://forum.pluxml.org/viewtopic.php?pid=56124#p56124
+    Paiement par Stripe: permet d'accepter les cartes bancaires
+    Paiement par Crypto-monnaie: permet d'accepter paiement en G1, Bitcoin
+    Vente de produit numérique, accessible après paiement via un lien de téléchargement
+    (lien sécurisé, nombre de téléchargement limité etc.)
+    Un espace membre
+    Personnaliser les informations du client: (ex: lui demander uniquement nom, prénom et email lors de l'achat) 
 
 ****
 * Si jamais configuré : petit BUG Config PAYPAL et frais de port (JavaScript), le panneau est caché. Se régle en jouant avec le l'interupteur ou après la premiere config enregistrée tout rentre dans l'ordre ;)
@@ -32,6 +39,18 @@ BUG les drapeaux le multilingue disparaissent au panier, mais sont présent dans
 le plugin spxplugindowloader.2.5 provoque la perte de l'action bar aux plugins qui ont un admin.php (vu avec plx5.4 & maybe after)
 
 Effet de bord : si on ajoute un shortCode [boutonPanier ###] a un prod/cat et que le panier est sur toutes les pages (il s'affiche 2 fois (av et aprés le form de commande)?????
+
+Add this modes in excluded caching with plxMinimifyCache.1.5.0 :
+product,boutique
+
+##v0.13.1r6 16/03/2018##
+[+] HTML not valid #Minimzed (Fail?) with plxMinimifyCache.1.5.0 #bugOrNot, if have 2 space in attribute tag, remove spaces & are unvalid code, be carefull & valid html before... or  maybe update library to solve problem
+[+] Improve default langs (admin user & site default)
+[+] Admin MultiLingual tabs System
+[+] Exemples Templates & langs updated
+Fix Lang for older PluXml Miss
+[+] onUpdate mise a jour du cache des css
+[+] Best integration on OLD Pluxml
 
 
 ##v0.13.1r5 25/07/2017##

@@ -12,6 +12,7 @@
 }
 .miniDel{
  text-indent:-10000px;
+ direction:ltr;/* thx kzAce */
  width:12px;
  height:3px;
  border:none;

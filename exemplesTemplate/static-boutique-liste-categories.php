@@ -22,16 +22,14 @@
     if (isset($plxMyShop->aProds[$plxMyShop->default_lang]) && is_array($plxMyShop->aProds[$plxMyShop->default_lang])) {
      echo "<ul>";
      foreach ($plxMyShop->aProds[$plxMyShop->default_lang] as $kRubrique => $vRubrique) {
-      if ( $vRubrique['menu'] === 'non' || $vRubrique['menu'] === '' || (1 !== $vRubrique["active"])) {
-       continue;
-      }
-      $lien = $plxShow->plxMotor->urlRewrite("?".$plxMyShop->lang."product$kRubrique/{$vRubrique["url"]}");
+      if ($vRubrique['pcat'] == 1 && $vRubrique['menu'] == 'oui' && $vRubrique["active"] == 1){
+       $lien = $plxShow->plxMotor->urlRewrite("?".$plxMyShop->lang."product$kRubrique/{$vRubrique["url"]}");
 ?>
        <li>
-        <a href="<?php echo htmlspecialchars($lien);?>">
-         <?php echo htmlspecialchars($vRubrique['name']);?></a>
+        <a href="<?php echo $lien;?>"><?php echo htmlspecialchars($vRubrique['name']);?></a>
        </li>
 <?php
+      }
      }
      echo "</ul>";
     }

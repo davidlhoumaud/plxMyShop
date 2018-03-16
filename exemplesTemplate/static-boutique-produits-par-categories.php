@@ -21,7 +21,7 @@
 
     if (isset($plxMyShop->aProds[$plxMyShop->default_lang]) && is_array($plxMyShop->aProds[$plxMyShop->default_lang])) {
      foreach ($plxMyShop->aProds[$plxMyShop->default_lang] as $k1 => $v1) {
-      if ($v1['pcat'] == 1 && $v1['menu'] =='oui') {
+      if ($v1['pcat'] == 1 && $v1['menu'] == 'oui') {
        $cat_array[$k1] = $v1['name'];# can only get the name of a category
       }
      }

@@ -63,6 +63,7 @@ $LANG = array(
 'L_PRODUCTS_CATEGORIES'             => 'Categorias d\'aqueste produit',
 'L_PRODUCTS_PRICE'                  => 'Prètz T.T.C.',
 'L_PRODUCTS_WEIGHT'                 => 'Pes (kg)',
+'L_CONFIRM_DELETE'                  => 'Confirmar la supression ?',
 
 'L_COMMAND_OF'                      => 'Commande de',# a traduire
 'PAYPAL_ALT'                        => 'Commander avec une CB',# a traduire
@@ -75,7 +76,7 @@ $LANG = array(
 'L_PRODUCT_UNKNOWN_PAGE'            => 'Aqueste produit existís pas o existís pas mai !',
 'L_PRODUCT_TITLE'                   => 'Modificacion del produit',
 'L_CAT_TITLE'                       => 'Modificacion de la categoria',
-
+'L_THUMBNAIL_SELECTION'             => 'Seleccionar un imatge',
 'L_PRODUCT_VIEW_PAGE_ON_SITE'       => 'Visualizar lo produit',
 'L_CAT_VIEW_PAGE_ON_SITE'           => 'Visualizar la categoria del produit',
 

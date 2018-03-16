@@ -68,6 +68,7 @@ $modProduit = ("1" !== $pcat[ $plxPlugin->default_lang ] );
 if (!isset($_SESSION)) {// inutile?
  session_start();
 }
+$_SESSION["default_lang"] = isset($_SESSION["default_lang"])?$_SESSION["default_lang"]:$plxPlugin->default_lang;# plx 5.3 fallback
 $_SESSION[$plxPlugin->plugName]["cheminImages"] = realpath(PLX_ROOT . $plxPlugin->cheminImages);
 $_SESSION[$plxPlugin->plugName]["urlImages"] = $plxAdmin->urlRewrite($plxPlugin->cheminImages);
 $imgNoUrl = PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png';
@@ -133,9 +134,19 @@ $imgNoUrl = PLX_PLUGINS.$plxPlugin->plugName.'/images/none.png';
      <li id="tabHeader_main"><?php $plxPlugin->lang('L_MAIN') ?></li>
 -->
 <?php
-     foreach($aLangs as $lang){
-      echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').($lang==$plxPlugin->default_lang?' data-default_lang title="'.$plxPlugin->getLang('L_PRODUCTS_WEIGHT').' & Stock"':'').'>'.strtoupper($lang).'</li>'.PHP_EOL;
+    foreach($aLangs as $lang){
+     $datab = $titab = $mixab = '';
+     if($lang==$_SESSION['default_lang']){
+      $titab .= ($modProduit?$plxPlugin->getLang('L_PRODUCTS_WEIGHT').' &amp; Stock'.PHP_EOL:'').L_CONFIG_BASE_DEFAULT_LANG;
+      $datab .= ' data-default_lang';
+      $mixab .= ' &amp; ';
      }
+     if($lang==$plxPlugin->dLang?' data-user_lang':''){
+      $titab .= $mixab.L_USER_LANG;
+      $datab .= ' data-user_lang';
+     }
+     echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').' title="'.$titab.'"'.$datab.'>'.strtoupper($lang).'</li>'.PHP_EOL;
+    }
 ?>
     </ul>
    </div>
@@ -152,8 +163,8 @@ foreach($aLangs as $lang) {
 ?>
    <div class="tabpage<?php echo(empty($lng) | $lang==$plxAdmin->aConf['default_lang'])?' active':'" style="display:none;'; ?>" id="tabpage<?php echo $lng ?>">
     <div class="grid gridthumb">
-     <div class="col sml-12 med-5 label-centered"><p class="lang_helper">Admin:<?php echo $plxAdmin->aConf['default_lang'].' - plug:'.$plxPlugin->default_lang.' - Tab:'.$lang ?></p>
-      <label for="id_image<?php echo $lng ?>"><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo L_THUMBNAIL_SELECTION ?>" id="toggler_thumbnail<?php echo $lng ?>" href="javascript:void(0)" onclick="mediasManager.openPopup('id_image<?php echo $lng ?>', true, 'id_image<?php echo $lng ?>')" style="outline:none; text-decoration: none"> +</a></label>
+     <div class="col sml-12 med-5 label-centered"><p class="lang_helper">AdminaConf:<?php echo (isset($plxAdmin->aConf['default_lang'])?$plxAdmin->aConf['default_lang']:'NotSet').' - Tab:'.$lang.' - dLang:'.$plxPlugin->dLang.' - sessDLang:'.$_SESSION['default_lang'] ?></p>
+      <label for="id_image<?php echo $lng ?>"><?php $plxPlugin->lang('L_PRODUCTS_IMAGE_CHOICE') ?> <a title="<?php echo $plxPlugin->lang('L_THUMBNAIL_SELECTION') ?>" id="toggler_thumbnail<?php echo $lng ?>" href="javascript:void(0)" onclick="mediasManager.openPopup('id_image<?php echo $lng ?>', true, 'id_image<?php echo $lng ?>')" style="outline:none; text-decoration: none"> +</a></label>
       <?php plxUtils::printInput('image'.$lng,plxUtils::strCheck($image[$lang]),'text','255-255',false,'full-width','','onKeyUp="refreshImg(\'id_image_img'.$lng.'\')"'); ?>
      </div>
      <div class="col sml-12 med-7">
@@ -181,13 +192,13 @@ foreach($aLangs as $lang) {
        <label for="id_poidg<?php echo $lng ?>"><?php $plxPlugin->lang('L_PRODUCTS_WEIGHT') ;?>&nbsp;:</label>
       </div>
       <div class="col sml-12 med-7">
-       <?php plxUtils::printInput('poidg'.$lng,plxUtils::strCheck($poidg[$lang]),'text','0-255',($lang!=$plxPlugin->default_lang)); ?>
+       <?php plxUtils::printInput('poidg'.$lng,plxUtils::strCheck($poidg[$lang]),'text','0-255',($lang!=$_SESSION['default_lang'])); ?>
       </div>
       <div class="col sml-12 med-5 label-centered">
        <label for="id_iteminstock<?php echo $lng ?>"><?php $plxPlugin->lang('L_PRODUCTS_ITEM_INSTOCK') ;?>&nbsp;:</label>
       </div>
       <div class="col sml-12 med-7">
-       <?php plxUtils::printInput('iteminstock'.$lng,plxUtils::strCheck($iteminstock[$lang]),'text','0-255',($lang!=$plxPlugin->default_lang)); ?>
+       <?php plxUtils::printInput('iteminstock'.$lng,plxUtils::strCheck($iteminstock[$lang]),'text','0-255',($lang!=$_SESSION['default_lang'])); ?>
       </div>
      </div>
      <div class="grid">
@@ -196,7 +207,7 @@ foreach($aLangs as $lang) {
       </div>
       <div class="col sml-12 med-7">
        <?php plxUtils::printSelect('noaddcart'.$lng, array('1'=>L_YES,'0'=>L_NO), plxUtils::strCheck($noaddcart[$lang]), false,'" onChange="toggleNoaddcart(this.options[this.selectedIndex].value,\''.$lng.'\');'); ?>
-       <?php if($lang==$plxPlugin->default_lang) {plxUtils::printInput('noaddcart4all','','checkbox'); echo '&nbsp;'.L_ALL.'?';} ?>
+       <?php if(($plxPlugin->aLangs && count($plxPlugin->aLangs) > 1) && $lang==$plxPlugin->default_lang) {plxUtils::printInput('noaddcart4all','','checkbox'); echo '&nbsp;'.L_ALL.'?';} ?>
       </div>
      </div>
      <div class="grid<?php echo $noaddcart[$lang]?'':' hide'; ?>" id="config_notice_noaddcart<?php echo $lng ?>">

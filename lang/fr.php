@@ -1,7 +1,6 @@
 <?php
-
+//<a class="hint"><span></span></a> helper
 $LANG = array(
-
 'L_PAGE_TITLE'                      => 'Gérer les produits',
 'L_ADMIN_MENU_TOOTIP'               => 'Gérer mon web-commerce (produits, catégories et commandes)', #Affichage des produits / catégories
 'L_LANG_UNAVAILABLE'                => 'Langue non disponible : %s',
@@ -58,11 +57,12 @@ $LANG = array(
 'L_PRODUCTS_IMAGE_CHOICE'           => 'Choisir une image',
 'L_PRODUCTS_SHORTCODE'              => 'Shortcode pour article et page statique',
 'L_PRODUCTS_BASKET_BUTTON'          => 'Produit Indisponible (Bouton "Ajouter au panier" masqué)',
-'L_PRODUCTS_ITEM_INSTOCK'           => 'Nombre de produits disponible en stock (<b title="Le dernier commandé du stock rend le produit indisponible!'.PHP_EOL.'Le bouton d\'Ajout au panier est automatiquement caché ;-)'.PHP_EOL.'Désactiver son masquage si le stock a été vidé puis remplis.'.PHP_EOL.'(Si laissé vide, le systeme de stock du produit est inactif)">optionel</b>)',
+'L_PRODUCTS_ITEM_INSTOCK'           => 'Nombre de produits disponible en stock (optionel) <a class="hint"><span>Le dernier commandé du stock rend le produit indisponible!'.PHP_EOL.'Le bouton d\'Ajout au panier est automatiquement caché ;-)'.PHP_EOL.'Désactiver son masquage si le stock a été vidé puis remplis.'.PHP_EOL.'(Si laissé vide, le systeme de stock du produit est inactif</span></a>',
 'L_PRODUCTS_BASKET_NO_BUTTON'       => 'Message substitutif au bouton "Ajouter au panier"',
 'L_PRODUCTS_CATEGORIES'             => 'Catégories de ce produit',
 'L_PRODUCTS_PRICE'                  => 'Prix T.T.C.',
 'L_PRODUCTS_WEIGHT'                 => 'Poids (kg)',
+'L_CONFIRM_DELETE'                  => 'Confirmer la suppression ?',
 
 'L_COMMAND_OF'                      => 'Commande de',
 'PAYPAL_ALT'                        => 'Commander avec une CB',
@@ -75,7 +75,7 @@ $LANG = array(
 'L_PRODUCT_UNKNOWN_PAGE'            => 'Ce produit n\'existe pas ou n\'existe plus !',
 'L_PRODUCT_TITLE'                   => 'Édition du produit',
 'L_CAT_TITLE'                       => 'Édition de la catégorie',
-
+'L_THUMBNAIL_SELECTION'             => 'Sélectionner une image',
 'L_PRODUCT_VIEW_PAGE_ON_SITE'       => 'Visualiser le produit %s sur le site',
 'L_CAT_VIEW_PAGE_ON_SITE'           => 'Visualiser la catégorie de produit %s sur le site',
 
@@ -147,7 +147,7 @@ $LANG = array(
 'L_CONFIG_DELIVERY_RECORDED'        => 'Accusé de réception',
 'L_CONFIG_DELIVERY_WEIGHT'          => 'Poids en kg',
 'L_CONFIG_DELIVERY_PRICE'           => 'Prix en ',
-'L_CONFIG_NB_LINES'                 => '<b title="Nombre de lignes de configuration du tableau des frais de port. Sauvegarder pour rendre effectif le nombre de lignes, puis en suite modifier et re-sauvegarder">Nombre de lignes du tableau</b>',
+'L_CONFIG_NB_LINES'                 => 'Nombre de lignes du tableau <a class="hint"><span><Nombre de lignes de configuration du tableau des frais de port. Sauvegarder pour rendre effectif le nombre de lignes, puis en suite modifier et re-sauvegarder./span></a>',
 
 'L_CONFIG_PAYMENT_CHEQUE'           => 'Paiement par chèque',
 'L_CONFIG_PAYMENT_CASH'             => 'Paiement en argent comptant',

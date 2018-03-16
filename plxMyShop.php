@@ -14,10 +14,15 @@ class plxMyShop extends plxPlugin {
  public $shortcode = 'boutonPanier';
  public $shortcodeactif = false;
  public $shipOverload = false;
- # plxMyMultilingue
+ public $dLang = '';
+# plxMyMultilingue
  public $lang = '';
  public $aLangs = false;
 
+
+ public function onUpdate(){#mise a jour du cache des css
+  return array('cssCache' => true);
+ }
  public function __construct($default_lang){
 
   if(defined('PLX_MYMULTILINGUE')) {# Si plugin plxMyMultilingue présent
@@ -28,11 +33,12 @@ class plxMyShop extends plxPlugin {
     }
    }
    $lang = plxMyMultiLingue::_Langs();# récupération du tableau des langues activées
-   $this->aLangs = empty($lang) ? array() : explode(',', $lang);
+   $this->aLangs = empty($lang) ? $this->aLangs : explode(',', $lang);
   }
 
-  # appel du constructeur de la classe plxPlugin (obligatoire)
+# appel du constructeur de la classe plxPlugin (obligatoire)
   parent::__construct($default_lang);
+  $this->dLang = $default_lang;#fix $plugin->default_lang protected in admin plx.5.2
   $this->plugName = $this->plug['name'];# or get_class($this);
   # Accès au menu admin réservé au profil administrateur et gestionnaire
   $this->setAdminProfil(PROFIL_ADMIN, PROFIL_MANAGER);
@@ -44,8 +50,8 @@ class plxMyShop extends plxPlugin {
    , 5
    , $this->getlang('L_ADMIN_MENU_TOOTIP')
   );
-  
-  //hook PluXml : core/lib/class.plx.motor.php
+
+#hook PluXml : core/lib/class.plx.motor.php
   $this->addHook('plxMotorPreChauffageBegin', 'plxMotorPreChauffageBegin');
   if(defined('PLX_ADMIN')) {//Déclaration des hooks pour la zone d'administration
    $this->addHook('AdminPrepend', 'AdminPrepend');
@@ -53,7 +59,7 @@ class plxMyShop extends plxPlugin {
    $this->addHook('AdminTopEndHead', 'AdminTopEndHead');
   }
   else{//Déclaration des hooks pour la partie visiteur
-   //hook PluXml
+#hook PluXml
    $this->addHook('plxMotorParseArticle', 'plxMotorParseArticle');
    $this->addHook('plxShowStaticListEnd', 'plxShowStaticListEnd');
    $this->addHook('plxShowConstruct', 'plxShowConstruct');
@@ -63,7 +69,7 @@ class plxMyShop extends plxPlugin {
    $this->addHook('SitemapStatics', 'SitemapStatics');
    $this->addHook('ThemeEndBody', 'ThemeEndBody');
    $this->addHook('ThemeEndHead', 'ThemeEndHead');
-   //hook plxMyShop
+#hook plxMyShop
    $this->addHook('plxMyShopEditProductBegin', 'changeStock');
    $this->addHook('plxMyShopShippingMethod', 'plxMyShopShippingMethod');
    $this->addHook('plxMyShopShowMiniPanier', 'plxMyShopShowMiniPanier');
@@ -81,7 +87,7 @@ class plxMyShop extends plxPlugin {
     $this->addHook('IndexEnd', 'IndexEnd');
    }
   }
-  // Ajout de variables non protégé facilement accessible via $(plxShow->)plxMotor->plxPlugins->aPlugins['plxMyShop']->aConf['racine_XXX'] dans les themes ou dans d'autres plugins.
+#Ajout de variables non protégé facilement accessible via $(plxShow->)plxMotor->plxPlugins->aPlugins['plxMyShop']->aConf['racine_XXX'] dans les themes ou dans d'autres plugins.
   $this->aConf['racine_products'] = (!$this->getParam('racine_products')?'data/products/':$this->getParam('racine_products'));
   $this->aConf['racine_commandes'] = (!$this->getParam('racine_commandes')?'data/commandes/':$this->getParam('racine_commandes'));
   if($this->aLangs && !empty($default_lang)){
@@ -97,7 +103,7 @@ class plxMyShop extends plxPlugin {
    $mescommandeindex = fopen(PLX_ROOT.$this->aConf['racine_commandes'].'index.html', 'w+');
    fclose($mescommandeindex);
   }
-  if($this->aLangs){//créer les dossiers de sauvegarde si MyMultilingue
+  if($this->aLangs){#créer les dossiers de sauvegarde si MyMultilingue
    foreach ($this->aLangs as $lang){
     if (!is_dir(PLX_ROOT.$this->aConf['racine_commandes'].$lang.'/')){
      mkdir(PLX_ROOT.$this->aConf['racine_commandes'].$lang.'/', 0755, true);
@@ -225,6 +231,10 @@ class plxMyShop extends plxPlugin {
    if($this->aLangs)
     echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.$this->plugName.'/css/tabs.css" />'."\n";
    echo '<noscript><style>.hide{display:inherit !important;}</style></noscript>'."\n";
+echo '<?php '; ?>
+   if ((isset($plxAdmin->version) && version_compare($plxAdmin->version, "5.3.1", "<=")))#$plxMotor/$plxAdmin->version removed in 5.5
+    echo '<link rel="stylesheet" type="text/css" href="'.PLX_PLUGINS.'<?php echo $this->plugName ?>/css/5.6.css" />'."\n";
+<?php echo ' ?>';
   }
  }
 
@@ -739,7 +749,7 @@ var picker_date = new Pikaday(
    $this->plxMotor->redir301($url);
   header('Status: 301 Moved Permanently', false, 301);
   header('Location: '.$url);
-  exit();
+  exit;
  }
 
  /**
@@ -920,6 +930,8 @@ var picker_date = new Pikaday(
       $this->aProds[$lang][$product_id]['poidg'] = isset($this->aProds[$lang][$product_id]['poidg'])?$this->aProds[$lang][$product_id]['poidg']:'';
       $this->aProds[$lang][$product_id]['meta_description'] = isset($this->aProds[$lang][$product_id]['meta_description'])?$this->aProds[$lang][$product_id]['meta_description']:'';
       $this->aProds[$lang][$product_id]['meta_keywords'] = isset($this->aProds[$lang][$product_id]['meta_keywords'])?$this->aProds[$lang][$product_id]['meta_keywords']:'';
+      # Hook plugins
+      eval($this->plxMotor->plxPlugins->callHook('plxMyShopEditProductsUpdate'));
       $action = true;
      }
     }
@@ -965,7 +977,7 @@ var picker_date = new Pikaday(
       $xml .= "<meta_keywords><![CDATA[".plxUtils::cdataCheck($product['meta_keywords'])."]]></meta_keywords>";
       $xml .= "<title_htmltag><![CDATA[".plxUtils::cdataCheck($product['title_htmltag'])."]]></title_htmltag>";
       # Hook plugins
-      //eval($this->plxPlugins->callHook('plxAdminEditProductsXml'));
+      eval($this->plxMotor->plxPlugins->callHook('plxMyShopEditProductsXml'));
       $xml .= "</product>\n";
      }
     }
