@@ -20,13 +20,13 @@ http://forum.pluxml.org/viewtopic.php?pid=56124#p56124
     Vente de produit numérique, accessible après paiement via un lien de téléchargement
     (lien sécurisé, nombre de téléchargement limité etc.)
     Un espace membre
-    Personnaliser les informations du client: (ex: lui demander uniquement nom, prénom et email lors de l'achat) 
+    Personnaliser les informations du client: (ex: lui demander uniquement nom, prénom et email lors de l'achat)
 
 ****
-* Si jamais configuré : petit BUG Config PAYPAL et frais de port (JavaScript), le panneau est caché. Se régle en jouant avec le l'interupteur ou après la premiere config enregistrée tout rentre dans l'ordre ;)
+* Si jamais configuré : petit BUG Config PAYPAL et frais de port (JavaScript), le panneau est caché. Se régle en jouant avec l'interupteur ou après la premiere config enregistrée tout rentre dans l'ordre ;)
 
 ****
-* Attention a l'utilisation de plxMultilingue : si vous le réglez pour avoir un dossier de media par langue (après avoir créé des produits avec image), il y perte de l'image du produit pour toute les langues! 
+* Attention a l'utilisation de plxMultilingue : si vous le réglez pour avoir un dossier de media par langue (après avoir créé des produits avec image), il y a perte de l'image du produit pour toute les langues!
 ** Solution de fortune: Placer une image avec le "même nom de fichier" dans chaque dossiers media/[lang] et elles s'afficheront (cela permet une image du produit par langue)
 
 ****https://www.colissimo.entreprise.laposte.fr/fr/faq-technique
@@ -42,6 +42,40 @@ Effet de bord : si on ajoute un shortCode [boutonPanier ###] a un prod/cat et qu
 
 Add this modes in excluded caching with plxMinimifyCache.1.5.0 :
 product,boutique
+
+
+
+### Todo
+#### http://".$_SERVER["HTTP_HOST"] ::: OU https ;) DS LE MÉL
+#### Améliorer les paiements (Junes, Bitcoins, etheréum, Paypal, stripe ...)
+https://stripe.com/docs/quickstart#collecting-payment-information
+#### Param (Dés)Activer | Paypal mode (bouton js/serveur?)
+##### restore SetExpressCheckout.php (CURL obligatoire) + MAJ API ?
+      #require PLX_PLUGINS . $this->plugName . '/classes/paypal_api/SetExpressCheckout.php';
+
+
+##v0.13.1 01/10/2019##
+## Compatibilité avec PluXml 5.7
++ const V = '0.13.1';#$this->getInfo('version') is empty in public mode
++ MAJ du cache navi & Fix plxAdminBar (public mode)
++ MAJ administration.css
++ MAJ info.xml
++ dos2Unix (Fins de ligne harmonisées)
+
+Fixs : if (!defined('PLX_ROOT')) exit; absents
+Fix Menu Panier non actif si sélectionné : manque / a la fin?
+```
+-    && ($nomPlugin === $this->plxMotor->cible)
+```
+```
++    && ($nomPlugin === rtrim($this->plxMotor->cible,'/'))
+```
+
+Fix : Langs : L_PAYMENT_ERROR
++ L_TRANSFERT_TO_PAYPAL #a traduire (SetExpressCheckout.php) #4todo
+Fix : admin : Compatibilité PHP 7.2 each() désaprecié : Merci @cpalo
+::: forum.pluxml.org/discussion/comment/59080/#Comment_59080
+::: admin.php : la fonction each() est désaprécié en php 7.2 : remplacé par un foreach() qui est (en plus) plus rapide et moins (memoryvore)[https://www.php.net/manual/fr/function.each.php#75692].
 
 ##v0.13.1r6 16/03/2018##
 [+] HTML not valid #Minimzed (Fail?) with plxMinimifyCache.1.5.0 #bugOrNot, if have 2 space in attribute tag, remove spaces & are unvalid code, be carefull & valid html before... or  maybe update library to solve problem
@@ -86,7 +120,7 @@ Fix PluXml media manager & refreshImg() locale (Si multilingue)
 * Fix Panier : minimum de produit limité a 0
 * Fix Panier : Si erreur d'envoi des courriels, commentaires & conteneurNomCadeau non gardé et réaffiché
 * Fix Courriel de commande : La methode de paiement "cash" est transformé en "chèque"
-* [+] Nouvelle icône du plugin et du mini panier. Info: Pour retrouver l'iĉône originale, renommé icon.origin.png en icon.png ;) 
+* [+] Nouvelle icône du plugin et du mini panier. Info: Pour retrouver l'iĉône originale, renommé icon.origin.png en icon.png ;)
 * [+] Admin : Ajout d'une icône a l'option Produit Indisponible (nouvelle "cacher le bouton ajout au panier") pour voir son état d'un coup d'oeil (liste et produit)
 * Fix Public : Si bouton "ajouter au panier" est caché, faire en sorte de sortir le produit du panier (si dans la session existante (cookie) le produit est présent)
 * [+] Fixé & Amélioré option "cacher le bouton ajouter au panier" + L_NOTICE_NOADDCART ::: #1 l'option "cacher le bouton ajouter au panier" ne fonctionne pas, si à oui, l'affiche quant même ::: la changer pour le lien panier. Est-ce important? #1 idée de texte: ce produit est indiponible et en cours de réaprovisionement
@@ -108,7 +142,7 @@ Fix PluXml media manager & refreshImg() locale (Si multilingue)
 ##v0.13.1r1 27/04/2017##
 * Fix SHIPMAXWEIGHT ::: si dépassement de proids prévu au maximum de la config (calcul approximatif du prix est appliqué aux frais de port et le client en est avertit par un message en rouge dans le formulaire de commande
 * [+] Config hook gratuité des frais de port** : options SHIPFREEWEIGHT & SHIPFREEPRICE ::(laisser vide pour le(s) désactivé(s)):: Frais de port gratuit si superieur ou égale a tel poids et/ou superieur ou égale a tel prix (ttc)
-* [+] Hook **plxMyShopShippingMethod amélioré, affiche les chiffres pour dire au client a partir d'où les frais de port lui sont offerts 
+* [+] Hook **plxMyShopShippingMethod amélioré, affiche les chiffres pour dire au client a partir d'où les frais de port lui sont offerts
 * [+] Ajout du prix total TTC dans la fonction ShippingMethod pour amélioré l'utilité du hook plxMyShopShippingMethod
 * [+] Hook plxMyShopShippingMethod dépacé pour avoir la possibilité de modifier le prix de base des frais de port
 * [+] Formulaire PayPal Multilingue
@@ -120,14 +154,14 @@ Fix PluXml media manager & refreshImg() locale (Si multilingue)
 * [+] Formulaires d'édition de produit & config compatible grille PluCss1.2
 * [+] dire a l'utilisateur que le panier s'affiche que si javascript est activé (boutons la boutique)
 * [+] Compatible avec les fonctions de plxMyMultilingue 0.8.1 (remove personal tests jobs)
-* Fix zéros superflus dans urls et ancres & espace entre devise non attendu (Yannic) ::: bug? les url sont non claire, et permettent de basculer d'une url a l'autre (attention au DC de GG) ::: produit (mauvaise redirection, ou pas, si par exemple product 2 est une catégorie alors que l'on cherche un produit atterrit sur une catégorie, et l'url n'est pas réécrite, c'est pareil avec les catégories => prod) 
+* Fix zéros superflus dans urls et ancres & espace entre devise non attendu (Yannic) ::: bug? les url sont non claire, et permettent de basculer d'une url a l'autre (attention au DC de GG) ::: produit (mauvaise redirection, ou pas, si par exemple product 2 est une catégorie alors que l'on cherche un produit atterrit sur une catégorie, et l'url n'est pas réécrite, c'est pareil avec les catégories => prod)
 
 
 ##v0.13.1b6 20/04/2017##
 * [+] Contenu des produits compatible Mulitilingue.0.8.1 (Yannic)
 * [+] Admin : Grille PluCss
 * [+] Public : Anglais bouton trop large (Remove from basket => Remove of basket)
-Éditeurs compatible: 
+Éditeurs compatible:
  100%: plxToolbar.1.4.1
  onglet de la langue en cour: CKEditor.4.6.2 et WymEditor.1.1.2
 
@@ -141,12 +175,12 @@ Fix PluXml media manager & refreshImg() locale (Si multilingue)
 * FiX : Utiliser plxMotor déja instancié dans la fonction "modele"
 * Fix : Si l'url de la catègorie & produit est inexistante, aucune redirction 404!
 * Fix : Texte d'exemple des champs de l'emplacement des données, placeholder pour 5.4, 5.5 & 5.6 (fonction printInput)
-* Fix : noscript sur toutes les pages de l'admin 
+* Fix : noscript sur toutes les pages de l'admin
 
 ##v0.13.1b4 16/04/2017##
 * [+] Admin : Utilisation du selecteur d'image natif à PluXml (Yannic) minimum compat media system 5.4
 * Fix : Config : texte d'exemple des champs de l'emplacement des données placeholder (5.6 only)
-* Fix : Admin : Menu barre d'action : boutons valide Xhtml 
+* Fix : Admin : Menu barre d'action : boutons valide Xhtml
 
 ##v0.13.1b3 15/04/2017##
 * [+] Public : panier.css transferé dans site.css, Nettoyage des javascripts & jquery en Vanilla
@@ -184,7 +218,7 @@ Fix PluXml media manager & refreshImg() locale (Si multilingue)
 ##v0.13 06/04/2017##
 * [+] Ajout du hook plxMyShopShowMiniPanier basé sur l'idée de WorldBot alias [Yannic](http://forum.pluxml.org/viewtopic.php?pid=53411#p53411)
 * [+] Compatible Multilingue 0.8 & pluxml 5.6 (worldBot)
-* [+] Bouton produit : Ajouter, modifier et supprimer du panier (worldBot & swd) 
+* [+] Bouton produit : Ajouter, modifier et supprimer du panier (worldBot & swd)
 * [+] Panier : Retire Rouge, Valider Vert (worldBot)
 * [+] Shortcode : Affiche au complet le produit (worldBot)
 * [+] Lien Panier : Classe css product_priceimage -> basket_link_image
@@ -212,7 +246,7 @@ Fix PluXml media manager & refreshImg() locale (Si multilingue)
 Release
 
 ##v0.11b1 02/04/2017##
-* FIX fichier langue fr suppression d'un <<<<<<HEAD oublié lors de la fusion 
+* FIX fichier langue fr suppression d'un <<<<<<HEAD oublié lors de la fusion
 
 ##v0.11b + Panier dans le menu (worldBot) 02/04/2017##
 * [+] Option d'ajouter ou non le lien vers le Panier dans le menu principal
@@ -230,7 +264,7 @@ Release
  + plxMyShopPanierFin
 * [-] Sauvegarde locale des coordonnées du client au formulaire de commande déplacé dans le plugin MyShopCookie v0.2
 
-v0.11a1 : Algo boucle des frais de ports config.php 
+v0.11a1 : Algo boucle des frais de ports config.php
 
 ##v0.11a 31/03/2017##
 * [+] Ajout de sauvegarde locale des coordonnées du client au formulaire de commande
@@ -244,10 +278,10 @@ v0.11a1 : Algo boucle des frais de ports config.php
 * [+] Déplacement dans administration.css des styles html inside (dans le body) [template edit prod admin & ajax/select_img]
 * [+] Ajout d'administration.css en javascript [config.php, template edit prod admin]
 * [+] Ajout du nom du module en cour dans le titre de l'admin de la boutique
-* [+] Complétion des fichiers de langues fr,en (manque quelques unes en occitan) 
+* [+] Complétion des fichiers de langues fr,en (manque quelques unes en occitan)
 * [+] Ré-indentation & Simplification du code (One Space Indent, boucles aux Frais De Ports, style, ...)
 * FIX Champs du nombre de produits a commander (Possibilité d'en commander 0 ou -1 -2 -20 ...)
-###### dans plxMyShop.php     
+###### dans plxMyShop.php
  - [ ] # //require PLX_PLUGINS . 'plxMyShop/classes/paypal_api/SetExpressCheckout.php'; c'est/était quoi?
  - [ ] require PLX_PLUGINS . 'plxMyShop/classes/paypal_api/boutonPaypalSimple.php'; (à tester)
 
@@ -255,8 +289,8 @@ v0.11a1 : Algo boucle des frais de ports config.php
 From develop branch of mathieu269 : [commit](https://github.com/davidlhoumaud/plxMyShop/commit/3f9df5b8656d989bec9827a9c0f2c477cf10758b)
 
 
-# Les Crochets (Hooks) du plugins 
-      in plxMotorPreChauffageBegin() 
+# Les Crochets (Hooks) du plugins
+      in plxMotorPreChauffageBegin()
         eval($this->plxMotor->plxPlugins->callHook("plxMyShop_debut"));
       commentés pour le moment :
         in editProduct($content)

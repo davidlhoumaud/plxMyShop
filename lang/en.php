@@ -1,5 +1,5 @@
 <?php
-
+//<a class="hint"><span>help tooltip</span></a>
 $LANG = array(
 
 'L_PAGE_TITLE'                      => 'Manage products',
@@ -198,6 +198,7 @@ $LANG = array(
 'L_PAYMENT_CHEQUE'                  => 'Cheque',
 'L_PAYMENT_CASH'                    => 'Cash',
 'L_PAYMENT_PAYPAL'                  => 'Paypal',
+'L_PAYMENT_ERROR'                   => 'A method of payment is required!',
 
 'L_EMAIL_SUBJECT'                   => 'New order for ',
 'L_EMAIL_TEL'                       => 'Tel :',
@@ -284,6 +285,9 @@ $LANG = array(
 'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Use plugin default phrases for the T&amp;C.",
 'L_CONFIG_URL_CGV'                  => 'URL for the T&amp;C.',
 'L_CONFIG_AMOUNT_PAYPAL'            => "Minimum amount to activate",
+#SetExpressCheckout.php
+'L_TRANSFERT_TO_PAYPAL'             => 'Data Transfered to Paypal...',#a traduire
+
 #boutonPanier.php
 'L_NOTICE_NOADDCART'                => 'Out of stock',#a traduire
 
@@ -301,5 +305,5 @@ $LANG = array(
 'L_PUBLIC_DELIVERYTIME'             => 'Select your delivery timeslot',
 'L_CHOICE_DELIVERYTIME'             => 'Choose one timeslot',
 'L_FORMAT_PIKADAY'                  => 'dddd Do MMMM YYYY',
-'L_I18N_PIKADAY'                    => ''# unused pikaday it's in english
+'L_I18N_PIKADAY'                    => ''# unused pikaday it's in english, see other lang (fr,oc)
 );

@@ -4,7 +4,7 @@ Implément multilingual Elements (currency symbol) in config with tabs,
 ###fix: 
 editors (untested),
  ...?
-##### Bug or not : if you use lang not translated in MyShop, the price will be back to the same of default_lang (need Translators)
+##### Bug or not : if you use lang not translated in MyShop, the price will be back to the same of default_lang (needs Translators)
 
 by David Lhoumaud craft@ckdevelop.org www.ckdevelop.org
 & Thomas Ingles www.sudwebdesign.fr

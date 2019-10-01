@@ -1,6 +1,7 @@
 <?php
-//<a class="hint"><span></span></a> helper
+//<a class="hint"><span>Infobule d'Aide</span></a>
 $LANG = array(
+
 'L_PAGE_TITLE'                      => 'Gérer les produits',
 'L_ADMIN_MENU_TOOTIP'               => 'Gérer mon web-commerce (produits, catégories et commandes)', #Affichage des produits / catégories
 'L_LANG_UNAVAILABLE'                => 'Langue non disponible : %s',
@@ -197,6 +198,7 @@ $LANG = array(
 'L_PAYMENT_CHEQUE'                  => 'Chèque',
 'L_PAYMENT_CASH'                    => 'Cash',
 'L_PAYMENT_PAYPAL'                  => 'Paypal',
+'L_PAYMENT_ERROR'                   => 'Une méthode de payment est requise!',//validerCommande()
 
 'L_EMAIL_SUBJECT'                   => 'Nouvelle commande ',
 'L_EMAIL_TEL'                       => 'Tel :',
@@ -283,6 +285,9 @@ $LANG = array(
 'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Utiliser les phrases par defaut des C.G.V. du plugin",
 'L_CONFIG_URL_CGV'                  => "URL des C.G.V.",
 'L_CONFIG_AMOUNT_PAYPAL'            => "Montant minimum pour l'activer",
+#SetExpressCheckout.php
+'L_TRANSFERT_TO_PAYPAL'             => 'Transfert des informations vers Paypal en cours...',
+
 #boutonPanier.php
 'L_NOTICE_NOADDCART'                => 'En rupture de stock',
 

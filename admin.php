@@ -5,10 +5,10 @@
  * @author    David L
  **/
 
-# Control du token du formulaire
+# Controle du token du formulaire
 plxToken::validateFormToken($_POST);
 
-# Control de l'accès à la page en fonction du profil de l'utilisateur connecté
+# Controle de l'accès à la page en fonction du profil de l'utilisateur connecté
 $plxAdmin->checkProfil(PROFIL_ADMIN, PROFIL_MANAGER);
 
 # On édite les produits
@@ -69,7 +69,7 @@ function checkBox(obj){
    <?php echo plxToken::getTokenPostMethod() ?>
    <?php plxUtils::printSelect('selection', array( '' =>L_FOR_SELECTION, 'delete' =>L_DELETE), '', false, '', 'id_selection') ?>
    <input class="button submit" type="submit" name="submit" value="<?php echo L_OK ?>" onclick="return confirmAction(this.form, 'id_selection', 'delete', 'idProduct[]', '<?php $plxPlugin->lang('L_CONFIRM_DELETE') ?>')" />
-   <input class="button update" type="submit" name="update" value="<?php $plxPlugin->lang('L_ADMIN_MODIFY') ?> <?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getlang('L_CATEGORIES'):$plxPlugin->getlang('L_PRODUCTS')); ?>" />
+   <input class="button update" type="submit" name="update" value="<?php $plxPlugin->lang('L_ADMIN_MODIFY') ?> <?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getLang('L_CATEGORIES'):$plxPlugin->getLang('L_PRODUCTS')); ?>" />
   </p>
  <?php endif; ?>
  <div class="grid" id="tabContainer">
@@ -84,7 +84,7 @@ function checkBox(obj){
     foreach($aLangs as $lang){
      $datab = $titab = $mixab = '';
      if($lang==$_SESSION['default_lang']){
-      $titab .= L_CONFIG_BASE_DEFAULT_LANG.' &amp; '.(isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getlang('L_NEW_CATEGORY'):$plxPlugin->getlang('L_NEW_PRODUCT'));
+      $titab .= L_CONFIG_BASE_DEFAULT_LANG.' &amp; '.(isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getLang('L_NEW_CATEGORY'):$plxPlugin->getLang('L_NEW_PRODUCT'));
       $datab .= ' data-default_lang';
       $mixab .= ' &amp; ';
      }
@@ -92,7 +92,7 @@ function checkBox(obj){
       $titab .= $mixab.L_USER_LANG;
       $datab .= ' data-user_lang';
      }
-//   echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').($lang==$plxPlugin->default_lang?' data-default_lang title="'.(isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getlang('L_NEW_CATEGORY'):$plxPlugin->getlang('L_NEW_PRODUCT')).'"':'').'>'.strtoupper($lang).'</li>'.PHP_EOL;
+//   echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').($lang==$plxPlugin->default_lang?' data-default_lang title="'.(isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getLang('L_NEW_CATEGORY'):$plxPlugin->getLang('L_NEW_PRODUCT')).'"':'').'>'.strtoupper($lang).'</li>'.PHP_EOL;
      echo '     <li id="tabHeader_'.$lang.'"'.($lang==$plxAdmin->aConf['default_lang']?' class="active"':'').' title="'.$titab.'"'.$datab.'>'.strtoupper($lang).'</li>'.PHP_EOL;
     }
 ?>
@@ -228,7 +228,7 @@ foreach($aLangs as $lang) {
  if ((!isset($_GET['mod']) || (isset($_GET['mod']) && $_GET['mod']!='cmd')) && $lang==$plxAdmin->aConf['default_lang']){ ?>
   <tr class="new">
    <td>&nbsp;<?php echo '<input type="hidden" name="productNum[]" value="'.$new_productid.'" />'; ?></td>
-   <td><?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getlang('L_NEW_CATEGORY'):$plxPlugin->getlang('L_NEW_PRODUCT')); ?></td>
+   <td><?php echo (isset($_GET['mod']) && $_GET['mod']=='cat'?$plxPlugin->getLang('L_NEW_CATEGORY'):$plxPlugin->getLang('L_NEW_PRODUCT')); ?></td>
    <td><input title="<?php $plxPlugin->lang('L_CAT') ?><?php echo '" type="hidden" name="'.$new_productid.'_pcat'.$lng.'" value="'.(isset($_GET['mod']) && $_GET['mod']=='cat'?'1':'0').'" '.(isset($_GET['mod']) && $_GET['mod']=='cat'?'checked':'').' onclick="checkBox(this);" /></td>'.PHP_EOL;
     echo '<td>';
     plxUtils::printInput($new_productid.'_name'.$lng, '', 'text', '20-255');
@@ -260,14 +260,14 @@ foreach($aLangs as $lang) {
    }
   }
   rsort($filescommande);
-  while (list ($key, $val) = each ($filescommande) ){
+  foreach($filescommande as $key => $val){//fix deprecated each() in php 7.2 ::: while (list ($key, $val) = each ($filescommande) ){
    $namearray=explode('_',$val);
    $date=implode('/',explode('-',$namearray[0]));
    echo '<tr>'.PHP_EOL.
     '   <td id="dateTime">'.$date.' - '.str_replace('-',':',$namearray[1]).'</td>'.PHP_EOL.
     '   <td>'.$namearray[2].'</td>'.PHP_EOL.
     '   <td class="nombre">'.$plxPlugin->pos_devise((float)$namearray[3]+(float)preg_replace('/.html/','',$namearray[4])).'</td>'.PHP_EOL.
-    '   <td><a onclick="if(confirm(\''.$plxPlugin->getlang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p='.$plxPlugin->plugName.'&amp;mod=cmd&amp;kill='.$lgf.$val.'">'.$plxPlugin->getlang('L_ADMIN_ORDER_DELETE').'</a> - <a target="_blank" href="'.$dir.$lgf.$val.'" data-featherlight-target="'.$dir.$lgf.$val.'" data-featherlight="iframe" data-featherlight-iframe-allowfullscreen="true">'.$plxPlugin->getlang('L_ADMIN_ORDER_VIEW').'</a></td>'.PHP_EOL.
+    '   <td><a onclick="if(confirm(\''.$plxPlugin->getLang('L_ADMIN_CONFIRM_DELETE').'\')) return true; else return false;" href="plugin.php?p='.$plxPlugin->plugName.'&amp;mod=cmd&amp;kill='.$lgf.$val.'">'.$plxPlugin->getLang('L_ADMIN_ORDER_DELETE').'</a> - <a target="_blank" href="'.$dir.$lgf.$val.'" data-featherlight-target="'.$dir.$lgf.$val.'" data-featherlight="iframe" data-featherlight-iframe-allowfullscreen="true">'.$plxPlugin->getLang('L_ADMIN_ORDER_VIEW').'</a></td>'.PHP_EOL.
     '</tr>';
   }
  }//fi command

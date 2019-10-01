@@ -24,9 +24,9 @@
       var devise = '<?php echo $plxMyShop->getParam("devise");?>';
       var pos_devise = '<?php echo $plxMyShop->getParam("pos_devise");?>';
       var shoppingCart = null;
-      var L_FOR = '<?php echo $plxMyShop->getlang('L_FOR'); ?>';
-      var L_DEL = '<?php echo $plxMyShop->getlang('L_DEL'); ?>';
-      var L_TOTAL = '<?php echo $plxMyShop->getlang('L_TOTAL_BASKET'); ?>';
+      var L_FOR = '<?php echo $plxMyShop->getLang('L_FOR'); ?>';
+      var L_DEL = '<?php echo $plxMyShop->getLang('L_DEL'); ?>';
+      var L_TOTAL = '<?php echo $plxMyShop->getLang('L_TOTAL_BASKET'); ?>';
       </script>
 <?php
      foreach ($plxMyShop->aProds[$plxMyShop->default_lang] as $kRubrique => $vRubrique) {

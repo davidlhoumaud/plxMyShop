@@ -11,14 +11,14 @@ if($plxPlugin->aLangs) {
  $aLangs = $plxPlugin->aLangs;
 }
 $tabAffPanier = array(
- "basPage" => $plxPlugin->getlang('L_PANIER_POS_BOTTOM') ,
- "pageSeparee" => $plxPlugin->getlang('L_PANIER_POS_SEPARATE') ,
- "partout" => $plxPlugin->getlang('L_PANIER_POS_BOTH') ,
+ "basPage" => $plxPlugin->getLang('L_PANIER_POS_BOTTOM'),
+ "pageSeparee" => $plxPlugin->getLang('L_PANIER_POS_SEPARATE'),
+ "partout" => $plxPlugin->getLang('L_PANIER_POS_BOTH'),
 );
 
 $tabPosDevise = array(
- "after" => $plxPlugin->getlang('L_AFTER') ,
- "before" => $plxPlugin->getlang('L_BEFORE') ,
+ "after" => $plxPlugin->getLang('L_AFTER'),
+ "before" => $plxPlugin->getLang('L_BEFORE'),
 );
 
 $timeselection = array(
@@ -48,7 +48,6 @@ $timeselection = array(
     "23:00" => "23:00",
     "24:00" => "24:00",
 );
-
 
 $var = array();
 if(!empty($_POST)){

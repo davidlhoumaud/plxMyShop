@@ -1,5 +1,5 @@
 <?php
-
+//<a class="hint"><span>Infobule d'Aide</span></a>
 $LANG = array(
 
 'L_PAGE_TITLE'                      => 'Creacion e modificacion dels produits',
@@ -198,6 +198,7 @@ $LANG = array(
 'L_PAYMENT_CHEQUE'                  => 'Chèc',
 'L_PAYMENT_CASH'                    => 'Pagar sulcòp',
 'L_PAYMENT_PAYPAL'                  => 'Paypal',
+'L_PAYMENT_ERROR'                   => 'Une méthode de payment est requise!',#a traduire
 
 'L_EMAIL_SUBJECT'                   => 'Novèla comanda ',
 'L_EMAIL_TEL'                       => 'Tel :',
@@ -284,6 +285,9 @@ $LANG = array(
 'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Utilizar las frasas per defaut de las C.G.V. de l'extension",
 'L_CONFIG_URL_CGV'                  => "URL de las C.G.V.",
 'L_CONFIG_AMOUNT_PAYPAL'            => "Montant minimum per l'activar",
+#SetExpressCheckout.php
+'L_TRANSFERT_TO_PAYPAL'             => 'Transfert des informations vers Paypal en cours...',#a traduire
+
 #boutonPanier.php
 'L_NOTICE_NOADDCART'                => 'Pas mai en resèrva',
 
