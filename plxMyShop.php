@@ -396,7 +396,7 @@ echo '<?php '; ?>
     document.getElementById("country").value = "";
    }
    function detail(event){
-    if (event.target.id != 'id_deliverydate' && event.target.id != 'nomCadeau')#not #datepicker & #nomCadeau
+    if (event.target.id != 'id_deliverydate' && event.target.id != 'nomCadeau')//not #datepicker & #nomCadeau
      if (event.target.type == "text" || event.target.type == "email"){
       document.getElementById("bouton_effacer").style.display = "none";
       document.getElementById("bouton_sauvegarder").style.display = "";
@@ -510,7 +510,7 @@ if (error) {
  nprod=<?php echo (isset($_SESSION[$this->plugName]["ncart"])?(int)$_SESSION[$this->plugName]["ncart"]:0); ?>;
  realnprod=<?php echo (isset($_SESSION[$this->plugName]["ncart"])?(int)$_SESSION[$this->plugName]["ncart"]:0); ?>;
 
- totalcommand.value = "<?php echo '<?php echo $this->pos_devise($totalpricettc+$totalpoidgshipping); ?>'; ?>";#total
+ totalcommand.value = "<?php echo '<?php echo $this->pos_devise($totalpricettc+$totalpoidgshipping); ?>'; ?>";//total
 }
 </script>
 <?php
