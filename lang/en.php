@@ -130,6 +130,7 @@ $LANG = array(
 'L_CONFIG_SECURITY'                 => 'Security',
 'L_CONFIG_SECURITY_KEY'             => 'Encryption key',
 
+# Dates et heures de livraisons
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration of delivery and payment methods',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Add Delivery fee',
 'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Based on the price of the order">Price Based</b>',
@@ -138,7 +139,20 @@ $LANG = array(
 'L_CONFIG_NB_DAYS'                  => 'Number of days',
 'L_CONFIG_DELIVERY_STARTTIME'       => 'First delivery hour',
 'L_CONFIG_DELIVERY_ENDTIME'         => 'Last delivery hour',
-'L_CONFIG_DELIVERY_TIMESLOT'        => 'Lenght (in hour) of delivery timeslot',
+'L_CONFIG_DELIVERY_TIMESLOT'        => 'Range delivery timeslot',
+'L_H'                               => 'hour(s)',
+#0.13.2 Jours feriés, Vacances... Merci @ppmt
+'L_CONFIG_DELIVERY_DISALOWED_DATES' => 'Unavailble dates on the calendar',
+'L_CONFIG_DELIVERY_DISALOW_DATES'   => 'Dates in <b>YYYYY-MM-DD</b> format and separated by commas.<br />Intervals with underscore "_"<br />between two dates. <b><i>Example</i></b>',
+'L_DELIVERY_DAY'                    => 'Deliveries open on',
+'L_DAY_0'                           => 'Sunday',
+'L_DAY_1'                           => 'Monday',
+'L_DAY_2'                           => 'Tuesday',
+'L_DAY_3'                           => 'Wednesday',
+'L_DAY_4'                           => 'Thursday',
+'L_DAY_5'                           => 'Friday',
+'L_DAY_6'                           => 'Saturday',
+
 'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">The delivery fee might need to be recalculated or configured.</b>',# atraduire
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">The delivery fee can be recalculated.</b>',# atraduire
 'L_CONFIG_FREE'                     => 'Free',

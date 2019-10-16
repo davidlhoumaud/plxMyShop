@@ -225,8 +225,8 @@ class plxMyShop extends plxPlugin {
  /**
  * Méthode qui charge le code css nécessaire à la gestion de onglet dans l'écran de configuration du plugin
  *
- * @return	stdio
- * @author	Stephane F
+ * @return    stdio
+ * @author    Stephane F
  **/
  public function AdminTopEndHead() {
   if (((basename($_SERVER['SCRIPT_NAME'])=='plugin.php' || basename($_SERVER['SCRIPT_NAME'])=='parametres_plugin.php')) && (isset($_GET['p']) && $_GET['p']==$this->plugName)) {
@@ -517,26 +517,99 @@ if (error) {
  }
 
 #hook js du Panier
- public function inlineDeliverydateJs(){ ?>
-<script type='text/javascript'>
-var mindays= <?php echo $this->getParam("delivery_nb_days"); ?>;
+ public function inlineDeliverydateJs(){
+  #disallowed Dates
+  $dDates = array();
+  $disallowedDates = $this->getParam('delivery_disallowed_dates');
+  $disallowedDates = explode(',', $disallowedDates);
+  foreach($disallowedDates AS $dDate){
+   $dDate = explode('_', trim($dDate));#Found range by _
+   if(isset($dDate[1])){#create range days
+    $dFrom = explode('-',$dDate[0]);#YYYY MM DD
+    $dTo = explode('-',$dDate[1]);#YYYY MM DD
+    $year = $dFrom[0];
+    $month = $dFrom[1];
+    $day = $dFrom[2];
+    while($year <= $dTo[0]){
+     while($month <= 12){
+      while($day <= 31){
+       $dDay = $year.'-'.str_pad($month, 2, '0', STR_PAD_LEFT).'-'.str_pad($day, 2, '0', STR_PAD_LEFT);
+       $dDates[] = $dDay;
+       if($dDay == $dDate[1]){#day == last day
+        break(2);
+       }
+       $day++;
+       #checkdate ( int $month , int $day , int $year )
+       if(!checkdate($month, $day ,$year)){
+        $day = 1;
+        break;
+       }
+      }
+      $day = 1;
+      $month++;
+      if($month > 12){
+       $month = 1;
+       break;
+      }
+     }
+     $year++;
+    }
+   }else{#classic (one day)
+    $dDates[] = $dDate[0];
+   }
+  }#hcaerof
+  $disallowedDates = array();#clear
+  foreach($dDates AS $dDate){
+   $disallowedDates[] = $dDate;#date + range
+  }
+  $disallowedDates = "['" . implode("','", $disallowedDates) . "']";
+  #disalowed days of week
+  $delivery_day = $this->getParam('delivery_day');#v0.13.2
+  $delivery_day_js = '';
+  if(!!$delivery_day AND $delivery_day != '1,1,1,1,1,1,1'){#weekday (if 1 or more not open)
+   $delivery_js = '';
+   $delivery_day = explode(',',$delivery_day);#v0.13.2
+   foreach($delivery_day AS $day => $v){
+    if(!$v){#closed weekday
+     $delivery_js .= 'case '.$day.':';#add js case
+    }
+   }
+   $delivery_day_js = 'if(!outDate)switch(theDate.getDay()){'.$delivery_js.'outDate=!0;break;}'.PHP_EOL;#js switch
+  }
+?>
+<script type="text/javascript">
+var mindays = <?php echo $this->getParam('delivery_nb_days'); ?>;
 var today = new Date();
 var nextdelivery = new Date();
 nextdelivery.setDate(today.getDate() + mindays);
 <?php echo $this->default_lang!='en' ? "moment.locale('".$this->default_lang."');" : ''; ?>
+
+var dDates = [];
+var disallowedDates = <?php echo $disallowedDates ?>;
+for(var dd = 0; dd < disallowedDates.length; dd++){
+ var tDate = new Date(disallowedDates[dd] + 'T00:00:00');
+ if(tDate.toString() != 'Invalid Date')
+   dDates[dd] = tDate.toISOString().split('T')[0];
+}
 var picker_date = new Pikaday(
-    {
-        field: document.getElementById('id_deliverydate'),
-        format: '<?php $this->lang("L_FORMAT_PIKADAY"); ?>',
+ {
+  disableDayFn: function(theDate) {//inspired by idea of ppmt
+   var outDate = theDate.toISOString().split('T')[0];
+   outDate = (dDates.indexOf(outDate) != -1);//only select day
+   <?php echo $delivery_day_js?>
+   return outDate;
+  },
+  field: document.getElementById('id_deliverydate'),
+  format: '<?php $this->lang("L_FORMAT_PIKADAY"); ?>',
 <?php if($this->default_lang!='en')$this->lang("L_I18N_PIKADAY"); ?>
-        firstDay: 1,
-        minDate: nextdelivery,
-        maxDate: new Date(<?php echo (date('Y')+3) ?>, 12, 31),
-        yearRange: [<?php echo date('Y') ?>,<?php echo (date('Y')+3) ?>],
-        onSelect: function() {
-            var date = document.createTextNode(this.getMoment() + ' ');
-        }
-    }
+  firstDay: 1,
+  minDate: nextdelivery,
+  maxDate: new Date(<?php echo (date('Y')+3) ?>, 12, 31),
+  yearRange: [<?php echo date('Y') ?>,<?php echo (date('Y')+3) ?>],
+  onSelect: function() {
+   var date = document.createTextNode(this.getMoment() + ' ');
+  }
+ }
 );
 </script>
 <?php
@@ -1403,7 +1476,7 @@ var picker_date = new Pikaday(
    $vuePanier->plxPlugin = $this;
 
    if ($this->getParam("affichePanierMenu")!="non") {# Afficher la page panier dans le menu ?
-    $submenuPanier = '<li class="static '.$classeCss.'"><a href="'.$lienPanier.'" title="' . plxUtils::strCheck($vuePanier->titre()) . '">'.$vuePanier->titre().'</a></li>';
+    $submenuPanier = '<li class="menu-item static menu '.$classeCss.'"><a href="'.$lienPanier.'" title="' . plxUtils::strCheck($vuePanier->titre()) . '">'.$vuePanier->titre().'</a></li>';
     if (!$submenu){
      echo "<?php array_splice(\$menus, $positionMenu, 0, '$submenuPanier'); ?>";
     }
@@ -1431,7 +1504,7 @@ var picker_date = new Pikaday(
 
      $classeCss = $categorieSelectionnee ? "active" : "noactive";
      $lien = $this->plxMotor->urlRewrite('?'.$this->lang."product$k/{$v["url"]}");
-     $submenuTemp = '   <li class="static '.$classeCss.'"><a href="'.$lien.'" title="'.plxUtils::strCheck($v['name']).'">'.plxUtils::strCheck($v['name']).'</a></li>'.PHP_EOL;
+     $submenuTemp = '   <li class="menu-item static menu '.$classeCss.'"><a href="'.$lien.'" title="'.plxUtils::strCheck($v['name']).'">'.plxUtils::strCheck($v['name']).'</a></li>'.PHP_EOL;
      $submenuCategories .= $submenuTemp;
      if (!$submenu){
       echo "<?php array_splice(\$menus, $positionMenu, 0, '$submenuTemp'); ?>";
@@ -1440,7 +1513,7 @@ var picker_date = new Pikaday(
    }
    if ($submenu){
     echo "<?php array_splice(\$menus, $positionMenu, 0,";
-    echo "' <li id=\"static-myshop\" class=\"menu-item static group menu $active\"><a href=\"javascript:;\">".$this->getParam('submenu')."</a>".PHP_EOL."  <ul>".PHP_EOL."$submenuCategories   $submenuPanier".PHP_EOL."  </ul>".PHP_EOL." </li>'".PHP_EOL;
+    echo "' <li id=\"static-myshop\" class=\"menu-item static group menu $active\"><span class=\"static group $active\"><a href=\"javascript:;\">".$this->getParam('submenu')."</a></span>".PHP_EOL."  <ul>".PHP_EOL."$submenuCategories   $submenuPanier".PHP_EOL."  </ul>".PHP_EOL." </li>'".PHP_EOL;
     echo " ) ?>";
    }
   }# FIN if ajout du menu pour accèder aux rubriques

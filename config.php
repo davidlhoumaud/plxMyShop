@@ -1,5 +1,5 @@
 <?php if(!defined('PLX_ROOT')) exit;
-# Control du token du formulaire
+# Controle du token du formulaire
 plxToken::validateFormToken($_POST);
 
 # Liste des langues disponibles et prises en charge par le plugin
@@ -11,44 +11,20 @@ if($plxPlugin->aLangs) {
  $aLangs = $plxPlugin->aLangs;
 }
 $tabAffPanier = array(
- "basPage" => $plxPlugin->getLang('L_PANIER_POS_BOTTOM'),
- "pageSeparee" => $plxPlugin->getLang('L_PANIER_POS_SEPARATE'),
- "partout" => $plxPlugin->getLang('L_PANIER_POS_BOTH'),
+ 'basPage' => $plxPlugin->getLang('L_PANIER_POS_BOTTOM'),
+ 'pageSeparee' => $plxPlugin->getLang('L_PANIER_POS_SEPARATE'),
+ 'partout' => $plxPlugin->getLang('L_PANIER_POS_BOTH'),
 );
 
 $tabPosDevise = array(
- "after" => $plxPlugin->getLang('L_AFTER'),
- "before" => $plxPlugin->getLang('L_BEFORE'),
+ 'after' => $plxPlugin->getLang('L_AFTER'),
+ 'before' => $plxPlugin->getLang('L_BEFORE'),
 );
 
-$timeselection = array(
-    "00:00" => "00:00",
-    "01:00" => "01:00",
-    "02:00" => "02:00",
-    "03:00" => "03:00",
-    "04:00" => "04:00",
-    "05:00" => "05:00",
-    "06:00" => "06:00",
-    "07:00" => "07:00",
-    "08:00" => "08:00",
-    "09:00" => "09:00",
-    "10:00" => "10:00",
-    "11:00" => "11:00",
-    "12:00" => "12:00",
-    "13:00" => "13:00",
-    "14:00" => "14:00",
-    "15:00" => "15:00",
-    "16:00" => "16:00",
-    "17:00" => "17:00",
-    "18:00" => "18:00",
-    "19:00" => "19:00",
-    "20:00" => "20:00",
-    "21:00" => "21:00",
-    "22:00" => "22:00",
-    "23:00" => "23:00",
-    "24:00" => "24:00",
-);
-
+$timeselection = array();
+for($h=0;$h<25;$h++)
+ $timeselection[ str_pad($h,2,'0',STR_PAD_LEFT).':00' ] = str_pad($h,2,'0',STR_PAD_LEFT).':00';
+$dDateSample = date('Y').'-12-25, '.date('Y').'-12-29_'.(date('Y')+1).'-01-02, '.(date('Y')+1).'-02-22';
 $var = array();
 if(!empty($_POST)){
  //socolissimo reco
@@ -60,11 +36,17 @@ if(!empty($_POST)){
  $plxPlugin->setParam('delivery_start_time', $_POST['delivery_start_time'], 'string');
  $plxPlugin->setParam('delivery_end_time', $_POST['delivery_end_time'], 'string');
  $plxPlugin->setParam('delivery_nb_timeslot', isset($_POST['delivery_nb_timeslot'])?($_POST['delivery_nb_timeslot']>='24'?'24':$_POST['delivery_nb_timeslot']):'2', 'numeric');
+ $plxPlugin->setParam('delivery_disallowed_dates', $_POST['delivery_disallowed_dates'], 'string');#v0.13.2
+ $delivery_day = '';#v0.13.2
+ for($d = 0; $d<7; $d++)
+  $delivery_day .= (isset($_POST['delivery_day_'.$d])? '1': '0').',';
+ $plxPlugin->setParam('delivery_day', rtrim($delivery_day,','), 'string');
+
  $plxPlugin->setParam('freeshipw', $_POST['freeshipw'], 'string');//free shipping weight
  $plxPlugin->setParam('freeshipp', $_POST['freeshipp'], 'string');//free shipping price
  $plxPlugin->setParam('acurecept', $_POST['acurecept'], 'string');
  for($i=1;$i<=$plxPlugin->getParam('shipping_nb_lines');$i++){
-  $num=str_pad($i, 2, "0", STR_PAD_LEFT);
+  $num=str_pad($i, 2, '0', STR_PAD_LEFT);
   $plxPlugin->setParam('p'.$num, $_POST['p'.$num], 'string');
   $plxPlugin->setParam('pv'.$num, $_POST['pv'.$num], 'string');
  }
@@ -112,11 +94,11 @@ if(!empty($_POST)){
  $plxPlugin->setParam('commercant_postcode', $_POST['commercant_postcode'], 'string');
  $plxPlugin->setParam('menu_position', $_POST['menu_position'], 'numeric');
  $plxPlugin->setParam('submenu', trim($_POST['submenu']), 'string');
- $afficheCategoriesMenu = isset($_POST['afficheCategoriesMenu']) ? "" : "non";
+ $afficheCategoriesMenu = isset($_POST['afficheCategoriesMenu']) ? '' : 'non';
  $plxPlugin->setParam('afficheCategoriesMenu', $afficheCategoriesMenu, 'string');
  $plxPlugin->setParam('afficheLienPanierTop', isset($_POST['afficheLienPanierTop'])?'1':'0', 'numeric');
  $plxPlugin->setParam('affPanier', $_POST['affPanier'], 'string');
- $affichePanierMenu = isset($_POST['affichePanierMenu']) ? "" : "non";
+ $affichePanierMenu = isset($_POST['affichePanierMenu']) ? '' : 'non';
  $plxPlugin->setParam('affichePanierMenu',$affichePanierMenu, 'string');
  $plxPlugin->setParam('localStorage', isset($_POST['localStorage'])?'1':'0', 'numeric');
  $plxPlugin->setParam('cookie', (isset($_POST['localStorage'])&&isset($_POST['cookie'])?'1':'0'), 'numeric');
@@ -164,17 +146,21 @@ $var['payment_paypal_cartbordercolor'] = $plxPlugin->getParam('payment_paypal_ca
 $var['shipping_by_price'] = $plxPlugin->getParam('shipping_by_price')=='' ? '0' : $plxPlugin->getParam('shipping_by_price');
 $var['shipping_nb_lines'] = $plxPlugin->getParam('shipping_nb_lines')=='' ? '11' : $plxPlugin->getParam('shipping_nb_lines');
 $var['shipping_colissimo'] = $plxPlugin->getParam('shipping_colissimo')=='' ? '' : $plxPlugin->getParam('shipping_colissimo');
+//delivery date time
 $var['delivery_date'] = $plxPlugin->getParam('delivery_date')=='' ? '' : $plxPlugin->getParam('delivery_date');
 $var['delivery_nb_days'] = $plxPlugin->getParam('delivery_nb_days')=='' ? '11' : $plxPlugin->getParam('delivery_nb_days');
-$var["delivery_start_time"] = ("" === $plxPlugin->getParam("delivery_start_time")) ? current(array_keys($timeselection)) : $plxPlugin->getParam("delivery_start_time");
-$var["delivery_end_time"] = ("" === $plxPlugin->getParam("delivery_end_time")) ? current(array_keys($timeselection)) : $plxPlugin->getParam("delivery_end_time");
+$var['delivery_start_time'] = ('' === $plxPlugin->getParam('delivery_start_time')) ? current(array_keys($timeselection)) : $plxPlugin->getParam('delivery_start_time');
+$var['delivery_end_time'] = ('' === $plxPlugin->getParam('delivery_end_time')) ? current(array_keys($timeselection)) : $plxPlugin->getParam('delivery_end_time');
 $var['delivery_nb_timeslot'] = $plxPlugin->getParam('delivery_nb_timeslot')=='' ? '2' : $plxPlugin->getParam('delivery_nb_timeslot');
+$var['delivery_disallowed_dates'] = trim($plxPlugin->getParam('delivery_disallowed_dates'));#v0.13.2
+$var['delivery_day'] = explode(',',($plxPlugin->getParam('delivery_day') == ''? '1,1,1,1,1,1,1': $plxPlugin->getParam('delivery_day')));#v0.13.2
+
 $var['freeshipw'] = $plxPlugin->getParam('freeshipw')=='' ? '' : $plxPlugin->getParam('freeshipw');
 $var['freeshipp'] = $plxPlugin->getParam('freeshipp')=='' ? '' : $plxPlugin->getParam('freeshipp');
 $var['acurecept'] = $plxPlugin->getParam('acurecept')=='' ? '' : $plxPlugin->getParam('acurecept');
 
 for($i=1;$i<=$var['shipping_nb_lines'];$i++){
- $num=str_pad($i, 2, "0", STR_PAD_LEFT);
+ $num=str_pad($i, 2, '0', STR_PAD_LEFT);
  $var['p'.$num] = $plxPlugin->getParam('p'.$num)=='' ? '' : $plxPlugin->getParam('p'.$num);
  $var['pv'.$num] = $plxPlugin->getParam('pv'.$num)=='' ? '' : $plxPlugin->getParam('pv'.$num);
 }
@@ -188,19 +174,19 @@ $var['commercant_name'] = $plxPlugin->getParam('commercant_name')=='' ? 'David.L
 $var['commercant_street'] = $plxPlugin->getParam('commercant_street')=='' ? 'Rue de la plume' : $plxPlugin->getParam('commercant_street');
 $var['commercant_postcode'] = $plxPlugin->getParam('commercant_postcode')=='' ? '09600' : $plxPlugin->getParam('commercant_postcode');
 $var['commercant_city'] = $plxPlugin->getParam('commercant_city')=='' ? 'Dun' : $plxPlugin->getParam('commercant_city');
-$var['devise'] = $plxPlugin->getParam('devise')=='' ? ' €' : $plxPlugin->getParam('devise');
+$var['devise'] = $plxPlugin->getParam('devise')=='' ? '€' : $plxPlugin->getParam('devise');
 $var['menu_position'] = $plxPlugin->getParam('menu_position')=='' ? 3 : $plxPlugin->getParam('menu_position');
 $var['submenu'] = $plxPlugin->getParam('submenu')=='' ? '' : $plxPlugin->getParam('submenu');
 $var['afficheCategoriesMenu'] = $plxPlugin->getParam('afficheCategoriesMenu');
 $var['afficheLienPanierTop'] = $plxPlugin->getParam('afficheLienPanierTop');
-$var["affPanier"] = ("" === $plxPlugin->getParam("affPanier")) ? current(array_keys($tabAffPanier)) : $plxPlugin->getParam("affPanier");
+$var['affPanier'] = ('' === $plxPlugin->getParam('affPanier')) ? current(array_keys($tabAffPanier)) : $plxPlugin->getParam('affPanier');
 $var['affichePanierMenu'] = $plxPlugin->getParam('affichePanierMenu');
 $var['localStorage'] = $plxPlugin->getParam('localStorage')!='' ? $plxPlugin->getParam('localStorage') : '1';
 $var['cookie'] = $plxPlugin->getParam('cookie')!='' ? $plxPlugin->getParam('cookie') : '1';
-$var["position_devise"] = ("" === $plxPlugin->getParam("position_devise")) ? current(array_keys($tabPosDevise)) : $plxPlugin->getParam("position_devise");
+$var['position_devise'] = ('' === $plxPlugin->getParam('position_devise')) ? current(array_keys($tabPosDevise)) : $plxPlugin->getParam('position_devise');
 $var['useLangCGVDefault'] = $plxPlugin->aLangs ? $plxPlugin->getParam('useLangCGVDefault') : '0';
-$var["libelleCGV"] = ("" === $plxPlugin->getParam("libelleCGV")) ? $plxPlugin->getLang("L_COMMANDE_LIBELLE_DEFAUT") : $plxPlugin->getParam("libelleCGV");
-$var["urlCGV"] = ("" === $plxPlugin->getParam("urlCGV")) ? "" : $plxPlugin->getParam("urlCGV");
+$var['libelleCGV'] = ('' === $plxPlugin->getParam('libelleCGV')) ? $plxPlugin->getLang('L_COMMANDE_LIBELLE_DEFAUT') : $plxPlugin->getParam('libelleCGV');
+$var['urlCGV'] = ('' === $plxPlugin->getParam('urlCGV')) ? '' : $plxPlugin->getParam('urlCGV');
 
 $var['racine_commandes'] = (!$plxPlugin->getParam('racine_commandes')?'data/commandes/':trim($plxPlugin->getParam('racine_commandes')));
 $var['racine_products'] = (!$plxPlugin->getParam('racine_products')?'data/products/':trim($plxPlugin->getParam('racine_products')));
@@ -280,60 +266,92 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
     <label for="id_position_devise"><?php $plxPlugin->lang('L_CONFIG_POSITION_CURRENCY') ?>&nbsp;:</label>
    </div>
    <div class="col sml-12 med-7">
-    <?php plxUtils::printSelect("position_devise", $tabPosDevise, $var["position_devise"]) ?>
+    <?php plxUtils::printSelect('position_devise', $tabPosDevise, $var['position_devise']) ?>
    </div>
   </div>
 
   <h2><?php $plxPlugin->lang('L_CONFIG_DELIVERY_TITLE') ?></h2>
   <div class="grid">
-   <div class="col sml-9 label-centered">
+   <div class="col sml-8 lrg-5 label-centered">
     <label for="id_delivery_date"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_DATE');?>&nbsp;:</label>
    </div>
 
-    <div class="col sml-3">
+   <div class="col sml-3 sml-push-1 lgr-push-5">
     <label class="switch switch-left-right">
-     <input class="switch-input" id="id_delivery_date" name="delivery_date" type="checkbox"<?php echo (("0" === $var["delivery_date"]) ? "" : " checked=\"checked\"").' onchange="if (this.checked) { document.getElementById(\'blockdelidate\').style.display=\'block\';}else{document.getElementById(\'blockdelidate\').style.display=\'none\';}"';?> />
-     <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
-     <span class="switch-handle"></span>
-    </label>
-    </div>
-
-  <fieldset id="blockdelidate" style="display:<?php echo ($var['delivery_date']==1?"block":"none"); ?>;">
-   <legend><?php $plxPlugin->lang('L_CONFIG_DELIVERY_MINDAYS') ?></legend>
-    <table class="full-width">
-     <tr>
-      <td colspan="3" class="text-right"><?php $plxPlugin->lang('L_CONFIG_NB_DAYS') ?>&nbsp;:</td>
-      <td colspan="2"><?php plxUtils::printInput('delivery_nb_days',$var['delivery_nb_days'],'number','2-2',false,'',' min="1" max="99"') ?></td>
-     </tr>
-     <tr>
-      <td colspan="3" class="text-right"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_STARTTIME') ?>&nbsp;:</td>
-      <td colspan="2"><?php plxUtils::printSelect('delivery_start_time',$timeselection, $var["delivery_start_time"]) ?></td>
-     </tr>
-     <tr>
-      <td colspan="3" class="text-right"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_ENDTIME') ?>&nbsp;:</td>
-      <td colspan="2"><?php plxUtils::printSelect('delivery_end_time',$timeselection, $var["delivery_end_time"]) ?></td>
-     </tr>
-     <tr>
-      <td colspan="3" class="text-right"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_TIMESLOT') ?>&nbsp;:</td>
-      <td colspan="2"><?php plxUtils::printInput('delivery_nb_timeslot',$var['delivery_nb_timeslot'],'number','2-2',false,'',' min="1" max="24"') ?></td>
-     </tr>
-    </table>
-  </fieldset>
-
-   <div class="col sml-9 label-centered">
-    <label for="id_shipping_colissimo"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_SHIPPING');?>&nbsp;:</label>
-   </div>
-
-   <div class="col sml-3">
-    <label class="switch switch-left-right">
-     <input class="switch-input" id="id_shipping_colissimo" name="shipping_colissimo" type="checkbox" <?php echo (("0" === $var["shipping_colissimo"]) ? "" : " checked=\"checked\"").' onchange="if (this.checked) { document.getElementById(\'blocksocoreco\').style.display=\'block\';}else{document.getElementById(\'blocksocoreco\').style.display=\'none\';}"';?> />
+     <input class="switch-input" id="id_delivery_date" name="delivery_date" type="checkbox"<?php echo (('0' === $var['delivery_date']) ? '' : ' checked="checked"').' onchange="if (this.checked) { document.getElementById(\'blockdelidate\').style.display=\'block\';}else{document.getElementById(\'blockdelidate\').style.display=\'none\';}"';?> />
      <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
      <span class="switch-handle"></span>
     </label>
    </div>
   </div>
 
-  <fieldset id="blocksocoreco" style="display:<?php echo ($var['shipping_colissimo']==1?"block":"none"); ?>;">
+  <fieldset id="blockdelidate" style="display:<?php echo ($var['delivery_date']==1?'block':'none'); ?>;">
+   <legend><?php $plxPlugin->lang('L_CONFIG_DELIVERY_MINDAYS') ?></legend>
+   <div class="scrollable-table">
+    <table class="full-width">
+     <tr>
+      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_NB_DAYS') ?>&nbsp;:</td>
+      <td class="text-left"><?php plxUtils::printInput('delivery_nb_days',$var['delivery_nb_days'],'number','2-2',false,'" min="1" max="99') ?></td>
+     </tr>
+     <tr>
+      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_STARTTIME') ?>&nbsp;:</td>
+      <td class="text-left"><?php plxUtils::printSelect('delivery_start_time',$timeselection, $var['delivery_start_time']) ?></td>
+     </tr>
+     <tr>
+      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_ENDTIME') ?>&nbsp;:</td>
+      <td class="text-left"><?php plxUtils::printSelect('delivery_end_time',$timeselection, $var['delivery_end_time']) ?></td>
+     </tr>
+     <tr>
+      <td class="text-right"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_TIMESLOT') ?>&nbsp;:</td>
+      <td class="text-left"><?php plxUtils::printInput('delivery_nb_timeslot',$var['delivery_nb_timeslot'],'number','2-2',false,'" min="1" max="24') ?><?php $plxPlugin->lang('L_H') ?></td>
+     </tr>
+     <tr>
+      <td colspan="2"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_DISALOWED_DATES') ?>&nbsp;:
+       <br />
+       <?php plxUtils::printInput('delivery_disallowed_dates',$var['delivery_disallowed_dates'],'text','',false, '" placeholder="'.$dDateSample) ?>
+       <br />
+       <sup><?php $plxPlugin->lang('L_CONFIG_DELIVERY_DISALOW_DATES') ?>&nbsp;:</sup><br />
+       <sup><b><?php echo $dDateSample; ?></b></sup>
+      </td>
+     </tr>
+     <tr>
+      <td class="text-left" colspan="2">
+       <span><?php $plxPlugin->lang('L_DELIVERY_DAY') ?>&nbsp;:</span>
+      </td>
+     </tr>
+<?php for($d=0; $d<7; $d++): ?>
+     <tr>
+      <td class="text-left">
+       <label for="delivery_day_<?php echo $d ?>"><?php $plxPlugin->lang('L_DAY_'.$d);?>&nbsp;:</label>
+      </td>
+      <td class="text-right">
+       <label class="switch switch-left-right">
+        <input class="switch-input" id="delivery_day_<?php echo $d ?>" name="delivery_day_<?php echo $d ?>" type="checkbox"<?php echo (!$var['delivery_day'][$d]) ? '' : ' checked="checked"';?> />
+        <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
+        <span class="switch-handle"></span>
+       </label>
+      </td>
+     </tr>
+<?php endfor; ?>
+    </table>
+   </div>
+  </fieldset>
+
+  <div class="grid">
+   <div class="col sml-8 lrg-5 label-centered">
+    <label for="id_shipping_colissimo"><?php $plxPlugin->lang('L_CONFIG_DELIVERY_SHIPPING');?>&nbsp;:</label>
+   </div>
+
+   <div class="col sml-3 sml-push-1 lgr-push-5">
+    <label class="switch switch-left-right">
+     <input class="switch-input" id="id_shipping_colissimo" name="shipping_colissimo" type="checkbox" <?php echo (('0' === $var['shipping_colissimo']) ? '' : ' checked="checked"').' onchange="if (this.checked) { document.getElementById(\'blocksocoreco\').style.display=\'block\';}else{document.getElementById(\'blocksocoreco\').style.display=\'none\';}"';?> />
+     <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
+     <span class="switch-handle"></span>
+    </label>
+   </div>
+  </div>
+
+  <fieldset id="blocksocoreco" style="display:<?php echo ($var['shipping_colissimo']==1?'block':'none'); ?>;">
    <legend><?php $plxPlugin->lang('L_CONFIG_DELIVERY_CONFIG') ?></legend>
    <div class="scrollable-table">
     <table class="full-width">
@@ -352,7 +370,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
      </tr>
      <tr>
       <td colspan="3" class="text-right"><?php $plxPlugin->lang('L_CONFIG_NB_LINES') ?>&nbsp;:</td>
-      <td colspan="2"><?php plxUtils::printInput('shipping_nb_lines',$var['shipping_nb_lines'],'number','2-2',false,'',' min="1" max="99"') ?></td>
+      <td colspan="2"><?php plxUtils::printInput('shipping_nb_lines',$var['shipping_nb_lines'],'number','2-2',false,'" min="1" max="99') ?></td>
      </tr>
      <tr>
       <td class="text-left" colspan="2">
@@ -361,8 +379,8 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
       <td colspan="3">
        <label class="switch switch-left-right">
         <input class="switch-input" id="id_shipping_by_price" name="shipping_by_price" type="checkbox"<?php
-        echo 
-         (("0" === $var["shipping_by_price"]) ? '' : ' checked="checked"')
+        echo
+         (('0' === $var['shipping_by_price']) ? '' : ' checked="checked"')
          .' onchange="if (this.checked) {confdelivery(\''.$plxPlugin->getLang('L_CONFIG_DELIVERY_PRICE').$var['devise'].'\')}else{confdelivery(\''.$plxPlugin->getLang('L_CONFIG_DELIVERY_WEIGHT').'\')}"';
         ?> />
         <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
@@ -381,9 +399,9 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
       </td>
      </tr>
 <?php
-      for($i=1;$i<=$var["shipping_nb_lines"];$i++){
-       $num=str_pad($i, 2, "0", STR_PAD_LEFT);
-       $cnf=("0" === $var["shipping_by_price"]) ? $plxPlugin->getLang('L_CONFIG_DELIVERY_WEIGHT'): $plxPlugin->getLang('L_CONFIG_DELIVERY_PRICE').$var['devise'];
+      for($i=1;$i<=$var['shipping_nb_lines'];$i++){
+       $num=str_pad($i, 2, '0', STR_PAD_LEFT);
+       $cnf=('0' === $var['shipping_by_price']) ? $plxPlugin->getLang('L_CONFIG_DELIVERY_WEIGHT'): $plxPlugin->getLang('L_CONFIG_DELIVERY_PRICE').$var['devise'];
 ?>
      <tr>
       <td class="text-right confdelivery"><?php echo $cnf; ?>&nbsp;:</td>
@@ -398,63 +416,63 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
   </fieldset>
 
    <div class="grid">
-    <div class="col sml-9 label-centered">
+    <div class="col sml-8 lrg-5 label-centered">
      <label for="id_payment_cheque"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_CHEQUE');?>&nbsp;:</label>
     </div>
-    <div class="col sml-3">
+    <div class="col sml-3 sml-push-1 lgr-push-5">
      <label class="switch switch-left-right">
-      <input class="switch-input" id="id_payment_cheque" name="payment_cheque" type="checkbox"<?php echo ("0" === $var["payment_cheque"]) ? "" : " checked=\"checked\"";?> />
+      <input class="switch-input" id="id_payment_cheque" name="payment_cheque" type="checkbox"<?php echo ('0' === $var['payment_cheque']) ? '' : ' checked="checked"';?> />
       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
       <span class="switch-handle"></span>
      </label>
     </div>
    </div>
    <div class="grid">
-    <div class="col sml-9 label-centered">
+    <div class="col sml-8 lrg-5 label-centered">
      <label for="id_payment_cash"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_CASH');?>&nbsp;:</label>
     </div>
-    <div class="col sml-3">
+    <div class="col sml-3 sml-push-1 lgr-push-5">
     <label class="switch switch-left-right">
-     <input class="switch-input" id="id_payment_cash" name="payment_cash" type="checkbox"<?php echo ("0" === $var["payment_cash"]) ? "" : " checked=\"checked\"";?> />
+     <input class="switch-input" id="id_payment_cash" name="payment_cash" type="checkbox"<?php echo ('0' === $var['payment_cash']) ? '' : ' checked="checked"';?> />
      <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
      <span class="switch-handle"></span>
     </label>
     </div>
    </div>
    <div class="grid">
-    <div class="col sml-9 label-centered">
+    <div class="col sml-8 lrg-5 label-centered">
      <label for="id_payment_paypal"><?php $plxPlugin->lang('L_CONFIG_PAYMENT_PAYPAL');?>&nbsp;:</label>
     </div>
-    <div class="col sml-3">
+    <div class="col sml-3 sml-push-1 lgr-push-5">
      <label class="switch switch-left-right">
-      <input class="switch-input" id="id_payment_paypal" name="payment_paypal" type="checkbox"<?php echo (("0" === $var["payment_paypal"]) ? "" : " checked=\"checked\"").' onchange="if (this.checked) { document.getElementById(\'blockpaypal\').style.display=\'block\';}else{document.getElementById(\'blockpaypal\').style.display=\'none\';}"';?> />
+      <input class="switch-input" id="id_payment_paypal" name="payment_paypal" type="checkbox"<?php echo (('0' === $var['payment_paypal']) ? '' : ' checked="checked"').' onchange="if (this.checked) { document.getElementById(\'blockpaypal\').style.display=\'block\';}else{document.getElementById(\'blockpaypal\').style.display=\'none\';}"';?> />
       <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
       <span class="switch-handle"></span>
      </label>
     </div>
    </div>
 
-  <fieldset id="blockpaypal" align="center" style="border:1px solid #333;display:<?php echo ($var['payment_paypal']==1?"block":"none"); ?>;">
+  <fieldset id="blockpaypal" align="center" style="border:1px solid #333;display:<?php echo ($var['payment_paypal']==1?'block':'none'); ?>;">
    <legend><?php $plxPlugin->lang('L_CONFIG_CONF_PAYPAL') ?></legend>
-   <input type="hidden" name="payment_paypal_test" value="<?php echo $var["payment_paypal_test"];?>"/>
-   <input type="hidden" name="payment_paypal_test_user" value="<?php echo $var["payment_paypal_test_user"];?>"/>
-   <input type="hidden" name="payment_paypal_test_pwd" value="<?php echo $var["payment_paypal_test_pwd"];?>"/>
-   <input type="hidden" name="payment_paypal_test_signature" value="<?php echo $var["payment_paypal_test_signature"];?>"/>
+   <input type="hidden" name="payment_paypal_test" value="<?php echo $var['payment_paypal_test'];?>"/>
+   <input type="hidden" name="payment_paypal_test_user" value="<?php echo $var['payment_paypal_test_user'];?>"/>
+   <input type="hidden" name="payment_paypal_test_pwd" value="<?php echo $var['payment_paypal_test_pwd'];?>"/>
+   <input type="hidden" name="payment_paypal_test_signature" value="<?php echo $var['payment_paypal_test_signature'];?>"/>
 
-   <input type="hidden" name="payment_paypal_pwd" value="<?php echo $var["payment_paypal_pwd"];?>"/>
-   <input type="hidden" name="payment_paypal_signature" value="<?php echo $var["payment_paypal_signature"];?>"/>
-   <input type="hidden" name="payment_paypal_overalldescription" value="<?php echo $var["payment_paypal_overalldescription"];?>"/>
-   <input type="hidden" name="payment_paypal_ipnurl" value="<?php echo $var["payment_paypal_ipnurl"];?>"/>
-   <input type="hidden" name="payment_paypal_logoimg" value="<?php echo $var["payment_paypal_logoimg"];?>"/>
-   <input type="hidden" name="payment_paypal_payflowcolor" value="<?php echo $var["payment_paypal_payflowcolor"];?>"/>
-   <input type="hidden" name="payment_paypal_cartbordercolor" value="<?php echo $var["payment_paypal_cartbordercolor"];?>"/>
+   <input type="hidden" name="payment_paypal_pwd" value="<?php echo $var['payment_paypal_pwd'];?>"/>
+   <input type="hidden" name="payment_paypal_signature" value="<?php echo $var['payment_paypal_signature'];?>"/>
+   <input type="hidden" name="payment_paypal_overalldescription" value="<?php echo $var['payment_paypal_overalldescription'];?>"/>
+   <input type="hidden" name="payment_paypal_ipnurl" value="<?php echo $var['payment_paypal_ipnurl'];?>"/>
+   <input type="hidden" name="payment_paypal_logoimg" value="<?php echo $var['payment_paypal_logoimg'];?>"/>
+   <input type="hidden" name="payment_paypal_payflowcolor" value="<?php echo $var['payment_paypal_payflowcolor'];?>"/>
+   <input type="hidden" name="payment_paypal_cartbordercolor" value="<?php echo $var['payment_paypal_cartbordercolor'];?>"/>
 
    <div class="grid">
     <div class="col sml-12 med-5 label-centered">
      <label for="payment_paypal_amount"><?php $plxPlugin->lang('L_CONFIG_AMOUNT_PAYPAL') ?>&nbsp;(<?php echo $var['devise']; ?>)&nbsp;:</label>
     </div>
     <div class="col sml-12 med-7">
-     <input name='payment_paypal_amount' value="<?php echo $var['payment_paypal_amount'];?>" type='text' >
+     <input name='payment_paypal_amount' value="<?php echo $var['payment_paypal_amount'];?>" type="text" />
     </div>
    </div>
    <div class="grid">
@@ -462,7 +480,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
      <label for="payment_paypal_user"><?php $plxPlugin->lang('L_CONFIG_EMAIL_PAYPAL') ?>&nbsp;:</label>
     </div>
     <div class="col sml-12 med-7">
-     <input name='payment_paypal_user' value="<?php echo $var['payment_paypal_user'];?>" type='text' >
+     <input name='payment_paypal_user' value="<?php echo $var['payment_paypal_user'];?>" type="text" />
     </div>
    </div>
    <div class="grid">
@@ -470,7 +488,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
      <label for="payment_paypal_currencycode"><?php $plxPlugin->lang('L_CONFIG_CURRENCY_PAYPAL') ?> (<?php echo $var['payment_paypal_currencycode']; ?>)&nbsp;:</label>
     </div>
     <div class="col sml-12 med-7">
-     <input name='payment_paypal_currencycode' value="<?php echo ($var['payment_paypal_currencycode']!=""?$var['payment_paypal_currencycode']:"EUR"); ?>" type='text' >
+     <input name='payment_paypal_currencycode' value="<?php echo ($var['payment_paypal_currencycode']!=''?$var['payment_paypal_currencycode']:'EUR'); ?>" type="text" />
     </div>
    </div>
    <div class="grid">
@@ -478,7 +496,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
      <label for="payment_paypal_returnurl"><?php $plxPlugin->lang('L_CONFIG_RETURN_URL_PAYPAL') ?>&nbsp;:</label>
     </div>
     <div class="col sml-12 med-7">
-     <input name='payment_paypal_returnurl' value="<?php echo ($var['payment_paypal_returnurl']!=""?$var['payment_paypal_returnurl']:$_SERVER['HTTP_HOST']); ?>" type='text' >
+     <input name='payment_paypal_returnurl' value="<?php echo ($var['payment_paypal_returnurl']!=''?$var['payment_paypal_returnurl']:$_SERVER['HTTP_HOST']); ?>" type="text" />
     </div>
    </div>
    <div class="grid">
@@ -486,7 +504,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
      <label for="payment_paypal_cancelurl"><?php $plxPlugin->lang('L_CONFIG_CANCEL_URL_PAYPAL') ?>&nbsp;:</label>
     </div>
     <div class="col sml-12 med-7">
-     <input name='payment_paypal_cancelurl' value="<?php echo ($var['payment_paypal_cancelurl']!=""?$var['payment_paypal_cancelurl']:$_SERVER['HTTP_HOST']); ?>" type='text' >
+     <input name='payment_paypal_cancelurl' value="<?php echo ($var['payment_paypal_cancelurl']!=''?$var['payment_paypal_cancelurl']:$_SERVER['HTTP_HOST']); ?>" type="text" />
     </div>
    </div>
   </fieldset>
@@ -498,7 +516,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
     <label for="id_email"><?php $plxPlugin->lang('L_EMAIL') ?>&nbsp;:</label>
    </div>
    <div class="col sml-12 med-7">
-    <input name='email' value="<?php echo $var['email']; ?>" type='text' >
+    <input name="email" value="<?php echo $var['email']; ?>" type="text" />
    </div>
   </div>
   <div class="grid">
@@ -506,7 +524,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
     <label for="id_email_cc"><?php $plxPlugin->lang('L_EMAIL_CC') ?>&nbsp;:</label>
    </div>
    <div class="col sml-12 med-7">
-    <input name='email_cc' value="<?php echo $var['email_cc']; ?>" type='text' >
+    <input name="email_cc" value="<?php echo $var['email_cc']; ?>" type="text" />
    </div>
   </div>
   <div class="grid">
@@ -514,7 +532,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
     <label for="id_email_bcc"><?php $plxPlugin->lang('L_EMAIL_BCC') ?>&nbsp;:</label>
    </div>
    <div class="col sml-12 med-7">
-    <input name='email_bcc' value="<?php echo $var['email_bcc']; ?>" type='text' >
+    <input name="email_bcc" value="<?php echo $var['email_bcc']; ?>" type="text" />
    </div>
   </div>
   <div class="grid">
@@ -537,19 +555,19 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
   <h2><?php $plxPlugin->lang('L_CONFIG_VALIDATION_COMMANDE') ?></h2>
 <?php if($plxPlugin->aLangs){ ?>
   <div class="grid">
-   <div class="col sml-9 label-centered">
+   <div class="col sml-8 lrg-5 label-centered">
     <label for="id_useLangCGVDefault"><?php $plxPlugin->lang('L_CONFIG_LANGUE_CGV_SYSTEME');?>&nbsp;:</label>
    </div>
-   <div class="col sml-3">
+   <div class="col sml-3 sml-push-1 lgr-push-5">
     <label class="switch switch-left-right">
-     <input class="switch-input" id="id_useLangCGVDefault" name="useLangCGVDefault" type="checkbox"<?php echo (empty($var["useLangCGVDefault"])) ? '' : ' checked="checked"';?> onchange="if (this.checked) { document.getElementById('libCGV').style.display='none';}else{document.getElementById('libCGV').style.display='block';}" />
+     <input class="switch-input" id="id_useLangCGVDefault" name="useLangCGVDefault" type="checkbox"<?php echo (empty($var['useLangCGVDefault'])) ? '' : ' checked="checked"';?> onchange="if (this.checked) { document.getElementById('libCGV').style.display='none';}else{document.getElementById('libCGV').style.display='block';}" />
      <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
      <span class="switch-handle"></span>
     </label>
    </div>
   </div>
 <?PHP } ?>
-  <div class="grid" id="libCGV"<?php echo (empty($var["useLangCGVDefault"])) ? '' : ' style="display:none;"';?>>
+  <div class="grid" id="libCGV"<?php echo (empty($var['useLangCGVDefault'])) ? '' : ' style="display:none;"';?>>
    <div class="col sml-12 med-5 label-centered">
     <label><?php $plxPlugin->lang('L_CONFIG_LIBELLE_CGV') ?>&nbsp;:</label>
    </div>
@@ -567,7 +585,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
     <label><?php $plxPlugin->lang('L_CONFIG_URL_CGV') ?>&nbsp;:</label>
    </div>
    <div class="col sml-12 med-7 success">
-    <input name="urlCGV" value="<?php echo $var['urlCGV']; ?>" type="text" placeholder="?static1">
+    <input name="urlCGV" value="<?php echo $var['urlCGV']; ?>" placeholder="?static1" type="text" />
    </div>
   </div>
 
@@ -590,60 +608,60 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
   </div>
 
   <div class="grid">
-   <div class="col sml-9 label-centered">
+   <div class="col sml-8 lrg-5 label-centered">
     <label for="id_affichePanierMenu"><?php $plxPlugin->lang('L_CONFIG_AFFICHER_PANIER_MENU');?>&nbsp;:</label>
    </div>
-   <div class="col sml-3">
+   <div class="col sml-3 sml-push-1 lgr-push-5">
     <label class="switch switch-left-right">
-     <input class="switch-input" id="id_affichePanierMenu" name="affichePanierMenu" type="checkbox" <?php echo ("non" === $var["affichePanierMenu"]) ? "" : " checked=\"checked\"";?> />
+     <input class="switch-input" id="id_affichePanierMenu" name="affichePanierMenu" type="checkbox" <?php echo ('non' === $var['affichePanierMenu']) ? '' : ' checked="checked"';?> />
      <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
      <span class="switch-handle"></span>
     </label>
    </div>
   </div>
   <div class="grid">
-   <div class="col sml-9 label-centered">
+   <div class="col sml-8 lrg-5 label-centered">
     <label for="id_afficheCategoriesMenu"><?php $plxPlugin->lang('L_CONFIG_AFFICHER_CATEGORIES_MENU');?>&nbsp;:</label>
    </div>
-   <div class="col sml-3">
+   <div class="col sml-3 sml-push-1 lgr-push-5">
     <label class="switch switch-left-right">
-     <input class="switch-input" id="id_afficheCategoriesMenu" name="afficheCategoriesMenu" type="checkbox" <?php echo ("non" === $var["afficheCategoriesMenu"]) ? "" : " checked=\"checked\"";?> />
+     <input class="switch-input" id="id_afficheCategoriesMenu" name="afficheCategoriesMenu" type="checkbox" <?php echo ('non' === $var['afficheCategoriesMenu']) ? '' : ' checked="checked"';?> />
      <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
      <span class="switch-handle"></span>
     </label>
    </div>
   </div>
   <div class="grid">
-   <div class="col sml-9 label-centered">
+   <div class="col sml-8 lrg-5 label-centered">
     <label for="id_afficheLienPanierTop"><?php $plxPlugin->lang('L_CONFIG_AFFICHER_LIEN_PANIER_TOP');?>&nbsp;:</label>
    </div>
-   <div class="col sml-3">
+   <div class="col sml-3 sml-push-1 lgr-push-5">
     <label class="switch switch-left-right">
-     <input class="switch-input" id="id_afficheLienPanierTop" name="afficheLienPanierTop" type="checkbox" <?php echo ("0" === $var["afficheLienPanierTop"]) ? "" : " checked=\"checked\"";?> />
+     <input class="switch-input" id="id_afficheLienPanierTop" name="afficheLienPanierTop" type="checkbox" <?php echo ('0' === $var['afficheLienPanierTop']) ? '' : ' checked="checked"';?> />
      <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
      <span class="switch-handle"></span>
     </label>
    </div>
   </div>
   <div class="grid">
-   <div class="col sml-9 label-centered">
+   <div class="col sml-8 lrg-5 label-centered">
     <label for="id_localStorage"><?php $plxPlugin->lang('L_CONFIG_LOCALSTORAGE');?>&nbsp;:</label>
    </div>
-   <div class="col sml-3">
+   <div class="col sml-3 sml-push-1 lgr-push-5">
     <label class="switch switch-left-right">
-     <input class="switch-input" id="id_localStorage" name="localStorage" type="checkbox" <?php echo ("0" === $var["localStorage"]) ? "" : " checked=\"checked\"";?> />
+     <input class="switch-input" id="id_localStorage" name="localStorage" type="checkbox" <?php echo ('0' === $var['localStorage']) ? '' : ' checked="checked"';?> />
      <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
      <span class="switch-handle"></span>
     </label>
    </div>
   </div>
   <div class="grid">
-   <div class="col sml-9 label-centered">
+   <div class="col sml-8 lrg-5 label-centered">
     <label for="id_cookie"><?php $plxPlugin->lang('L_CONFIG_COOKIE');?>&nbsp;:</label>
    </div>
-   <div class="col sml-3">
+   <div class="col sml-3 sml-push-1 lgr-push-5">
     <label class="switch switch-left-right">
-     <input class="switch-input" id="id_cookie" name="cookie" type="checkbox" <?php echo ("0" === $var["cookie"]) ? "" : " checked=\"checked\"";?> />
+     <input class="switch-input" id="id_cookie" name="cookie" type="checkbox" <?php echo ('0' === $var['cookie']) ? '' : ' checked="checked"';?> />
      <span class="switch-label" data-on="<?php echo L_YES ?>" data-off="<?php echo L_NO ?>"></span>
      <span class="switch-handle"></span>
     </label>
@@ -656,7 +674,7 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
     <label for="id_affPanier"><?php $plxPlugin->lang('L_CONFIG_BASKET_DISPLAY') ?>&nbsp;:</label>
    </div>
    <div class="col sml-12 med-7">
-    <?php plxUtils::printSelect("affPanier", $tabAffPanier, $var["affPanier"]) ?>
+    <?php plxUtils::printSelect('affPanier', $tabAffPanier, $var['affPanier']) ?>
    </div>
   </div>
   <div class="grid">
@@ -669,13 +687,13 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
   </div>
 
   <h2><?php $plxPlugin->lang('L_CONFIG_FOLDERS') ?></h2>
-<?php $placeholder = (defined('PLX_VERSION') && PLX_VERSION > '5.5')?' placeholder="data/%s/"':'data/%s/'; ?>
+<?php $placeholder = /*(defined('PLX_VERSION') && PLX_VERSION > '5.5')?*/'" placeholder="data/%s/'/*:'data/%s/'*/; ?>
   <div class="grid">
    <div class="col sml-12 med-5 label-centered">
     <label for="id_racine_commandes"><?php $plxPlugin->lang('L_CONFIG_ORDERS_FOLDER') ?>&nbsp;:</label>
    </div>
    <div class="col sml-12 med-7">
-    <?php plxUtils::printInput('racine_commandes',$var['racine_commandes'],'text','0-120', false, '', sprintf($placeholder,'commandes')) ?>
+    <?php plxUtils::printInput('racine_commandes',$var['racine_commandes'],'text','0-120', false, sprintf($placeholder,'commandes')) ?>
    </div>
   </div>
   <div class="grid">
@@ -683,12 +701,12 @@ if ($array = $files->query('/^static(-[a-z0-9-_]+)?.php$/')) {
     <label for="id_racine_products"><?php $plxPlugin->lang('L_CONFIG_PRODUCTS_FOLDER') ?>&nbsp;:</label>
    </div>
    <div class="col sml-12 med-7">
-    <?php plxUtils::printInput('racine_products',$var['racine_products'],'text','0-120', false, '', sprintf($placeholder,'products')) ?>
+    <?php plxUtils::printInput('racine_products',$var['racine_products'],'text','0-120', false, sprintf($placeholder,'products')) ?>
    </div>
   </div>
  </fieldset>
 </form>
 
 <p class="in-action-bar save-button plx<?php echo str_replace('.','-',@PLX_VERSION); echo $plxPlugin->aLangs?' multilingue':'';?>">
- <?php $plxPlugin->menuAdmin("configuration");?>
+ <?php $plxPlugin->menuAdmin('configuration');?>
 </p>
