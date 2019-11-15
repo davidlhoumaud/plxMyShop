@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('PLX_ROOT')) exit;
 $montant = $totalpricettc;
 $livraison = $totalpoidgshipping;
 $devise = $plxPlugin->getParam("payment_paypal_currencycode");

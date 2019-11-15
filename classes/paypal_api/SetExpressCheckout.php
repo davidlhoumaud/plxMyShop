@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('PLX_ROOT')) exit;
 if (isset($_POST) && !empty($_POST) && is_array($_POST)) {
  /**
  * Send HTTP POST Request
@@ -78,7 +78,7 @@ if (isset($_POST) && !empty($_POST) && is_array($_POST)) {
  <div style="width:100%;" align="center">
   <p><img style="margin-top:10%;" src="' . $plxPlugin->plxMotor->racine . PLX_PLUGINS . 'plxMyShop/images/paypal_logo.gif" border="0"/></p>
   <p><img style="margin-top:2%;" src="' . $plxPlugin->plxMotor->racine . PLX_PLUGINS . 'plxMyShop/images/icon_load.gif" border="0"/></p>
-  <span style="color:#003366;font-size:12px">Transfert des informations vers Paypal en cours...</span>
+  <span style="color:#003366;font-size:12px">' . $plxPlugin->getLang('L_TRANSFERT_TO_PAYPAL') . '</span>
  </div>
  ';
 

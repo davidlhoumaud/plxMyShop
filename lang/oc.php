@@ -1,5 +1,5 @@
 <?php
-
+//<a class="hint"><span>Infobule d'Aide</span></a>
 $LANG = array(
 
 'L_PAGE_TITLE'                      => 'Creacion e modificacion dels produits',
@@ -130,6 +130,7 @@ $LANG = array(
 'L_CONFIG_SECURITY'                 => 'Seguretat',
 'L_CONFIG_SECURITY_KEY'             => 'Clau de chiframent',
 
+# Dates et heures de livraisons
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuracion dels mejans de liurason e pagament',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Liurason per "SoColissimo Recommandé"',
 'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Basat sul prètz total (ttc)">Basat sul prètz total del panièr</b>',
@@ -138,7 +139,20 @@ $LANG = array(
 'L_CONFIG_NB_DAYS'                  => 'Nombre de jorn',
 'L_CONFIG_DELIVERY_STARTTIME'       => 'Primièra ora de liurason',
 'L_CONFIG_DELIVERY_ENDTIME'         => 'Darrièra ora de liurason',
-'L_CONFIG_DELIVERY_TIMESLOT'        => 'Durada (en ora) dels intervals de liurason',
+'L_CONFIG_DELIVERY_TIMESLOT'        => 'Intervals de liurason',
+'L_H'                               => 'oro(s)',
+#0.13.2 Jours feriés, Vacances... Merci @ppmt @vérifié
+'L_CONFIG_DELIVERY_DISALOWED_DATES' => 'Dates indisponibles sus o calendari',
+'L_CONFIG_DELIVERY_DISALOW_DATES'   => 'Dates en format <b>AAAA-MM-DD</b> e separes per de virgules.<br />Intervales amb un jonhent bas "_"<br />entre dos dates. <b><i>Exemple</i></b>',
+'L_DELIVERY_DAY'                    => 'Liurasons dobèrt le',
+'L_DAY_0'                           => 'Dimenge',
+'L_DAY_1'                           => 'Diluns',
+'L_DAY_2'                           => 'Dimars',
+'L_DAY_3'                           => 'Dimècres',
+'L_DAY_4'                           => 'Dijòus',
+'L_DAY_5'                           => 'Divendres',
+'L_DAY_6'                           => 'Dissabte',
+
 'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Cal benlèu tornar avalorar o configurar los montants de las còstas de pòrts.</b>',
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Lo montant de las còstas de pòrt pòt èsser tornat avalorar.</b>',
 'L_CONFIG_FREE'                     => 'Gratuitat',
@@ -198,6 +212,7 @@ $LANG = array(
 'L_PAYMENT_CHEQUE'                  => 'Chèc',
 'L_PAYMENT_CASH'                    => 'Pagar sulcòp',
 'L_PAYMENT_PAYPAL'                  => 'Paypal',
+'L_PAYMENT_ERROR'                   => 'Une méthode de payment est requise!',#a traduire
 
 'L_EMAIL_SUBJECT'                   => 'Novèla comanda ',
 'L_EMAIL_TEL'                       => 'Tel :',
@@ -284,6 +299,9 @@ $LANG = array(
 'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Utilizar las frasas per defaut de las C.G.V. de l'extension",
 'L_CONFIG_URL_CGV'                  => "URL de las C.G.V.",
 'L_CONFIG_AMOUNT_PAYPAL'            => "Montant minimum per l'activar",
+#SetExpressCheckout.php
+'L_TRANSFERT_TO_PAYPAL'             => 'Transfert des informations vers Paypal en cours...',#a traduire
+
 #boutonPanier.php
 'L_NOTICE_NOADDCART'                => 'Pas mai en resèrva',
 

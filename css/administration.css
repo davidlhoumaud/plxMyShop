@@ -1,5 +1,17 @@
+form#config_plxmyshop{
+ max-width: 1280px;
+}
+#config_plxmyshop fieldset fieldset{
+ background-color: rgba(0,0,0,0.1);
+}
+legend{
+ margin-top: -2.22rem;
+ border-top: 1px solid #333;
+ border-right: 1px solid #333;
+ border-left: 1px solid #333;
+}
 .lang_helper{
- display:none
+ display: none
 }
 .nombre {
  text-align: right;
@@ -24,37 +36,21 @@
  background-color: rgba(238,238,238,0.8); /* si titre prod très long */
  margin-top: 2.3rem;;
 }
-.return-link.plx5-6 {/* produits */
+/* surcharge pluxml 5.6 & 5.7 */
+.return-link.plx5-6, .return-link.plx5-7 {/* produits */
  margin-top: 3.4rem;
 }
-#blocksocoreco{ /* Configuration des frais de port */
+#blocksocoreco, /* Configuration des frais de port */
+#blockdelidate{ /* Configuration des horaires et dates livraisons */
  text-align: center;
  border: 1px solid #333;
  padding-bottom: 0.2em;
  margin-bottom: 1em;
- max-width: 480px;
+ max-width: 640px;
+ min-width: 320px;
 }
-#blocksocoreco input[type="text"],#blocksocoreco  input[type="number"] {width: 100%;}
-
-
-#blockdelidate{ /* Configuration des frais de port */
- text-align: center;
- border: 1px solid #333;
- padding-bottom: 0.2em;
- margin-bottom: 1em;
- max-width: 480px;
-}
-#blockdelidate input[type="text"],#blockdelidate  input[type="number"] {width: 100%;}
-
-/*
-.return-link, .back {
- left: 72%;
-}
-.back {
- top: 0.5rem;
- position: fixed;
-}
-*/
+#config_plxmyshop input[type="text"] {width:100%;}
+#config_plxmyshop input[type="number"] {max-width:55px;}
 
 /* template : editionProduitAdmin.php with js */
 .informationsShortcodeProduit {
@@ -215,7 +211,7 @@ table.dataTable {
  border: none;
 }
 
-/* surcharge plx 5.6 */
+/* surcharge pluxml 5.6 & 5.7 */
 .button{
  padding: 0.3rem 0.7rem;
 }
@@ -239,11 +235,11 @@ table.dataTable {
  .in-action-bar.multilingue {
   margin-top: 5em;
  }
-/* surcharge plx 5.6 */
- .in-action-bar.plx5-6 {
+/* surcharge pluxml 5.6 & 5.7 */
+ .in-action-bar.plx5-6, .in-action-bar.plx5-7 {
   margin-left: -2rem;
  }
- .return-link.plx5-6.multilingue {
+ .return-link.plx5-6.multilingue, .return-link.plx5-7.multilingue {
   margin-top: 8.5rem;
  }
 }

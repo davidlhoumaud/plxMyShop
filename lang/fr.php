@@ -1,6 +1,7 @@
 <?php
-//<a class="hint"><span></span></a> helper
+//<a class="hint"><span>Infobule d'Aide</span></a>
 $LANG = array(
+
 'L_PAGE_TITLE'                      => 'Gérer les produits',
 'L_ADMIN_MENU_TOOTIP'               => 'Gérer mon web-commerce (produits, catégories et commandes)', #Affichage des produits / catégories
 'L_LANG_UNAVAILABLE'                => 'Langue non disponible : %s',
@@ -129,15 +130,29 @@ $LANG = array(
 'L_CONFIG_SECURITY'                 => 'Sécurité',
 'L_CONFIG_SECURITY_KEY'             => 'Clé de chiffrement',
 
+# Dates et heures de livraisons. Merci @ppmt
 'L_CONFIG_DELIVERY_TITLE'           => 'Configuration des moyens de livraison et paiement',
 'L_CONFIG_DELIVERY_SHIPPING'        => 'Ajout de frais de port',
 'L_CONFIG_DELIVERY_BY_PRICE'        => '<b title="Basé sur le prix total (ttc)">Basé sur le total du panier</b>',
-'L_CONFIG_DELIVERY_DATE'            => 'Afficher le choix de date et d\'horaire de livraison', # /ppmt nouvelle option
-'L_CONFIG_DELIVERY_MINDAYS'         => 'Jour et heure de la livraison', # /ppmt nouvelle option
-'L_CONFIG_NB_DAYS'                  => 'Nombre de jour', # /ppmt nouvelle option
-'L_CONFIG_DELIVERY_STARTTIME'       => 'Première heure de livraison', # /ppmt nouvelle option
-'L_CONFIG_DELIVERY_ENDTIME'         => 'Dernière heure de livraison', # /ppmt nouvelle option
-'L_CONFIG_DELIVERY_TIMESLOT'        => 'Durée (en heure) des intervaux de livraison', # /ppmt nouvelle option
+'L_CONFIG_DELIVERY_DATE'            => 'Afficher le choix de date et d\'horaire de livraison',
+'L_CONFIG_DELIVERY_MINDAYS'         => 'Jour et heure de la livraison',
+'L_CONFIG_NB_DAYS'                  => 'Nombre de jours',
+'L_CONFIG_DELIVERY_STARTTIME'       => 'Première heure de livraison',
+'L_CONFIG_DELIVERY_ENDTIME'         => 'Dernière heure de livraison',
+'L_CONFIG_DELIVERY_TIMESLOT'        => 'Intervales entre livraisons',
+'L_H'                               => 'heure(s)',
+#0.13.2 Jours feriés, Vacances... Merci @ppmt
+'L_CONFIG_DELIVERY_DISALOWED_DATES' => 'Dates indisponibles sur le calendrier',
+'L_CONFIG_DELIVERY_DISALOW_DATES'   => 'Dates au format <b>AAAA-MM-JJ</b> et séparés par des virgules.<br />Intervalles avec un tiret bas "_"<br />entre deux dates. <b><i>Exemple</i></b>',
+'L_DELIVERY_DAY'                    => 'Livraisons ouvertes le',
+'L_DAY_0'                           => 'Dimanche',
+'L_DAY_1'                           => 'Lundi',
+'L_DAY_2'                           => 'Mardi',
+'L_DAY_3'                           => 'Mercredi',
+'L_DAY_4'                           => 'Jeudi',
+'L_DAY_5'                           => 'Vendredi',
+'L_DAY_6'                           => 'Samedi',
+
 'L_SHIPMAXWEIGHTADMIN'              => '<b class="startw">Les montants des frais de ports sont peut être a réévaluer ou a reconfigurer.</b>',
 'L_SHIPMAXWEIGHT'                   => '<b class="startw">Le montant des frais de port peut être réévalué.</b>',
 'L_CONFIG_FREE'                     => 'Gratuité',
@@ -147,7 +162,7 @@ $LANG = array(
 'L_CONFIG_DELIVERY_RECORDED'        => 'Accusé de réception',
 'L_CONFIG_DELIVERY_WEIGHT'          => 'Poids en kg',
 'L_CONFIG_DELIVERY_PRICE'           => 'Prix en ',
-'L_CONFIG_NB_LINES'                 => 'Nombre de lignes du tableau <a class="hint"><span><Nombre de lignes de configuration du tableau des frais de port. Sauvegarder pour rendre effectif le nombre de lignes, puis en suite modifier et re-sauvegarder./span></a>',
+'L_CONFIG_NB_LINES'                 => 'Nombre de lignes du tableau <a class="hint"><span>Nombre de lignes de configuration du tableau des frais de port. Sauvegarder pour rendre effectif le nombre de lignes, puis en suite modifier et re-sauvegarder.</span></a>',
 
 'L_CONFIG_PAYMENT_CHEQUE'           => 'Paiement par chèque',
 'L_CONFIG_PAYMENT_CASH'             => 'Paiement en argent comptant',
@@ -197,6 +212,7 @@ $LANG = array(
 'L_PAYMENT_CHEQUE'                  => 'Chèque',
 'L_PAYMENT_CASH'                    => 'Cash',
 'L_PAYMENT_PAYPAL'                  => 'Paypal',
+'L_PAYMENT_ERROR'                   => 'Une méthode de payment est requise!',//validerCommande()
 
 'L_EMAIL_SUBJECT'                   => 'Nouvelle commande ',
 'L_EMAIL_TEL'                       => 'Tel :',
@@ -283,6 +299,9 @@ $LANG = array(
 'L_CONFIG_LANGUE_CGV_SYSTEME'       => "Utiliser les phrases par defaut des C.G.V. du plugin",
 'L_CONFIG_URL_CGV'                  => "URL des C.G.V.",
 'L_CONFIG_AMOUNT_PAYPAL'            => "Montant minimum pour l'activer",
+#SetExpressCheckout.php
+'L_TRANSFERT_TO_PAYPAL'             => 'Transfert des informations vers Paypal en cours...',
+
 #boutonPanier.php
 'L_NOTICE_NOADDCART'                => 'En rupture de stock',
 
